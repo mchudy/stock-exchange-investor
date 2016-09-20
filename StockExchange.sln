@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockExchange.Task.App", "StockExchange.Task.App\StockExchange.Task.App.csproj", "{30AB6F4E-A579-418C-BCA0-973F6F6B9C3A}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C5A583DA-A15F-45B2-A03F-FB20CB23BD1D} = {C5A583DA-A15F-45B2-A03F-FB20CB23BD1D}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockExchange.Task.Business", "StockExchange.Task.Business\StockExchange.Task.Business.csproj", "{C5A583DA-A15F-45B2-A03F-FB20CB23BD1D}"
 EndProject
