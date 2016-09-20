@@ -48,6 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Helpers\CsvImporter.cs" />
     <Compile Include="HistoricalDataSynchronizer.cs" />
     <Compile Include="IHistoricalDataSynchronizer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

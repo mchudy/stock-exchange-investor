@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using StockExchange.Task.App.Helpers;
 using StockExchange.Task.Business;
 
@@ -16,7 +17,7 @@ namespace StockExchange.Task.App.Commands
 
         public void Execute(IEnumerable<string> parameters)
         {
-            _synchronizer.Sync();
+            _synchronizer.Sync(new DateTime(2006,01,01), DateTime.Today);
         }
     }
 }

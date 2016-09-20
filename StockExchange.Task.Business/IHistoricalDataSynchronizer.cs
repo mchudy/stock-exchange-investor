@@ -1,7 +1,9 @@
-﻿namespace StockExchange.Task.Business
+﻿using System;
+
+namespace StockExchange.Task.Business
 {
     public interface IHistoricalDataSynchronizer
     {
-        void Sync();
+        void Sync(DateTime startDate, DateTime endDate, string companyCode = null);
     }
 }
