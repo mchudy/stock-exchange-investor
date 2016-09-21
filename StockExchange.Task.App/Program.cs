@@ -49,6 +49,7 @@ namespace StockExchange.Task.App
                 finally
                 {
                     logger.Debug("Job ended");
+                    Console.ReadLine();
                 }
             }
         }

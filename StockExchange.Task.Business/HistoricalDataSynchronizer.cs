@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Linq;
 using log4net;
+using StockExchange.DataAccess.IRepositories;
+using StockExchange.DataAccess.Models;
 using StockExchange.Task.Business.Helpers;
 
 namespace StockExchange.Task.Business
@@ -7,6 +10,14 @@ namespace StockExchange.Task.Business
     public sealed class HistoricalDataSynchronizer : IHistoricalDataSynchronizer
     {
         private static readonly ILog Logger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        private readonly IRepository<Company> _companyRepository;
+        private readonly IRepository<Price> _priceRepository; 
+
+        public HistoricalDataSynchronizer(IRepository<Company> companyRepository, IRepository<Price> priceRepository)
+        {
+            _companyRepository = companyRepository;
+            _priceRepository = priceRepository;
+        }
 
         public void Sync(DateTime startDate, DateTime endDate, string companyCode = null)
         {
@@ -24,6 +35,7 @@ namespace StockExchange.Task.Business
             {
                 
             }
+            var a = _companyRepository.GetQueryable().ToList();
             Logger.Debug("Syncing historical data ended.");
         }
     }
