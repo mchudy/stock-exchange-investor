@@ -2,6 +2,7 @@
 using System.Linq;
 using log4net;
 using Autofac;
+using StockExchange.Common;
 using StockExchange.Task.App.Commands;
 
 namespace StockExchange.Task.App
@@ -18,27 +19,24 @@ namespace StockExchange.Task.App
             {
                 try
                 {
-                    var parameters = args.Skip(1).ToList();
                     if (args.Length > 0)
                     {
-                        foreach (var arg in args)
+                        var commandName = args[0];
+                        var parameters = args.Skip(1).ToList();
+                        if (scope.IsRegisteredWithName(commandName, typeof(ICommand)))
                         {
-                            var commandName = arg;
-                            if (scope.IsRegisteredWithName(commandName, typeof (ICommand)))
-                            {
-                                // TODO: Task Log Db
-                                scope.ResolveNamed<ICommand>(commandName).Execute(parameters);
-                            }
-                            else
-                            {
-                                scope.ResolveNamed<ICommand>("help").Execute(parameters);
-                                logger.Error("Unknown command");
-                            }
+                            // TODO: Task Log Db
+                            scope.ResolveNamed<ICommand>(commandName).Execute(parameters);
+                        }
+                        else
+                        {
+                            scope.ResolveNamed<ICommand>(Consts.Commands.Help).Execute(null);
+                            logger.Error("Unknown command");
                         }
                     }
                     else
                     {
-                        scope.ResolveNamed<ICommand>("help").Execute(parameters);
+                        scope.ResolveNamed<ICommand>(Consts.Commands.Help).Execute(null);
                         logger.Error("No command specified");
                     }
                 }
@@ -49,7 +47,6 @@ namespace StockExchange.Task.App
                 finally
                 {
                     logger.Debug("Job ended");
-                    Console.ReadLine();
                 }
             }
         }

@@ -12,6 +12,7 @@ namespace StockExchange.DataAccess
         }
 
         public IDbSet<Company> Companies { get; set; }
+
         public IDbSet<Price> Prices { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

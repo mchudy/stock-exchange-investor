@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Reflection;
 using log4net;
+using StockExchange.Common;
 using StockExchange.Task.App.Helpers;
 
 namespace StockExchange.Task.App.Commands
 {
-    [CommandName("help", "Displays help")]
+    [CommandName(Consts.Commands.Help, "Displays help")]
     internal sealed class HelpCommand : ICommand
     {
         private static readonly ILog Logger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);

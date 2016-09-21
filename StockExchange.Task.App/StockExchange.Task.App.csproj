@@ -116,6 +116,10 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\StockExchange.Common\StockExchange.Common.csproj">
+      <Project>{abf032db-f0ce-4f94-ad17-ad142b67f448}</Project>
+      <Name>StockExchange.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\StockExchange.DataAccess\StockExchange.DataAccess.csproj">
       <Project>{c254649a-33dd-4eaa-bd0e-2afb3af7579e}</Project>
       <Name>StockExchange.DataAccess</Name>

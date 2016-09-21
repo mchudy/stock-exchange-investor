@@ -12,6 +12,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockExchange.Task.Business
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockExchange.DataAccess", "StockExchange.DataAccess\StockExchange.DataAccess.csproj", "{C254649A-33DD-4EAA-BD0E-2AFB3AF7579E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockExchange.Common", "StockExchange.Common\StockExchange.Common.csproj", "{ABF032DB-F0CE-4F94-AD17-AD142B67F448}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,12 +32,16 @@ Global
 		{C254649A-33DD-4EAA-BD0E-2AFB3AF7579E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C254649A-33DD-4EAA-BD0E-2AFB3AF7579E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C254649A-33DD-4EAA-BD0E-2AFB3AF7579E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ABF032DB-F0CE-4F94-AD17-AD142B67F448}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ABF032DB-F0CE-4F94-AD17-AD142B67F448}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ABF032DB-F0CE-4F94-AD17-AD142B67F448}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ABF032DB-F0CE-4F94-AD17-AD142B67F448}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 4
+		SccNumberOfProjects = 5
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://bartosz-wozniak.visualstudio.com/
 		SccLocalPath0 = .
@@ -48,5 +54,8 @@ Global
 		SccProjectUniqueName3 = StockExchange.DataAccess\\StockExchange.DataAccess.csproj
 		SccProjectName3 = StockExchange.DataAccess
 		SccLocalPath3 = StockExchange.DataAccess
+		SccProjectUniqueName4 = StockExchange.Common\\StockExchange.Common.csproj
+		SccProjectName4 = StockExchange.Common
+		SccLocalPath4 = StockExchange.Common
 	EndGlobalSection
 EndGlobal
