@@ -59,6 +59,7 @@
   <ItemGroup>
     <Compile Include="Helpers\CsvImporter.cs" />
     <Compile Include="DataSynchronizer.cs" />
+    <Compile Include="Helpers\PriceConverter.cs" />
     <Compile Include="IDataSynchronizer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

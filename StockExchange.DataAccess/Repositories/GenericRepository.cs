@@ -40,6 +40,16 @@ namespace StockExchange.DataAccess.Repositories
             return query;
         }
 
+        public void Insert(TEntity entity)
+        {
+            _dbSet.Add(entity);
+        }
+
+        public int Save()
+        {
+            return _context.SaveChanges();
+        }
+
         public void Dispose()
         {
             Dispose(true);

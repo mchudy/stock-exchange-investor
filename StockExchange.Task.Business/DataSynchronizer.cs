@@ -13,7 +13,7 @@ namespace StockExchange.Task.Business
     {
         private static readonly ILog Logger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         private readonly IRepository<Company> _companyRepository;
-        private readonly IRepository<Price> _priceRepository; 
+        private readonly IRepository<Price> _priceRepository;
 
         public DataSynchronizer(IRepository<Company> companyRepository, IRepository<Price> priceRepository)
         {
@@ -30,21 +30,28 @@ namespace StockExchange.Task.Business
             {
                 companyCodes = _companyRepository.GetQueryable().Select(item => item.code);
             }
-            foreach (var url in companyCodes.Select(companyCode => CreatePathUrl(startDateString, endDateString, companyCode)))
+            foreach (var companyCode in companyCodes)
             {
-                SyncByCompany(url);
+                var url = CreatePathUrl(startDateString, endDateString, companyCode);
+                SyncByCompany(url, companyCode);
             }
             Logger.Debug("Syncing historical data ended.");
         }
 
-        private static void SyncByCompany(string url)
+        private void SyncByCompany(string url, string companyCode)
         {
             var data = CsvImporter.GetCsv(url);
             data.RemoveAt(0);
             foreach (var row in data)
             {
-                // TODO
+                var company = _companyRepository.GetQueryable(item => item.code == companyCode).FirstOrDefault() ?? new Company { id = 0 };
+                var currentDate = DateTime.Parse(row[0]);
+                if (!_priceRepository.GetQueryable(item => item.companyId == company.id && item.date == currentDate).Any())
+                {
+                    _priceRepository.Insert(PriceConverter.Convert(row, company));
+                }
             }
+            _priceRepository.Save();
         }
 
         private static string CreatePathUrl(string startDateString, string endDateString, string companyCode)

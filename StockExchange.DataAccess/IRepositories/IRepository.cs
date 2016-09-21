@@ -11,5 +11,9 @@ namespace StockExchange.DataAccess.IRepositories
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, 
             List<Expression<Func<TEntity, object>>> includeProperties = null, 
             int? page = null, int? pageSize = null);
+
+        void Insert(TEntity entity);
+
+        int Save();
     }
 }

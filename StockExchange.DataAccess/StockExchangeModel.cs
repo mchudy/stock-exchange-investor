@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity.Infrastructure.Annotations;
 using StockExchange.DataAccess.Models;
 
 namespace StockExchange.DataAccess
@@ -20,7 +22,8 @@ namespace StockExchange.DataAccess
             modelBuilder.Entity<Company>()
                 .Property(e => e.code)
                 .IsFixedLength()
-                .IsUnicode(false);
+                .IsUnicode(false)
+                .HasColumnAnnotation(IndexAnnotation.AnnotationName, new IndexAnnotation(new IndexAttribute()));
 
             modelBuilder.Entity<Company>()
                 .Property(e => e.name)
@@ -33,19 +36,19 @@ namespace StockExchange.DataAccess
 
             modelBuilder.Entity<Price>()
                 .Property(e => e.openPrice)
-                .HasPrecision(18, 0);
+                .HasPrecision(18, 2);
 
             modelBuilder.Entity<Price>()
                 .Property(e => e.closePrice)
-                .HasPrecision(18, 0);
+                .HasPrecision(18, 2);
 
             modelBuilder.Entity<Price>()
                 .Property(e => e.highPrice)
-                .HasPrecision(18, 0);
+                .HasPrecision(18, 2);
 
             modelBuilder.Entity<Price>()
                 .Property(e => e.lowPrice)
-                .HasPrecision(18, 0);
+                .HasPrecision(18, 2);
         }
     }
 }
