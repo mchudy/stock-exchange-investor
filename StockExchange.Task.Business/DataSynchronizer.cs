@@ -50,16 +50,22 @@ namespace StockExchange.Task.Business
             {
                 using (var priceRepository = _priceRepositoryFactory.CreateInstance())
                 {
+                    var inserted = false;
                     foreach (var row in data)
                     {
                         var company = companyRepository.GetQueryable(item => item.code == companyCode).FirstOrDefault() ?? new Company { id = 0 };
                         var currentDate = DateTime.Parse(row[0]);
+                        // ReSharper disable once InvertIf
                         if (!priceRepository.GetQueryable(item => item.companyId == company.id && item.date == currentDate).Any())
                         {
                             priceRepository.Insert(PriceConverter.Convert(row, company));
+                            inserted = true;
                         }
                     }
-                    priceRepository.Save();
+                    if (inserted)
+                    {
+                        priceRepository.Save();
+                    }
                 }
             }
 

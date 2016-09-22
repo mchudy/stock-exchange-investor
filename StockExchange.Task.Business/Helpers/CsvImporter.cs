@@ -7,7 +7,7 @@ namespace StockExchange.Task.Business.Helpers
 {
     internal static class CsvImporter
     {
-        public static IList<IList<string>> GetCsv(string url)
+        internal static IList<IList<string>> GetCsv(string url)
         {
             var req = (HttpWebRequest)WebRequest.Create(url);
             var resp = (HttpWebResponse)req.GetResponse();

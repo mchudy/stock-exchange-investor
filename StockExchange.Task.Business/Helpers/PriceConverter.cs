@@ -5,9 +5,9 @@ using StockExchange.DataAccess.Models;
 
 namespace StockExchange.Task.Business.Helpers
 {
-    public static class PriceConverter
+    internal static class PriceConverter
     {
-        public static Price Convert(IList<string> data, Company company)
+        internal static Price Convert(IList<string> data, Company company)
         {
             return new Price
             {
