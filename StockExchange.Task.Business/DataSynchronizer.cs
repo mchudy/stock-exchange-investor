@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using log4net;
 using StockExchange.Common;
 using StockExchange.DataAccess.IRepositories;
@@ -12,13 +13,13 @@ namespace StockExchange.Task.Business
     public sealed class DataSynchronizer : IDataSynchronizer
     {
         private static readonly ILog Logger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-        private readonly IRepository<Company> _companyRepository;
-        private readonly IRepository<Price> _priceRepository;
+        private readonly IFactory<IRepository<Company>> _companyRepositoryFactory;
+        private readonly IFactory<IRepository<Price>> _priceRepositoryFactory;
 
-        public DataSynchronizer(IRepository<Company> companyRepository, IRepository<Price> priceRepository)
+        public DataSynchronizer(IFactory<IRepository<Company>> companyRepositoryFactory, IFactory<IRepository<Price>> priceRepositoryFactory)
         {
-            _companyRepository = companyRepository;
-            _priceRepository = priceRepository;
+            _companyRepositoryFactory = companyRepositoryFactory;
+            _priceRepositoryFactory = priceRepositoryFactory;
         }
 
         public void Sync(DateTime startDate, DateTime endDate, IEnumerable<string> companyCodes = null)
@@ -28,30 +29,40 @@ namespace StockExchange.Task.Business
             var endDateString = endDate.ToString(Consts.Formats.DateFormat);
             if (companyCodes == null)
             {
-                companyCodes = _companyRepository.GetQueryable().Select(item => item.code);
+                companyCodes = _companyRepositoryFactory.CreateInstance().GetQueryable().Select(item => item.code);
             }
-            foreach (var companyCode in companyCodes)
-            {
-                var url = CreatePathUrl(startDateString, endDateString, companyCode);
-                SyncByCompany(url, companyCode);
-            }
+            var enumerable = companyCodes as IList<string> ?? companyCodes.ToList();
+            Parallel.ForEach(enumerable, companyCode => ThreadSync(startDateString, endDateString, companyCode));
             Logger.Debug("Syncing historical data ended.");
+        }
+
+        private void ThreadSync(string startDateString, string endDateString, string companyCode)
+        {
+            var url = CreatePathUrl(startDateString, endDateString, companyCode);
+            SyncByCompany(url, companyCode);
         }
 
         private void SyncByCompany(string url, string companyCode)
         {
             var data = CsvImporter.GetCsv(url);
             data.RemoveAt(0);
-            foreach (var row in data)
+            using (var companyRepository = _companyRepositoryFactory.CreateInstance())
             {
-                var company = _companyRepository.GetQueryable(item => item.code == companyCode).FirstOrDefault() ?? new Company { id = 0 };
-                var currentDate = DateTime.Parse(row[0]);
-                if (!_priceRepository.GetQueryable(item => item.companyId == company.id && item.date == currentDate).Any())
+                using (var priceRepository = _priceRepositoryFactory.CreateInstance())
                 {
-                    _priceRepository.Insert(PriceConverter.Convert(row, company));
+                    foreach (var row in data)
+                    {
+                        var company = companyRepository.GetQueryable(item => item.code == companyCode).FirstOrDefault() ?? new Company { id = 0 };
+                        var currentDate = DateTime.Parse(row[0]);
+                        if (!priceRepository.GetQueryable(item => item.companyId == company.id && item.date == currentDate).Any())
+                        {
+                            priceRepository.Insert(PriceConverter.Convert(row, company));
+                        }
+                    }
+                    priceRepository.Save();
                 }
             }
-            _priceRepository.Save();
+
         }
 
         private static string CreatePathUrl(string startDateString, string endDateString, string companyCode)
