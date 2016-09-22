@@ -16,7 +16,7 @@ namespace StockExchange.Task.App
         {
             var assembly = Assembly.GetExecutingAssembly();
             var builder = new ContainerBuilder();
-            builder.RegisterType<Factory<GenericRepository<Company>>>().As<IFactory<IRepository<Company>>>();
+            builder.RegisterType<GenericRepository<Company>>().As<IRepository<Company>>();
             builder.RegisterType<Factory<GenericRepository<Price>>>().As<IFactory<IRepository<Price>>>();
             builder.RegisterType<DataSynchronizer>().As<IDataSynchronizer>();
             builder.RegisterAssemblyTypes(assembly).Where(CommandHelper.IsCommand).Named<ICommand>(a => CommandHelper.GetCommandName(a).Name);
