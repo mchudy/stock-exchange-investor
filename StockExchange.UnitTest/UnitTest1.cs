@@ -3,7 +3,7 @@
 namespace StockExchange.UnitTest
 {
     [TestClass]
-    public class UnitTest1
+    public sealed class UnitTest1
     {
         [TestMethod]
         public void TestMethod1()

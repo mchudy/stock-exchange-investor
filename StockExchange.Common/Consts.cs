@@ -11,6 +11,9 @@
         public static class Formats
         {
             public const string DateFormat = "yyyyMMdd";
+            public const string Currency = "{0:#,##0.00}";
+            public const string Integer = "{0:#,##0}";
+            public const string DisplayDate = "{0:MM/dd/yyyy}";
         }
 
         public static class SyncDataParameters

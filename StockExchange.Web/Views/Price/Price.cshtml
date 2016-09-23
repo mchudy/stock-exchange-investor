@@ -1,0 +1,25 @@
+﻿@using System.Web.Optimization
+@model StockExchange.Web.Models.PriceViewModel
+@{
+    ViewBag.Title = "Prices";
+}
+<div class="main-container">
+    <h1>Prices</h1>
+    <section class="panel panel-default panel-accordion">
+        <div class="panel-body panel-content">
+            @Html.Partial("_PricesDataTable")
+        </div>
+    </section>
+</div>
+
+<div class="modal fade" id="modalEdit" tabindex="-1" role="dialog" aria-labelledby="modalEditLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    @Scripts.Render("~/scripts/price.js")
+}

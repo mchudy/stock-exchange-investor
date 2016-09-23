@@ -34,7 +34,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -44,7 +53,28 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Business\IPriceManager.cs" />
+    <Compile Include="Business\PriceManager.cs" />
+    <Compile Include="Models\CompanyDto.cs" />
+    <Compile Include="Models\FilterDefinition.cs" />
+    <Compile Include="Models\IFilter.cs" />
+    <Compile Include="Models\PagedFilterDefinition.cs" />
+    <Compile Include="Models\PriceDto.cs" />
+    <Compile Include="Models\PriceFilter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\StockExchange.Common\StockExchange.Common.csproj">
+      <Project>{abf032db-f0ce-4f94-ad17-ad142b67f448}</Project>
+      <Name>StockExchange.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\StockExchange.DataAccess\StockExchange.DataAccess.csproj">
+      <Project>{c254649a-33dd-4eaa-bd0e-2afb3af7579e}</Project>
+      <Name>StockExchange.DataAccess</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

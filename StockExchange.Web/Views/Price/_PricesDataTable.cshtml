@@ -1,0 +1,51 @@
+﻿@model StockExchange.Web.Models.PriceViewModel
+@using StockExchange.Web.Helpers
+<div id="grid-container" class="grid-container">
+    <template id="filters">
+        <label>
+            Company Name:
+            @Html.DropDownList("companyName", Model.CompanyNames, new { id = "companyName" })
+        </label>
+        <label>
+            Choose Filter Type:
+            <select id="filterType">
+                <option value="month">Monthly</option>
+                <option value="year">Yearly</option>
+            </select>
+            <input type="text" id="filterValue" />
+        </label>
+    </template>    
+    <table id="grid" class="table table-striped table-hover table-bordered"
+           data-length-menu="[10, 30, 50, 100]"
+           data-page-length="10"
+           data-auto-width="true"
+           data-scroll-y="400px"
+           data-scroll-x="true"
+           data-scroll-collapse="true"
+           data-processing="true"
+           data-order='[[0, "desc"]]'
+           data-server-side="true"
+           data-ajax-url="@Url.Action("GetPrices")"
+           data-filter-ajax-url="@Url.Action("GetFilterValues")"
+           data-filter-ajax-paramname="fieldName">
+        <thead>
+        <tr>
+            <th class="width-small" data-column="CompanyName">@Html.DisplayNameFor(i => Model.Prices.FirstOrDefault().CompanyName)</th>
+            <th class="width-small" data-column="Date">@Html.DisplayNameFor(i => Model.Prices.FirstOrDefault().Date)</th>
+            <th class="width-small" data-column="OpenPrice">@Html.DisplayNameFor(i => Model.Prices.FirstOrDefault().OpenPrice)</th>
+            <th class="width-small" data-column="ClosePrice">@Html.DisplayNameFor(i => Model.Prices.FirstOrDefault().ClosePrice)</th>
+            <th class="width-small" data-column="HighPrice">@Html.DisplayNameFor(i => Model.Prices.FirstOrDefault().HighPrice)</th>
+            <th class="width-small" data-column="LowPrice">@Html.DisplayNameFor(i => Model.Prices.FirstOrDefault().LowPrice)</th>
+            <th class="width-small" data-column="Volume">@Html.DisplayNameFor(i => Model.Prices.FirstOrDefault().Volume)</th>
+            <th class="width-small" data-column="Id">@Html.DisplayNameFor(i => Model.Prices.FirstOrDefault().Id)</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td colspan="24">
+                <span class="blink_me">Loading Data...</span>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
