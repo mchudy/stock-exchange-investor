@@ -36,7 +36,14 @@ namespace StockExchange.Task.Business
         private void ThreadSync(string startDateString, string endDateString, Company company, IList<Price> prices)
         {
             var url = CreatePathUrl(startDateString, endDateString, company.code);
-            SyncByCompany(url, company, prices);
+            try
+            {
+                SyncByCompany(url, company, prices);
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex.Message);
+            }
         }
 
         private void SyncByCompany(string url, Company company, IList<Price> prices)
