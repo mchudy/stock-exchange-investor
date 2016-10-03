@@ -6,22 +6,22 @@ namespace StockExchange.DataAccess.Models
     [Table("Price")]
     public sealed class Price
     {
-        public int id { get; set; }
+        public int Id { get; set; }
 
-        public int companyId { get; set; }
+        public int CompanyId { get; set; }
 
         [Column(TypeName = "date")]
-        public DateTime date { get; set; }
+        public DateTime Date { get; set; }
 
-        public decimal openPrice { get; set; }
+        public decimal OpenPrice { get; set; }
 
-        public decimal closePrice { get; set; }
+        public decimal ClosePrice { get; set; }
 
-        public decimal highPrice { get; set; }
+        public decimal HighPrice { get; set; }
 
-        public decimal lowPrice { get; set; }
+        public decimal LowPrice { get; set; }
 
-        public int volume { get; set; }
+        public int Volume { get; set; }
 
         public Company Company { get; set; }
     }

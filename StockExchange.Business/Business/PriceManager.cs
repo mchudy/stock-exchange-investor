@@ -41,7 +41,7 @@ namespace StockExchange.Business.Business
 
         public IEnumerable<string> GetCompanyNames()
         {
-            return _companyRepository.GetQueryable().Select(item => item.name).Distinct().ToList();
+            return _companyRepository.GetQueryable().Select(item => item.Name).Distinct().ToList();
         }
 
         private static IQueryable<PriceDto> Filter(PriceFilter filter, IQueryable<PriceDto> results)
@@ -67,15 +67,15 @@ namespace StockExchange.Business.Business
         {
             return price => new PriceDto
             {
-                Id = price.id,
-                ClosePrice = price.closePrice,
-                Date = price.date,
-                HighPrice = price.highPrice,
-                LowPrice = price.lowPrice,
-                OpenPrice = price.openPrice,
-                Volume = price.volume,
-                CompanyId = price.Company.id,
-                CompanyName = price.Company.name
+                Id = price.Id,
+                ClosePrice = price.ClosePrice,
+                Date = price.Date,
+                HighPrice = price.HighPrice,
+                LowPrice = price.LowPrice,
+                OpenPrice = price.OpenPrice,
+                Volume = price.Volume,
+                CompanyId = price.Company.Id,
+                CompanyName = price.Company.Name
             };
         }
     }

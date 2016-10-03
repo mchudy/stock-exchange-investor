@@ -1,8 +1,8 @@
-﻿using System;
+﻿using StockExchange.DataAccess.IRepositories;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using StockExchange.DataAccess.IRepositories;
 using System.Linq.Expressions;
 
 namespace StockExchange.DataAccess.Repositories

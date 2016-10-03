@@ -20,6 +20,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockExchange.UnitTest", "S
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockExchange.Web", "StockExchange.Web\StockExchange.Web.csproj", "{E3763FF0-5667-4A0A-8E97-BE601F967DDF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockExchange.Migrations", "StockExchange.Migrations\StockExchange.Migrations.csproj", "{1C6AE943-82F5-451B-82B1-7CF6634014FE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{553EBCE0-3F21-4E16-8BB3-FC4926ABB3E0}"
+	ProjectSection(SolutionItems) = preProject
+		Readme.md = Readme.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -54,12 +61,16 @@ Global
 		{E3763FF0-5667-4A0A-8E97-BE601F967DDF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E3763FF0-5667-4A0A-8E97-BE601F967DDF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E3763FF0-5667-4A0A-8E97-BE601F967DDF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1C6AE943-82F5-451B-82B1-7CF6634014FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C6AE943-82F5-451B-82B1-7CF6634014FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C6AE943-82F5-451B-82B1-7CF6634014FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C6AE943-82F5-451B-82B1-7CF6634014FE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 8
+		SccNumberOfProjects = 9
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://bartosz-wozniak.visualstudio.com/
 		SccLocalPath0 = .
@@ -84,5 +95,8 @@ Global
 		SccProjectUniqueName7 = StockExchange.Web\\StockExchange.Web.csproj
 		SccProjectName7 = StockExchange.Web
 		SccLocalPath7 = StockExchange.Web
+		SccProjectUniqueName8 = StockExchange.Migrations\\StockExchange.Migrations.csproj
+		SccProjectName8 = StockExchange.Migrations
+		SccLocalPath8 = StockExchange.Migrations
 	EndGlobalSection
 EndGlobal

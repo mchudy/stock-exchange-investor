@@ -20,13 +20,13 @@ namespace StockExchange.DataAccess
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Company>()
-                .Property(e => e.code)
+                .Property(e => e.Code)
                 .IsFixedLength()
                 .IsUnicode(false)
                 .HasColumnAnnotation(IndexAnnotation.AnnotationName, new IndexAnnotation(new IndexAttribute()));
 
             modelBuilder.Entity<Company>()
-                .Property(e => e.name)
+                .Property(e => e.Name)
                 .IsUnicode(false);
 
             modelBuilder.Entity<Company>()
@@ -35,19 +35,19 @@ namespace StockExchange.DataAccess
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Price>()
-                .Property(e => e.openPrice)
+                .Property(e => e.OpenPrice)
                 .HasPrecision(18, 2);
 
             modelBuilder.Entity<Price>()
-                .Property(e => e.closePrice)
+                .Property(e => e.ClosePrice)
                 .HasPrecision(18, 2);
 
             modelBuilder.Entity<Price>()
-                .Property(e => e.highPrice)
+                .Property(e => e.HighPrice)
                 .HasPrecision(18, 2);
 
             modelBuilder.Entity<Price>()
-                .Property(e => e.lowPrice)
+                .Property(e => e.LowPrice)
                 .HasPrecision(18, 2);
         }
     }

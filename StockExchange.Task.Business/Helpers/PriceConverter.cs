@@ -11,13 +11,13 @@ namespace StockExchange.Task.Business.Helpers
         {
             return new Price
             {
-                date = DateTime.Parse(data[0]),
-                companyId = company.id,
-                openPrice = decimal.Parse(data[1], NumberStyles.Any, CultureInfo.InvariantCulture),
-                highPrice = decimal.Parse(data[2], NumberStyles.Any, CultureInfo.InvariantCulture),
-                lowPrice = decimal.Parse(data[3], NumberStyles.Any, CultureInfo.InvariantCulture),
-                closePrice = decimal.Parse(data[4], NumberStyles.Any, CultureInfo.InvariantCulture),
-                volume = int.Parse(data[5])
+                Date = DateTime.Parse(data[0]),
+                CompanyId = company.Id,
+                OpenPrice = decimal.Parse(data[1], NumberStyles.Any, CultureInfo.InvariantCulture),
+                HighPrice = decimal.Parse(data[2], NumberStyles.Any, CultureInfo.InvariantCulture),
+                LowPrice = decimal.Parse(data[3], NumberStyles.Any, CultureInfo.InvariantCulture),
+                ClosePrice = decimal.Parse(data[4], NumberStyles.Any, CultureInfo.InvariantCulture),
+                Volume = int.Parse(data[5])
             };
         }
     }

@@ -27,7 +27,7 @@ namespace StockExchange.Task.Business
             Logger.Debug("Syncing historical data started");
             var startDateString = startDate.ToString(Consts.Formats.DateFormat);
             var endDateString = endDate.ToString(Consts.Formats.DateFormat);
-            IList<Company> companies = companyCodes == null ? _companyRepository.GetQueryable().ToList() : _companyRepository.GetQueryable(item => companyCodes.ToList().Contains(item.code)).ToList();
+            IList<Company> companies = companyCodes == null ? _companyRepository.GetQueryable().ToList() : _companyRepository.GetQueryable(item => companyCodes.ToList().Contains(item.Code)).ToList();
             IList<Price> prices = _priceRepositoryFactory.CreateInstance().GetQueryable().ToList();
             Parallel.ForEach(companies, company => ThreadSync(startDateString, endDateString, company, prices));
             Logger.Debug("Syncing historical data ended.");
@@ -35,7 +35,7 @@ namespace StockExchange.Task.Business
 
         private void ThreadSync(string startDateString, string endDateString, Company company, IList<Price> prices)
         {
-            var url = CreatePathUrl(startDateString, endDateString, company.code);
+            var url = CreatePathUrl(startDateString, endDateString, company.Code);
             try
             {
                 SyncByCompany(url, company, prices);
@@ -58,7 +58,7 @@ namespace StockExchange.Task.Business
                 {
                     var currentDate = DateTime.Parse(row[0]);
                     // ReSharper disable once InvertIf
-                    if (!prices.Any(item => item.companyId == company.id && item.date == currentDate))
+                    if (!prices.Any(item => item.CompanyId == company.Id && item.Date == currentDate))
                     {
                         priceRepository.Insert(PriceConverter.Convert(row, company));
                         inserted = true;
