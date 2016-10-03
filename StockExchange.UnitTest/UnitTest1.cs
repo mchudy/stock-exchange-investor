@@ -1,11 +1,10 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Xunit;
 
 namespace StockExchange.UnitTest
 {
-    [TestClass]
     public sealed class UnitTest1
     {
-        [TestMethod]
+        [Fact]
         public void TestMethod1()
         {
         }
