@@ -1,9 +1,10 @@
-﻿using System;
+﻿using StockExchange.Common.LinqUtils;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace StockExchange.Common
+namespace StockExchange.Common.Extensions
 {
     public static class QueryableExtension
     {

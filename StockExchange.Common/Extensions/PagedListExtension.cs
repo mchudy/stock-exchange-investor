@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace StockExchange.Common
+namespace StockExchange.Common.Extensions
 {
     public static class PagedListExtension
     {

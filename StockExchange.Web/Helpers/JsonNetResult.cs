@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using StockExchange.Common;
+using StockExchange.Common.Extensions;
 
 namespace StockExchange.Web.Helpers
 {

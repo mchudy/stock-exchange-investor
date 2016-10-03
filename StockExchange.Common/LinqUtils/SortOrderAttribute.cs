@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace StockExchange.Common
+namespace StockExchange.Common.LinqUtils
 {
     [AttributeUsage(AttributeTargets.Property)]
     public sealed class SortOrderAttribute : Attribute

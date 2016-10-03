@@ -3,6 +3,7 @@ using System.Linq;
 using Newtonsoft.Json;
 using StockExchange.Business.Models;
 using StockExchange.Common;
+using StockExchange.Common.LinqUtils;
 using StockExchange.Web.Models;
 
 namespace StockExchange.Web.Helpers

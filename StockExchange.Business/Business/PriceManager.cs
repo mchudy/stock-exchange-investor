@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using StockExchange.Business.Models;
 using StockExchange.Common;
+using StockExchange.Common.Extensions;
 using StockExchange.DataAccess.IRepositories;
 using StockExchange.DataAccess.Models;
 

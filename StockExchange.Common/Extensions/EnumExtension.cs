@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
-namespace StockExchange.Common
+namespace StockExchange.Common.Extensions
 {
     public static class EnumExtension
     {

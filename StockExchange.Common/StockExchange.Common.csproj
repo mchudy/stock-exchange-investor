@@ -55,15 +55,15 @@
   <ItemGroup>
     <Compile Include="AttributeHelper.cs" />
     <Compile Include="Consts.cs" />
-    <Compile Include="EnumExtension.cs" />
+    <Compile Include="Extensions\EnumExtension.cs" />
     <Compile Include="Factory.cs" />
     <Compile Include="IFactory.cs" />
-    <Compile Include="OrderBy.cs" />
-    <Compile Include="PagedListExtension.cs" />
+    <Compile Include="LinqUtils\OrderBy.cs" />
+    <Compile Include="Extensions\PagedListExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="QueryableExtension.cs" />
-    <Compile Include="SearchBy.cs" />
-    <Compile Include="SortOrderAttribute.cs" />
+    <Compile Include="Extensions\QueryableExtension.cs" />
+    <Compile Include="LinqUtils\SearchBy.cs" />
+    <Compile Include="LinqUtils\SortOrderAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

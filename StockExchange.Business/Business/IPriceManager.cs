@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using StockExchange.Business.Models;
 using StockExchange.Common;
+using StockExchange.Common.Extensions;
 
 namespace StockExchange.Business.Business
 {

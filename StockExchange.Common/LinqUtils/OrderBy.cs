@@ -1,4 +1,4 @@
-﻿namespace StockExchange.Common
+﻿namespace StockExchange.Common.LinqUtils
 {
     public sealed class OrderBy
     {

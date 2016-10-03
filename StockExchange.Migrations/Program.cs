@@ -52,9 +52,6 @@ namespace StockExchange.Migrations
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("Success!");
             Console.ResetColor();
-#if DEBUG
-            Console.ReadLine();
-#endif
             return 0;
         }
     }
