@@ -2,19 +2,19 @@
 
 namespace StockExchange.Web.Models
 {
-    public class DataTableSimpleFilter
+    public class DataTableSimpleMessage
     {
-        public sealed class DataTableFilterSearch
+        public class DataTableMessageSearch
         {
             public string Value { get; set; }
-
             public bool Regex { get; set; }
         }
 
-        public DataTableFilterSearch Search { get; set; }
+        public DataTableMessageSearch Search { get; set; }
+
     }
 
-    public sealed class DataTableSimpleFilter<T> : DataTableSimpleFilter where T : IFilter
+    public class DataTableSimpleMessage<T> : DataTableSimpleMessage where T : IFilter
     {
         public T Filter { get; set; }
     }

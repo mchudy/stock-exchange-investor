@@ -1,0 +1,518 @@
+﻿/*For Chart*/
+/* Default monospace fonts for `<code>`, `<kbd>`, and `<pre>`.*/
+/* Unit-less `line-height` for use in components like buttons.*/
+/* Computed "line-height" (`font-size` * `line-height`) for use with `margin`, `padding`, etc.*/
+/* Load fonts from this directory.*/
+/* Global color for active items (e.g., navs or dropdowns).*/
+/* Global background color for active items (e.g., navs or dropdowns).*/
+/* Width of the `border` for generating carets that indicator dropdowns.*/
+/* Carets increase slightly in size for larger components.*/
+/* Padding for `<th>`s and `<td>`s.*/
+/* Padding for cells in `.table-condensed`.*/
+/* Default background color used for all tables.*/
+/* Background color used for `.table-striped`.*/
+/* Background color used for `.table-hover`.*/
+/* Border color for table and cell borders.*/
+/* Default `.form-control` height.*/
+/* `.form-group` margin.*/
+/* Background color for textual input addons*/
+/* Border color for textual input addons*/
+/* Disabled cursor for form controls and buttons.*/
+/* Background for the dropdown menu.*/
+/* Dropdown menu `border-color`.*/
+/* Dropdown menu `border-color` **for IE8**.*/
+/* Divider color for between dropdown items.*/
+/* Dropdown link text color.*/
+/* Hover color for dropdown links.*/
+/* Hover background for dropdown links.*/
+/* Active dropdown menu item text color.*/
+/* Active dropdown menu item background color.*/
+/* Disabled dropdown menu item background color.*/
+/* Text color for headers within dropdown menus.*/
+/* Deprecated `@dropdown-caret-color` as of v3.1.0*/
+/* Deprecated `@screen-xs` as of v3.0.1*/
+/* Deprecated `@screen-xs-min` as of v3.2.0*/
+/* Deprecated `@screen-phone` as of v3.0.1*/
+/* Deprecated `@screen-sm` as of v3.0.1*/
+/* Deprecated `@screen-tablet` as of v3.0.1*/
+/* Deprecated `@screen-md` as of v3.0.1*/
+/* Deprecated `@screen-desktop` as of v3.0.1*/
+/* Deprecated `@screen-lg` as of v3.0.1*/
+/* Deprecated `@screen-lg-desktop` as of v3.0.1*/
+/* Number of columns in the grid.*/
+/* Padding between columns. Gets divided in half for the left and right.*/
+/* Point at which the navbar becomes uncollapsed.*/
+/* Point at which the navbar begins collapsing.*/
+/* For `@screen-sm-min` and up.*/
+/* For `@screen-md-min` and up.*/
+/* For `@screen-lg-min` and up.*/
+/* Tooltip max width*/
+/* Tooltip text color*/
+/* Tooltip background color*/
+/* Tooltip arrow width*/
+/* Tooltip arrow color*/
+/* Popover body background color*/
+/* Popover maximum width*/
+/* Popover border color*/
+/* Popover fallback border color*/
+/* Popover title background color*/
+/* Popover arrow width*/
+/* Popover arrow color*/
+/* Popover outer arrow width*/
+/* Popover outer arrow color*/
+/* Popover outer arrow fallback color*/
+/* Default label background color*/
+/* Primary label background color*/
+/* Success label background color*/
+/* Info label background color*/
+/* Warning label background color*/
+/* Danger label background color*/
+/* Default label text color*/
+/* Default text color of a linked label*/
+/* Padding applied to the modal body*/
+/* Padding applied to the modal title*/
+/* Modal title line-height*/
+/* Background color of modal content area*/
+/* Modal content border color*/
+/* Modal content border color **for IE8***/
+/* Modal backdrop background color*/
+/* Modal backdrop opacity*/
+/* Modal header border color*/
+/* Modal footer border color*/
+/* Background color of the whole progress component*/
+/* Progress bar text color*/
+/* Variable for setting rounded corners on progress bar.*/
+/* Default progress bar color*/
+/* Success progress bar color*/
+/* Warning progress bar color*/
+/* Danger progress bar color*/
+/* Info progress bar color*/
+/* Background color on `.list-group-item`*/
+/* `.list-group-item` border color*/
+/* List group border radius*/
+/* Background color of single list items on hover*/
+/* Text color of active list items*/
+/* Background color of active list items*/
+/* Border color of active list elements*/
+/* Text color for content within active list items*/
+/* Text color of disabled list items*/
+/* Background color of disabled list items*/
+/* Text color for content within disabled list items*/
+/* Border color for elements within panels*/
+/* Padding around the thumbnail image*/
+/* Thumbnail background color*/
+/* Thumbnail border color*/
+/* Thumbnail border radius*/
+/* Custom text color for thumbnail captions*/
+/* Padding around the thumbnail caption*/
+/* Linked badge text color on hover*/
+/* Badge text color in active nav link*/
+/* Badge background color in active nav link*/
+/* Breadcrumb background color*/
+/* Breadcrumb text color*/
+/* Text color of current page in the breadcrumb*/
+/* Textual separator for between breadcrumb elements*/
+/* Horizontal offset for forms and lists.*/
+/* Text muted color*/
+/* Abbreviations and acronyms border color*/
+/* Headings small color*/
+/* Blockquote small color*/
+/* Blockquote font size*/
+/* Blockquote border color*/
+/* Page header border color*/
+/* Width of horizontal description list titles*/
+/* Horizontal line color.*/
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+  outline: none;
+}
+html,
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Metric Web", Arial, sans-serif;
+  font-size: 11pt;
+  font-style: normal;
+}
+body {
+  background-color: #1aab83;
+}
+label {
+  font-size: 11pt;
+  color: #343433;
+}
+input[type=text],
+input[type=password] {
+  font: "Metric Web", Arial, sans-serif;
+  font-size: 11pt;
+  border: 1px solid #1aab83;
+}
+input,
+select {
+  color: #343433;
+}
+a {
+  color: #1aab83;
+  text-decoration: underline;
+  cursor: pointer;
+}
+a:hover {
+  text-decoration: none;
+}
+
+section {
+  margin: 2px 0 20px 0;
+}
+textarea {
+  border: 1px solid #1aab83;
+  width: 100%;
+  max-width: 100%;
+}
+select {
+  font-family: "Metric Web", Arial, sans-serif !important;
+  border: 1px solid #1aab83 !important;
+}
+select > option {
+  outline: 1px solid #1aab83 !important;
+  border: 1px solid #1aab83 !important;
+}
+select > option:focus,
+select option:hover,
+select option:active {
+  background: #1aab83;
+  color: white;
+}
+select:focus,
+select:hover,
+select:active {
+  outline: 1px solid #1aab83 !important;
+}
+.input-validation-error,
+.field-validation-error {
+  color: #ef4953;
+  font-weight: bold;
+}
+.datepicker {
+  /*min-width: 225px !important;*/
+  cursor: pointer !important;
+}
+.datepicker-dropdown {
+  min-width: 225px !important;
+}
+.background-green {
+  background-color: #1aab83;
+  color: white;
+}
+.background-yellow {
+  background-color: #fed144;
+  color: white;
+}
+.background-red {
+  background-color: #ef4953;
+  color: white;
+}
+.background-overperf {
+  background-color: #624867;
+  color: white;
+}
+.background-grey {
+  background-color: #8b8c8f;
+  color: white;
+}
+.background-white {
+  background-color: white;
+  color: #343433;
+}
+/*from site.css*/
+.loader-img {
+  background: url("../../content/images/loader.gif") no-repeat;
+  z-index: 9999;
+  width: 60px;
+  height: 60px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  outline: none;
+  border: none;
+}
+.field-validation-error {
+  color: #ef4953;
+  font-weight: bold;
+  display: block;
+  padding-top: 5px;
+}
+.validation-summary-errors {
+  color: #ef4953;
+  font-weight: bold;
+  font-size: 11pt;
+}
+.alert-container {
+  width: 1000px;
+  margin: 50px auto;
+}
+.checkboxes {
+  padding: 20px 0;
+}
+.checkboxes > label {
+  margin: 0;
+}
+.main-container {
+  padding: 0 50px;
+  margin: 25px auto;
+    min-width: 1295px;
+    max-width: 1795px;
+}
+main.content {
+  box-sizing: border-box;
+  padding: 10px;
+}
+.dashboard-box {
+  background-color: white;
+}
+.tableWidth {
+  table-layout: fixed !important;
+}
+.error {
+  border-color: #ef4953 !important;
+  border-style: dashed !important;
+  -moz-box-shadow: 0 0 2px 2px #ef4953 !important;
+  -webkit-box-shadow: 0 0 2px 2px #ef4953 !important;
+  box-shadow: 0 0 2px 2px #FF4242 !important;
+}
+.add:hover,
+.edit:hover,
+.delete:hover {
+  cursor: pointer;
+}
+.add,
+.edit,
+.delete,
+.link,
+.addactionlink {
+  margin-left: 2px;
+  font-size: 11pt;
+  cursor: pointer;
+}
+.requiredField {
+  color: #ef4953;
+  margin-left: 5px;
+}
+.edited,
+.foredit,
+.foredit2 {
+  background-color: #FF8D6D !important;
+  color: white;
+}
+.edited > td,
+.foredit > td,
+.foredit2 > td {
+  vertical-align: top !important;
+}
+.edited > td a,
+.foredit > td a,
+.foredit2 > td a {
+  color: white !important;
+}
+.edited > input,
+.foredit > input,
+.foredit2 > input,
+.edited select,
+.foredit select,
+.foredit2 select,
+.edited .datepicker,
+.foredit .datepicker,
+.foredit2 .datepicker {
+  color: #343433 !important;
+}
+.hide,
+.hide2 {
+  display: none;
+}
+.hiddenElem {
+  display: none;
+}
+.blink_me {
+  -webkit-animation-name: blinker;
+  -webkit-animation-duration: 1s;
+  -webkit-animation-timing-function: linear;
+  -webkit-animation-iteration-count: infinite;
+  -moz-animation-name: blinker;
+  -moz-animation-duration: 1s;
+  -moz-animation-timing-function: linear;
+  -moz-animation-iteration-count: infinite;
+  animation-name: blinker;
+  animation-duration: 1s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+@-moz-keyframes blinker {
+  0% {
+    opacity: 1.0;
+  }
+  50% {
+    opacity: 0.0;
+  }
+  100% {
+    opacity: 1.0;
+  }
+}
+@-webkit-keyframes blinker {
+  0% {
+    opacity: 1.0;
+  }
+  50% {
+    opacity: 0.0;
+  }
+  100% {
+    opacity: 1.0;
+  }
+}
+@keyframes blinker {
+  0% {
+    opacity: 1.0;
+  }
+  50% {
+    opacity: 0.0;
+  }
+  100% {
+    opacity: 1.0;
+  }
+}
+/* overlay */
+.msp-overlay {
+  opacity: 0.5;
+  background: #343433;
+  top: 0;
+  left: 0;
+  position: absolute;
+  width: 100%;
+  min-height: 100%;
+  z-index: 1100;
+}
+/* filter sections for dashboards */
+.dashboard-filter {
+  position: relative;
+  overflow: hidden;
+  margin: 40px 0 20px;
+}
+.dashboard-filter div {
+  float: right;
+}
+.dashboard-filter label {
+  margin: 0 2px;
+  line-height: 30px;
+  color: white;
+}
+.dashboard-filter input,
+.dashboard-filter select {
+  width: 150px !important;
+  margin-right: 2px;
+}
+.row-header {
+  text-align: left;
+  font-weight: bold;
+}
+/* text alignment */
+.align-right {
+  text-align: right !important;
+}
+.align-left {
+  text-align: left !important;
+}
+.align-center {
+  text-align: center !important;
+}
+/* truncate text with ellipsis */
+.truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+/* alert style */
+.alert-info {
+  font-weight: 600 !important;
+}
+/* notifier */
+.notify-container {
+  position: absolute;
+  z-index: 9999;
+  bottom: 75px;
+  width: 25%;
+  right: 2%;
+  min-height: 1%;
+}
+.notifier {
+  min-height: 50px;
+  width: 100%;
+  text-align: center;
+  border: 1px solid #d1d2d4;
+}
+/* fixed column widths */
+.width-big {
+  width: 300px;
+}
+.width-normal {
+  min-width: 200px !important;
+  max-width: 200px !important;
+  width: 200px !important;
+}
+.width-small {
+  min-width: 150px !important;
+  max-width: 150px !important;
+  width: 150px !important;
+}
+.width-smaller {
+  min-width: 100px !important;
+  max-width: 100px !important;
+  width: 100px !important;
+}
+.width-smallest {
+  min-width: 75px !important;
+  max-width: 75px !important;
+  width: 75px !important;
+}
+.icon {
+  min-width: 50px !important;
+  max-width: 50px !important;
+  width: 50px !important;
+}
+.grey-out {
+  color: #b7b4b4 !important;
+}
+.small-table thead td {
+  background: white;
+  padding: 5px 10px;
+  width: 75px;
+  color: #343433;
+  font-weight: bold;
+  text-align: center;
+  height: 20px;
+}
+.small-table tr {
+  height: 20px;
+}
+.small-table td {
+  border-bottom: solid 2px #d1d2d4;
+  height: 20px !important;
+}
+.small-table th {
+  border-bottom: solid 2px #d1d2d4;
+}
+.small-table tbody td {
+  padding: 5px 10px;
+  font-style: normal;
+  text-align: center;
+}
+table tr td {
+  vertical-align: middle !important;
+}
+.template td,
+.template-linkage td {
+  vertical-align: top !important;
+}
+.pre {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}

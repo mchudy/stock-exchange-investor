@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using System.Web.Optimization
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -7,36 +8,37 @@
     <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <script src="~/Scripts/modernizr-2.6.2.js"></script>
+    @RenderSection("css", false)
+    @Styles.Render("~/Content/Common/common.css")
+    @Styles.Render("~/Content/Common/header.css")
+    @Styles.Render("~/Content/Common/main.css")
+    @Styles.Render("~/Content/Common/widget.css")
+    @Styles.Render("~/Content/Common/footer.css")
+    @Styles.Render("~/Content/datepicker.min.css")
+    @Styles.Render("~/Content/DataTables/buttons.dataTables.css")
+    @Styles.Render("~/Content/DataTables/fixedColumns.dataTables.css")
+    @Styles.Render("~/Content/DataTables/jquery.dataTables.css")
+    @Styles.Render("~/Content/DataTables/dataTables.bootstrap.css")
+    @Styles.Render("~/Content/DataTables/dataTables.tableTools.css")
+    @Styles.Render("~/Content/DataTables/jquery.multiselect.css")
+    @Styles.Render("~/Content/DataTables/jquery.multiselect.filter.css")
+    @Styles.Render("~/Content/DataTables/datatablefix.css")
+    @Styles.Render("~/Content/jquery-ui-1.10.3.custom.css")
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Stock Exchange", "Price", "Price", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav"></ul>
-            </div>
+    <div id="body-wrapper">
+        <div id="body">
+            @RenderBody()
         </div>
-    </div>
-
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
         <footer>
-            <p>&copy; Bartosz Woźniak @DateTime.Now.Year - Stock Exchange Analyzer </p>
+            <div class="div-footer">
+                <span>&copy; Bartosz Woźniak @DateTime.Now.Year - Stock Exchange Analyzer </span>
+            </div>
         </footer>
     </div>
-
     <script src="~/Scripts/jquery-1.10.2.min.js"></script>
-    <script src="~/Scripts/jquery.dataTables.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>
     <script src="~/Scripts/bootstrap-datepicker.js"></script>
-    @RenderSection("scripts", required: false)
+    @RenderSection("scripts", false)
 </body>
 </html>

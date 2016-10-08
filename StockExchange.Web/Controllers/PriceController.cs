@@ -23,7 +23,7 @@ namespace StockExchange.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult GetPrices(DataTableFilter<PriceFilter> dataTableMessage)
+        public ActionResult GetPrices(DataTableMessage<PriceFilter> dataTableMessage)
         {
             var searchMessage = DataTableMessageConverter.ToPagedFilterDefinition(dataTableMessage);
             var pagedList = _priceManager.Get(searchMessage);
@@ -38,7 +38,7 @@ namespace StockExchange.Web.Controllers
         }
 
         [HttpGet]
-        public ActionResult GetFilterValues(DataTableSimpleFilter<PriceFilter> message, string fieldName)
+        public ActionResult GetFilterValues(DataTableSimpleMessage<PriceFilter> message, string fieldName)
         {
             return new JsonNetResult(_priceManager.GetValues(DataTableMessageConverter.ToFilterDefinition(message), fieldName), typeof(PriceDto), fieldName);
         }

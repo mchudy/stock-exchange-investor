@@ -10,7 +10,7 @@ namespace StockExchange.Web.Helpers
 {
     public static class DataTableMessageConverter
     {
-        public static PagedFilterDefinition<T> ToPagedFilterDefinition<T>(DataTableFilter<T> dataTableMessage) where T : IFilter
+        public static PagedFilterDefinition<T> ToPagedFilterDefinition<T>(DataTableMessage<T> dataTableMessage) where T : IFilter
         {
             return new PagedFilterDefinition<T>
             {
@@ -30,7 +30,7 @@ namespace StockExchange.Web.Helpers
             };
         }
 
-        public static FilterDefinition<T> ToFilterDefinition<T>(DataTableSimpleFilter<T> dataTableMessage) where T : IFilter
+        public static FilterDefinition<T> ToFilterDefinition<T>(DataTableSimpleMessage<T> dataTableMessage) where T : IFilter
         {
             return new FilterDefinition<T>
             {
