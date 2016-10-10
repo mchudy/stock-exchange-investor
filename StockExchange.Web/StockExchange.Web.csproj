@@ -229,20 +229,21 @@
     <Content Include="fonts\Metric Web\MetricWeb-ThinItalic.eot" />
     <Content Include="fonts\Metric Web\MetricWeb-ThinItalic.ttf" />
     <Content Include="fonts\Metric Web\MetricWeb-ThinItalic.woff" />
-    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\DataTables\buttons.html5.js" />
     <Content Include="Scripts\DataTables\dataTables.buttons.js" />
     <Content Include="Scripts\DataTables\dataTables.fixedColumns.js" />
     <Content Include="Scripts\DataTables\dataTablesExtensions.js" />
     <Content Include="Scripts\dateFilter.js" />
     <Content Include="Scripts\generic.js" />
-    <Content Include="Scripts\jquery-1.10.2.js" />
-    <Content Include="Scripts\jquery-1.10.2.min.js" />
     <Content Include="Scripts\DataTables\jquery.dataTables.js" />
+    <Content Include="Scripts\jquery-1.11.3.js" />
     <Content Include="Scripts\jquery.multiselect\jquery-ui-1.10.3.custom.js" />
     <Content Include="Scripts\jquery.multiselect\jquery.multiselect.filter.js" />
     <Content Include="Scripts\jquery.multiselect\jquery.multiselect.min.js" />
-    <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\masonry.pkgd.min.js" />
     <Content Include="Scripts\notification.js" />
     <Content Include="Scripts\overlay.js" />
     <Content Include="Scripts\panelAccordion.js" />
@@ -274,7 +275,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="Scripts\jquery-1.10.2.min.map" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
