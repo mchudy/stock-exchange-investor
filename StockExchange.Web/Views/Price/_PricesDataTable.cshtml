@@ -12,14 +12,14 @@
         </label>
     </template>    
     <table id="grid" class="table table-striped table-hover table-bordered"
-           data-length-menu="[10, 30, 50, 100]"
-           data-page-length="10"
+           data-length-menu="[12, 25, 50, 100]"
+           data-page-length="12"
            data-auto-width="true"
-           data-scroll-y="400px"
+           data-scroll-y="750px"
            data-scroll-x="true"
            data-scroll-collapse="true"
            data-processing="true"
-           data-order='[[0, "desc"]]'
+           data-order='[[1, "desc"]]'
            data-server-side="true"
            data-ajax-url="@Url.Action("GetPrices")"
            data-filter-ajax-url="@Url.Action("GetFilterValues")"
@@ -33,7 +33,6 @@
             <th class="width-small" data-column="HighPrice">@Html.DisplayNameFor(i => Model.Prices.FirstOrDefault().HighPrice)</th>
             <th class="width-small" data-column="LowPrice">@Html.DisplayNameFor(i => Model.Prices.FirstOrDefault().LowPrice)</th>
             <th class="width-small" data-column="Volume">@Html.DisplayNameFor(i => Model.Prices.FirstOrDefault().Volume)</th>
-            <th class="width-small" data-column="Id">@Html.DisplayNameFor(i => Model.Prices.FirstOrDefault().Id)</th>
         </tr>
         </thead>
         <tbody>

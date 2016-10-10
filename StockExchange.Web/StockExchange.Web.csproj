@@ -254,15 +254,18 @@
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\PriceController.cs" />
-    <Compile Include="Helpers\DataTableFilterConverter.cs" />
+    <Compile Include="Helpers\CustomFormatResolver.cs" />
+    <Compile Include="Helpers\DataTableMessageConverter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\DisplayFormatConverter.cs" />
+    <Compile Include="Helpers\EnumDisplayFormatConverter.cs" />
     <Compile Include="Helpers\HtmlExtension.cs" />
     <Compile Include="Helpers\JsonNetResult.cs" />
-    <Compile Include="Models\DataTableFilter.cs" />
+    <Compile Include="Models\DataTableMessage.cs" />
     <Compile Include="Models\DataTableResponse.cs" />
-    <Compile Include="Models\DataTableSimpleFilter.cs" />
+    <Compile Include="Models\DataTableSimpleMessage.cs" />
     <Compile Include="Models\PriceViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

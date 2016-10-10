@@ -18,8 +18,7 @@ namespace StockExchange.Web.Models
         {
             public int Column { get; set; }
             public string Dir { get; set; }
-
-            public bool Desc { get { return Dir == "desc"; } }
+            public bool Desc => Dir == "desc";
         }
 
         public class DataTableMessageSearch
@@ -29,6 +28,7 @@ namespace StockExchange.Web.Models
         }
 
         public int Draw { get; set; }
+
         public int Start { get; set; }
 
         public int Length { get; set; }
@@ -38,14 +38,12 @@ namespace StockExchange.Web.Models
         public List<DataTableMessageColumn> Columns { get; set; }
 
         public List<DataTableMessageOrder> Order { get; set; }
-
     }
 
     public class DataTableMessage<T> : DataTableMessage where T : IFilter
     {
         public T Filter { get; set; }
     }
-
 }
 
 

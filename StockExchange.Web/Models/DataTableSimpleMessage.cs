@@ -11,7 +11,6 @@ namespace StockExchange.Web.Models
         }
 
         public DataTableMessageSearch Search { get; set; }
-
     }
 
     public class DataTableSimpleMessage<T> : DataTableSimpleMessage where T : IFilter

@@ -2,15 +2,14 @@
 using System.Linq;
 using Newtonsoft.Json;
 using StockExchange.Business.Models;
-using StockExchange.Common;
 using StockExchange.Common.LinqUtils;
 using StockExchange.Web.Models;
 
 namespace StockExchange.Web.Helpers
 {
-    public static class DataTableMessageConverter
+    internal static class DataTableMessageConverter
     {
-        public static PagedFilterDefinition<T> ToPagedFilterDefinition<T>(DataTableMessage<T> dataTableMessage) where T : IFilter
+        internal static PagedFilterDefinition<T> ToPagedFilterDefinition<T>(DataTableMessage<T> dataTableMessage) where T : IFilter
         {
             return new PagedFilterDefinition<T>
             {
@@ -30,7 +29,7 @@ namespace StockExchange.Web.Helpers
             };
         }
 
-        public static FilterDefinition<T> ToFilterDefinition<T>(DataTableSimpleMessage<T> dataTableMessage) where T : IFilter
+        internal static FilterDefinition<T> ToFilterDefinition<T>(DataTableSimpleMessage<T> dataTableMessage) where T : IFilter
         {
             return new FilterDefinition<T>
             {

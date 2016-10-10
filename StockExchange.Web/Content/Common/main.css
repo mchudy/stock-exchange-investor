@@ -262,7 +262,7 @@ select:active {
   padding: 0 50px;
   margin: 25px auto;
     min-width: 1295px;
-    max-width: 1795px;
+    max-width: 1709px;
 }
 main.content {
   box-sizing: border-box;
@@ -451,7 +451,9 @@ main.content {
 }
 /* fixed column widths */
 .width-big {
-  width: 300px;
+  min-width: 300px !important;
+  max-width: 300px !important;
+  width: 300px !important;
 }
 .width-normal {
   min-width: 200px !important;

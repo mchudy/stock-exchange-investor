@@ -12,13 +12,6 @@
     </section>
 </div>
 
-<div class="modal fade" id="modalEdit" tabindex="-1" role="dialog" aria-labelledby="modalEditLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-        </div>
-    </div>
-</div>
-
 @section scripts
 {
     @Scripts.Render("~/Scripts/jquery-1.11.3.js")
@@ -42,4 +35,25 @@
     @Scripts.Render("~/Scripts/DataTables/dataTables.fixedColumns.js")
     @Scripts.Render("~/Scripts/DataTables/dataTablesExtensions.js")
     @Scripts.Render("~/Scripts/price.js")
+}
+
+@section css
+{
+    @Styles.Render("~/Content/Site.css")
+    @Styles.Render("~/Content/bootstrap.min.css")
+    @Styles.Render("~/Content/Common/common.css")
+    @Styles.Render("~/Content/Common/header.css")
+    @Styles.Render("~/Content/Common/main.css")
+    @Styles.Render("~/Content/Common/widget.css")
+    @Styles.Render("~/Content/Common/footer.css")
+    @Styles.Render("~/Content/datepicker.min.css")
+    @Styles.Render("~/Content/DataTables/buttons.dataTables.css")
+    @Styles.Render("~/Content/DataTables/fixedColumns.dataTables.css")
+    @Styles.Render("~/Content/DataTables/jquery.dataTables.css")
+    @Styles.Render("~/Content/DataTables/dataTables.bootstrap.css")
+    @Styles.Render("~/Content/DataTables/dataTables.tableTools.css")
+    @Styles.Render("~/Content/DataTables/jquery.multiselect.css")
+    @Styles.Render("~/Content/DataTables/jquery.multiselect.filter.css")
+    @Styles.Render("~/Content/DataTables/datatablefix.css")
+    @Styles.Render("~/Content/jquery-ui-1.10.3.custom.css")
 }
