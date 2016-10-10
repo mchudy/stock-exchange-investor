@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using StockExchange.Common;
 using StockExchange.Common.LinqUtils;
 
 namespace StockExchange.Business.Models

@@ -59,11 +59,8 @@
     <Compile Include="Factory.cs" />
     <Compile Include="IFactory.cs" />
     <Compile Include="LinqUtils\OrderBy.cs" />
-    <Compile Include="Extensions\PagedListExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Extensions\QueryableExtension.cs" />
     <Compile Include="LinqUtils\SearchBy.cs" />
-    <Compile Include="LinqUtils\SortOrderAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

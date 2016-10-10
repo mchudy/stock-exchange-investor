@@ -2,15 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace StockExchange.Common.Extensions
+namespace StockExchange.Business.Extensions
 {
     public static class PagedListExtension
     {
-        public static PagedList<T> ToPagedList<T>(this IEnumerable<T> enumerable, int skip, int take)
-        {
-            return new PagedList<T>(enumerable, skip, take);
-        }
-
         public static PagedList<T> ToPagedList<T>(this IQueryable<T> queryable, int skip, int take)
         {
             return new PagedList<T>(queryable, skip, take);
@@ -31,13 +26,6 @@ namespace StockExchange.Common.Extensions
         {
             Skip = skip;
             Take = take;
-        }
-
-        public PagedList(IEnumerable<T> enumerable, int skip, int take) : this(skip, take)
-        {
-            var enumerable1 = enumerable as T[] ?? enumerable.ToArray();
-            TotalCount = enumerable1.Length;
-            _list = enumerable1.Skip(skip).Take(take).ToList();
         }
 
         public PagedList(IQueryable<T> enumerable, int skip, int take) : this(skip, take)
