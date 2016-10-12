@@ -22,12 +22,12 @@
                 if (dateType === "month") {
                     return {
                         startDate: new Date(date.getFullYear(), date.getMonth(), 1),
-                        endDate: new Date(date.getFullYear(), date.getMonth() + 1, 0) // last day of month
+                        endDate: new Date(date.getFullYear(), date.getMonth() + 1, 0) 
                     };
                 } else {
                     return {
-                        startDate: new Date(date.getFullYear() - 1, 10, 1), // 1 Nov fiscal year start
-                        endDate: new Date(date.getFullYear(), 9, 31) // 31 Oct fiscal year end
+                        startDate: new Date(date.getFullYear() - 1, 0, 1), 
+                        endDate: new Date(date.getFullYear(), 11, 31)
                     }
                 }
             }
@@ -44,11 +44,6 @@
 
         var freezeEvents = false;
 
-        var yearStartDate = options.startDate;
-        if (yearStartDate.getMonth() >= 10) {
-            yearStartDate = new Date(yearStartDate.getFullYear() + 1, 0, 1);
-        }
-
         var filterTypeOptions = {
             years: {
                 format: "yyyy",
@@ -56,7 +51,7 @@
                 minViewMode: "years",
                 immediateUpdates: true,
                 autoclose: true,
-                startDate: yearStartDate
+                startDate: options.startDate
             },
             months: {
                 format: "mm/yyyy",
@@ -68,9 +63,7 @@
             }
         };
 
-
-
-        $("<select id=\"filterType\"><option value=\"month\">Monthly</option><option value=\"year\">FY</option></select><input type=\"text\" id=\"filterValue\"/>").appendTo(that);
+        $("<select id=\"filterType\"><option value=\"month\">Monthly</option><option value=\"year\">Yearly</option></select><input type=\"text\" id=\"filterValue\"/>").appendTo(that);
         $("#filterValue", that).datepicker(filterTypeOptions.months);
         $("#filterValue", that).datepicker("setDate", dateFilter.getDate());
 

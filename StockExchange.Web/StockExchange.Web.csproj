@@ -291,7 +291,7 @@
     <Content Include="Scripts\DataTables\dataTables.semanticui.min.js" />
     <Content Include="Scripts\DataTables\dataTables.uikit.js" />
     <Content Include="Scripts\DataTables\dataTables.uikit.min.js" />
-    <Content Include="Scripts\dataTablesExtensions.js" />
+    <Content Include="Scripts\Defined\dataTablesExtensions.js" />
     <Content Include="Scripts\DataTables\jquery.dataTables.min.js" />
     <Content Include="Scripts\DataTables\responsive.bootstrap.js" />
     <Content Include="Scripts\DataTables\responsive.bootstrap.min.js" />
@@ -303,8 +303,7 @@
     <Content Include="Scripts\DataTables\responsive.jqueryui.min.js" />
     <Content Include="Scripts\DataTables\responsive.semanticui.js" />
     <Content Include="Scripts\DataTables\responsive.semanticui.min.js" />
-    <Content Include="Scripts\dateFilter.js" />
-    <Content Include="Scripts\generic.js" />
+    <Content Include="Scripts\Defined\dateFilter.js" />
     <Content Include="Scripts\DataTables\jquery.dataTables.js" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
@@ -397,10 +396,7 @@
     <Content Include="Scripts\locales\bootstrap-datepicker.zh-CN.min.js" />
     <Content Include="Scripts\locales\bootstrap-datepicker.zh-TW.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
-    <Content Include="Scripts\notification.js" />
-    <Content Include="Scripts\overlay.js" />
-    <Content Include="Scripts\panelAccordion.js" />
-    <Content Include="Scripts\price.js" />
+    <Content Include="Scripts\Defined\price.js" />
     <Content Include="Web.config" />
     <Content Include="Views\Price\_PricesDataTable.cshtml" />
   </ItemGroup>
