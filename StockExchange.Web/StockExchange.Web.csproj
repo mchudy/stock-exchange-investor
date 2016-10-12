@@ -154,8 +154,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\bootstrap.css" />
-    <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Common\footer.css" />
     <Content Include="Content\DataTables\buttons.dataTables.css" />
     <Content Include="Content\DataTables\datatablefix.css" />
@@ -219,7 +217,6 @@
     <Content Include="Content\themes\base\theme.css" />
     <Content Include="Content\themes\base\tooltip.css" />
     <Content Include="favicon.ico" />
-    <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\bootstrap-datepicker.js" />
     <Content Include="Connections.config">
@@ -268,8 +265,6 @@
     <Content Include="fonts\Metric Web\MetricWeb-ThinItalic.ttf" />
     <Content Include="fonts\Metric Web\MetricWeb-ThinItalic.woff" />
     <Content Include="Scripts\bootstrap-datepicker.min.js" />
-    <Content Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\DataTables\autoFill.bootstrap.js" />
     <Content Include="Scripts\DataTables\autoFill.bootstrap.min.js" />
     <Content Include="Scripts\DataTables\autoFill.bootstrap4.js" />
@@ -346,9 +341,6 @@
     <Content Include="Scripts\DataTables\responsive.semanticui.min.js" />
     <Content Include="Scripts\Defined\dateFilter.js" />
     <Content Include="Scripts\DataTables\jquery.dataTables.js" />
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Scripts\jquery-1.12.4.min.map" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <None Include="Scripts\jquery-1.12.4.intellisense.js" />
@@ -364,15 +356,8 @@
     <Content Include="Scripts\jquery-ui-multiselect-widget\jquery.multiselect.filter.min.js" />
     <Content Include="Scripts\jquery-ui-multiselect-widget\jquery.multiselect.js" />
     <Content Include="Scripts\jquery-ui-multiselect-widget\jquery.multiselect.min.js" />
-    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.1.1.min.map" />
-    <None Include="Scripts\jquery.validate-vsdoc.js" />
-    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
-    <Content Include="Scripts\jquery.validate.js" />
-    <Content Include="Scripts\jquery.validate.min.js" />
-    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
-    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\locales\bootstrap-datepicker.ar.min.js" />
     <Content Include="Scripts\locales\bootstrap-datepicker.az.min.js" />
     <Content Include="Scripts\locales\bootstrap-datepicker.bg.min.js" />
