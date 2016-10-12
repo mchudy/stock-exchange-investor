@@ -317,9 +317,11 @@
     <Content Include="Scripts\jquery-3.1.1.min.js" />
     <Content Include="Scripts\jquery-3.1.1.slim.js" />
     <Content Include="Scripts\jquery-3.1.1.slim.min.js" />
-    <Content Include="Scripts\jquery.multiselect\jquery-ui-1.10.3.custom.js" />
-    <Content Include="Scripts\jquery.multiselect\jquery.multiselect.filter.js" />
-    <Content Include="Scripts\jquery.multiselect\jquery.multiselect.min.js" />
+    <Content Include="Scripts\jquery-ui-multiselect-widget\jquery-ui-1.10.3.custom.js" />
+    <Content Include="Scripts\jquery-ui-multiselect-widget\jquery.multiselect.filter.js" />
+    <Content Include="Scripts\jquery-ui-multiselect-widget\jquery.multiselect.filter.min.js" />
+    <Content Include="Scripts\jquery-ui-multiselect-widget\jquery.multiselect.js" />
+    <Content Include="Scripts\jquery-ui-multiselect-widget\jquery.multiselect.min.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.1.1.min.map" />
