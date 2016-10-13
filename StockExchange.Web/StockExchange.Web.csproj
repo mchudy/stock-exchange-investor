@@ -182,11 +182,20 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\DataTables\buttons.dataTables.css" />
-    <Content Include="Content\DataTables\datatablefix.css" />
+    <Content Include="Content\DataTables\dataTable.bootstrap.css">
+      <DependentUpon>dataTables.bootstrap.scss</DependentUpon>
+    </Content>
+    <Content Include="Content\DataTables\dataTable.bootstrap.min.css">
+      <DependentUpon>dataTable.bootstrap.css</DependentUpon>
+    </Content>
+    <Content Include="Content\DataTables\dataTables.bootstrap.min.css">
+      <DependentUpon>dataTables.bootstrap.css</DependentUpon>
+    </Content>
+    <Content Include="Content\DataTables\jquery.dataTables.min.css">
+      <DependentUpon>jquery.dataTables.css</DependentUpon>
+    </Content>
+    <Content Include="Content\Defined\datatablefix.css" />
     <Content Include="Content\DataTables\dataTables.bootstrap.css" />
-    <Content Include="Content\DataTables\dataTables.tableTools.css" />
-    <Content Include="Content\DataTables\fixedColumns.dataTables.css" />
     <Content Include="Content\Defined\main.css" />
     <Content Include="Content\Images\loader.gif" />
     <Content Include="Content\DataTables\jquery.dataTables.css" />
@@ -382,6 +391,8 @@
     </None>
     <Content Include="Content\bootstrap-datepicker\build.less" />
     <Content Include="Content\bootstrap-datepicker\build3.less" />
+    <Content Include="Content\DataTables\jquery.dataTables.scss" />
+    <Content Include="Content\DataTables\dataTables.bootstrap.scss" />
     <None Include="Scripts\jquery-1.12.4.intellisense.js" />
     <Content Include="Scripts\jquery-1.12.4.js" />
     <Content Include="Scripts\jquery-1.12.4.min.js" />

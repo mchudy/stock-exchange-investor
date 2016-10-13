@@ -14,5 +14,17 @@
   {
     "outputFile": "Content/bootstrap-datepicker/build3.css",
     "inputFile": "Content/bootstrap-datepicker/build3.less"
+  },
+  {
+    "outputFile": "Content/DataTables/jquery.dataTables.css",
+    "inputFile": "Content/DataTables/jquery.dataTables.scss"
+  },
+  {
+    "outputFile": "Content/DataTables/dataTable.bootstrap.css",
+    "inputFile": "Content/DataTables/dataTable.bootstrap.scss"
+  },
+  {
+    "outputFile": "Content/DataTables/dataTables.bootstrap.css",
+    "inputFile": "Content/DataTables/dataTables.bootstrap.scss"
   }
 ]
