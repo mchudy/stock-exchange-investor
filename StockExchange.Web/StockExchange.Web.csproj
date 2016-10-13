@@ -154,6 +154,30 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\bootstrap-datepicker\build.css">
+      <DependentUpon>build.less</DependentUpon>
+    </Content>
+    <Content Include="Content\bootstrap-datepicker\build.min.css">
+      <DependentUpon>build.css</DependentUpon>
+    </Content>
+    <Content Include="Content\bootstrap-datepicker\build3.css">
+      <DependentUpon>build3.less</DependentUpon>
+    </Content>
+    <Content Include="Content\bootstrap-datepicker\build3.min.css">
+      <DependentUpon>build3.css</DependentUpon>
+    </Content>
+    <Content Include="Content\bootstrap-datepicker\datepicker.css">
+      <DependentUpon>datepicker.less</DependentUpon>
+    </Content>
+    <Content Include="Content\bootstrap-datepicker\datepicker.min.css">
+      <DependentUpon>datepicker.css</DependentUpon>
+    </Content>
+    <Content Include="Content\bootstrap-datepicker\datepicker3.css">
+      <DependentUpon>datepicker3.less</DependentUpon>
+    </Content>
+    <Content Include="Content\bootstrap-datepicker\datepicker3.min.css">
+      <DependentUpon>datepicker3.css</DependentUpon>
+    </Content>
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -163,7 +187,6 @@
     <Content Include="Content\DataTables\dataTables.bootstrap.css" />
     <Content Include="Content\DataTables\dataTables.tableTools.css" />
     <Content Include="Content\DataTables\fixedColumns.dataTables.css" />
-    <Content Include="Content\Defined\datepicker.min.css" />
     <Content Include="Content\Defined\main.css" />
     <Content Include="Content\Images\loader.gif" />
     <Content Include="Content\DataTables\jquery.dataTables.css" />
@@ -351,6 +374,14 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="Content\bootstrap-datepicker\datepicker.less" />
+    <Content Include="Content\bootstrap-datepicker\datepicker3.less" />
+    <None Include="compilerconfig.json" />
+    <None Include="compilerconfig.json.defaults">
+      <DependentUpon>compilerconfig.json</DependentUpon>
+    </None>
+    <Content Include="Content\bootstrap-datepicker\build.less" />
+    <Content Include="Content\bootstrap-datepicker\build3.less" />
     <None Include="Scripts\jquery-1.12.4.intellisense.js" />
     <Content Include="Scripts\jquery-1.12.4.js" />
     <Content Include="Scripts\jquery-1.12.4.min.js" />

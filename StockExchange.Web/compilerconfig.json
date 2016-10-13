@@ -1,0 +1,18 @@
+﻿[
+  {
+    "outputFile": "Content/bootstrap-datepicker/build.css",
+    "inputFile": "Content/bootstrap-datepicker/build.less"
+  },
+  {
+    "outputFile": "Content/bootstrap-datepicker/datepicker.css",
+    "inputFile": "Content/bootstrap-datepicker/datepicker.less"
+  },
+  {
+    "outputFile": "Content/bootstrap-datepicker/datepicker3.css",
+    "inputFile": "Content/bootstrap-datepicker/datepicker3.less"
+  },
+  {
+    "outputFile": "Content/bootstrap-datepicker/build3.css",
+    "inputFile": "Content/bootstrap-datepicker/build3.less"
+  }
+]
