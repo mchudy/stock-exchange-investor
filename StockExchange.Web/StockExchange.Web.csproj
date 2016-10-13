@@ -158,27 +158,21 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\Common\footer.css" />
     <Content Include="Content\DataTables\buttons.dataTables.css" />
     <Content Include="Content\DataTables\datatablefix.css" />
     <Content Include="Content\DataTables\dataTables.bootstrap.css" />
     <Content Include="Content\DataTables\dataTables.tableTools.css" />
     <Content Include="Content\DataTables\fixedColumns.dataTables.css" />
-    <Content Include="Content\datepicker.min.css" />
-    <Content Include="Content\Common\common.css" />
-    <Content Include="Content\Common\header.css" />
-    <Content Include="Content\Common\main.css" />
-    <Content Include="Content\Common\widget.css" />
+    <Content Include="Content\Defined\datepicker.min.css" />
+    <Content Include="Content\Defined\main.css" />
     <Content Include="Content\Images\loader.gif" />
-    <Content Include="Content\jquery-ui-1.10.3.custom.css" />
     <Content Include="Content\DataTables\jquery.dataTables.css" />
-    <Content Include="Content\DataTables\jquery.multiselect.css" />
-    <Content Include="Content\DataTables\jquery.multiselect.filter.css" />
+    <Content Include="Content\jquery-ui-multiselect-widget\jquery.multiselect.css" />
+    <Content Include="Content\jquery-ui-multiselect-widget\jquery.multiselect.filter.css" />
     <Content Include="Content\Images\sort_asc.png" />
     <Content Include="Content\Images\sort_both.png" />
     <Content Include="Content\Images\sort_desc.png" />
     <Content Include="Content\Images\ui-icons_ef8c08_256x240.png" />
-    <Content Include="Content\Site.css" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
     <Content Include="Content\themes\base\autocomplete.css" />
@@ -461,6 +455,7 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Price\Price.cshtml" />
+    <Content Include="Views\Shared\_header.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
