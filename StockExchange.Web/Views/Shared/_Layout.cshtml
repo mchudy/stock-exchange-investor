@@ -1,9 +1,17 @@
-﻿<!DOCTYPE html>
+﻿@using System.Web.Optimization
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Stock Exchange Application</title>
+
+    @Styles.Render("~/bower_components/bootstrap/dist/css/bootstrap.min.css")
+    @Styles.Render("~/bower_components/jquery-ui/themes/base/jquery-ui.min.css")
+
+    @Styles.Render("~/Content/css/main.css")
+    @RenderSection("css", false)
+
 </head>
 <body>
     <div id="body-wrapper">
@@ -11,10 +19,10 @@
             @RenderBody()
         </div>
         <footer>
-               &copy; Bartosz Woźniak @DateTime.Now.Year - Stock Exchange Analyzer 
+            &copy; Bartosz Woźniak @DateTime.Now.Year - Stock Exchange Analyzer
         </footer>
     </div>
-    @RenderSection("scripts", false) 
-    @RenderSection("css", false)
+    @Scripts.Render("~/bower_components/jquery/dist/jquery.min.js")
+    @RenderSection("scripts", false)
 </body>
 </html>

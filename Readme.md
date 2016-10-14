@@ -40,3 +40,6 @@ Bez argumentu puszcza na localdb, z argumentem `prod` na produkcyjną bazę, mo�
 
 Potem się dopisze skrypt do deploymentu, żeby migracje zawsze szły razem z zipem i ustawi connection stringi na azurze/octo, żeby ich nie
 trzymać w repo i żeby się nie mieszały.
+
+## Frontend
+Biblioteki frontendowe instalujemy przez **Bowera**. Można to zrobić z konsoli `bower install --save nazwa_pakietu`, dopisując do pliku `bower.json` (jest Intellisense) lub z VS (prawym na bower.json -> Manage Bower Packages).

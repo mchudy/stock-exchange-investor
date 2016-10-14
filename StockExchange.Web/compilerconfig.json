@@ -1,38 +1,10 @@
 ﻿[
   {
-    "outputFile": "Content/bootstrap-datepicker/build.css",
-    "inputFile": "Content/bootstrap-datepicker/build.less"
+    "outputFile": "Content/css/dataTableFix.css",
+    "inputFile": "Content/css/dataTableFix.less"
   },
   {
-    "outputFile": "Content/bootstrap-datepicker/datepicker.css",
-    "inputFile": "Content/bootstrap-datepicker/datepicker.less"
-  },
-  {
-    "outputFile": "Content/bootstrap-datepicker/datepicker3.css",
-    "inputFile": "Content/bootstrap-datepicker/datepicker3.less"
-  },
-  {
-    "outputFile": "Content/bootstrap-datepicker/build3.css",
-    "inputFile": "Content/bootstrap-datepicker/build3.less"
-  },
-  {
-    "outputFile": "Content/DataTables/jquery.dataTables.css",
-    "inputFile": "Content/DataTables/jquery.dataTables.scss"
-  },
-  {
-    "outputFile": "Content/DataTables/dataTable.bootstrap.css",
-    "inputFile": "Content/DataTables/dataTable.bootstrap.scss"
-  },
-  {
-    "outputFile": "Content/DataTables/dataTables.bootstrap.css",
-    "inputFile": "Content/DataTables/dataTables.bootstrap.scss"
-  },
-  {
-    "outputFile": "Content/Defined/dataTableFix.css",
-    "inputFile": "Content/Defined/dataTableFix.less"
-  },
-  {
-    "outputFile": "Content/Defined/main.css",
-    "inputFile": "Content/Defined/main.less"
+    "outputFile": "Content/css/main.css",
+    "inputFile": "Content/css/main.less"
   }
 ]
