@@ -201,7 +201,12 @@
     <Content Include="Content\Defined\dataTableFix.min.css">
       <DependentUpon>dataTableFix.css</DependentUpon>
     </Content>
-    <Content Include="Content\Defined\main.css" />
+    <Content Include="Content\Defined\main.css">
+      <DependentUpon>main.less</DependentUpon>
+    </Content>
+    <Content Include="Content\Defined\main.min.css">
+      <DependentUpon>main.css</DependentUpon>
+    </Content>
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\Images\loader.gif" />
     <Content Include="Content\DataTables\jquery.dataTables.css" />
@@ -475,6 +480,7 @@
     <Content Include="Content\bootstrap\badges.less" />
     <Content Include="Content\bootstrap\alerts.less" />
     <Content Include="Content\Defined\dataTableFix.less" />
+    <Content Include="Content\Defined\main.less" />
     <None Include="Scripts\jquery-1.12.4.intellisense.js" />
     <Content Include="Scripts\jquery-1.12.4.js" />
     <Content Include="Scripts\jquery-1.12.4.min.js" />
