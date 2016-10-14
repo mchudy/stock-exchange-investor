@@ -1,10 +1,6 @@
 ﻿using Autofac;
 using Autofac.Integration.Mvc;
 using log4net;
-using StockExchange.Business.Business;
-using StockExchange.DataAccess.IRepositories;
-using StockExchange.DataAccess.Models;
-using StockExchange.DataAccess.Repositories;
 using System;
 using System.Web.Mvc;
 using System.Web.Routing;
@@ -21,17 +17,14 @@ namespace StockExchange.Web
             RouteConfig.RegisterRoutes(RouteTable.Routes);
 
             var builder = new ContainerBuilder();
-            builder.RegisterControllers(typeof(MvcApplication).Assembly);
-            builder.RegisterType<GenericRepository<Company>>().As<IRepository<Company>>();
-            builder.RegisterType<GenericRepository<Price>>().As<IRepository<Price>>();
-            builder.RegisterType<PriceManager>().As<IPriceManager>();
+            builder.RegisterAssemblyModules(typeof(MvcApplication).Assembly);
             var container = builder.Build();
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
 
             log4net.Config.XmlConfigurator.Configure();
         }
 
-        void Application_Error(object sender, EventArgs e)
+        protected void Application_Error(object sender, EventArgs e)
         {
             Exception ex = Server.GetLastError().GetBaseException();
             log.Error("App_Error", ex);

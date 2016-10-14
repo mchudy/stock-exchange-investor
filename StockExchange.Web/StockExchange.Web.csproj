@@ -1897,6 +1897,7 @@
     <Compile Include="Helpers\EnumDisplayFormatConverter.cs" />
     <Compile Include="Helpers\HtmlExtension.cs" />
     <Compile Include="Helpers\JsonNetResult.cs" />
+    <Compile Include="Infrastructure\AppModule.cs" />
     <Compile Include="Models\DataTableMessage.cs" />
     <Compile Include="Models\DataTableResponse.cs" />
     <Compile Include="Models\DataTableSimpleMessage.cs" />
