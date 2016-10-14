@@ -212,10 +212,15 @@
     <Content Include="Content\Defined\main.min.css">
       <DependentUpon>main.css</DependentUpon>
     </Content>
-    <Content Include="Content\Images\loader.gif" />
-    <Content Include="Content\Images\sort_asc.png" />
-    <Content Include="Content\Images\sort_both.png" />
-    <Content Include="Content\Images\sort_desc.png" />
+    <Content Include="Content\Images\sort_asc.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Images\sort_both.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Images\sort_desc.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\jquery-ui-multiselect-widget\jquery.multiselect.css" />
     <Content Include="Content\jquery-ui-multiselect-widget\jquery.multiselect.filter.css" />
     <Content Include="Content\themes\base\accordion.css" />
