@@ -1,8 +1,8 @@
-﻿using System.Web.Mvc;
-using StockExchange.Business.Business;
+﻿using StockExchange.Business.Business;
 using StockExchange.Business.Models;
 using StockExchange.Web.Helpers;
 using StockExchange.Web.Models;
+using System.Web.Mvc;
 
 namespace StockExchange.Web.Controllers
 {
@@ -10,11 +10,11 @@ namespace StockExchange.Web.Controllers
     {
         private readonly IPriceManager _priceManager;
 
-        public  PriceController(IPriceManager priceManager)
+        public PriceController(IPriceManager priceManager)
         {
             _priceManager = priceManager;
         }
-        
+
         [HttpGet]
         public ActionResult Price()
         {
