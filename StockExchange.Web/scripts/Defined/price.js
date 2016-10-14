@@ -23,14 +23,11 @@
     var columnFilters = $("#grid-container").DataTableColumnFilters({
         getValuesUrlCallback: getFilterValuesUrl
     });
+    columnFilters.init();
     var dataTable = $("#grid").DataTable(
     {
         "columns": columns,
         "columnDefs": columnDefs,
-        "fixedColumns": {
-            "drawCallback": function () { columnFilters.init() },
-            "leftColumns": 1
-        },
         "ajax": {
             "url": ajaxUrl,
             "contentType": "application/json",
@@ -56,9 +53,6 @@
         columnFilters.clear();
         dataTable.draw();
     }
-    $("#reset").on("click", function () {
-        columnFilters.clear();
-    });
     $("#grid-container [type=search]").on("change", function () {
         columnFilters.clear();
     });

@@ -4,9 +4,9 @@
     ViewBag.Title = "Prices";
 }
 <div class="main-container">
-    <h1>Prices</h1>
-    <section class="panel panel-default panel-accordion">
-        <div class="panel-body panel-content">
+    <section class="panel panel-default">
+        <div class="panel-heading">Prices</div>
+        <div class="panel-body ">
             @Html.Partial("_PricesDataTable")
         </div>
     </section>
@@ -28,15 +28,13 @@
 
 @section css
 {
-    @Styles.Render("~/Content/bootstrap.css")
+    @Styles.Render("~/Content/bootstrap.css") 
+    @Styles.Render("~/Content/bootstrap-datepicker/datepicker3.css")
     @Styles.Render("~/Content/themes/base/jquery-ui.css")
     @Styles.Render("~/Content/jquery-ui-multiselect-widget/jquery.multiselect.css")
     @Styles.Render("~/Content/jquery-ui-multiselect-widget/jquery.multiselect.filter.css")
-    @Styles.Render("~/Content/bootstrap-datepicker/datepicker3.css")
     @Styles.Render("~/Content/DataTables/jquery.dataTables.css")
-
+    @Styles.Render("~/Content/DataTables/dataTables.bootstrap.css")
     @Styles.Render("~/Content/Defined/main.css")
     @Styles.Render("~/Content/Defined/dataTableFix.css")
-
-    @Styles.Render("~/Content/DataTables/dataTables.bootstrap.css")
 }

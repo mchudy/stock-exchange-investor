@@ -188,13 +188,18 @@
     <Content Include="Content\DataTables\dataTable.bootstrap.min.css">
       <DependentUpon>dataTable.bootstrap.css</DependentUpon>
     </Content>
+    <Content Include="Content\DataTables\dataTables.bootstrap.css">
+      <DependentUpon>dataTables.bootstrap.scss</DependentUpon>
+    </Content>
     <Content Include="Content\DataTables\dataTables.bootstrap.min.css">
       <DependentUpon>dataTables.bootstrap.css</DependentUpon>
+    </Content>
+    <Content Include="Content\DataTables\jquery.dataTables.css">
+      <DependentUpon>jquery.dataTables.scss</DependentUpon>
     </Content>
     <Content Include="Content\DataTables\jquery.dataTables.min.css">
       <DependentUpon>jquery.dataTables.css</DependentUpon>
     </Content>
-    <Content Include="Content\DataTables\dataTables.bootstrap.css" />
     <Content Include="Content\Defined\dataTableFix.css">
       <DependentUpon>dataTableFix.less</DependentUpon>
     </Content>
@@ -208,7 +213,6 @@
       <DependentUpon>main.css</DependentUpon>
     </Content>
     <Content Include="Content\Images\loader.gif" />
-    <Content Include="Content\DataTables\jquery.dataTables.css" />
     <Content Include="Content\Images\sort_asc.png" />
     <Content Include="Content\Images\sort_both.png" />
     <Content Include="Content\Images\sort_desc.png" />
@@ -256,6 +260,7 @@
     <Content Include="Content\themes\base\theme.css" />
     <Content Include="Content\themes\base\tooltip.css" />
     <Content Include="favicon.ico" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\bootstrap-datepicker.js" />
     <Content Include="Connections.config">
@@ -428,6 +433,10 @@
     <Content Include="Content\bootstrap\alerts.less" />
     <Content Include="Content\Defined\dataTableFix.less" />
     <Content Include="Content\Defined\main.less" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <None Include="Scripts\jquery-1.12.4.intellisense.js" />
     <Content Include="Scripts\jquery-1.12.4.js" />
     <Content Include="Scripts\jquery-1.12.4.min.js" />
