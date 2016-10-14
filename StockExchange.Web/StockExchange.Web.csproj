@@ -182,12 +182,6 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\DataTables\dataTable.bootstrap.css">
-      <DependentUpon>dataTables.bootstrap.scss</DependentUpon>
-    </Content>
-    <Content Include="Content\DataTables\dataTable.bootstrap.min.css">
-      <DependentUpon>dataTable.bootstrap.css</DependentUpon>
-    </Content>
     <Content Include="Content\DataTables\dataTables.bootstrap.css">
       <DependentUpon>dataTables.bootstrap.scss</DependentUpon>
     </Content>
@@ -442,6 +436,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <None Include="Properties\PublishProfiles\MiniStockExchange - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.12.4.intellisense.js" />
     <Content Include="Scripts\jquery-1.12.4.js" />
     <Content Include="Scripts\jquery-1.12.4.min.js" />
@@ -546,7 +541,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Price\Price.cshtml" />
-    <Content Include="Views\Shared\_header.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
