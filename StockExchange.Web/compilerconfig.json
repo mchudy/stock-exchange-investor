@@ -26,5 +26,9 @@
   {
     "outputFile": "Content/DataTables/dataTables.bootstrap.css",
     "inputFile": "Content/DataTables/dataTables.bootstrap.scss"
+  },
+  {
+    "outputFile": "Content/Defined/dataTableFix.css",
+    "inputFile": "Content/Defined/dataTableFix.less"
   }
 ]
