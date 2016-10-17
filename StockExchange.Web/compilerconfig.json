@@ -1,10 +1,12 @@
 ﻿[
   {
     "outputFile": "Content/css/dataTableFix.css",
-    "inputFile": "Content/css/dataTableFix.less"
+    "inputFile": "Content/css/dataTableFix.less",
+    "includeInProject": true
   },
   {
     "outputFile": "Content/css/main.css",
-    "inputFile": "Content/css/main.less"
+    "inputFile": "Content/css/main.less",
+    "includeInProject": true
   }
 ]

@@ -5,7 +5,7 @@
             return {
                 "name": $(this).data("column"),
                 "data": $(this).data("column")
-            }
+            };
         });
     };
 
@@ -28,11 +28,11 @@
         });
     };
 
-    $.fn.DataTableColumnFilters = function (o) {
+    $.fn.DataTableColumnFilters = function(o) {
 
         var defaults = {
             NoValueText: "No Value",
-            getValuesUrlCallback: function (column) { throw new Error("Not implemented"); }
+            getValuesUrlCallback: function(column) { throw new Error("Not implemented"); }
         };
         var options = $.extend({}, defaults, o || {});
         var dataTable = null;
@@ -41,99 +41,110 @@
         var tr = document.createElement("tr");
 
         $(tr).addClass("dataTableFilterRow");
-        $("thead", this).each(function () {
-            $(this).prepend(tr);
-        });
-
-        $("thead th", this).each(function () {
-            var column = $(this).data("column");
-            var th = document.createElement("th");
-            $("thead tr.dataTableFilterRow", that).each(function () {
-                $(this).append(th);
+        $("thead", this)
+            .each(function() {
+                $(this).prepend(tr);
             });
-            var title = $(this).text();
-            $(th).data("column", column);
-            $(th).html("<select multiple=\"multiple\" placeholder=\"Search " + title + "\" />");
-        });
+
+        $("thead th", this)
+            .each(function() {
+                var column = $(this).data("column");
+                var th = document.createElement("th");
+                $("thead tr.dataTableFilterRow", that)
+                    .each(function() {
+                        $(this).append(th);
+                    });
+                var title = $(this).text();
+                $(th).data("column", column);
+                $(th).html("<select multiple=\"multiple\" placeholder=\"Search " + title + "\" />");
+            });
 
         var filter = {
-            clear: function () {
+            clear: function() {
 
-                $("thead tr.dataTableFilterRow select", that).each(function () {
-                    $(this).empty();
+                $("thead tr.dataTableFilterRow select", that)
+                    .each(function() {
+                        $(this).empty();
 
-                    try {
-                        $(this).multiselect("uncheckAll");
-                    } catch (x) {
-                    }
+                        try {
+                            $(this).multiselect("uncheckAll");
+                        } catch (x) {
 
-                    if (dataTable) {
-                        var column = dataTable.column($(this).parent("th").data("column") + ":name");
-                        column.search("");
-                    }
-                });
+                        }
+
+                        if (dataTable) {
+                            var column = dataTable.column($(this).parent("th").data("column") + ":name");
+                            column.search("");
+                        }
+                    });
             },
-            assign: function (dt) {
+            assign: function(dt) {
                 dataTable = dt;
             },
 
-            init: function () {
+            init: function() {
 
 
-                $("thead tr.dataTableFilterRow select", that).on("keyup change", function () {
-                    if (dataTable !== null) {
-                        var value = $(this).val();
-                        var search = (value !== null) ? JSON.stringify(value) : "";
+                $("thead tr.dataTableFilterRow select", that)
+                    .on("keyup change",
+                        function() {
+                            if (dataTable !== null) {
+                                var value = $(this).val();
+                                var search = (value !== null) ? JSON.stringify(value) : "";
 
-                        var column = dataTable.column($(this).parent("th").data("column") + ":name");
-                        if (column.search() !== search) {
-                            column
-                                .search(search)
-                                .draw();
-                        }
-                    }
-                });
+                                var column = dataTable.column($(this).parent("th").data("column") + ":name");
+                                if (column.search() !== search) {
+                                    column
+                                        .search(search)
+                                        .draw();
+                                }
+                            }
+                        });
 
 
-                $("thead tr.dataTableFilterRow select", that).multiselect({
-                    beforeopen: function (event, ui) {
-                        var thatSelect = this;
-                        if ($(this).children().length === 0) {
-                            if (typeof options.getValuesUrlCallback === "function") {
-                                var url = options.getValuesUrlCallback($(this).parent().data("column"));
-                                $.get(url, function (data) {
-                                    var hasEmpty = false;
-                                    for (var i = 0; i < data.length; i++) {
-                                        var option = $("<option></option>");
-                                        if (data[i] !== null && data[i] !== "") {
-                                            var text = $.trim(data[i]);
-                                            var br = text.indexOf("\n");
-                                            if (br > -1) {
-                                                text = $.trim(text.substr(0, br));
+                $("thead tr.dataTableFilterRow select", that)
+                    .multiselect({
+                        beforeopen: function(event, ui) {
+                            var thatSelect = this;
+                            if ($(this).children().length === 0) {
+                                if (typeof options.getValuesUrlCallback === "function") {
+                                    var url = options.getValuesUrlCallback($(this).parent().data("column"));
+                                    $.get(url,
+                                        function(data) {
+                                            var hasEmpty = false;
+                                            for (var i = 0; i < data.length; i++) {
+                                                var option = $("<option></option>");
+                                                if (data[i] !== null && data[i] !== "") {
+                                                    var text = $.trim(data[i]);
+                                                    var br = text.indexOf("\n");
+                                                    if (br > -1) {
+                                                        text = $.trim(text.substr(0, br));
+                                                    }
+                                                    option.attr("value", text);
+                                                    option.text(text);
+                                                    $(thatSelect).append(option);
+                                                } else {
+                                                    option.attr("value", "");
+                                                    option.text(options.NoValueText);
+                                                    if (!hasEmpty) {
+                                                        $(thatSelect).append(option);
+                                                    }
+                                                    hasEmpty = true;
+                                                }
                                             }
-                                            option.attr("value", text);
-                                            option.text(text);
-                                            $(thatSelect).append(option);
-                                        } else {
-                                            option.attr("value", "");
-                                            option.text(options.NoValueText);
-                                            if (!hasEmpty) {
-                                                $(thatSelect).append(option);
-                                            }
-                                            hasEmpty = true;
-                                        }
-                                    }
-                                    $(thatSelect).multiselect("refresh");
-                                }, "json");
+                                            $(thatSelect).multiselect("refresh");
+                                        },
+                                        "json");
+                                }
                             }
                         }
-                    }
-                }).multiselectfilter();
+                    })
+                    .multiselectfilter();
                 $(window).trigger('resize');
             }
         };
         return filter;
-    }
+    };
 
 
 }(jQuery));

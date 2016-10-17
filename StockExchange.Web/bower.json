@@ -1,6 +1,6 @@
 {
-	"name": "asp.net",
-	"private": true,
+  "name": "asp.net",
+  "private": true,
   "dependencies": {
     "jquery": "1.12.4",
     "modernizr": "2.8.3",
@@ -11,6 +11,7 @@
     "datatables.net": "1.10.12",
     "datatables.net-dt": "1.10.12",
     "datatables.net-bs": "1.10.12",
-    "datatables.net-jqui": "1.10.12"
+    "datatables.net-jqui": "1.10.12",
+    "font-awesome": "4.6.1"
   }
 }

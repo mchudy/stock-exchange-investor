@@ -1,6 +1,6 @@
 ﻿@using System.Web.Optimization
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,20 +8,44 @@
 
     @Styles.Render("~/bower_components/bootstrap/dist/css/bootstrap.min.css")
     @Styles.Render("~/bower_components/jquery-ui/themes/base/jquery-ui.min.css")
+    @Styles.Render("~/bower_components/font-awesome/css/font-awesome.min.css")
 
     @Styles.Render("~/Content/css/main.css")
-    @RenderSection("css", false)
 
+    @RenderSection("css", false)
 </head>
 <body>
-    <div id="body-wrapper">
-        <div id="body">
-            @RenderBody()
+    <nav class="navbar navbar-inverse">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/">Stock Exchange Analyzer</a>
         </div>
-        <footer>
-            &copy; Bartosz Woźniak @DateTime.Now.Year - Stock Exchange Analyzer
-        </footer>
+    </nav>
+<div class="main-container">
+    <div class="sidebar">
+        <div class="sidebar-content">
+            <ul class="nav">
+                <li>
+                    <a href="@Url.Action("Price", "Price")">
+                        <i class="fa fa-table fa-lg"></i>
+                         Prices
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fa fa-area-chart fa-lg"></i>
+                         Charts
+                    </a>
+                </li>
+            </ul>
+        </div>
     </div>
+    <div id="body" class="main-content">
+        @RenderBody()
+    </div>
+    <footer>
+        &copy; Bartosz Woźniak @DateTime.Now.Year - Stock Exchange Analyzer
+    </footer>
+</div>
     @Scripts.Render("~/bower_components/jquery/dist/jquery.min.js")
     @RenderSection("scripts", false)
 </body>

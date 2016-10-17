@@ -1,13 +1,30 @@
 ﻿body {
   background-color: #eeeeee;
 }
-.main-container {
-  max-width: 1573px !important;
-  margin: 50px auto;
+.main-content {
+  margin: 0 0 0 200px;
+  padding: 15px;
+  position: relative;
+}
+.navbar {
+  min-height: 50px;
+  border-radius: 0;
+  margin: 0;
+  z-index: 100;
+}
+.sidebar {
+  z-index: 10;
+  position: absolute;
+  width: 200px;
+  background-color: #f5f5f5;
+  min-height: 100%;
 }
 footer {
   text-align: center !important;
   width: auto;
+}
+.prices-table {
+  max-width: 1573px !important;
 }
 .width-big {
   min-width: 300px !important;

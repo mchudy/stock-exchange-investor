@@ -3,19 +3,17 @@
 @{
     ViewBag.Title = "Prices";
 }
-<div class="main-container">
-    <section class="panel panel-default">
-        <div class="panel-heading">Prices</div>
-        <div class="panel-body ">
-            @Html.Partial("_PricesDataTable")
-        </div>
-    </section>
-</div>
+<section class="panel panel-default prices-table">
+    <div class="panel-heading">Prices</div>
+    <div class="panel-body">
+        @Html.Partial("_PricesDataTable")
+    </div>
+</section>
 
 @section scripts
 {
-    @Scripts.Render("~/bower_components/datatables.net/js/jquery.dataTables.js")
     @Scripts.Render("~/bower_components/jquery-ui/jquery-ui.min.js")
+    @Scripts.Render("~/bower_components/datatables.net/js/jquery.dataTables.js")
     @Scripts.Render("~/bower_components/jquery-ui-multiselect-widget/src/jquery.multiselect.js")
     @Scripts.Render("~/bower_components/jquery-ui-multiselect-widget/src/jquery.multiselect.filter.js")
     @Scripts.Render("~/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.js")
