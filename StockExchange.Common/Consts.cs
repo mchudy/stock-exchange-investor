@@ -7,7 +7,7 @@
             public const string Help = "help";
             public const string SyncData = "sync-data";
         }
-         
+
         public static class Formats
         {
             public const string DateFormat = "yyyyMMdd";
