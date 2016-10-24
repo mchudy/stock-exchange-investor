@@ -34,7 +34,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\</OutputPath>
+    <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -42,7 +42,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\</OutputPath>
+    <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -1911,7 +1911,10 @@
       <DependentUpon>Log4Net.config</DependentUpon>
       <IsTransformFile>True</IsTransformFile>
     </None>
-    <None Include="Properties\PublishProfiles\MiniStockExchangeDev - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\MiniStockExchange - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\MiniStockExchangeDev - Web Deploy.pubxml">
+      <SubType>Designer</SubType>
+    </None>
     <Content Include="Scripts\price.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
