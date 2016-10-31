@@ -3,7 +3,8 @@
 @sidebar-transition-time: .30s;
 
 body {
-    background-color: #eeeeee;
+    background-color: #f1f4f7;
+    font-family: 'Open Sans','Helvetica Neue',Helvetica,Arial,sans-serif;
 }
 
 .transition (@transition) {
@@ -18,13 +19,20 @@ body {
     padding: 15px;
     position: relative;
     .transition(margin-left ease @sidebar-transition-time);
+
     &.hide-sidebar {
         margin-left: 0;
     }
 }
 
+.page-header {
+    font-size: 20px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+}
+
 .navbar {
-    min-height: @navbar-height;
+    height: @navbar-height;
     border-radius: 0;
     margin: 0;
     background-color: #fff;
@@ -32,10 +40,7 @@ body {
 
     .navbar-brand {
         padding-right: 5px;
-
-        &:hover {
-           color: #000000;
-        }
+        font-weight: 600;
     }
 
     .btn-icon {
@@ -45,6 +50,10 @@ body {
         i {
             color: #3bafda;
         }
+    }
+
+    a:hover {
+        color: black !important;
     }
 }
 
@@ -57,33 +66,47 @@ body {
     background-color: #232323;
     .transition(left ease @sidebar-transition-time);
 
-    ul li a {
-        color: #dadada;
-    }
-
-    ul li a:hover {
-        background-color: #2e2e2e;
-        color: #eeeeee;
-    }
-
     &.hide-sidebar {
         left: -@sidebar-width;
     }
 
     .sidebar-menu li {
-        a {
-            padding: 12px 20px
+        margin-left: 3px;
+
+        &.list-header {
+            padding: 12px 12px 8px 12px;
+            font-weight: 600;
+            color: #a19a9a;
+            font-size: 12px;
         }
+
+        &.active {
+            border: 0 solid #dadada;
+            border-left-width: 3px;
+            margin-left: 0;
+        }
+
+        a {
+            color: #dadada;
+            font-size: 12px;
+        }
+
+        a:hover {
+            background-color: #2e2e2e;
+            color: #eeeeee;
+        }
+
         i {
             width: 20px;
         }
+
         span {
             margin-left: 5px;
         }
     }
 }
 
-.sidebar-footer {
+footer {
     text-align: center !important;
     width: auto;
 }

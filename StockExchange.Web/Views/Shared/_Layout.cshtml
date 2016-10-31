@@ -19,14 +19,20 @@
     <nav class="navbar navbar-inverse">
         <div class="navbar-header">
             <a class="btn btn-icon navbar-btn sidebar-toggle" href="#"><i class="fa fa-bars fa-lg"></i></a>
-            <a class="navbar-brand" href="/">Stock Exchange Analyzer</a>
+            <a class="navbar-brand" href="/">Stock Exchange Investor</a>
+        </div>
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#">Sign in</a></li>
+            </ul>
         </div>
     </nav>
     <div class="main-container">
         <div class="sidebar">
             <div class="sidebar-content">
                 <ul class="nav sidebar-menu">
-                    <li>
+                    <li class="list-header">Data</li>
+                    <li class="active">
                         <a href="@Url.Action("Price", "Price")">
                             <i class="fa fa-table fa-lg"></i>
                             <span>Prices</span>
@@ -42,9 +48,12 @@
             </div>
         </div>
         <div id="body" class="main-content">
+            <h1 class="page-header">
+                @ViewBag.Title
+            </h1>
             @RenderBody()
             <footer>
-                &copy; Bartosz Woźniak @DateTime.Now.Year - Stock Exchange Analyzer
+                &copy; Bartosz Woźniak @DateTime.Now.Year - Stock Exchange Investor
             </footer>
         </div>
     </div>
