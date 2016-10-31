@@ -1,9 +1,9 @@
-﻿using System;
-using System.Linq;
+﻿using Autofac;
 using log4net;
-using Autofac;
 using StockExchange.Common;
 using StockExchange.Task.App.Commands;
+using System;
+using System.Linq;
 
 namespace StockExchange.Task.App
 {
