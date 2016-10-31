@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace StockExchange.Indicators
+namespace StockExchange.Indicators.Helpers
 {
     public static class MovingAveragesHelper
     {
@@ -53,17 +51,17 @@ namespace StockExchange.Indicators
         {
             var valuesArray = values as decimal[] ?? values.ToArray();
             int count = valuesArray.Length;
-            decimal p = 1-2.0m/(count + 1); //1-alpha, alpha = 2/(N+1)
+            decimal p = 1 - 2.0m / (count + 1);
             decimal weight = 1;
             decimal weightSum = 0;
             decimal avg = 0;
             for (int i = 0; i < count; i++)
             {
-                avg += valuesArray[i]*weight;
+                avg += valuesArray[i] * weight;
                 weightSum += weight;
                 weight *= p;
             }
-            return avg/weightSum;
+            return avg / weightSum;
         }
     }
 }

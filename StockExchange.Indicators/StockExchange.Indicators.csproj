@@ -44,8 +44,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MovingAveragesHelper.cs" />
+    <Compile Include="Helpers\MacdHelper.cs" />
+    <Compile Include="Lines\InterceptionInfo.cs" />
+    <Compile Include="Lines\PointLineInterceptionHelper.cs" />
+    <Compile Include="MacdIndicator.cs" />
+    <Compile Include="Helpers\MovingAveragesHelper.cs" />
+    <Compile Include="Lines\PointLine.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SignalEvent.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
