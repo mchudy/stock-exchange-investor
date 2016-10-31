@@ -9,6 +9,7 @@
     @Styles.Render("~/bower_components/bootstrap/dist/css/bootstrap.min.css")
     @Styles.Render("~/bower_components/jquery-ui/themes/base/jquery-ui.min.css")
     @Styles.Render("~/bower_components/font-awesome/css/font-awesome.min.css")
+    @Styles.Render("~/bower_components/Bootflat/css/site.min.css")
 
     @Styles.Render("~/Content/css/main.css")
 
@@ -17,36 +18,38 @@
 <body>
     <nav class="navbar navbar-inverse">
         <div class="navbar-header">
+            <a class="btn btn-icon navbar-btn sidebar-toggle" href="#"><i class="fa fa-bars fa-lg"></i></a>
             <a class="navbar-brand" href="/">Stock Exchange Analyzer</a>
         </div>
     </nav>
-<div class="main-container">
-    <div class="sidebar">
-        <div class="sidebar-content">
-            <ul class="nav">
-                <li>
-                    <a href="@Url.Action("Price", "Price")">
-                        <i class="fa fa-table fa-lg"></i>
-                         Prices
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <i class="fa fa-area-chart fa-lg"></i>
-                         Charts
-                    </a>
-                </li>
-            </ul>
+    <div class="main-container">
+        <div class="sidebar">
+            <div class="sidebar-content">
+                <ul class="nav sidebar-menu">
+                    <li>
+                        <a href="@Url.Action("Price", "Price")">
+                            <i class="fa fa-table fa-lg"></i>
+                            <span>Prices</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-area-chart fa-lg"></i>
+                            <span>Charts</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div id="body" class="main-content">
+            @RenderBody()
+            <footer>
+                &copy; Bartosz Woźniak @DateTime.Now.Year - Stock Exchange Analyzer
+            </footer>
         </div>
     </div>
-    <div id="body" class="main-content">
-        @RenderBody()
-    </div>
-    <footer>
-        &copy; Bartosz Woźniak @DateTime.Now.Year - Stock Exchange Analyzer
-    </footer>
-</div>
     @Scripts.Render("~/bower_components/jquery/dist/jquery.min.js")
+    @Scripts.Render("~/Scripts/site.js")
     @RenderSection("scripts", false)
 </body>
 </html>
