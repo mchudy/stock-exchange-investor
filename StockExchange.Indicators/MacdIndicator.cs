@@ -38,7 +38,7 @@ namespace StockExchange.Indicators
         {
             var macd = CalculateMacdLine(historicalData);
             var signal = MacdHelper.CalculateSignalLine(macd, SignalTerm);
-            PointLine macd1 = new PointLine(macd.Values.Skip(LongTerm - ShortTerm));
+            PointLine macd1 = new PointLine(macd.Values.Skip(SignalTerm));
             return PointLineInterceptionHelper.FindAllInterceptions(macd1, signal).Select(Convert).Where(s=>s!=SignalEventAction.None);
         }
 
