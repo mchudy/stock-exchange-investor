@@ -14,11 +14,19 @@ body {
     transition: @transition;
 }
 
+.main-container {
+    min-height: calc(~"100vh - 50px");
+    position: relative;
+    height: auto;
+    padding-top: @navbar-height;
+}
+
 .main-content {
     margin: 0 0 0 @sidebar-width;
     padding: 15px;
     position: relative;
     .transition(margin-left ease @sidebar-transition-time);
+    min-height: inherit;
 
     &.hide-sidebar {
         margin-left: 0;
@@ -37,6 +45,11 @@ body {
     margin: 0;
     background-color: #fff;
     border-color: transparent;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
 
     .navbar-brand {
         padding-right: 5px;
@@ -109,6 +122,11 @@ body {
 footer {
     text-align: center !important;
     width: auto;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 10px 0 10px 0;
 }
 
 .prices-table {

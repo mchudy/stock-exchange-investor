@@ -2,6 +2,12 @@
   background-color: #f1f4f7;
   font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
+.main-container {
+  min-height: calc(100vh - 50px);
+  position: relative;
+  height: auto;
+  padding-top: 50px;
+}
 .main-content {
   margin: 0 0 0 200px;
   padding: 15px;
@@ -10,6 +16,7 @@
   -moz-transition: margin-left ease 0.3s;
   -o-transition: margin-left ease 0.3s;
   transition: margin-left ease 0.3s;
+  min-height: inherit;
 }
 .main-content.hide-sidebar {
   margin-left: 0;
@@ -25,6 +32,11 @@
   margin: 0;
   background-color: #fff;
   border-color: transparent;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
 }
 .navbar .navbar-brand {
   padding-right: 5px;
@@ -86,6 +98,11 @@
 footer {
   text-align: center !important;
   width: auto;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 10px 0 10px 0;
 }
 .prices-table {
   max-width: 1573px !important;

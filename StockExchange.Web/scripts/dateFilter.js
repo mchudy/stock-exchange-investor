@@ -63,18 +63,23 @@
             }
         };
 
-        $("<select id=\"filterType\"><option value=\"month\">Monthly</option><option value=\"year\">Yearly</option></select><input type=\"text\" id=\"filterValue\"/>").appendTo(that);
-        $("#filterValue", that).datepicker(filterTypeOptions.months);
-        $("#filterValue", that).datepicker("setDate", dateFilter.getDate());
+        $("<select id=\"filterType\" class=\"form-control\"><option value=\"month\">Monthly</option><option value=\"year\">Yearly</option></select><input type=\"text\" class=\"form-control\" id=\"filterValue\"/>").appendTo(that);
 
-        $("#filterValue", that).on("changeDate", function () {
-            if (!freezeEvents) {
-                dateFilter.setDate($(this).datepicker("getDate"));
-                if (typeof dateFilter.onChanged === "function") {
-                    dateFilter.onChanged();
+        var $filterValue = $('#filterValue', that);
+        $filterValue.datepicker(filterTypeOptions.months);
+        $filterValue.datepicker('setDate', dateFilter.getDate())
+            .on('changeDate', function () {
+                if (!freezeEvents) {
+                    dateFilter.setDate($(this).datepicker('getDate'));
+                    if (typeof dateFilter.onChanged === 'function') {
+                        dateFilter.onChanged();
+                    }
                 }
-            }
-        });
+            })
+            .on('show', function() {
+                $('.datepicker').addClass('calendar');
+            });
+
         $("#filterType", that).on("change", function () {
             dateFilter.setDateType($(this).val());
 

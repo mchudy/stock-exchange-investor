@@ -4,7 +4,7 @@
     <template id="filters">
         <label>
             Company Name:
-            @Html.DropDownList("companyName", Model.CompanyNames, new { id = "companyName" })
+            @Html.DropDownList("companyName", Model.CompanyNames, new { id = "companyName", @class="form-control" })
         </label>
         <label>
             Choose Filter Type:

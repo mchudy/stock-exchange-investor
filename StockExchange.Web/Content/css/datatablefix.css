@@ -7,3 +7,6 @@ table.dataTable thead .dataTableFilterRow th button {
 .ui-multiselect-checkboxes {
   max-height: 175px;
 }
+.dataTables_wrapper .row:last-child {
+  margin-top: 10px;
+}

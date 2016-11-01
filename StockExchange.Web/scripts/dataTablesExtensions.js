@@ -69,7 +69,7 @@
                         try {
                             $(this).multiselect("uncheckAll");
                         } catch (x) {
-
+                            console.warn(x);
                         }
 
                         if (dataTable) {
