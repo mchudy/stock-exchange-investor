@@ -1,0 +1,20 @@
+﻿@using System.Web.Optimization
+
+@{
+    ViewBag.Title = "Charts";
+}
+@section css
+{
+    @Styles.Render("~/Content/css/charts.css")
+}
+
+<div class="row">
+    <div id="chart-container" class="center-block"></div>
+</div>
+
+@section scripts
+{
+    @Scripts.Render("~/bower_components/highcharts/highstock.js")
+    @Scripts.Render("~/Scripts/charts.js")
+}
+

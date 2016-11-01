@@ -531,6 +531,131 @@
     <Content Include="bower_components\font-awesome\scss\_screen-reader.scss" />
     <Content Include="bower_components\font-awesome\scss\_stacked.scss" />
     <Content Include="bower_components\font-awesome\scss\_variables.scss" />
+    <Content Include="bower_components\highcharts\adapters\standalone-framework.js" />
+    <Content Include="bower_components\highcharts\adapters\standalone-framework.src.js" />
+    <Content Include="bower_components\highcharts\css\highcharts.css" />
+    <Content Include="bower_components\highcharts\highcharts-3d.js" />
+    <Content Include="bower_components\highcharts\highcharts-3d.src.js" />
+    <Content Include="bower_components\highcharts\highcharts-more.js" />
+    <Content Include="bower_components\highcharts\highcharts-more.src.js" />
+    <Content Include="bower_components\highcharts\highcharts.js" />
+    <Content Include="bower_components\highcharts\highcharts.src.js" />
+    <Content Include="bower_components\highcharts\highmaps.js" />
+    <Content Include="bower_components\highcharts\highmaps.src.js" />
+    <Content Include="bower_components\highcharts\highstock.js" />
+    <Content Include="bower_components\highcharts\highstock.src.js" />
+    <Content Include="bower_components\highcharts\js\highcharts-3d.js" />
+    <Content Include="bower_components\highcharts\js\highcharts-3d.src.js" />
+    <Content Include="bower_components\highcharts\js\highcharts-more.js" />
+    <Content Include="bower_components\highcharts\js\highcharts-more.src.js" />
+    <Content Include="bower_components\highcharts\js\highcharts.js" />
+    <Content Include="bower_components\highcharts\js\highcharts.src.js" />
+    <Content Include="bower_components\highcharts\js\highmaps.js" />
+    <Content Include="bower_components\highcharts\js\highmaps.src.js" />
+    <Content Include="bower_components\highcharts\js\highstock.js" />
+    <Content Include="bower_components\highcharts\js\highstock.src.js" />
+    <Content Include="bower_components\highcharts\js\modules\accessibility.js" />
+    <Content Include="bower_components\highcharts\js\modules\accessibility.src.js" />
+    <Content Include="bower_components\highcharts\js\modules\annotations.js" />
+    <Content Include="bower_components\highcharts\js\modules\annotations.src.js" />
+    <Content Include="bower_components\highcharts\js\modules\boost.js" />
+    <Content Include="bower_components\highcharts\js\modules\boost.src.js" />
+    <Content Include="bower_components\highcharts\js\modules\broken-axis.js" />
+    <Content Include="bower_components\highcharts\js\modules\broken-axis.src.js" />
+    <Content Include="bower_components\highcharts\js\modules\data.js" />
+    <Content Include="bower_components\highcharts\js\modules\data.src.js" />
+    <Content Include="bower_components\highcharts\js\modules\drilldown.js" />
+    <Content Include="bower_components\highcharts\js\modules\drilldown.src.js" />
+    <Content Include="bower_components\highcharts\js\modules\exporting.js" />
+    <Content Include="bower_components\highcharts\js\modules\exporting.src.js" />
+    <Content Include="bower_components\highcharts\js\modules\funnel.js" />
+    <Content Include="bower_components\highcharts\js\modules\funnel.src.js" />
+    <Content Include="bower_components\highcharts\js\modules\gantt.js" />
+    <Content Include="bower_components\highcharts\js\modules\gantt.src.js" />
+    <Content Include="bower_components\highcharts\js\modules\grid-axis.js" />
+    <Content Include="bower_components\highcharts\js\modules\grid-axis.src.js" />
+    <Content Include="bower_components\highcharts\js\modules\heatmap.js" />
+    <Content Include="bower_components\highcharts\js\modules\heatmap.src.js" />
+    <Content Include="bower_components\highcharts\js\modules\map.js" />
+    <Content Include="bower_components\highcharts\js\modules\map.src.js" />
+    <Content Include="bower_components\highcharts\js\modules\no-data-to-display.js" />
+    <Content Include="bower_components\highcharts\js\modules\no-data-to-display.src.js" />
+    <Content Include="bower_components\highcharts\js\modules\offline-exporting.js" />
+    <Content Include="bower_components\highcharts\js\modules\offline-exporting.src.js" />
+    <Content Include="bower_components\highcharts\js\modules\overlapping-datalabels.js" />
+    <Content Include="bower_components\highcharts\js\modules\overlapping-datalabels.src.js" />
+    <Content Include="bower_components\highcharts\js\modules\series-label.js" />
+    <Content Include="bower_components\highcharts\js\modules\series-label.src.js" />
+    <Content Include="bower_components\highcharts\js\modules\solid-gauge.js" />
+    <Content Include="bower_components\highcharts\js\modules\solid-gauge.src.js" />
+    <Content Include="bower_components\highcharts\js\modules\treemap.js" />
+    <Content Include="bower_components\highcharts\js\modules\treemap.src.js" />
+    <Content Include="bower_components\highcharts\js\modules\xrange-series.js" />
+    <Content Include="bower_components\highcharts\js\modules\xrange-series.src.js" />
+    <Content Include="bower_components\highcharts\js\themes\dark-blue.js" />
+    <Content Include="bower_components\highcharts\js\themes\dark-green.js" />
+    <Content Include="bower_components\highcharts\js\themes\dark-unica.js" />
+    <Content Include="bower_components\highcharts\js\themes\gray.js" />
+    <Content Include="bower_components\highcharts\js\themes\grid-light.js" />
+    <Content Include="bower_components\highcharts\js\themes\grid.js" />
+    <Content Include="bower_components\highcharts\js\themes\sand-signika.js" />
+    <Content Include="bower_components\highcharts\js\themes\skies.js" />
+    <Content Include="bower_components\highcharts\lib\canvg.js" />
+    <Content Include="bower_components\highcharts\lib\canvg.src.js" />
+    <Content Include="bower_components\highcharts\lib\jspdf.js" />
+    <Content Include="bower_components\highcharts\lib\jspdf.src.js" />
+    <Content Include="bower_components\highcharts\lib\rgbcolor.js" />
+    <Content Include="bower_components\highcharts\lib\rgbcolor.src.js" />
+    <Content Include="bower_components\highcharts\lib\svg2pdf.js" />
+    <Content Include="bower_components\highcharts\lib\svg2pdf.src.js" />
+    <Content Include="bower_components\highcharts\modules\accessibility.js" />
+    <Content Include="bower_components\highcharts\modules\accessibility.src.js" />
+    <Content Include="bower_components\highcharts\modules\annotations.js" />
+    <Content Include="bower_components\highcharts\modules\annotations.src.js" />
+    <Content Include="bower_components\highcharts\modules\boost.js" />
+    <Content Include="bower_components\highcharts\modules\boost.src.js" />
+    <Content Include="bower_components\highcharts\modules\broken-axis.js" />
+    <Content Include="bower_components\highcharts\modules\broken-axis.src.js" />
+    <Content Include="bower_components\highcharts\modules\canvas-tools.js" />
+    <Content Include="bower_components\highcharts\modules\canvas-tools.src.js" />
+    <Content Include="bower_components\highcharts\modules\data.js" />
+    <Content Include="bower_components\highcharts\modules\data.src.js" />
+    <Content Include="bower_components\highcharts\modules\drilldown.js" />
+    <Content Include="bower_components\highcharts\modules\drilldown.src.js" />
+    <Content Include="bower_components\highcharts\modules\exporting.js" />
+    <Content Include="bower_components\highcharts\modules\exporting.src.js" />
+    <Content Include="bower_components\highcharts\modules\funnel.js" />
+    <Content Include="bower_components\highcharts\modules\funnel.src.js" />
+    <Content Include="bower_components\highcharts\modules\gantt.js" />
+    <Content Include="bower_components\highcharts\modules\gantt.src.js" />
+    <Content Include="bower_components\highcharts\modules\grid-axis.js" />
+    <Content Include="bower_components\highcharts\modules\grid-axis.src.js" />
+    <Content Include="bower_components\highcharts\modules\heatmap.js" />
+    <Content Include="bower_components\highcharts\modules\heatmap.src.js" />
+    <Content Include="bower_components\highcharts\modules\map.js" />
+    <Content Include="bower_components\highcharts\modules\map.src.js" />
+    <Content Include="bower_components\highcharts\modules\no-data-to-display.js" />
+    <Content Include="bower_components\highcharts\modules\no-data-to-display.src.js" />
+    <Content Include="bower_components\highcharts\modules\offline-exporting.js" />
+    <Content Include="bower_components\highcharts\modules\offline-exporting.src.js" />
+    <Content Include="bower_components\highcharts\modules\overlapping-datalabels.js" />
+    <Content Include="bower_components\highcharts\modules\overlapping-datalabels.src.js" />
+    <Content Include="bower_components\highcharts\modules\series-label.js" />
+    <Content Include="bower_components\highcharts\modules\series-label.src.js" />
+    <Content Include="bower_components\highcharts\modules\solid-gauge.js" />
+    <Content Include="bower_components\highcharts\modules\solid-gauge.src.js" />
+    <Content Include="bower_components\highcharts\modules\treemap.js" />
+    <Content Include="bower_components\highcharts\modules\treemap.src.js" />
+    <Content Include="bower_components\highcharts\modules\xrange-series.js" />
+    <Content Include="bower_components\highcharts\modules\xrange-series.src.js" />
+    <Content Include="bower_components\highcharts\themes\dark-blue.js" />
+    <Content Include="bower_components\highcharts\themes\dark-green.js" />
+    <Content Include="bower_components\highcharts\themes\dark-unica.js" />
+    <Content Include="bower_components\highcharts\themes\gray.js" />
+    <Content Include="bower_components\highcharts\themes\grid-light.js" />
+    <Content Include="bower_components\highcharts\themes\grid.js" />
+    <Content Include="bower_components\highcharts\themes\sand-signika.js" />
+    <Content Include="bower_components\highcharts\themes\skies.js" />
     <Content Include="bower_components\jquery-ui-multiselect-widget\demos\animations.htm" />
     <Content Include="bower_components\jquery-ui-multiselect-widget\demos\assets\ba.hashchange.js" />
     <Content Include="bower_components\jquery-ui-multiselect-widget\demos\assets\prettify.css" />
@@ -1733,6 +1858,12 @@
     <Content Include="bower_components\modernizr\test\node\lib\options.js" />
     <Content Include="bower_components\modernizr\test\universal\lib\build-query.js" />
     <Content Include="bower_components\modernizr\test\universal\lib\generate-banner.js" />
+    <Content Include="Content\css\charts.css">
+      <DependentUpon>charts.less</DependentUpon>
+    </Content>
+    <Content Include="Content\css\charts.min.css">
+      <DependentUpon>charts.css</DependentUpon>
+    </Content>
     <Content Include="Content\css\dataTableFix.css">
       <DependentUpon>dataTableFix.less</DependentUpon>
     </Content>
@@ -1750,6 +1881,7 @@
     <Content Include="Connections.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Scripts\charts.js" />
     <Content Include="Scripts\dataTablesExtensions.js" />
     <Content Include="Scripts\dateFilter.js" />
     <Content Include="bower.json" />
@@ -1998,6 +2130,11 @@
     <Content Include="bower_components\Bootflat\package.json" />
     <Content Include="bower_components\Bootflat\README.markdown" />
     <Content Include="bower_components\Bootflat\_config.yml" />
+    <Content Include="bower_components\highcharts\.bower.json" />
+    <Content Include="bower_components\highcharts\.gitignore" />
+    <Content Include="bower_components\highcharts\bower.json" />
+    <Content Include="bower_components\highcharts\package.json" />
+    <Content Include="bower_components\highcharts\README.md" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
@@ -2008,6 +2145,7 @@
     <Content Include="Log4Net.config">
       <TransformOnBuild>true</TransformOnBuild>
     </Content>
+    <Content Include="Content\css\charts.less" />
     <None Include="Log4Net.Debug.config">
       <DependentUpon>Log4Net.config</DependentUpon>
       <IsTransformFile>True</IsTransformFile>
@@ -2031,6 +2169,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\ChartsController.cs" />
     <Compile Include="Controllers\PriceController.cs" />
     <Compile Include="Helpers\CustomFormatResolver.cs" />
     <Compile Include="Helpers\DataTableMessageConverter.cs" />
@@ -2057,6 +2196,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Price\Price.cshtml" />
     <Content Include="Properties\SlowCheetah\SlowCheetah.Transforms.targets" />
+    <Content Include="Views\Charts\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -2064,9 +2204,7 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="fonts\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\StockExchange.Business\StockExchange.Business.csproj">
       <Project>{14a3ba8d-7d94-46f3-a1b9-3c9fc0e2fac5}</Project>

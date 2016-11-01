@@ -1,4 +1,5 @@
 ﻿@using System.Web.Optimization
+@using StockExchange.Web.Helpers
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -32,14 +33,14 @@
             <div class="sidebar-content">
                 <ul class="nav sidebar-menu">
                     <li class="list-header">Data</li>
-                    <li class="active">
+                    <li class="@Html.IsSelected("Price", "Price")">
                         <a href="@Url.Action("Price", "Price")">
                             <i class="fa fa-table fa-lg"></i>
                             <span>Prices</span>
                         </a>
                     </li>
-                    <li>
-                        <a href="#">
+                    <li class="@Html.IsSelected("Charts", "Index")">
+                        <a href="@Url.Action("Index", "Charts")">
                             <i class="fa fa-area-chart fa-lg"></i>
                             <span>Charts</span>
                         </a>

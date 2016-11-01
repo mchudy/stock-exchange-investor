@@ -13,6 +13,7 @@
     "datatables.net-bs": "1.10.12",
     "datatables.net-jqui": "1.10.12",
     "font-awesome": "4.6.1",
-    "Bootflat": "2.0.4"
+    "Bootflat": "2.0.4",
+    "highcharts":  "5.0.2"
   }
 }
