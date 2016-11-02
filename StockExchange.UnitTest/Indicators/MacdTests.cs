@@ -66,6 +66,17 @@ namespace StockExchange.UnitTest.Indicators
                 AssertDecimals(expectedLine[i], actualLine.Values[i],6);
         }
 
+        [Fact]
+        private void IntersectionTest()
+        {
+            MacdIndicator indicator = new MacdIndicator(26,12,9);
+            var events = indicator.Simulate(MacdData.HistorcalData).ToArray();
+            Assert.NotNull(events);
+            Assert.Equal(2, events.Length);
+            Assert.Equal(SignalEventAction.Buy, events[0]);
+            Assert.Equal(SignalEventAction.Sell, events[1]);
+        }
+
         private void AssertDecimals(decimal expected, decimal actual, int prec)
         {
             var diff = expected - actual;
