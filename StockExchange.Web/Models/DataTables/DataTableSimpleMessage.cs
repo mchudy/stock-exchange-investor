@@ -1,6 +1,6 @@
 ﻿using StockExchange.Business.Models;
 
-namespace StockExchange.Web.Models
+namespace StockExchange.Web.Models.DataTables
 {
     public class DataTableSimpleMessage
     {

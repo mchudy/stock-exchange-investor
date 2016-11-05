@@ -3,6 +3,7 @@ using StockExchange.Business.Models;
 using StockExchange.Web.Helpers;
 using StockExchange.Web.Models;
 using System.Web.Mvc;
+using StockExchange.Web.Models.DataTables;
 
 namespace StockExchange.Web.Controllers
 {

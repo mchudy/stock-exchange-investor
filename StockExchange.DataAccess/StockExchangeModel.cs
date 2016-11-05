@@ -1,12 +1,14 @@
+using Microsoft.AspNet.Identity.EntityFramework;
+using StockExchange.DataAccess.Models;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.Infrastructure.Annotations;
-using StockExchange.DataAccess.Models;
 
 namespace StockExchange.DataAccess
 {
     using System.Data.Entity;
 
-    public sealed class StockExchangeModel : DbContext
+    public sealed class StockExchangeModel
+        : IdentityDbContext<User, AppRole, int, AppUserLogin, AppUserRole, AppUserClaim>
     {
         public StockExchangeModel()
             : base("name=StockExchangeModel")
@@ -19,6 +21,8 @@ namespace StockExchange.DataAccess
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<Company>()
                 .Property(e => e.Code)
                 .IsFixedLength()

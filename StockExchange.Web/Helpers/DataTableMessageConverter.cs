@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using StockExchange.Business.Models;
 using StockExchange.Common.LinqUtils;
 using StockExchange.Web.Models;
+using StockExchange.Web.Models.DataTables;
 
 namespace StockExchange.Web.Helpers
 {

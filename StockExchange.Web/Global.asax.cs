@@ -1,6 +1,4 @@
-﻿using Autofac;
-using Autofac.Integration.Mvc;
-using log4net;
+﻿using log4net;
 using System;
 using System.Web.Mvc;
 using System.Web.Routing;
@@ -15,12 +13,7 @@ namespace StockExchange.Web
         {
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
-
-            var builder = new ContainerBuilder();
-            builder.RegisterAssemblyModules(typeof(MvcApplication).Assembly);
-            var container = builder.Build();
-            DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
-
+            FilterConfig.RegisterFilters(GlobalFilters.Filters);
             log4net.Config.XmlConfigurator.Configure();
         }
 

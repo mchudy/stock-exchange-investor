@@ -10,7 +10,7 @@
     @Styles.Render("~/bower_components/bootstrap/dist/css/bootstrap.min.css")
     @Styles.Render("~/bower_components/jquery-ui/themes/base/jquery-ui.min.css")
     @Styles.Render("~/bower_components/font-awesome/css/font-awesome.min.css")
-    @Styles.Render("~/bower_components/Bootflat/css/site.min.css")
+    @Styles.Render("~/bower_components/Bootflat/bootflat/css/bootflat.min.css")
 
     @Styles.Render("~/Content/css/main.css")
 
@@ -24,7 +24,11 @@
         </div>
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#">Sign in</a></li>
+                @if (!Request.IsAuthenticated)
+                {
+                    <li>@Html.ActionLink("Sign in", "Login", "Account")</li>
+                    <li>@Html.ActionLink("Sign up", "Register", "Account")</li>
+                }
             </ul>
         </div>
     </nav>
@@ -59,6 +63,7 @@
         </div>
     </div>
     @Scripts.Render("~/bower_components/jquery/dist/jquery.min.js")
+    @Scripts.Render("~/bower_components/Bootflat/bootflat/js/icheck.min.js")
     @Scripts.Render("~/Scripts/site.js")
     @RenderSection("scripts", false)
 </body>

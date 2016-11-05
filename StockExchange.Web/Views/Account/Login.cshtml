@@ -1,0 +1,58 @@
+﻿@using System.Web.UI.WebControls
+@model StockExchange.Web.Models.Account.LoginViewModel
+
+@{
+    ViewBag.Title = "Sign in";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-2 col-sm-6 col-centered">
+            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-addon">
+                            <i class="fa fa-user"></i>
+                        </div>
+                        @Html.TextBoxFor(m => m.Email, new {placeholder = "Email", @class = "form-control"})
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-addon">
+                            <i class="fa fa-key"></i>
+                        </div>
+                        @Html.PasswordFor(m => m.Password, new { placeholder = "Password", @class = "form-control" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="checkbox">
+                        <div class="icheckbox_flat">
+                            @Html.CheckBoxFor(m => m.RememberMe)
+                        </div>
+                        <label>Remember me</label>
+                    </div>
+                </div>
+
+                <button class="btn btn-primary btn-block" type="submit">Sign in</button>
+            }
+            <div class="text-center sign-up-text">
+                Haven't got an account yet? <a href="@Url.Action("Register", "Account")">Click here</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script>
+        $("input[type='checkbox']").iCheck({
+                checkboxClass: 'icheckbox_flat'
+        });
+    </script>
+}

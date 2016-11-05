@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace StockExchange.Web.Models
+namespace StockExchange.Web.Models.DataTables
 {
     public sealed class DataTableResponse<T>
     {
