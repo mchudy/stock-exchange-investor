@@ -21,5 +21,6 @@
   },
   "_source": "https://github.com/jquery/jquery-dist.git",
   "_target": "1.12.4",
-  "_originalSource": "jquery"
+  "_originalSource": "jquery",
+  "_direct": true
 }

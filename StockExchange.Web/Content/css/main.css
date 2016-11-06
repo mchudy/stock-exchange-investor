@@ -49,6 +49,15 @@
 .navbar .btn-icon i {
   color: #3bafda;
 }
+.navbar a {
+  color: #8c8c8c;
+}
+.navbar .dropdown i {
+  margin-right: 5px;
+}
+.navbar .dropdown-menu i {
+  color: #dadada;
+}
 .navbar a:hover {
   color: black !important;
 }
@@ -143,4 +152,10 @@ footer {
 }
 .sign-up-text {
   margin-top: 10px;
+}
+.glyphicon-ok.form-control-feedback {
+  color: #8cc152;
+}
+.has-error .form-control-feedback {
+  color: #d91d30;
 }

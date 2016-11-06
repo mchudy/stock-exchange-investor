@@ -1,4 +1,5 @@
 ﻿@using System.Web.Optimization
+@using Microsoft.AspNet.Identity
 @using StockExchange.Web.Helpers
 <!DOCTYPE html>
 <html lang="en">
@@ -17,19 +18,40 @@
     @RenderSection("css", false)
 </head>
 <body>
-    <nav class="navbar navbar-inverse">
+    <nav class="navbar">
         <div class="navbar-header">
             <a class="btn btn-icon navbar-btn sidebar-toggle" href="#"><i class="fa fa-bars fa-lg"></i></a>
             <a class="navbar-brand" href="/">Stock Exchange Investor</a>
         </div>
         <div class="collapse navbar-collapse">
-            <ul class="nav navbar-nav navbar-right">
-                @if (!Request.IsAuthenticated)
-                {
-                    <li>@Html.ActionLink("Sign in", "Login", "Account")</li>
-                    <li>@Html.ActionLink("Sign up", "Register", "Account")</li>
-                }
-            </ul>
+            @using (Html.BeginForm("LogOut", "Account", FormMethod.Post, new { id = "logoutForm" }))
+            {
+                <ul class="nav navbar-nav navbar-right">
+                    @if (!Request.IsAuthenticated)
+                    {
+                        <li>@Html.ActionLink("Sign in", "Login", "Account")</li>
+                        <li>@Html.ActionLink("Sign up", "Register", "Account")</li>
+                    }
+                    else
+                    {
+                        @Html.AntiForgeryToken()
+                        <li class="dropdown">
+                            @*TODO: show full name of the user*@
+
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="fa fa-user fa-lg"></i>  @User.Identity.Name
+                                <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li>
+                                    <a href="#"><i class="fa fa-cog fa-lg"></i>  Settings</a>
+                                </li>
+                                <li><a href="javascript:document.getElementById('logoutForm').submit()"><i class="fa fa-sign-out fa-lg"></i>  Log out</a></li>
+                            </ul>
+                        </li>
+                    }
+                </ul>
+            }
         </div>
     </nav>
     <div class="main-container">
@@ -63,6 +85,10 @@
         </div>
     </div>
     @Scripts.Render("~/bower_components/jquery/dist/jquery.min.js")
+    @Scripts.Render("~/bower_components/jquery-validation/dist/jquery.validate.js")
+    @Scripts.Render("~/bower_components/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js")
+
+    @Scripts.Render("~/bower_components/bootstrap/dist/js/bootstrap.min.js")
     @Scripts.Render("~/bower_components/Bootflat/bootflat/js/icheck.min.js")
     @Scripts.Render("~/Scripts/site.js")
     @RenderSection("scripts", false)

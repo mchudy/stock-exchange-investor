@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 
 namespace StockExchange.DataAccess.Models
 {
-    public class User :
-        IdentityUser<int, AppUserLogin, AppUserRole, AppUserClaim>,
-        IUser<int>
+    public class User : IdentityUser<int, AppUserLogin, AppUserRole, AppUserClaim>, IUser<int>
     {
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<User, int> manager)
         {

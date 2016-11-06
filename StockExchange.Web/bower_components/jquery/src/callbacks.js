@@ -1,14 +1,12 @@
 define( [
 	"./core",
-	"./var/rnothtmlwhite"
-], function( jQuery, rnothtmlwhite ) {
-
-"use strict";
+	"./var/rnotwhite"
+], function( jQuery, rnotwhite ) {
 
 // Convert String-formatted options into Object-formatted ones
 function createOptions( options ) {
 	var object = {};
-	jQuery.each( options.match( rnothtmlwhite ) || [], function( _, flag ) {
+	jQuery.each( options.match( rnotwhite ) || [], function( _, flag ) {
 		object[ flag ] = true;
 	} );
 	return object;
@@ -192,9 +190,9 @@ jQuery.Callbacks = function( options ) {
 			// Also disable .add unless we have memory (since it would have no effect)
 			// Abort any pending executions
 			lock: function() {
-				locked = queue = [];
-				if ( !memory && !firing ) {
-					list = memory = "";
+				locked = true;
+				if ( !memory ) {
+					self.disable();
 				}
 				return this;
 			},

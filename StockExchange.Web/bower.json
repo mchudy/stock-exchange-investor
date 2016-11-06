@@ -2,7 +2,7 @@
   "name": "asp.net",
   "private": true,
   "dependencies": {
-    "jquery": "1.12.4",
+    "jquery": "<=1.12.4",
     "modernizr": "2.8.3",
     "bootstrap": "3.3.6",
     "bootstrap-datepicker": "1.6.4",
@@ -14,6 +14,7 @@
     "datatables.net-jqui": "1.10.12",
     "font-awesome": "4.6.1",
     "Bootflat": "2.0.4",
-    "highcharts":  "5.0.2"
+    "highcharts": "5.0.2",
+    "jquery-validation-unobtrusive": "3.2.6"
   }
 }
