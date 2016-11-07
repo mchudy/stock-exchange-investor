@@ -2,7 +2,7 @@
 
 namespace StockExchange.Web.Controllers
 {
-    public class ChartsController : Controller
+    public class ChartsController : BaseController
     {
         public ActionResult Index()
         {

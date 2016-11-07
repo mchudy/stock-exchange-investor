@@ -2,12 +2,12 @@
 using StockExchange.Business.Models;
 using StockExchange.Web.Helpers;
 using StockExchange.Web.Models;
-using System.Web.Mvc;
 using StockExchange.Web.Models.DataTables;
+using System.Web.Mvc;
 
 namespace StockExchange.Web.Controllers
 {
-    public sealed class PriceController : Controller
+    public sealed class PriceController : BaseController
     {
         private readonly IPriceManager _priceManager;
 

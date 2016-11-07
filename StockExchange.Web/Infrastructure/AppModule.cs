@@ -12,7 +12,7 @@ namespace StockExchange.Web.Infrastructure
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterControllers(typeof(MvcApplication).Assembly);
+            builder.RegisterControllers(typeof(MvcApplication).Assembly).PropertiesAutowired();
             builder.RegisterType<GenericRepository<Company>>().As<IRepository<Company>>();
             builder.RegisterType<GenericRepository<Price>>().As<IRepository<Price>>();
             builder.RegisterType<PriceManager>().As<IPriceManager>();
