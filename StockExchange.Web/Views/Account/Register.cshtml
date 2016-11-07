@@ -1,0 +1,61 @@
+﻿@model StockExchange.Web.Models.Account.RegisterViewModel
+
+<div class="container col-sm-4 col-centered">
+    @using (Html.BeginForm("Register", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <h3 class="col-sm-offset-1">Register</h3>
+
+        <div class="form-group has-feedback">
+            @Html.LabelFor(m => m.FirstName, new { @class = "col-sm-4 control-label" })
+            <div class="col-sm-8">
+                @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control", autofocus = "" })
+                <span class="glyphicon form-control-feedback"></span>
+                @Html.ValidationMessageFor(m => m.FirstName, null, new { @class = "help-block" })
+            </div>
+        </div>
+
+        <div class="form-group has-feedback">
+            @Html.LabelFor(m => m.LastName, new { @class = "col-sm-4 control-label" })
+            <div class="col-sm-8">
+                @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
+                <span class="glyphicon form-control-feedback"></span>
+                @Html.ValidationMessageFor(m => m.LastName, null, new { @class = "help-block" })
+            </div>
+        </div>
+
+        <div class="form-group has-feedback">
+            @Html.LabelFor(m => m.Email, new { @class = "col-sm-4 control-label" })
+            <div class="col-sm-8">
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                <span class="glyphicon form-control-feedback"></span>
+                @Html.ValidationMessageFor(m => m.Email, null, new { @class = "help-block" })
+            </div>
+        </div>
+
+        <div class="form-group has-feedback">
+            @Html.LabelFor(m => m.Password, new { @class = "col-sm-4 control-label" })
+            <div class="col-sm-8">
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                <span class="glyphicon form-control-feedback"></span>
+                @Html.ValidationMessageFor(m => m.Password, null, new { @class = "help-block" })
+            </div>
+        </div>
+
+        <div class="form-group has-feedback">
+            @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-sm-4 control-label" })
+            <div class="col-sm-8">
+                @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+                <span class="glyphicon form-control-feedback"></span>
+                @Html.ValidationMessageFor(m => m.ConfirmPassword, null, new { @class = "help-block" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-8 col-sm-offset-4">
+                <button type="submit" class="btn btn-primary btn-block">Register</button>
+            </div>
+        </div>
+    }
+</div>

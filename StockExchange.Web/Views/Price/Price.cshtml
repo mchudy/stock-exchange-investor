@@ -3,37 +3,32 @@
 @{
     ViewBag.Title = "Prices";
 }
-<div class="main-container">
-    <section class="panel panel-default">
-        <div class="panel-heading">Prices</div>
-        <div class="panel-body ">
-            @Html.Partial("_PricesDataTable")
-        </div>
-    </section>
-</div>
+<section class="panel panel-default prices-table">
+    <div class="panel-body">
+        @Html.Partial("_PricesDataTable")
+    </div>
+</section>
 
 @section scripts
 {
-    @Scripts.Render("~/Scripts/jquery-1.12.4.js")
-    @Scripts.Render("~/Scripts/DataTables/jquery.dataTables.js")
-    @Scripts.Render("~/Scripts/jquery-ui-1.12.1.js")
-    @Scripts.Render("~/Scripts/jquery-ui-multiselect-widget/jquery.multiselect.js")
-    @Scripts.Render("~/Scripts/jquery-ui-multiselect-widget/jquery.multiselect.filter.js")   
-    @Scripts.Render("~/Scripts/bootstrap-datepicker.js")
-    @Scripts.Render("~/Scripts/Defined/dataTablesExtensions.js")
-    @Scripts.Render("~/Scripts/Defined/dateFilter.js")
-    @Scripts.Render("~/Scripts/Defined/price.js")
+    @Scripts.Render("~/bower_components/jquery-ui/jquery-ui.min.js")
+    @Scripts.Render("~/bower_components/datatables.net/js/jquery.dataTables.js")
+    @Scripts.Render("~/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js")
+    @Scripts.Render("~/bower_components/jquery-ui-multiselect-widget/src/jquery.multiselect.js")
+    @Scripts.Render("~/bower_components/jquery-ui-multiselect-widget/src/jquery.multiselect.filter.js")
+    @Scripts.Render("~/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.js")
+
+    @Scripts.Render("~/Scripts/dataTablesExtensions.js")
+    @Scripts.Render("~/Scripts/dateFilter.js")
+    @Scripts.Render("~/Scripts/price.js")
 }
 
 @section css
 {
-    @Styles.Render("~/Content/bootstrap.css") 
-    @Styles.Render("~/Content/bootstrap-datepicker/datepicker3.css")
-    @Styles.Render("~/Content/themes/base/jquery-ui.css")
-    @Styles.Render("~/Content/jquery-ui-multiselect-widget/jquery.multiselect.css")
-    @Styles.Render("~/Content/jquery-ui-multiselect-widget/jquery.multiselect.filter.css")
-    @Styles.Render("~/Content/DataTables/jquery.dataTables.css")
-    @Styles.Render("~/Content/DataTables/dataTables.bootstrap.css")
-    @Styles.Render("~/Content/Defined/main.css")
-    @Styles.Render("~/Content/Defined/dataTableFix.css")
+    @Styles.Render("~/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker3.css")
+    @Styles.Render("~/bower_components/jquery-ui-multiselect-widget/jquery.multiselect.css")
+    @Styles.Render("~/bower_components/jquery-ui-multiselect-widget/jquery.multiselect.filter.css")
+    @Styles.Render("~/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css")
+
+    @Styles.Render("~/Content/css/dataTableFix.css")
 }

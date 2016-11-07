@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using log4net;
+﻿using log4net;
 using StockExchange.Common;
 using StockExchange.DataAccess.IRepositories;
 using StockExchange.DataAccess.Models;
 using StockExchange.Task.Business.Helpers;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace StockExchange.Task.Business
 {
@@ -50,6 +50,10 @@ namespace StockExchange.Task.Business
         {
             var data = CsvImporter.GetCsv(url);
             data.RemoveAt(0);
+            if (!data.Any())
+            {
+                Logger.Warn($"No data available for company {company.Code}");
+            }
             using (var priceRepository = _priceRepositoryFactory.CreateInstance())
             {
                 var inserted = false;

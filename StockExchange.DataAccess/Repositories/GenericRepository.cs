@@ -63,7 +63,6 @@ namespace StockExchange.DataAccess.Repositories
                 _context.Dispose();
             }
         }
-
         ~GenericRepository()
         {
             Dispose(false);

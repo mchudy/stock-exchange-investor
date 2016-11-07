@@ -1,20 +1,96 @@
-﻿<!DOCTYPE html>
-<html>
+﻿@using System.Web.Optimization
+@using Microsoft.AspNet.Identity
+@using StockExchange.Web.Helpers
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Stock Exchange Application</title>
+
+    @Styles.Render("~/bower_components/bootstrap/dist/css/bootstrap.min.css")
+    @Styles.Render("~/bower_components/jquery-ui/themes/base/jquery-ui.min.css")
+    @Styles.Render("~/bower_components/font-awesome/css/font-awesome.min.css")
+    @Styles.Render("~/bower_components/Bootflat/bootflat/css/bootflat.min.css")
+
+    @Styles.Render("~/Content/css/main.css")
+
+    @RenderSection("css", false)
 </head>
 <body>
-    <div id="body-wrapper">
-        <div id="body">
-            @RenderBody()
+    <nav class="navbar">
+        <div class="navbar-header">
+            <a class="btn btn-icon navbar-btn sidebar-toggle" href="#"><i class="fa fa-bars fa-lg"></i></a>
+            <a class="navbar-brand" href="/">Stock Exchange Investor</a>
         </div>
-        <footer>
-               &copy; Bartosz Woźniak @DateTime.Now.Year - Stock Exchange Analyzer 
-        </footer>
+        <div class="collapse navbar-collapse">
+            @using (Html.BeginForm("LogOut", "Account", FormMethod.Post, new { id = "logoutForm" }))
+            {
+                <ul class="nav navbar-nav navbar-right">
+                    @if (!Request.IsAuthenticated)
+                    {
+                        <li>@Html.ActionLink("Sign in", "Login", "Account")</li>
+                        <li>@Html.ActionLink("Sign up", "Register", "Account")</li>
+                    }
+                    else
+                    {
+                        @Html.AntiForgeryToken()
+                        <li class="dropdown">
+                            @*TODO: show full name of the user*@
+
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="fa fa-user fa-lg"></i>  @User.Identity.Name
+                                <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li>
+                                    <a href="#"><i class="fa fa-cog fa-lg"></i>  Settings</a>
+                                </li>
+                                <li><a href="javascript:document.getElementById('logoutForm').submit()"><i class="fa fa-sign-out fa-lg"></i>  Log out</a></li>
+                            </ul>
+                        </li>
+                    }
+                </ul>
+            }
+        </div>
+    </nav>
+    <div class="main-container">
+        <div class="sidebar">
+            <div class="sidebar-content">
+                <ul class="nav sidebar-menu">
+                    <li class="list-header">Data</li>
+                    <li class="@Html.IsSelected("Price", "Price")">
+                        <a href="@Url.Action("Price", "Price")">
+                            <i class="fa fa-table fa-lg"></i>
+                            <span>Prices</span>
+                        </a>
+                    </li>
+                    <li class="@Html.IsSelected("Charts", "Index")">
+                        <a href="@Url.Action("Index", "Charts")">
+                            <i class="fa fa-area-chart fa-lg"></i>
+                            <span>Charts</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div id="body" class="main-content">
+            <h1 class="page-header">
+                @ViewBag.Title
+            </h1>
+            @RenderBody()
+            <footer>
+                &copy; Bartosz Woźniak @DateTime.Now.Year - Stock Exchange Investor
+            </footer>
+        </div>
     </div>
-    @RenderSection("scripts", false) 
-    @RenderSection("css", false)
+    @Scripts.Render("~/bower_components/jquery/dist/jquery.min.js")
+    @Scripts.Render("~/bower_components/jquery-validation/dist/jquery.validate.js")
+    @Scripts.Render("~/bower_components/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js")
+
+    @Scripts.Render("~/bower_components/bootstrap/dist/js/bootstrap.min.js")
+    @Scripts.Render("~/bower_components/Bootflat/bootflat/js/icheck.min.js")
+    @Scripts.Render("~/Scripts/site.js")
+    @RenderSection("scripts", false)
 </body>
 </html>
