@@ -53,6 +53,16 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SignalEvent.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\StockExchange.Business\StockExchange.Business.csproj">
+      <Project>{14A3BA8D-7D94-46F3-A1B9-3C9FC0E2FAC5}</Project>
+      <Name>StockExchange.Business</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\StockExchange.DataAccess\StockExchange.DataAccess.csproj">
+      <Project>{C254649A-33DD-4EAA-BD0E-2AFB3AF7579E}</Project>
+      <Name>StockExchange.DataAccess</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

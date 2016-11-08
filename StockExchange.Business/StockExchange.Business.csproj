@@ -58,6 +58,8 @@
     <Compile Include="Extensions\PagedListExtension.cs" />
     <Compile Include="Extensions\QueryableExtension.cs" />
     <Compile Include="Extensions\SortOrderAttribute.cs" />
+    <Compile Include="Indicators\BaseIndicator.cs" />
+    <Compile Include="Indicators\IIndicator.cs" />
     <Compile Include="Models\CompanyDto.cs" />
     <Compile Include="Models\FilterDefinition.cs" />
     <Compile Include="Models\IFilter.cs" />

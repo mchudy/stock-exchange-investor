@@ -10,16 +10,16 @@ namespace StockExchange.UnitTest.Indicators
     /// This data are based on example:
     /// http://investexcel.net/how-to-calculate-macd-in-excel/
     /// </summary>
-    public class MacdData
+    internal class MacdData
     {
-        public static readonly IEnumerable<decimal> HistorcalData;
+        public static readonly decimal[] HistorcalData;
 
         static MacdData()
         {
-            HistorcalData = GetData();
+            HistorcalData = GetHistoricalData();
         }
 
-        public static IEnumerable<decimal> GetData()
+        internal static decimal[] GetHistoricalData()
         {
             return new decimal[]
             {
@@ -92,7 +92,7 @@ namespace StockExchange.UnitTest.Indicators
             };
         }
 
-        public static IEnumerable<decimal> Get12DaysEma()
+        internal static decimal[] Get12DaysEma()
         {
             return new decimal[]
             {
@@ -154,8 +154,8 @@ namespace StockExchange.UnitTest.Indicators
             };
         }
     
-        public static IEnumerable<decimal> Get26DaysEma()
-        {
+        internal static decimal[] Get26DaysEma()
+        { 
             return new decimal[]
             {
                 443.2896154m,
@@ -202,7 +202,7 @@ namespace StockExchange.UnitTest.Indicators
             };
         }
 
-        public static IEnumerable<decimal> Get9DaysSignal()
+        internal static decimal[] Get9DaysSignal()
         {
             return new decimal[]
             {
