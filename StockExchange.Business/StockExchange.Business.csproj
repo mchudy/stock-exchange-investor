@@ -60,6 +60,7 @@
     <Compile Include="Extensions\SortOrderAttribute.cs" />
     <Compile Include="Indicators\BaseIndicator.cs" />
     <Compile Include="Indicators\IIndicator.cs" />
+    <Compile Include="Indicators\MacdIndicator.cs" />
     <Compile Include="Models\CompanyDto.cs" />
     <Compile Include="Models\FilterDefinition.cs" />
     <Compile Include="Models\IFilter.cs" />
