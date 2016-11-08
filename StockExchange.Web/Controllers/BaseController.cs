@@ -4,7 +4,7 @@ using System.Web.Mvc;
 
 namespace StockExchange.Web.Controllers
 {
-    public class BaseController : Controller
+    public abstract class BaseController : Controller
     {
         public ApplicationUserManager UserManager { get; set; }
 

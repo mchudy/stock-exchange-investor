@@ -1,13 +1,14 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
+using StockExchange.Common;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 using System.Web.Mvc;
-using Newtonsoft.Json;
-using StockExchange.Common;
 
 namespace StockExchange.Web.Helpers
 {
-    internal sealed  class JsonNetResult : ActionResult
+    internal sealed class JsonNetResult : ActionResult
     {
         private readonly string _dataFormatString;
 
@@ -21,11 +22,19 @@ namespace StockExchange.Web.Helpers
 
         public Formatting Formatting { get; set; }
 
-        public JsonNetResult(object data)
+        public JsonNetResult(object data, bool camelCase = true)
         {
             Data = data;
             Formatting = Formatting.None;
-            SerializerSettings = new JsonSerializerSettings { ContractResolver = new CustomFormatResolver(_dataFormatString) };
+            SerializerSettings = new JsonSerializerSettings();
+            if (camelCase)
+            {
+                SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            }
+            else
+            {
+                SerializerSettings.ContractResolver = new CustomFormatResolver(_dataFormatString);
+            }
         }
 
         public JsonNetResult(object data, Type type, string fieldName) : this(data)

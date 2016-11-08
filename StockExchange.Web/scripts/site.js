@@ -6,10 +6,6 @@
         $('.main-content').toggleClass('hide-sidebar');
     });
 
-    $("input[type='checkbox']").iCheck({
-        checkboxClass: 'icheckbox_flat'
-    });
-
     $.validator.setDefaults({
         highlight: function (e, v) {
             var $formGroup = $(e).parents('.form-group');

@@ -35,13 +35,14 @@ namespace StockExchange.Web.Controllers
                 Data = pagedList,
                 Draw = dataTableMessage.Draw
             };
-            return new JsonNetResult(model);
+            return new JsonNetResult(model, false);
         }
 
         [HttpGet]
         public ActionResult GetFilterValues(DataTableSimpleMessage<PriceFilter> message, string fieldName)
         {
-            return new JsonNetResult(_priceManager.GetValues(DataTableMessageConverter.ToFilterDefinition(message), fieldName), typeof(PriceDto), fieldName);
+            object values = _priceManager.GetValues(DataTableMessageConverter.ToFilterDefinition(message), fieldName);
+            return new JsonNetResult(values, typeof(PriceDto), fieldName);
         }
 
         private PriceViewModel GetPriceViewModel()

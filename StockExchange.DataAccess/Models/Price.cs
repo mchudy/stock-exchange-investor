@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace StockExchange.DataAccess.Models
 {
     [Table("Price")]
-    public sealed class Price
+    public class Price
     {
         public int Id { get; set; }
 
@@ -23,6 +23,6 @@ namespace StockExchange.DataAccess.Models
 
         public int Volume { get; set; }
 
-        public Company Company { get; set; }
+        public virtual Company Company { get; set; }
     }
 }

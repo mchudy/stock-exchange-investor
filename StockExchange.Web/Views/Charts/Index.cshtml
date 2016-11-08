@@ -9,12 +9,32 @@
 }
 
 <div class="row">
+    <div class="col-md-4">
+        <span class="chart-options-wrapper">
+            <span class="chart-option">Line chart</span>
+            <label class="toggle">
+                <input type="checkbox" id="isCandlestickChart">
+                <span class="handle"></span>
+            </label>
+            <span class="chart-option">Candlestick chart</span>
+        </span>
+    </div>
+</div>
+
+<div class="row">
+
     <div id="chart-container" class="center-block"></div>
 </div>
 
 @section scripts
 {
+    <script type="text/javascript">
+        var baseUrl = "@Url.Content("~")";
+    </script>
+
     @Scripts.Render("~/bower_components/highcharts/highstock.js")
+    @Scripts.Render("~/bower_components/highcharts/modules/exporting.js")
+    @Scripts.Render("~/bower_components/highcharts/modules/offline-exporting.js")
     @Scripts.Render("~/Scripts/charts.js")
 }
 

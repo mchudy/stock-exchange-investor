@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using StockExchange.Business.Extensions;
+﻿using StockExchange.Business.Extensions;
 using StockExchange.Business.Models;
-using StockExchange.Common.Extensions;
 using StockExchange.DataAccess.IRepositories;
 using StockExchange.DataAccess.Models;
+using System;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
+using System.Linq.Expressions;
 
 namespace StockExchange.Business.Business
 {
@@ -43,6 +43,21 @@ namespace StockExchange.Business.Business
         public IEnumerable<string> GetCompanyNames()
         {
             return _companyRepository.GetQueryable().Select(item => item.Name).Distinct().ToList();
+        }
+
+        public IList<CompanyPricesDto> GetPricesForCompanies(IList<int> companyIds)
+        {
+            //TODO: move to repository
+            return _priceRepository.GetQueryable()
+                .Include(p => p.Company)
+                .Where(p => companyIds.Contains(p.CompanyId))
+                .GroupBy(p => p.Company)
+                .Select(g => new CompanyPricesDto
+                {
+                    Company = g.Key,
+                    Prices = g.OrderBy(p => p.Date).ToList()
+                })
+                .ToList();
         }
 
         private static IQueryable<PriceDto> Filter(PriceFilter filter, IQueryable<PriceDto> results)

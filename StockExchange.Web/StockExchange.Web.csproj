@@ -2402,6 +2402,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\DateTimeExtensions.cs" />
     <Compile Include="Helpers\DisplayFormatConverter.cs" />
     <Compile Include="Helpers\EnumDisplayFormatConverter.cs" />
     <Compile Include="Helpers\HtmlExtension.cs" />
@@ -2409,6 +2410,7 @@
     <Compile Include="Infrastructure\AppModule.cs" />
     <Compile Include="Infrastructure\IdentityModule.cs" />
     <Compile Include="Models\Account\RegisterViewModel.cs" />
+    <Compile Include="Models\Charts\LineChartModel.cs" />
     <Compile Include="Models\DataTables\DataTableMessage.cs" />
     <Compile Include="Models\DataTables\DataTableResponse.cs" />
     <Compile Include="Models\DataTables\DataTableSimpleMessage.cs" />

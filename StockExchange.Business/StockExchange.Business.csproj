@@ -53,6 +53,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\CompanyPricesDto.cs" />
     <Compile Include="Business\IPriceManager.cs" />
     <Compile Include="Business\PriceManager.cs" />
     <Compile Include="Extensions\PagedListExtension.cs" />
