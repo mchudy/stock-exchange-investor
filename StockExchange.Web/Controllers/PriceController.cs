@@ -2,12 +2,12 @@
 using StockExchange.Business.Models;
 using StockExchange.Web.Helpers;
 using StockExchange.Web.Models;
-using System.Web.Mvc;
 using StockExchange.Web.Models.DataTables;
+using System.Web.Mvc;
 
 namespace StockExchange.Web.Controllers
 {
-    public sealed class PriceController : Controller
+    public sealed class PriceController : BaseController
     {
         private readonly IPriceManager _priceManager;
 
@@ -35,13 +35,14 @@ namespace StockExchange.Web.Controllers
                 Data = pagedList,
                 Draw = dataTableMessage.Draw
             };
-            return new JsonNetResult(model);
+            return new JsonNetResult(model, false);
         }
 
         [HttpGet]
         public ActionResult GetFilterValues(DataTableSimpleMessage<PriceFilter> message, string fieldName)
         {
-            return new JsonNetResult(_priceManager.GetValues(DataTableMessageConverter.ToFilterDefinition(message), fieldName), typeof(PriceDto), fieldName);
+            object values = _priceManager.GetValues(DataTableMessageConverter.ToFilterDefinition(message), fieldName);
+            return new JsonNetResult(values, typeof(PriceDto), fieldName);
         }
 
         private PriceViewModel GetPriceViewModel()

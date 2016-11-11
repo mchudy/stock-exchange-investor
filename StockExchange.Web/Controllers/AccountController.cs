@@ -9,7 +9,7 @@ using System.Web.Mvc;
 namespace StockExchange.Web.Controllers
 {
     [Authorize]
-    public class AccountController : Controller
+    public class AccountController : BaseController
     {
         private readonly ApplicationSignInManager _signInManager;
         private readonly IAuthenticationManager _authenticationManager;
@@ -46,9 +46,6 @@ namespace StockExchange.Web.Controllers
             {
                 case SignInStatus.Success:
                     return RedirectToLocal(returnUrl);
-                //case SignInStatus.LockedOut:
-                //  return View("Lockout");
-                case SignInStatus.Failure:
                 default:
                     ModelState.AddModelError("", "Invalid login attempt.");
                     return View(model);

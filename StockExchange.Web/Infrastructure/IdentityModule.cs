@@ -1,5 +1,4 @@
 ﻿using Autofac;
-using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.DataProtection;
@@ -31,9 +30,6 @@ namespace StockExchange.Web.Infrastructure
 
             builder.Register<IAuthenticationManager>(c => HttpContext.Current.GetOwinContext().Authentication)
                 .InstancePerRequest();
-
-            builder.Register(c => c.Resolve<ApplicationUserManager>()
-                .FindById(HttpContext.Current.User.Identity.GetUserId<int>())).As<User>();
         }
     }
 }

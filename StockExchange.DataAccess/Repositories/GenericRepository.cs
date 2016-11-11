@@ -7,10 +7,10 @@ using System.Linq.Expressions;
 
 namespace StockExchange.DataAccess.Repositories
 {
-    public sealed class GenericRepository<TEntity> : IRepository<TEntity> where TEntity : class
+    public class GenericRepository<TEntity> : IRepository<TEntity> where TEntity : class
     {
-        private readonly StockExchangeModel _context;
-        private readonly IDbSet<TEntity> _dbSet;
+        protected readonly StockExchangeModel _context;
+        protected readonly IDbSet<TEntity> _dbSet;
 
         public GenericRepository()
         {

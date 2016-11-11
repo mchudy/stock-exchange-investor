@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace StockExchange.DataAccess.Models
 {
     [Table("Company")]
-    public sealed class Company
+    public class Company
     {
         public int Id { get; set; }
 
@@ -17,6 +17,6 @@ namespace StockExchange.DataAccess.Models
         [StringLength(50)]
         public string Name { get; set; }
 
-        public ICollection<Price> Prices { get; set; } = new HashSet<Price>();
+        public virtual ICollection<Price> Prices { get; set; } = new HashSet<Price>();
     }
 }

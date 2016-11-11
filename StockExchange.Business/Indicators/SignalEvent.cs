@@ -4,23 +4,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace StockExchange.Indicators
+namespace StockExchange.Business.Indicators
 {
     public enum SignalEventAction
     {
-        Buy,
+        Buy, 
         Sell,
         None
     }
 
     public class SignalEvent
     {
-        public int Index { get; }
         public SignalEventAction Action { get; }
 
-        public SignalEvent(int index, SignalEventAction action)
+        public SignalEvent(SignalEventAction action)
         {
-            Index = index;
             Action = action;
         }
     }

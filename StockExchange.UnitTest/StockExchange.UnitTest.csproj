@@ -101,9 +101,13 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\StockExchange.Indicators\StockExchange.Indicators.csproj">
-      <Project>{78dea3fc-f762-4c1a-bda6-682a03837919}</Project>
-      <Name>StockExchange.Indicators</Name>
+    <ProjectReference Include="..\StockExchange.Business\StockExchange.Business.csproj">
+      <Project>{14A3BA8D-7D94-46F3-A1B9-3C9FC0E2FAC5}</Project>
+      <Name>StockExchange.Business</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\StockExchange.DataAccess\StockExchange.DataAccess.csproj">
+      <Project>{C254649A-33DD-4EAA-BD0E-2AFB3AF7579E}</Project>
+      <Name>StockExchange.DataAccess</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />
