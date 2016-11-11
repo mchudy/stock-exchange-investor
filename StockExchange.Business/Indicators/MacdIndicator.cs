@@ -46,8 +46,8 @@ namespace StockExchange.Business.Indicators
             var shortEma = MovingAverageHelper.ExpotentialMovingAverage(list, ShortTerm);
             int diff = LongTerm - ShortTerm;
             var macdLine = new List<decimal>();
-            for (int i = 0; i < shortEma.Count; i++)
-                macdLine.Add(shortEma[i] - longEma[i + diff]);
+            for (int i = 0; i < longEma.Count; i++)
+                macdLine.Add(shortEma[i+diff] - longEma[i]);
             return macdLine;
         }
 

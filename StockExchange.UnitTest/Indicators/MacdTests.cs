@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using FluentAssertions;
 using StockExchange.Business.Indicators;
+using StockExchange.DataAccess.Models;
 using Xunit;
 using Xunit.Extensions;
 
@@ -17,10 +18,14 @@ namespace StockExchange.UnitTest.Indicators
     public class MacdTests
     {
         public static IEnumerable<object[]> DataFor26DaysEma { get; }
+        public static IEnumerable<object[]> DataFor12DaysEma { get; }
+        public static IEnumerable<object[]> DataFor9DaysSignalLine { get; }
 
         static MacdTests()
         {
             DataFor26DaysEma = new List<object[]> { new object[] { MacdData.HistorcalData, MacdData.Get26DaysEma() } };
+            DataFor12DaysEma = new List<object[]> { new object[] {MacdData.HistorcalData, MacdData.Get12DaysEma()}};
+            DataFor9DaysSignalLine = new List<object[]> { new object[] {MacdData.HistorcalData, MacdData.Get9DaysSignal()}};
         }
 
         private static void AssertDecimals(decimal expected, decimal actual, int prec)
@@ -39,44 +44,27 @@ namespace StockExchange.UnitTest.Indicators
                 AssertDecimals(expected26DaysEma[i], actual26DaysEma[i], 6);
         }
 
-        //[Fact]
-        //private void ExpotentialMovingAverage12Test()
-        //{
-        //    var data = MacdData.HistorcalData;
-        //    decimal[] expected12 = MacdData.Get12DaysEma().ToArray();
-        //    decimal[] actual = MacdHelper.CalculateExpotentialMovingAverage(data, 12).ToArray();
-        //    Assert.Equal(expected12.Length, actual.Length);
-        //    for (int i = 0; i < actual.Length; i++)
-        //        AssertDecimals(expected12[i], actual[i],6);
-        //}
+        [Theory]
+        [MemberData(nameof(DataFor12DaysEma))]
+        private void ExpotentialMovingAverage12Test(decimal[] data, decimal[] expected12DaysEma)
+        {
+            var actual12DaysEma = MovingAverageHelper.ExpotentialMovingAverage(data, 12);
+            Assert.Equal(expected12DaysEma.Length, actual12DaysEma.Count);
+            for (int i = 0; i < actual12DaysEma.Count; i++)
+                AssertDecimals(expected12DaysEma[i], actual12DaysEma[i], 6);
+        }
 
-        //[Fact]
-        //private void MacdLineTest()
-        //{
-        //    var l1 = MacdData.Get12DaysEma().Skip(26 - 12).ToArray();
-        //    var l2 = MacdData.Get26DaysEma().ToArray();
-        //    IList<decimal> expectedLine = new List<decimal>();
-        //    for(int i=0; i<l2.Length; i++)
-        //        expectedLine.Add(l1[i]-l2[i]);
-        //    var actualLine = MacdHelper.CalculateMacdLine(MacdData.HistorcalData, 26, 12);
-        //    Assert.NotNull(actualLine);
-        //    Assert.NotNull(actualLine.Values);
-        //    Assert.Equal(expectedLine.Count, actualLine.Values.Count);
-        //    for(int i=0; i<expectedLine.Count; i++)
-        //        AssertDecimals(expectedLine[i], actualLine.Values[i],6);
-        //}
-
-        //[Fact]
-        //private void SignalLineTest()
-        //{
-        //    var expectedLine = MacdData.Get9DaysSignal().ToArray();
-        //    var actualLine = MacdHelper.CalculateSignalLine(MacdHelper.CalculateMacdLine(MacdData.HistorcalData, 26, 12), 9);
-        //    Assert.NotNull(actualLine);
-        //    Assert.NotNull(actualLine.Values);
-        //    Assert.Equal(expectedLine.Length, actualLine.Values.Count);
-        //    for (int i = 0; i < expectedLine.Length; i++)
-        //        AssertDecimals(expectedLine[i], actualLine.Values[i],6);
-        //}
+        [Theory]
+        [MemberData(nameof(DataFor9DaysSignalLine))]
+        private void SignalLineTest(decimal[] data, decimal[] expected9DaysSignalLine)
+        {
+            MacdIndicator indicator = new MacdIndicator();
+            var actual9DaysSignalLine =
+                indicator.CalculateSignalLine(data.Select(x => new Price() {ClosePrice = x}).ToList());
+            Assert.Equal(expected9DaysSignalLine.Length, actual9DaysSignalLine.Count);
+            for (int i = 0; i < expected9DaysSignalLine.Length; i++)
+                AssertDecimals(expected9DaysSignalLine[i], actual9DaysSignalLine[i], 6);
+        }
 
         //[Fact]
         //private void IntersectionTest()
