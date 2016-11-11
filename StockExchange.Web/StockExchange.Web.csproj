@@ -2397,6 +2397,7 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\ChartsController.cs" />
     <Compile Include="Controllers\PriceController.cs" />
+    <Compile Include="Controllers\WalletController.cs" />
     <Compile Include="Helpers\CustomFormatResolver.cs" />
     <Compile Include="Helpers\DataTableMessageConverter.cs" />
     <Compile Include="Global.asax.cs">
@@ -2431,6 +2432,7 @@
     <Content Include="Views\Charts\Index.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\Wallet\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
