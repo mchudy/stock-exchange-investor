@@ -4,8 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FluentAssertions;
-using StockExchange.Indicators;
-using StockExchange.Indicators.Helpers;
+using StockExchange.Business.Indicators;
 using Xunit;
 using Xunit.Extensions;
 
@@ -21,9 +20,7 @@ namespace StockExchange.UnitTest.Indicators
 
         static MacdTests()
         {
-            var list = new List<object[]>();
-            list.Add(new object[] { MacdData.HistorcalData, MacdData.Get26DaysEma() });
-            DataFor26DaysEma = list;
+            DataFor26DaysEma = new List<object[]> { new object[] { MacdData.HistorcalData, MacdData.Get26DaysEma() } };
         }
 
         private static void AssertDecimals(decimal expected, decimal actual, int prec)
@@ -36,10 +33,10 @@ namespace StockExchange.UnitTest.Indicators
         [MemberData(nameof(DataFor26DaysEma))]
         private void ExpotentialMovingAverage26Test(decimal[] data, decimal[] expected26DaysEma)
         {
-            decimal[] actual26TermEma = MacdHelper.CalculateExpotentialMovingAverage(data, 26).ToArray(); //refactor
-            Assert.Equal(expected26DaysEma.Length, actual26TermEma.Length);
-            for(int i=0; i<actual26TermEma.Length; i++)
-                AssertDecimals(expected26DaysEma[i], actual26TermEma[i], 6);
+            var actual26DaysEma = MovingAverageHelper.ExpotentialMovingAverage(data, 26);
+            Assert.Equal(expected26DaysEma.Length, actual26DaysEma.Count);
+            for(int i=0; i<actual26DaysEma.Count; i++)
+                AssertDecimals(expected26DaysEma[i], actual26DaysEma[i], 6);
         }
 
         //[Fact]

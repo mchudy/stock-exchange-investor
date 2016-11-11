@@ -19,10 +19,19 @@ namespace StockExchange.Business.Indicators
 
         public MacdIndicator() : base()
         {
+            Initialize();
         }
 
         public MacdIndicator(IRepository<Price> priceRepository) : base(priceRepository)
         {
+            Initialize();
+        }
+
+        private void Initialize()
+        {
+            LongTerm = 26;
+            ShortTerm = 12;
+            SignalTerm = 9;
         }
 
         public override IList<decimal> Calculate(IList<Price> historicalPrices)
