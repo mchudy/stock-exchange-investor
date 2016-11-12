@@ -56,6 +56,16 @@
         <div class="sidebar">
             <div class="sidebar-content">
                 <ul class="nav sidebar-menu">
+                    @if (Request.IsAuthenticated)
+                    {
+                        <li class="list-header"></li>
+                        <li class="">
+                            <a href="#">
+                                <i class="fa fa-dashboard fa-lg"></i>
+                                <span>Dashboard</span>
+                            </a>
+                        </li>
+                    }
                     <li class="list-header">Data</li>
                     <li class="@Html.IsSelected("Price", "Price")">
                         <a href="@Url.Action("Price", "Price")">
@@ -65,22 +75,26 @@
                     </li>
                     <li class="@Html.IsSelected("Charts", "Index")">
                         <a href="@Url.Action("Index", "Charts")">
-                            <i class="fa fa-area-chart fa-lg"></i>
+                            <i class="fa fa-line-chart fa-lg"></i>
                             <span>Charts</span>
                         </a>
                     </li>
-                    <li class="@Html.IsSelected("Wallet", "Index")">
-                        <a href="@Url.Action("Index", "Wallet")">
-                            <i class="fa fa-area-chart fa-lg"></i>
-                            <span>Wallet</span>
-                        </a>
-                    </li>
-                    <li class="@Html.IsSelected("Transactions", "Index")">
-                        <a href="@Url.Action("Index", "Transactions")">
-                            <i class="fa fa-table fa-lg"></i>
-                            <span>Transactions</span>
-                        </a>
-                    </li>
+                    @if (Request.IsAuthenticated)
+                    {
+                        <li class="list-header">Your investments</li>
+                        <li class="@Html.IsSelected("Wallet", "Index")">
+                            <a href="@Url.Action("Index", "Wallet")">
+                                <i class="fa fa-pie-chart fa-lg"></i>
+                                <span>Wallet</span>
+                            </a>
+                        </li>
+                        <li class="@Html.IsSelected("Transactions", "Index")">
+                            <a href="@Url.Action("Index", "Transactions")">
+                                <i class="fa fa-usd fa-lg"></i>
+                                <span>Transactions</span>
+                            </a>
+                        </li>
+                    }
                 </ul>
             </div>
         </div>

@@ -10,3 +10,6 @@ table.dataTable thead .dataTableFilterRow th button {
 .dataTables_wrapper .row:last-child {
   margin-top: 10px;
 }
+.prices-table {
+  max-width: 1573px !important;
+}

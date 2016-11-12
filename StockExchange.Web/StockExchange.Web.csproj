@@ -2370,6 +2370,8 @@
     <Content Include="Connections.config">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Content\css\colors.less" />
+    <Content Include="Content\css\boxes.less" />
     <None Include="Log4Net.Debug.config">
       <DependentUpon>Log4Net.config</DependentUpon>
       <IsTransformFile>True</IsTransformFile>

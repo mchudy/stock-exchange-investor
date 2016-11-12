@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 
 namespace StockExchange.Web.Controllers
 {
+    [Authorize]
     public class TransactionsController : BaseController
     {
         [HttpGet]

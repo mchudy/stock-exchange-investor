@@ -1,16 +1,23 @@
-﻿@sidebar-width: 200px;
+﻿@import "colors.less";
+@import "boxes.less";
+
+@sidebar-width: 200px;
 @navbar-height: 50px;
 @sidebar-transition-time: .30s;
+@input-radius: 0;
 
 body {
     background-color: #f1f4f7;
     font-family: 'Open Sans','Helvetica Neue',Helvetica,Arial,sans-serif;
 }
 
+.clearfix{
+  zoom:1;
+  &:before, &:after{ content:""; display:table; }
+  &:after{ clear: both; }
+}
+
 .transition (@transition) {
-    -webkit-transition: @transition;
-    -moz-transition: @transition;
-    -o-transition: @transition;
     transition: @transition;
 }
 
@@ -88,7 +95,7 @@ body {
     width: @sidebar-width;
     background-color: #f5f5f5;
     min-height: 100%;
-    background-color: #232323;
+    background-color: @dark-gray;
     .transition(left ease @sidebar-transition-time);
 
     &.hide-sidebar {
@@ -102,7 +109,8 @@ body {
             padding: 12px 12px 8px 12px;
             font-weight: 600;
             color: #a19a9a;
-            font-size: 12px;
+            font-size: 11px;
+            text-transform: uppercase;
         }
 
         &.active {
@@ -139,10 +147,7 @@ footer {
     left: 0;
     right: 0;
     padding: 10px 0 10px 0;
-}
-
-.prices-table {
-    max-width: 1573px !important;
+    font-size: 11px;
 }
 
 .width-big {
@@ -175,7 +180,6 @@ footer {
     width: 75px !important;
 }
 
-
 .icheckbox_flat, .iradio_flat {
     background-image: url("../../bower_components/Bootflat/bootflat/img/check_flat/default.png");
     height: 25px;
@@ -191,9 +195,86 @@ footer {
 }
 
 .glyphicon-ok.form-control-feedback {
-    color: #8cc152;
+    color: @green;
 }
 
 .has-error .form-control-feedback {
-    color: #d91d30;
+    color: @red;
+}
+
+.form-control {
+  border-radius: @input-radius;
+  box-shadow: none;
+  border-color: @gray;
+  &:focus {
+    border-color: @light-blue;
+    box-shadow: none;
+  }
+  &::-moz-placeholder,
+  &:-ms-input-placeholder,
+  &::-webkit-input-placeholder {
+    color: #bbb;
+    opacity: 1;
+  }
+
+  &:not(select) {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+  }
+}
+
+.form-group {
+  &.has-success {
+    label {
+      color: @green;
+    }
+    .form-control,
+    .input-group-addon {
+      border-color: @green;
+      box-shadow: none;
+    }
+    .help-block {
+      color: @green;
+    }
+  }
+
+  &.has-warning {
+    label {
+      color: @yellow;
+    }
+    .form-control,
+    .input-group-addon {
+      border-color: @yellow;
+      box-shadow: none;
+    }
+    .help-block {
+      color: @yellow;
+    }
+  }
+
+  &.has-error {
+    label {
+      color: @red;
+    }
+    .form-control,
+    .input-group-addon {
+      border-color: @red;
+      box-shadow: none;
+    }
+    .help-block {
+      color: @red;
+    }
+  }
+}
+
+.input-group {
+  .input-group-addon {
+    border-radius: @input-radius;
+    border-color: @gray;
+  }
+}
+
+.btn {
+    border-radius: @input-radius;
 }
