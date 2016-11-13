@@ -19,7 +19,13 @@ namespace StockExchange.Web.Controllers
 
         public ActionResult Index()
         {
-            return View();
+            //TODO: load companies list from the view via AJAX
+            var companies = _priceManager.GetAllCompanies();
+            var model = new ChartsIndexModel
+            {
+                Companies = companies
+            };
+            return View(model);
         }
 
         [HttpGet]
@@ -43,7 +49,14 @@ namespace StockExchange.Web.Controllers
             {
                 CompanyId = cp.Company.Id,
                 Name = cp.Company.Code,
-                Data = cp.Prices.Select(p => new[] { p.Date.ToJavaScriptTimeStamp(), p.OpenPrice, p.HighPrice, p.LowPrice, p.ClosePrice }).ToList()
+                Data = cp.Prices.Select(p => new[]
+                {
+                    p.Date.ToJavaScriptTimeStamp(),
+                    p.OpenPrice,
+                    p.HighPrice,
+                    p.LowPrice,
+                    p.ClosePrice
+                }).ToList()
             });
             return new JsonNetResult(model);
         }

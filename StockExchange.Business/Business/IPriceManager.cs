@@ -9,6 +9,7 @@ namespace StockExchange.Business.Business
         PagedList<PriceDto> Get(PagedFilterDefinition<PriceFilter> pagedFilterDefinition);
 
         IEnumerable<string> GetCompanyNames();
+        IList<CompanyDto> GetAllCompanies();
 
         object GetValues(FilterDefinition<PriceFilter> toPagedFilterDefinition, string fieldName);
 

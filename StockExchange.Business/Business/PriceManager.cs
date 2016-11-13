@@ -40,9 +40,21 @@ namespace StockExchange.Business.Business
             return values.ToList();
         }
 
+        //TODO: move to CompanyService
         public IEnumerable<string> GetCompanyNames()
         {
             return _companyRepository.GetQueryable().Select(item => item.Name).Distinct().ToList();
+        }
+
+        //TODO: move to CompanyService
+        public IList<CompanyDto> GetAllCompanies()
+        {
+            return _companyRepository.GetQueryable().Select(c => new CompanyDto
+            {
+                Code = c.Code,
+                Id = c.Id,
+                Name = c.Name
+            }).ToList();
         }
 
         public IList<CompanyPricesDto> GetPricesForCompanies(IList<int> companyIds)

@@ -150,36 +150,6 @@ footer {
     font-size: 11px;
 }
 
-.width-big {
-    min-width: 300px !important;
-    max-width: 300px !important;
-    width: 300px !important;
-}
-
-.width-normal {
-    min-width: 200px !important;
-    max-width: 200px !important;
-    width: 200px !important;
-}
-
-.width-small {
-    min-width: 150px !important;
-    max-width: 150px !important;
-    width: 150px !important;
-}
-
-.width-smaller {
-    min-width: 100px !important;
-    max-width: 100px !important;
-    width: 100px !important;
-}
-
-.width-smallest {
-    min-width: 75px !important;
-    max-width: 75px !important;
-    width: 75px !important;
-}
-
 .icheckbox_flat, .iradio_flat {
     background-image: url("../../bower_components/Bootflat/bootflat/img/check_flat/default.png");
     height: 25px;
@@ -276,5 +246,9 @@ footer {
 }
 
 .btn {
+    border-radius: @input-radius;
+}
+
+.select2-container--default .select2-selection--multiple {
     border-radius: @input-radius;
 }

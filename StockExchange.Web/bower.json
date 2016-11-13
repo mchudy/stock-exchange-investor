@@ -15,6 +15,7 @@
     "font-awesome": "4.6.1",
     "Bootflat": "2.0.4",
     "highcharts": "5.0.2",
-    "jquery-validation-unobtrusive": "3.2.6"
+    "jquery-validation-unobtrusive": "3.2.6",
+    "select2": "4.0.3" 
   }
 }
