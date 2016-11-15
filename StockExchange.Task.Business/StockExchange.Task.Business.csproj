@@ -57,9 +57,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataSynchronizerGpw.cs" />
     <Compile Include="Helpers\CsvImporter.cs" />
     <Compile Include="DataSynchronizer.cs" />
     <Compile Include="Helpers\PriceConverter.cs" />
+    <Compile Include="IDataSynchronizerGpw.cs" />
     <Compile Include="IDataSynchronizer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

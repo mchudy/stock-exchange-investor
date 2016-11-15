@@ -19,6 +19,7 @@ namespace StockExchange.Task.App
             builder.RegisterType<GenericRepository<Company>>().As<IRepository<Company>>();
             builder.RegisterType<Factory<GenericRepository<Price>>>().As<IFactory<IRepository<Price>>>();
             builder.RegisterType<DataSynchronizer>().As<IDataSynchronizer>();
+            builder.RegisterType<DataSynchronizerGpw>().As<IDataSynchronizerGpw>();
             builder.RegisterAssemblyTypes(assembly).Where(CommandHelper.IsCommand).Named<ICommand>(a => CommandHelper.GetCommandName(a).Name);
             return builder.Build();
         }
