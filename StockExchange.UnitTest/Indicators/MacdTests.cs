@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using FluentAssertions;
 using StockExchange.Business.Indicators;
 using StockExchange.DataAccess.Models;
 using Xunit;
-using Xunit.Extensions;
 
 namespace StockExchange.UnitTest.Indicators
 {
@@ -18,16 +14,19 @@ namespace StockExchange.UnitTest.Indicators
     public class MacdTests
     {
         public static IEnumerable<object[]> DataFor26DaysEma { get; }
+
         public static IEnumerable<object[]> DataFor12DaysEma { get; }
+
         public static IEnumerable<object[]> DataFor9DaysSignalLine { get; }
 
         static MacdTests()
         {
             DataFor26DaysEma = new List<object[]> { new object[] { MacdData.HistorcalData, MacdData.Get26DaysEma() } };
-            DataFor12DaysEma = new List<object[]> { new object[] {MacdData.HistorcalData, MacdData.Get12DaysEma()}};
-            DataFor9DaysSignalLine = new List<object[]> { new object[] {MacdData.HistorcalData, MacdData.Get9DaysSignal()}};
+            DataFor12DaysEma = new List<object[]> { new object[] { MacdData.HistorcalData, MacdData.Get12DaysEma() } };
+            DataFor9DaysSignalLine = new List<object[]> { new object[] { MacdData.HistorcalData, MacdData.Get9DaysSignal() } };
         }
 
+        // ReSharper disable once UnusedParameter.Local
         private static void AssertDecimals(decimal expected, decimal actual, int prec)
         {
             var diff = expected - actual;
@@ -40,7 +39,7 @@ namespace StockExchange.UnitTest.Indicators
         {
             var actual26DaysEma = MovingAverageHelper.ExpotentialMovingAverage(data, 26);
             Assert.Equal(expected26DaysEma.Length, actual26DaysEma.Count);
-            for(int i=0; i<actual26DaysEma.Count; i++)
+            for (var i = 0; i < actual26DaysEma.Count; i++)
                 AssertDecimals(expected26DaysEma[i], actual26DaysEma[i], 6);
         }
 
@@ -50,7 +49,7 @@ namespace StockExchange.UnitTest.Indicators
         {
             var actual12DaysEma = MovingAverageHelper.ExpotentialMovingAverage(data, 12);
             Assert.Equal(expected12DaysEma.Length, actual12DaysEma.Count);
-            for (int i = 0; i < actual12DaysEma.Count; i++)
+            for (var i = 0; i < actual12DaysEma.Count; i++)
                 AssertDecimals(expected12DaysEma[i], actual12DaysEma[i], 6);
         }
 
@@ -58,11 +57,11 @@ namespace StockExchange.UnitTest.Indicators
         [MemberData(nameof(DataFor9DaysSignalLine))]
         private void SignalLineTest(decimal[] data, decimal[] expected9DaysSignalLine)
         {
-            MacdIndicator indicator = new MacdIndicator();
+            var indicator = new MacdIndicator();
             var actual9DaysSignalLine =
-                indicator.CalculateSignalLine(data.Select(x => new Price() {ClosePrice = x}).ToList());
+                indicator.CalculateSignalLine(data.Select(x => new Price() { ClosePrice = x }).ToList());
             Assert.Equal(expected9DaysSignalLine.Length, actual9DaysSignalLine.Count);
-            for (int i = 0; i < expected9DaysSignalLine.Length; i++)
+            for (var i = 0; i < expected9DaysSignalLine.Length; i++)
                 AssertDecimals(expected9DaysSignalLine[i], actual9DaysSignalLine[i], 6);
         }
 

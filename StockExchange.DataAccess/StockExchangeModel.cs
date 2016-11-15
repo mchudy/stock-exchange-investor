@@ -7,12 +7,11 @@ namespace StockExchange.DataAccess
 {
     using System.Data.Entity;
 
-    public sealed class StockExchangeModel
-        : IdentityDbContext<User, AppRole, int, AppUserLogin, AppUserRole, AppUserClaim>
+    public sealed class StockExchangeModel : IdentityDbContext<User, AppRole, int, AppUserLogin, AppUserRole, AppUserClaim>
     {
-        public StockExchangeModel()
-            : base("name=StockExchangeModel")
+        public StockExchangeModel() : base("name=StockExchangeModel")
         {
+
         }
 
         public IDbSet<Company> Companies { get; set; }

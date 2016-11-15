@@ -9,19 +9,19 @@ namespace StockExchange.DataAccess.Repositories
 {
     public class GenericRepository<TEntity> : IRepository<TEntity> where TEntity : class
     {
-        protected readonly StockExchangeModel _context;
-        protected readonly IDbSet<TEntity> _dbSet;
+        protected readonly StockExchangeModel Context;
+        protected readonly IDbSet<TEntity> DbSet;
 
         public GenericRepository()
         {
-            _context = new StockExchangeModel();
-            _dbSet = _context.Set<TEntity>();
+            Context = new StockExchangeModel();
+            DbSet = Context.Set<TEntity>();
         }
 
         public GenericRepository(StockExchangeModel context)
         {
-            _context = context;
-            _dbSet = context.Set<TEntity>();
+            Context = context;
+            DbSet = context.Set<TEntity>();
         }
 
         public IQueryable<TEntity> GetQueryable(Expression<Func<TEntity, bool>> filter = null,
@@ -29,7 +29,7 @@ namespace StockExchange.DataAccess.Repositories
            List<Expression<Func<TEntity, object>>> includeProperties = null,
            int? page = null, int? pageSize = null)
         {
-            IQueryable<TEntity> query = _dbSet;
+            IQueryable<TEntity> query = DbSet;
             includeProperties?.ForEach(i => { query = query.Include(i); });
             if (filter != null)
                 query = query.Where(filter);
@@ -42,12 +42,12 @@ namespace StockExchange.DataAccess.Repositories
 
         public void Insert(TEntity entity)
         {
-            _dbSet.Add(entity);
+            DbSet.Add(entity);
         }
 
         public int Save()
         {
-            return _context.SaveChanges();
+            return Context.SaveChanges();
         }
 
         public void Dispose()
@@ -60,7 +60,7 @@ namespace StockExchange.DataAccess.Repositories
         {
             if (disposing)
             {
-                _context.Dispose();
+                Context.Dispose();
             }
         }
         ~GenericRepository()

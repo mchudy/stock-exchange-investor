@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using StockExchange.DataAccess.IRepositories;
 using StockExchange.DataAccess.Models;
 
@@ -14,10 +11,12 @@ namespace StockExchange.Business.Indicators
     public class MacdIndicator : BaseIndicator
     {
         public int LongTerm { get; set; }
+
         public int ShortTerm { get; set; }
+
         public int SignalTerm { get; set; }
 
-        public MacdIndicator() : base()
+        public MacdIndicator()
         {
             Initialize();
         }
@@ -44,11 +43,8 @@ namespace StockExchange.Business.Indicators
             var list = historicalPrices.Select(x => x.ClosePrice).ToList();
             var longEma = MovingAverageHelper.ExpotentialMovingAverage(list, LongTerm);
             var shortEma = MovingAverageHelper.ExpotentialMovingAverage(list, ShortTerm);
-            int diff = LongTerm - ShortTerm;
-            var macdLine = new List<decimal>();
-            for (int i = 0; i < longEma.Count; i++)
-                macdLine.Add(shortEma[i+diff] - longEma[i]);
-            return macdLine;
+            var diff = LongTerm - ShortTerm;
+            return longEma.Select((t, i) => shortEma[i + diff] - t).ToList();
         }
 
         public IList<decimal> CalculateSignalLine(IList<Price> historicalPrices)
@@ -57,6 +53,7 @@ namespace StockExchange.Business.Indicators
             return MovingAverageHelper.ExpotentialMovingAverage(list, SignalTerm);
         }
 
+        // ReSharper disable once UnusedMember.Local
         private IList<decimal> CalculateSignalLine(IList<decimal> macdLine)
         {
             return MovingAverageHelper.ExpotentialMovingAverage(macdLine, SignalTerm);

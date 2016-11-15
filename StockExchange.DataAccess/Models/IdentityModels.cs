@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNet.Identity.EntityFramework;
+﻿using System.Data.Entity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using System.Security.Claims;
 using System.Security.Principal;
 
@@ -13,7 +14,9 @@ namespace StockExchange.DataAccess.Models
     public class AppRole : IdentityRole<int, AppUserRole>
     {
         public AppRole()
-        { }
+        {
+            
+        }
 
         public AppRole(string name)
         {
@@ -21,11 +24,9 @@ namespace StockExchange.DataAccess.Models
         }
     }
 
-    public class ApplicationUserStore :
-        UserStore<User, AppRole, int, AppUserLogin, AppUserRole, AppUserClaim>
+    public class ApplicationUserStore : UserStore<User, AppRole, int, AppUserLogin, AppUserRole, AppUserClaim>
     {
-
-        public ApplicationUserStore(StockExchangeModel context) : base(context)
+        public ApplicationUserStore(DbContext context) : base(context)
         {
 
         }
@@ -33,16 +34,17 @@ namespace StockExchange.DataAccess.Models
 
     public class AppRoleStore : RoleStore<AppRole, int, AppUserRole>
     {
-        public AppRoleStore(StockExchangeModel context)
-            : base(context)
+        public AppRoleStore(DbContext context) : base(context)
         {
+
         }
     }
 
     public class AppClaimsPrincipal : ClaimsPrincipal
     {
         public AppClaimsPrincipal(IPrincipal principal) : base(principal)
-        { }
-
+        {
+            
+        }
     }
 }
