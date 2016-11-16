@@ -1,4 +1,6 @@
 ﻿using log4net;
+using NPOI.POIFS.FileSystem;
+using NPOI.SS.UserModel;
 using StockExchange.Common;
 using StockExchange.DataAccess.IRepositories;
 using StockExchange.DataAccess.Models;
@@ -8,8 +10,6 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Runtime.InteropServices;
-using Excel = Microsoft.Office.Interop.Excel;
 
 namespace StockExchange.Task.Business
 {
@@ -66,7 +66,7 @@ namespace StockExchange.Task.Business
                     LowPrice = min,
                     OpenPrice = open,
                     Volume = volumen
-                });            
+                });
             }
             _priceRepository.Save();
             Logger.Debug("Syncing historical data ended.");
@@ -74,32 +74,23 @@ namespace StockExchange.Task.Business
 
         private static string[,] ReadExcel(string fullPath)
         {
-            // Reference to Excel Application
-            var xlApp = new Excel.Application();
-            var xlWorkbook = xlApp.Workbooks.Open(fullPath);
-            // Get the first worksheet
-            var xlWorksheet = (Excel.Worksheet)xlWorkbook.Sheets.Item[1];
-            // Get the range of cells which has data.
-            var xlRange = xlWorksheet.UsedRange;
-            // Get an object array of all of the cells in the worksheet with their values
-            var valueArray = (object[,])xlRange.Value[Excel.XlRangeValueDataType.xlRangeValueDefault];
-            // iterate through each cell and display the contents
-            var arr = new string[xlWorksheet.UsedRange.Rows.Count, xlWorksheet.UsedRange.Columns.Count];
-            for (var row = 1; row <= xlWorksheet.UsedRange.Rows.Count; ++row)
+            IWorkbook workbook;
+            using (FileStream file = new FileStream(fullPath, FileMode.Open, FileAccess.Read))
             {
-                for (var col = 1; col <= xlWorksheet.UsedRange.Columns.Count; ++col)
+                var fs = new NPOIFSFileSystem(file);
+                workbook = WorkbookFactory.Create(fs);
+            }
+
+            ISheet sheet = workbook.GetSheetAt(0);
+            var arr = new string[sheet.PhysicalNumberOfRows, sheet.GetRow(1).PhysicalNumberOfCells];
+            for (int row = 0; row <= sheet.LastRowNum; row++)
+            {
+                for (int col = 0; col < sheet.GetRow(row).PhysicalNumberOfCells; col++)
                 {
-                    arr[row - 1, col - 1] = valueArray[row, col].ToString();
+                    arr[row, col] = sheet.GetRow(row).GetCell(col).ToString();
                 }
             }
-            // Close the Workbook
-            xlWorkbook.Close(false);
-            // Relase COM Object by decrementing the reference count
-            Marshal.ReleaseComObject(xlWorkbook);
-            // Close Excel application
-            xlApp.Quit();
-            // Release COM object
-            Marshal.FinalReleaseComObject(xlApp);
+
             return arr;
         }
 

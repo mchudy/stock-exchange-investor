@@ -20,8 +20,12 @@ namespace StockExchange.Task.App.Commands
         public void Execute(IEnumerable<string> parameters)
         {
             var arrayParameters = parameters as string[] ?? parameters.ToArray();
-            var startDate = arrayParameters.Any() ? DateTime.ParseExact(arrayParameters[0], Consts.Formats.DateFormat, System.Globalization.CultureInfo.InvariantCulture) : DateTime.Parse(Consts.SyncDataParameters.StartDate);
-            var endDate = arrayParameters.Length > 1 ? DateTime.ParseExact(arrayParameters[1], Consts.Formats.DateFormat, System.Globalization.CultureInfo.InvariantCulture) : DateTime.Now;
+            var startDate = arrayParameters.Any() 
+                ? DateTime.ParseExact(arrayParameters[0], Consts.Formats.DateFormat, System.Globalization.CultureInfo.InvariantCulture) 
+                : DateTime.Parse(Consts.SyncDataParameters.StartDate);
+            var endDate = arrayParameters.Length > 1 
+                ? DateTime.ParseExact(arrayParameters[1], Consts.Formats.DateFormat, System.Globalization.CultureInfo.InvariantCulture) 
+                : DateTime.Now;
             var companyCodes = arrayParameters.Length > 2 ? arrayParameters.Skip(2) : null;
             _synchronizer.Sync(startDate, endDate, companyCodes);
         }
