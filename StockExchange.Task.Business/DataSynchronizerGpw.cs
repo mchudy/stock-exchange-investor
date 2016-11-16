@@ -2,10 +2,14 @@
 using StockExchange.Common;
 using StockExchange.DataAccess.IRepositories;
 using StockExchange.DataAccess.Models;
-using StockExchange.Task.Business.Helpers;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
 using System.Linq;
+using System.Net;
+using System.Runtime.InteropServices;
+using Excel = Microsoft.Office.Interop.Excel;
 
 namespace StockExchange.Task.Business
 {
@@ -13,12 +17,12 @@ namespace StockExchange.Task.Business
     {
         private static readonly ILog Logger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         private readonly IRepository<Company> _companyRepository;
-        private readonly IFactory<IRepository<Price>> _priceRepositoryFactory;
+        private readonly IRepository<Price> _priceRepository;
 
-        public DataSynchronizerGpw(IRepository<Company> companyRepository, IFactory<IRepository<Price>> priceRepositoryFactory)
+        public DataSynchronizerGpw(IRepository<Company> companyRepository, IRepository<Price> priceRepository)
         {
             _companyRepository = companyRepository;
-            _priceRepositoryFactory = priceRepositoryFactory;
+            _priceRepository = priceRepository;
         }
 
         public void Sync(DateTime date)
@@ -26,39 +30,77 @@ namespace StockExchange.Task.Business
             Logger.Debug("Syncing historical data started");
             var dateString = date.ToString(Consts.Formats.DateGpwFormat);
             IList<Company> companies = _companyRepository.GetQueryable().ToList();
-            IList<Price> prices = _priceRepositoryFactory.CreateInstance().GetQueryable().ToList();
+            IList<Price> prices = _priceRepository.GetQueryable().ToList();
             var url = CreatePathUrl(dateString);
-
+            var client = new WebClient();
+            var fullPath = Path.GetTempFileName();
+            client.DownloadFile(url, fullPath);
+            var data = ReadExcel(fullPath);
+            for (var i = 1; i < data.GetLength(0); ++i)
+            {
+                var day = DateTime.Parse(data[i, 0]);
+                var name = data[i, 1].Trim();
+                var open = decimal.Parse(data[i, 4].Replace(",", "."), NumberStyles.Any, CultureInfo.InvariantCulture);
+                var max = decimal.Parse(data[i, 5].Replace(",", "."), NumberStyles.Any, CultureInfo.InvariantCulture);
+                var min = decimal.Parse(data[i, 6].Replace(",", "."), NumberStyles.Any, CultureInfo.InvariantCulture);
+                var close = decimal.Parse(data[i, 7].Replace(",", "."), NumberStyles.Any, CultureInfo.InvariantCulture);
+                var volumen = int.Parse(data[i, 9]);
+                if (companies.All(item => item.Code != name))
+                {
+                    _companyRepository.Insert(new Company
+                    {
+                        Code = name,
+                        Name = ""
+                    });
+                    _companyRepository.Save();
+                    companies = _companyRepository.GetQueryable().ToList();
+                }
+                var company = companies.First(item => item.Code == name);
+                if (prices.Any(item => item.Date == day && item.CompanyId == company.Id)) continue;
+                _priceRepository.Insert(new Price
+                {
+                    Date = day,
+                    ClosePrice = close,
+                    CompanyId = company.Id,
+                    HighPrice = max,
+                    LowPrice = min,
+                    OpenPrice = open,
+                    Volume = volumen
+                });            
+            }
+            _priceRepository.Save();
             Logger.Debug("Syncing historical data ended.");
         }
 
-        private void SyncByCompany(string url, Company company, IList<Price> prices)
+        private static string[,] ReadExcel(string fullPath)
         {
-            var data = CsvImporter.GetCsv(url);
-            data.RemoveAt(0);
-            if (!data.Any())
+            // Reference to Excel Application
+            var xlApp = new Excel.Application();
+            var xlWorkbook = xlApp.Workbooks.Open(fullPath);
+            // Get the first worksheet
+            var xlWorksheet = (Excel.Worksheet)xlWorkbook.Sheets.Item[1];
+            // Get the range of cells which has data.
+            var xlRange = xlWorksheet.UsedRange;
+            // Get an object array of all of the cells in the worksheet with their values
+            var valueArray = (object[,])xlRange.Value[Excel.XlRangeValueDataType.xlRangeValueDefault];
+            // iterate through each cell and display the contents
+            var arr = new string[xlWorksheet.UsedRange.Rows.Count, xlWorksheet.UsedRange.Columns.Count];
+            for (var row = 1; row <= xlWorksheet.UsedRange.Rows.Count; ++row)
             {
-                Logger.Warn($"No data available for company {company.Code}");
-            }
-            using (var priceRepository = _priceRepositoryFactory.CreateInstance())
-            {
-                var inserted = false;
-                // ReSharper disable once LoopCanBePartlyConvertedToQuery
-                foreach (var row in data)
+                for (var col = 1; col <= xlWorksheet.UsedRange.Columns.Count; ++col)
                 {
-                    var currentDate = DateTime.Parse(row[0]);
-                    // ReSharper disable once InvertIf
-                    if (!prices.Any(item => item.CompanyId == company.Id && item.Date == currentDate))
-                    {
-                        priceRepository.Insert(PriceConverter.Convert(row, company));
-                        inserted = true;
-                    }
-                }
-                if (inserted)
-                {
-                    priceRepository.Save();
+                    arr[row - 1, col - 1] = valueArray[row, col].ToString();
                 }
             }
+            // Close the Workbook
+            xlWorkbook.Close(false);
+            // Relase COM Object by decrementing the reference count
+            Marshal.ReleaseComObject(xlWorkbook);
+            // Close Excel application
+            xlApp.Quit();
+            // Release COM object
+            Marshal.FinalReleaseComObject(xlApp);
+            return arr;
         }
 
         private static string CreatePathUrl(string dateString)

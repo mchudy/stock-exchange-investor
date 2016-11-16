@@ -10,11 +10,10 @@ namespace StockExchange.DataAccess.Models
         public int Id { get; set; }
 
         [Required]
-        [StringLength(3)]
+        [MaxLength(20)]
         public string Code { get; set; }
 
-        [Required]
-        [StringLength(50)]
+        [MaxLength(50)]
         public string Name { get; set; }
 
         public virtual ICollection<Price> Prices { get; set; } = new HashSet<Price>();
