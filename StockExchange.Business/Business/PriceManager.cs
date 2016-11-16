@@ -40,20 +40,20 @@ namespace StockExchange.Business.Business
             return values.ToList();
         }
 
-        //TODO: move to CompanyService
+        //TODO: move to CompanyService, change code to name
         public IEnumerable<string> GetCompanyNames()
         {
-            return _companyRepository.GetQueryable().Select(item => item.Name).Distinct().ToList();
+            return _companyRepository.GetQueryable().Select(item => item.Code).Distinct().ToList();
         }
 
-        //TODO: move to CompanyService
+        //TODO: move to CompanyService, change Code to Name!!!
         public IList<CompanyDto> GetAllCompanies()
         {
             return _companyRepository.GetQueryable().Select(c => new CompanyDto
             {
                 Code = c.Code,
                 Id = c.Id,
-                Name = c.Name
+                Name = c.Code
             }).ToList();
         }
 
@@ -91,6 +91,7 @@ namespace StockExchange.Business.Business
             return results;
         }
 
+        // TODO change code to name
         private static Expression<Func<Price, PriceDto>> GetSelectDtoExpression()
         {
             return price => new PriceDto
@@ -103,7 +104,7 @@ namespace StockExchange.Business.Business
                 OpenPrice = price.OpenPrice,
                 Volume = price.Volume,
                 CompanyId = price.Company.Id,
-                CompanyName = price.Company.Name
+                CompanyName = price.Company.Code
             };
         }
     }
