@@ -41,7 +41,7 @@ namespace StockExchange.Web.Controllers
         [HttpGet]
         public ActionResult GetFilterValues(DataTableSimpleMessage<PriceFilter> message, string fieldName)
         {
-            object values = _priceManager.GetValues(DataTableMessageConverter.ToFilterDefinition(message), fieldName);
+            var values = _priceManager.GetValues(DataTableMessageConverter.ToFilterDefinition(message), fieldName);
             return new JsonNetResult(values, typeof(PriceDto), fieldName);
         }
 

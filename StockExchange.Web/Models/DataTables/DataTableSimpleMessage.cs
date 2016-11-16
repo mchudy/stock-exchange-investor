@@ -7,6 +7,7 @@ namespace StockExchange.Web.Models.DataTables
         public class DataTableMessageSearch
         {
             public string Value { get; set; }
+
             public bool Regex { get; set; }
         }
 

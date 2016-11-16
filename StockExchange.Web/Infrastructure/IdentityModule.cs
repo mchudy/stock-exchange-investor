@@ -1,6 +1,5 @@
 ﻿using Autofac;
 using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.DataProtection;
 using StockExchange.DataAccess.Models;
 using System.Web;
@@ -23,12 +22,12 @@ namespace StockExchange.Web.Infrastructure
                 .AsSelf()
                 .InstancePerRequest();
 
-            builder.Register<IdentityFactoryOptions<ApplicationUserManager>>(c => new IdentityFactoryOptions<ApplicationUserManager>()
+            builder.Register(c => new IdentityFactoryOptions<ApplicationUserManager>()
             {
                 DataProtectionProvider = new DpapiDataProtectionProvider("StockExchange")
             });
 
-            builder.Register<IAuthenticationManager>(c => HttpContext.Current.GetOwinContext().Authentication)
+            builder.Register(c => HttpContext.Current.GetOwinContext().Authentication)
                 .InstancePerRequest();
         }
     }

@@ -16,9 +16,7 @@ namespace StockExchange.Web
             builder.RegisterAssemblyModules(typeof(Startup).Assembly);
             var container = builder.Build();
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
-
             app.UseAutofacMiddleware(container);
-
             ConfigureAuth(app);
         }
     }

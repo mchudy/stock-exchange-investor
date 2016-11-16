@@ -11,16 +11,14 @@ namespace StockExchange.Web.Controllers
         protected int CurrentUserId => User.Identity.GetUserId<int>();
 
         private User _currentUser;
+
         protected User CurrentUser
         {
             get
             {
-                if (_currentUser == null && User.Identity.IsAuthenticated)
-                {
-                    _currentUser = UserManager.FindById(CurrentUserId);
-                    return _currentUser;
-                }
-                return null;
+                if (_currentUser != null || !User.Identity.IsAuthenticated) return null;
+                _currentUser = UserManager.FindById(CurrentUserId);
+                return _currentUser;
             }
         }
 
