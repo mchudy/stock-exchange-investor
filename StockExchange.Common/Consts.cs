@@ -6,6 +6,7 @@
         {
             public const string Help = "help";
             public const string SyncData = "sync-data";
+            public const string SyncDataGpw = "sync-data-gpw";
             public const string SyncTodayData = "sync-today-data";
             public const string SyncTodayDataGpw = "sync-today-data-gpw";
         }
