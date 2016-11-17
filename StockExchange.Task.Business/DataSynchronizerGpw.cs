@@ -35,7 +35,16 @@ namespace StockExchange.Task.Business
             var client = new WebClient();
             var fullPath = Path.GetTempFileName();
             client.DownloadFile(url, fullPath);
-            var data = ReadExcel(fullPath);
+            string[,] data;
+            try
+            {
+                data = ReadExcel(fullPath);
+            }
+            catch (Exception ex)
+            {
+                Logger.Debug(date.ToString(CultureInfo.InvariantCulture) + ": " + ex.Message);
+                return;
+            }
             for (var i = 1; i < data.GetLength(0); ++i)
             {
                 var day = DateTime.Parse(data[i, 0]);
