@@ -30,7 +30,7 @@ namespace StockExchange.Task.Business
             Logger.Debug("Syncing historical data started");
             var dateString = date.ToString(Consts.Formats.DateGpwFormat);
             IList<Company> companies = _companyRepository.GetQueryable().ToList();
-            IList<Price> prices = _priceRepository.GetQueryable().ToList();
+            IList<Price> prices = _priceRepository.GetQueryable(item => item.Date == date).ToList();
             var url = CreatePathUrl(dateString);
             var client = new WebClient();
             var fullPath = Path.GetTempFileName();
@@ -56,7 +56,7 @@ namespace StockExchange.Task.Business
                     companies = _companyRepository.GetQueryable().ToList();
                 }
                 var company = companies.First(item => item.Code == name);
-                if (prices.Any(item => item.Date == day && item.CompanyId == company.Id)) continue;
+                if (prices.Any(item => item.CompanyId == company.Id)) continue;
                 _priceRepository.Insert(new Price
                 {
                     Date = day,
@@ -75,22 +75,20 @@ namespace StockExchange.Task.Business
         private static string[,] ReadExcel(string fullPath)
         {
             IWorkbook workbook;
-            using (FileStream file = new FileStream(fullPath, FileMode.Open, FileAccess.Read))
+            using (var file = new FileStream(fullPath, FileMode.Open, FileAccess.Read))
             {
                 var fs = new NPOIFSFileSystem(file);
                 workbook = WorkbookFactory.Create(fs);
             }
-
-            ISheet sheet = workbook.GetSheetAt(0);
+            var sheet = workbook.GetSheetAt(0);
             var arr = new string[sheet.PhysicalNumberOfRows, sheet.GetRow(1).PhysicalNumberOfCells];
-            for (int row = 0; row <= sheet.LastRowNum; row++)
+            for (var row = 0; row <= sheet.LastRowNum; row++)
             {
-                for (int col = 0; col < sheet.GetRow(row).PhysicalNumberOfCells; col++)
+                for (var col = 0; col < sheet.GetRow(row).PhysicalNumberOfCells; col++)
                 {
                     arr[row, col] = sheet.GetRow(row).GetCell(col).ToString();
                 }
             }
-
             return arr;
         }
 
