@@ -28,17 +28,15 @@ namespace StockExchange.Task.Business
         public void Sync(DateTime date)
         {
             Logger.Debug("Syncing historical data started");
+
             var dateString = date.ToString(Consts.Formats.DateGpwFormat);
             IList<Company> companies = _companyRepository.GetQueryable().ToList();
             IList<Price> prices = _priceRepository.GetQueryable(item => item.Date == date).ToList();
-            var url = CreatePathUrl(dateString);
-            var client = new WebClient();
-            var fullPath = Path.GetTempFileName();
-            client.DownloadFile(url, fullPath);
+            var pricesToInsert = new List<Price>();
             string[,] data;
             try
             {
-                data = ReadExcel(fullPath);
+                data = LoadData(dateString);
             }
             catch (Exception ex)
             {
@@ -66,7 +64,7 @@ namespace StockExchange.Task.Business
                 }
                 var company = companies.First(item => item.Code == name);
                 if (prices.Any(item => item.CompanyId == company.Id)) continue;
-                _priceRepository.Insert(new Price
+                pricesToInsert.Add(new Price
                 {
                     Date = day,
                     ClosePrice = close,
@@ -77,8 +75,20 @@ namespace StockExchange.Task.Business
                     Volume = volumen
                 });
             }
+            _priceRepository.BulkInsert(pricesToInsert);
             _priceRepository.Save();
+
             Logger.Debug("Syncing historical data ended.");
+        }
+
+        private static string[,] LoadData(string dateString)
+        {
+            var url = CreatePathUrl(dateString);
+            var client = new WebClient();
+            var fullPath = Path.GetTempFileName();
+            client.DownloadFile(url, fullPath);
+            var data = ReadExcel(fullPath);
+            return data;
         }
 
         private static string[,] ReadExcel(string fullPath)

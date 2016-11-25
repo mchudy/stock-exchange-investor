@@ -1,4 +1,5 @@
-﻿using StockExchange.DataAccess.IRepositories;
+﻿using EntityFramework.BulkInsert.Extensions;
+using StockExchange.DataAccess.IRepositories;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -43,6 +44,11 @@ namespace StockExchange.DataAccess.Repositories
         public void Insert(TEntity entity)
         {
             DbSet.Add(entity);
+        }
+
+        public void BulkInsert(IEnumerable<TEntity> entities)
+        {
+            Context.BulkInsert(entities);
         }
 
         public int Save()
