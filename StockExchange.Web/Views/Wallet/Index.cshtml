@@ -1,7 +1,163 @@
-﻿
+﻿@using System.Web.Optimization
 @{
     ViewBag.Title = "Wallet";
 }
 
-<h2>Wallet</h2>
+<div class="row">
+    <div class="col-md-4">
+        <div class="info-box bg-yellow">
+            <span class="info-box-icon"><i class="fa fa-money"></i></span>
 
+            <div class="info-box-content">
+                <span class="info-box-text">Budget</span>
+                <span class="info-box-number">$5,200</span>
+
+                <div class="progress">
+                    <div class="progress-bar progress-bar-success" role="progressbar" style="width: 50%"></div>
+                </div>
+                <span class="progress-description">
+                    50% Increase in 30 Days
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="info-box">
+            <span class="info-box-icon"><i class="fa fa-signal"></i></span>
+            <div class="info-box-content">
+                <span class="info-box-text">Signals</span>
+                <span class="info-box-number">3</span>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="info-box">
+            <span class="info-box-icon"><i class="fa fa-handshake-o"></i></span>
+            <div class="info-box-content">
+                <span class="info-box-text">All transactions</span>
+                <span class="info-box-number">120</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="box box-default">
+            <div class="box-header with-border">
+                <h3 class="box-title">Your stocks</h3>
+            </div>
+            <div class="box-body">
+                <div class="table-responsive">
+                    <table class="table no-margin">
+                        <thead>
+                        <tr>
+                            <th>Company</th>
+                            <th>Price</th>
+                            <th>Change</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>ALIOR</td>
+                            <td>43,96</td>
+                            <td>
+                                <i class="fa fa-arrow-up icon-stock-up"></i>
+                                <span class="text-success">2,80%</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>ASSECO</td>
+                            <td>56,30</td>
+                            <td>
+                                <i class="fa fa-arrow-down icon-stock-down"></i>
+                                <span class="text-danger">-12,00%</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>MBANK</td>
+                            <td>546,30</td>
+                            <td>
+                                <i class="fa fa-arrow-down icon-stock-down"></i>
+                                <span class="text-danger">-3,09%</span>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="col-md-4">
+        <div class="box box-danger">
+            <div class="box-header with-border">
+                <h3 class="box-title">Current signals</h3>
+            </div>
+            <div class="box-body">
+                
+            </div>
+            <div class="box-footer">
+                <span class="text-muted">Currently used strategy: </span>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="box box-warning">
+            <div class="box-header with-border">
+                <h3 class="box-title">Owned stocks</h3>
+            </div>
+            <div class="box-body">
+                <div id="owned-stocks-pie-chart">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    @Scripts.Render("~/bower_components/highcharts/highstock.js")
+    <script>
+        $(function () {
+            Highcharts.chart('owned-stocks-pie-chart', {
+                chart: {
+                    plotBackgroundColor: null,
+                    plotBorderWidth: null,
+                    plotShadow: false,
+                    type: 'pie',
+                    height: 300
+                },
+                title: {
+                    text: ''
+                },
+                tooltip: {
+                    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                },
+                plotOptions: {
+                    pie: {
+                        allowPointSelect: true,
+                        cursor: 'pointer',
+                        dataLabels: {
+                            enabled: false
+                        },
+                        showInLegend: true
+                    }
+                },
+                series: [{
+                    name: 'Company',
+                    colorByPoint: true,
+                    data: [{
+                        name: 'ASSECO',
+                        y: 60
+                    }, {
+                        name: 'ALIOR',
+                        y: 40
+                    }, {
+                        name: 'MBANK',
+                        y: 20
+                    }]
+                }]
+            });
+        });
+    </script>
+}
