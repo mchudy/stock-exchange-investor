@@ -5,6 +5,7 @@ namespace StockExchange.Web.Models.Charts
     public class LineChartModel
     {
         public int CompanyId { get; set; }
+
         public string Name { get; set; }
 
         /// <summary>

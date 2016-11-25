@@ -12,6 +12,7 @@
     @Styles.Render("~/bower_components/jquery-ui/themes/base/jquery-ui.min.css")
     @Styles.Render("~/bower_components/font-awesome/css/font-awesome.min.css")
     @Styles.Render("~/bower_components/Bootflat/bootflat/css/bootflat.min.css")
+    @Styles.Render("~/bower_components/select2/dist/css/select2.min.css")
 
     @Styles.Render("~/Content/css/main.css")
 
@@ -56,6 +57,16 @@
         <div class="sidebar">
             <div class="sidebar-content">
                 <ul class="nav sidebar-menu">
+                    @if (Request.IsAuthenticated)
+                    {
+                        <li class="list-header"></li>
+                        <li class="">
+                            <a href="#">
+                                <i class="fa fa-dashboard fa-lg"></i>
+                                <span>Dashboard</span>
+                            </a>
+                        </li>
+                    }
                     <li class="list-header">Data</li>
                     <li class="@Html.IsSelected("Price", "Price")">
                         <a href="@Url.Action("Price", "Price")">
@@ -65,10 +76,26 @@
                     </li>
                     <li class="@Html.IsSelected("Charts", "Index")">
                         <a href="@Url.Action("Index", "Charts")">
-                            <i class="fa fa-area-chart fa-lg"></i>
+                            <i class="fa fa-line-chart fa-lg"></i>
                             <span>Charts</span>
                         </a>
                     </li>
+                    @if (Request.IsAuthenticated)
+                    {
+                        <li class="list-header">Your investments</li>
+                        <li class="@Html.IsSelected("Wallet", "Index")">
+                            <a href="@Url.Action("Index", "Wallet")">
+                                <i class="fa fa-pie-chart fa-lg"></i>
+                                <span>Wallet</span>
+                            </a>
+                        </li>
+                        <li class="@Html.IsSelected("Transactions", "Index")">
+                            <a href="@Url.Action("Index", "Transactions")">
+                                <i class="fa fa-usd fa-lg"></i>
+                                <span>Transactions</span>
+                            </a>
+                        </li>
+                    }
                 </ul>
             </div>
         </div>
@@ -85,6 +112,7 @@
     @Scripts.Render("~/bower_components/jquery/dist/jquery.min.js")
     @Scripts.Render("~/bower_components/jquery-validation/dist/jquery.validate.js")
     @Scripts.Render("~/bower_components/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js")
+    @Scripts.Render("~/bower_components/select2/dist/js/select2.min.js")
 
     @Scripts.Render("~/bower_components/bootstrap/dist/js/bootstrap.min.js")
     @Scripts.Render("~/bower_components/Bootflat/bootflat/js/icheck.min.js")

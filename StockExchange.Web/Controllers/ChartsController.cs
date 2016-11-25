@@ -1,5 +1,4 @@
 ﻿using StockExchange.Business.Business;
-using StockExchange.Business.Models;
 using StockExchange.Web.Helpers;
 using StockExchange.Web.Models.Charts;
 using System.Collections.Generic;
@@ -19,13 +18,19 @@ namespace StockExchange.Web.Controllers
 
         public ActionResult Index()
         {
-            return View();
+            //TODO: load companies list from the view via AJAX
+            var companies = _priceManager.GetAllCompanies();
+            var model = new ChartsIndexModel
+            {
+                Companies = companies
+            };
+            return View(model);
         }
 
         [HttpGet]
         public ActionResult GetLineChartData(IList<int> companyIds)
         {
-            IList<CompanyPricesDto> companyPrices = _priceManager.GetPricesForCompanies(companyIds);
+            var companyPrices = _priceManager.GetPricesForCompanies(companyIds);
             var model = companyPrices.Select(cp => new LineChartModel
             {
                 CompanyId = cp.Company.Id,
@@ -38,12 +43,19 @@ namespace StockExchange.Web.Controllers
         [HttpGet]
         public ActionResult GetCandlestickChartData(IList<int> companyIds)
         {
-            IList<CompanyPricesDto> companyPrices = _priceManager.GetPricesForCompanies(companyIds);
+            var companyPrices = _priceManager.GetPricesForCompanies(companyIds);
             var model = companyPrices.Select(cp => new LineChartModel
             {
                 CompanyId = cp.Company.Id,
                 Name = cp.Company.Code,
-                Data = cp.Prices.Select(p => new[] { p.Date.ToJavaScriptTimeStamp(), p.OpenPrice, p.HighPrice, p.LowPrice, p.ClosePrice }).ToList()
+                Data = cp.Prices.Select(p => new[]
+                {
+                    p.Date.ToJavaScriptTimeStamp(),
+                    p.OpenPrice,
+                    p.HighPrice,
+                    p.LowPrice,
+                    p.ClosePrice
+                }).ToList()
             });
             return new JsonNetResult(model);
         }

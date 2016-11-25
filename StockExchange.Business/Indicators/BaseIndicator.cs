@@ -4,14 +4,13 @@ using StockExchange.DataAccess.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace StockExchange.Business.Indicators
 {
     public abstract class BaseIndicator : IAutoIndicator
     {
         private readonly IRepository<Price> _priceRepository;
+
         protected BaseIndicator(IRepository<Price> priceRepository)
         {
             _priceRepository = priceRepository;

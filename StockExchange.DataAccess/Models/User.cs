@@ -5,9 +5,11 @@ using System.Threading.Tasks;
 
 namespace StockExchange.DataAccess.Models
 {
+    // ReSharper disable once RedundantExtendsListEntry
     public class User : IdentityUser<int, AppUserLogin, AppUserRole, AppUserClaim>, IUser<int>
     {
         public string FirstName { get; set; }
+
         public string LastName { get; set; }
 
         public string FullName => $"{FirstName} {LastName}";

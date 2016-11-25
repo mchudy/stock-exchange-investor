@@ -10,6 +10,8 @@ namespace StockExchange.Business.Business
 
         IEnumerable<string> GetCompanyNames();
 
+        IList<CompanyDto> GetAllCompanies();
+
         object GetValues(FilterDefinition<PriceFilter> toPagedFilterDefinition, string fieldName);
 
         IList<CompanyPricesDto> GetPricesForCompanies(IList<int> companyIds);

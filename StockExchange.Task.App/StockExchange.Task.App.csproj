@@ -84,7 +84,9 @@
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Commands\HelpCommand.cs" />
     <Compile Include="Commands\ICommand.cs" />
+    <Compile Include="Commands\SyncHistoricalDataGpwCommand.cs" />
     <Compile Include="Commands\SyncHistoricalDataCommand.cs" />
+    <Compile Include="Commands\SyncTodayDataGpwCommand.cs" />
     <Compile Include="Helpers\CommandHelper.cs" />
     <Compile Include="Helpers\CommandNameAttribute.cs" />
     <Compile Include="Program.cs" />

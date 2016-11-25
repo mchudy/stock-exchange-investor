@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace StockExchange.UnitTest.Indicators
+﻿namespace StockExchange.UnitTest.Indicators
 {
     /// <summary>
     /// This data are based on example:
@@ -21,7 +15,7 @@ namespace StockExchange.UnitTest.Indicators
 
         internal static decimal[] GetHistoricalData()
         {
-            return new decimal[]
+            return new[]
             {
                 459.99m,
                 448.85m,
@@ -94,7 +88,7 @@ namespace StockExchange.UnitTest.Indicators
 
         internal static decimal[] Get12DaysEma()
         {
-            return new decimal[]
+            return new[]
             {
                 440.8975m,
                 439.3101923m,
@@ -153,10 +147,10 @@ namespace StockExchange.UnitTest.Indicators
                 441.0857716m
             };
         }
-    
+
         internal static decimal[] Get26DaysEma()
-        { 
-            return new decimal[]
+        {
+            return new[]
             {
                 443.2896154m,
                 443.940755m,
@@ -204,7 +198,7 @@ namespace StockExchange.UnitTest.Indicators
 
         internal static decimal[] Get9DaysSignal()
         {
-            return new decimal[]
+            return new[]
             {
                 3.037525869m,
                 1.905652229m,

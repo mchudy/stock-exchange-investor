@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNet.Identity.EntityFramework;
 using System.Security.Claims;
 using System.Security.Principal;
+// ReSharper disable SuggestBaseTypeForParameter
 
 namespace StockExchange.DataAccess.Models
 {
@@ -13,7 +14,9 @@ namespace StockExchange.DataAccess.Models
     public class AppRole : IdentityRole<int, AppUserRole>
     {
         public AppRole()
-        { }
+        {
+
+        }
 
         public AppRole(string name)
         {
@@ -21,10 +24,8 @@ namespace StockExchange.DataAccess.Models
         }
     }
 
-    public class ApplicationUserStore :
-        UserStore<User, AppRole, int, AppUserLogin, AppUserRole, AppUserClaim>
+    public class ApplicationUserStore : UserStore<User, AppRole, int, AppUserLogin, AppUserRole, AppUserClaim>
     {
-
         public ApplicationUserStore(StockExchangeModel context) : base(context)
         {
 
@@ -33,16 +34,17 @@ namespace StockExchange.DataAccess.Models
 
     public class AppRoleStore : RoleStore<AppRole, int, AppUserRole>
     {
-        public AppRoleStore(StockExchangeModel context)
-            : base(context)
+        public AppRoleStore(StockExchangeModel context) : base(context)
         {
+
         }
     }
 
     public class AppClaimsPrincipal : ClaimsPrincipal
     {
         public AppClaimsPrincipal(IPrincipal principal) : base(principal)
-        { }
+        {
 
+        }
     }
 }

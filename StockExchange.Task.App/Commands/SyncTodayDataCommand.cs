@@ -12,7 +12,7 @@ namespace StockExchange.Task.App.Commands
     internal class SyncTodayDataCommand : ICommand
     {
         private readonly IDataSynchronizer _synchronizer;
-        private static readonly ILog logger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+        private static readonly ILog Logger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
         public SyncTodayDataCommand(IDataSynchronizer synchronizer)
         {
@@ -23,7 +23,7 @@ namespace StockExchange.Task.App.Commands
         {
             var startDate = DateTime.Now.AddDays(-1).Date;
             var endDate = DateTime.Now.Date;
-            logger.Debug($"Synchronizing data from {startDate.ToShortDateString()}");
+            Logger.Debug($"Synchronizing data from {startDate.ToShortDateString()}");
             _synchronizer.Sync(startDate, endDate);
         }
     }

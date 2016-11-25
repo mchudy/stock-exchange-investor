@@ -15,8 +15,7 @@ namespace StockExchange.Web.Controllers
         private readonly IAuthenticationManager _authenticationManager;
         private readonly ApplicationUserManager _userManager;
 
-        public AccountController(ApplicationSignInManager signInManager, IAuthenticationManager authenticationManager,
-            ApplicationUserManager userManager)
+        public AccountController(ApplicationSignInManager signInManager, IAuthenticationManager authenticationManager, ApplicationUserManager userManager)
         {
             _signInManager = signInManager;
             _authenticationManager = authenticationManager;
@@ -42,6 +41,7 @@ namespace StockExchange.Web.Controllers
             }
 
             var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+            // ReSharper disable once SwitchStatementMissingSomeCases
             switch (result)
             {
                 case SignInStatus.Success:

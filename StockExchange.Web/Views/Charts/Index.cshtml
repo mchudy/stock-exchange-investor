@@ -1,4 +1,5 @@
-﻿@using System.Web.Optimization
+﻿@model StockExchange.Web.Models.Charts.ChartsIndexModel
+@using System.Web.Optimization
 
 @{
     ViewBag.Title = "Charts";
@@ -9,20 +10,25 @@
 }
 
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-2">
         <span class="chart-options-wrapper">
             <span class="chart-option">Line chart</span>
             <label class="toggle">
-                <input type="checkbox" id="isCandlestickChart">
+                <input type="checkbox" id="is-candlestick-chart">
                 <span class="handle"></span>
             </label>
             <span class="chart-option">Candlestick chart</span>
         </span>
     </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            @Html.DropDownListFor(m => m.Companies, new MultiSelectList(Model.Companies, "Id", "Name"),
+                new { @class = "form-control company-select", multiple = "" })
+        </div>
+    </div>
 </div>
 
 <div class="row">
-
     <div id="chart-container" class="center-block"></div>
 </div>
 
