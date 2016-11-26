@@ -17,6 +17,6 @@ namespace StockExchange.DataAccess.Models
 
         public virtual InvestmentStrategy Strategy { get; set; }
 
-        public virtual ICollection<SimultionCompany> SimultionCompanies { get; set; } = new HashSet<SimultionCompany>();
+        public virtual ICollection<SimulationCompany> SimultionCompanies { get; set; } = new HashSet<SimulationCompany>();
     }
 }

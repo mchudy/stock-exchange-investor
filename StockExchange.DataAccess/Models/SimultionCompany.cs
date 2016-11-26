@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace StockExchange.DataAccess.Models
 {
     [Table("SimulationCompany")]
-    public class SimultionCompany
+    public class SimulationCompany
     {
+        public int Id { get; set; }
         public decimal Weight { get; set; }
 
         public virtual Company Company { get; set; }

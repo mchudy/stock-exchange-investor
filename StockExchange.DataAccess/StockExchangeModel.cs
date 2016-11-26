@@ -22,6 +22,6 @@ namespace StockExchange.DataAccess
 
         public IDbSet<Simulation> Simulations { get; set; }
 
-        public IDbSet<SimultionCompany> SimultionCompanies { get; set; }
+        public IDbSet<SimulationCompany> SimultionCompanies { get; set; }
     }
 }
