@@ -19,5 +19,9 @@ namespace StockExchange.DataAccess
         public IDbSet<InvestmentStrategy> Strategies { get; set; }
 
         public IDbSet<InvestmentCondition> Conditions { get; set; }
+
+        public IDbSet<Simulation> Simulations { get; set; }
+
+        public IDbSet<SimultionCompany> SimultionCompanies { get; set; }
     }
 }
