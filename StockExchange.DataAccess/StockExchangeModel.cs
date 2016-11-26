@@ -24,6 +24,11 @@ namespace StockExchange.DataAccess
 
         public IDbSet<SimulationCompany> SimultionCompanies { get; set; }
 
+        public IDbSet<SimulationResult> SimulationResults { get; set; }
+        public IDbSet<SimulationValue> SimulationValues { get; set; }
+        public IDbSet<CompanyStockQuantity> CompanyStockQuantities { get; set; }
+        public IDbSet<Transaction> Transactions { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
