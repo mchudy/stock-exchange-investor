@@ -83,6 +83,8 @@
     <Compile Include="IRepositories\IRepository.cs" />
     <Compile Include="Models\Company.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\InvestmentCondition.cs" />
+    <Compile Include="Models\InvestmentStrategy.cs" />
     <Compile Include="Models\Price.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
