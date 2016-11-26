@@ -8,7 +8,7 @@ namespace StockExchange.Business.Indicators
     /// <summary>
     /// Wskaźnik Macd
     /// </summary>
-    public class MacdIndicator : BaseIndicator
+    public class MacdIndicator : IIndicator
     {
         public int LongTerm { get; set; }
 
@@ -21,11 +21,6 @@ namespace StockExchange.Business.Indicators
             Initialize();
         }
 
-        public MacdIndicator(IRepository<Price> priceRepository) : base(priceRepository)
-        {
-            Initialize();
-        }
-
         private void Initialize()
         {
             LongTerm = 26;
@@ -33,30 +28,45 @@ namespace StockExchange.Business.Indicators
             SignalTerm = 9;
         }
 
-        public override IList<decimal> Calculate(IList<Price> historicalPrices)
+        public IList<IndicatorValue> Calculate(IList<Price> historicalPrices)
         {
-            return CalculateMacdLine(historicalPrices);
+            var longEma = MovingAverageHelper.ExpotentialMovingAverage(historicalPrices, LongTerm);
+            var shortEma = MovingAverageHelper.ExpotentialMovingAverage(historicalPrices, ShortTerm);
+            var macdLine = SubstractLongEmaFromShortEma(shortEma, longEma);
+            var signalLine = MovingAverageHelper.ExpotentialMovingAverage(macdLine, SignalTerm);
+            return PrepareResult(macdLine, signalLine);
         }
 
-        public IList<decimal> CalculateMacdLine(IList<Price> historicalPrices)
+        private IList<IndicatorValue> SubstractLongEmaFromShortEma(IList<IndicatorValue> shortEma, IList<IndicatorValue> longEma)
         {
-            var list = historicalPrices.Select(x => x.ClosePrice).ToList();
-            var longEma = MovingAverageHelper.ExpotentialMovingAverage(list, LongTerm);
-            var shortEma = MovingAverageHelper.ExpotentialMovingAverage(list, ShortTerm);
-            var diff = LongTerm - ShortTerm;
-            return longEma.Select((t, i) => shortEma[i + diff] - t).ToList();
+            int difference = LongTerm - ShortTerm;
+            IList<IndicatorValue> values=new List<IndicatorValue>();
+            for (int i = difference; i < shortEma.Count; i++)
+            {
+                var val = new IndicatorValue()
+                {
+                    Date = shortEma[i].Date,
+                    Value = shortEma[i].Value - longEma[i-difference].Value
+                };
+                values.Add(val);
+            }
+            return values;
         }
 
-        public IList<decimal> CalculateSignalLine(IList<Price> historicalPrices)
+        private IList<IndicatorValue> PrepareResult(IList<IndicatorValue> macdLine, IList<IndicatorValue> signalLine)
         {
-            var list = Calculate(historicalPrices);
-            return MovingAverageHelper.ExpotentialMovingAverage(list, SignalTerm);
-        }
-
-        // ReSharper disable once UnusedMember.Local
-        private IList<decimal> CalculateSignalLine(IList<decimal> macdLine)
-        {
-            return MovingAverageHelper.ExpotentialMovingAverage(macdLine, SignalTerm);
+            IList<IndicatorValue> resultList = new List<IndicatorValue>();
+            int difference = macdLine.Count - signalLine.Count;
+            for (int i = difference; i < macdLine.Count; i++)
+            {
+                resultList.Add(new DoubleLineIndicatorValue()
+                {
+                    Date = macdLine[i].Date,
+                    Value = macdLine[i].Value,
+                    SecondLineValue = signalLine[i-difference].Value
+                });
+            }
+            return resultList;
         }
     }
 }

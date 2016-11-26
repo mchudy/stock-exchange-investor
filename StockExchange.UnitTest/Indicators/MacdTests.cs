@@ -35,45 +35,33 @@ namespace StockExchange.UnitTest.Indicators
 
         [Theory]
         [MemberData(nameof(DataFor26DaysEma))]
-        private void ExpotentialMovingAverage26Test(decimal[] data, decimal[] expected26DaysEma)
+        private void ExpotentialMovingAverage26Test(IList<Price> data, IList<IndicatorValue> expected26DaysEma)
         {
             var actual26DaysEma = MovingAverageHelper.ExpotentialMovingAverage(data, 26);
-            Assert.Equal(expected26DaysEma.Length, actual26DaysEma.Count);
+            Assert.Equal(expected26DaysEma.Count, actual26DaysEma.Count);
             for (var i = 0; i < actual26DaysEma.Count; i++)
-                AssertDecimals(expected26DaysEma[i], actual26DaysEma[i], 6);
+                AssertDecimals(expected26DaysEma[i].Value, actual26DaysEma[i].Value, 6);
         }
 
         [Theory]
         [MemberData(nameof(DataFor12DaysEma))]
-        private void ExpotentialMovingAverage12Test(decimal[] data, decimal[] expected12DaysEma)
+        private void ExpotentialMovingAverage12Test(IList<Price> data, IList<IndicatorValue> expected12DaysEma)
         {
             var actual12DaysEma = MovingAverageHelper.ExpotentialMovingAverage(data, 12);
-            Assert.Equal(expected12DaysEma.Length, actual12DaysEma.Count);
+            Assert.Equal(expected12DaysEma.Count, actual12DaysEma.Count);
             for (var i = 0; i < actual12DaysEma.Count; i++)
-                AssertDecimals(expected12DaysEma[i], actual12DaysEma[i], 6);
+                AssertDecimals(expected12DaysEma[i].Value, actual12DaysEma[i].Value, 6);
         }
 
         [Theory]
         [MemberData(nameof(DataFor9DaysSignalLine))]
-        private void SignalLineTest(decimal[] data, decimal[] expected9DaysSignalLine)
+        private void SignalLineTest(IList<Price> data, IList<IndicatorValue> expected9DaysSignalLine)
         {
             var indicator = new MacdIndicator();
-            var actual9DaysSignalLine =
-                indicator.CalculateSignalLine(data.Select(x => new Price() { ClosePrice = x }).ToList());
-            Assert.Equal(expected9DaysSignalLine.Length, actual9DaysSignalLine.Count);
-            for (var i = 0; i < expected9DaysSignalLine.Length; i++)
-                AssertDecimals(expected9DaysSignalLine[i], actual9DaysSignalLine[i], 6);
+            var actual9DaysSignalLine = indicator.Calculate(data);
+            Assert.Equal(expected9DaysSignalLine.Count, actual9DaysSignalLine.Count);
+            for (var i = 0; i < expected9DaysSignalLine.Count; i++)
+                AssertDecimals(expected9DaysSignalLine[i].Value, ((DoubleLineIndicatorValue)actual9DaysSignalLine[i]).SecondLineValue, 6);
         }
-
-        //[Fact]
-        //private void IntersectionTest()
-        //{
-        //    MacdIndicator indicator = new MacdIndicator(26,12,9);
-        //    var events = indicator.Simulate(MacdData.HistorcalData).ToArray();
-        //    Assert.NotNull(events);
-        //    Assert.Equal(2, events.Length);
-        //    Assert.Equal(SignalEventAction.Buy, events[0]);
-        //    Assert.Equal(SignalEventAction.Sell, events[1]);
-        //}
     }
 }

@@ -1,56 +1,82 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using StockExchange.DataAccess.Models;
 
 namespace StockExchange.Business.Indicators
 {
     public static class MovingAverageHelper
     {
-        /// <summary>
-        /// Calculate Simple Moving Average for the given values.
-        /// </summary>
-        /// <param name="values">Data for calculations.</param>
-        /// <returns>Simple Moving Average (SMA) which is the arithmetical average of given values.</returns>
-        public static decimal SimpleMovingAverage(IList<decimal> values)
+        //Checks whether prices are sorted by date and there are no holes between prices.
+        private static bool CheckDates(IList<DateTime> dates)
         {
-            if (values == null || values.Count == 0)
-                throw new ArgumentException();
-            return values.Average();
+            for (int i = 1; i < dates.Count; i++)
+                if (dates[i].Date - dates[i - 1].Date > TimeSpan.FromDays(1))
+                    return false;
+            return true;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="values"></param>
-        /// <param name="terms"></param>
-        /// <returns></returns>
-        public static IList<decimal> SimpleMovingAverage(IList<decimal> values, int terms)
+        public static IndicatorValue SimpleMovingAverage(IList<Price> prices)
         {
-            if (values == null || values.Count < terms || terms < 1)
+            if (prices == null || prices.Count == 0 || !CheckDates(prices.Select(pr=>pr.Date).ToList()))
                 throw new ArgumentException();
-            IList<decimal> averages = new List<decimal>();
-            var avg = values.Take(terms).Average();
-            averages.Add(avg);
-            for (var i = terms; i < values.Count; i++)
+            return new IndicatorValue()
             {
-                avg = avg + (values[i] - values[i - terms]) / terms;
-                averages.Add(avg);
+                Date = prices.Last().Date,
+                Value = prices.Select(x => x.ClosePrice).Average()
+            };
+        }
+
+        public static IndicatorValue SimpleMovingAverage(IList<IndicatorValue> values)
+        {
+            if(values == null || values.Count == 0 || !CheckDates(values.Select(v=>v.Date).ToList()))
+                throw new ArgumentException();
+            return new IndicatorValue()
+            {
+                Date = values.Last().Date,
+                Value = values.Select(x => x.Value).Average()
+            };
+        }
+
+        public static IList<IndicatorValue> ExpotentialMovingAverage(IList<Price> prices, int terms)
+        {
+            if (prices == null || prices.Count < terms || terms < 1 || !CheckDates(prices.Select(price => price.Date).ToList()))
+                throw new ArgumentException();
+            IList<IndicatorValue> averages = new List<IndicatorValue>();
+            IndicatorValue ema = SimpleMovingAverage(prices.Take(terms).ToList());
+            averages.Add(ema);
+            var alpha = 2.0m / (terms + 1);
+            var p = 1 - alpha;
+            for (var i = terms; i < prices.Count; i++)
+            {
+                var nextEma = new IndicatorValue()
+                {
+                    Date = prices[i].Date,
+                    Value = prices[i].ClosePrice * alpha + ema.Value * p
+                };
+                ema = nextEma;
+                averages.Add(ema);
             }
             return averages;
         }
 
-        public static IList<decimal> ExpotentialMovingAverage(IList<decimal> values, int terms)
+        public static IList<IndicatorValue> ExpotentialMovingAverage(IList<IndicatorValue> values, int terms)
         {
-            if (values == null || values.Count < terms || terms < 1)
+            if (values == null || values.Count < terms || terms < 1 || !CheckDates(values.Select(price => price.Date).ToList()))
                 throw new ArgumentException();
-            IList<decimal> averages = new List<decimal>();
-            var ema = values.Take(terms).Average();
+            IList<IndicatorValue> averages = new List<IndicatorValue>();
+            IndicatorValue ema = SimpleMovingAverage(values.Take(terms).ToList());
             averages.Add(ema);
             var alpha = 2.0m / (terms + 1);
             var p = 1 - alpha;
             for (var i = terms; i < values.Count; i++)
             {
-                ema = values[i] * alpha + ema * p;
+                var nextEma = new IndicatorValue()
+                {
+                    Date = values[i].Date,
+                    Value = values[i].Value * alpha + ema.Value * p
+                };
+                ema = nextEma;
                 averages.Add(ema);
             }
             return averages;

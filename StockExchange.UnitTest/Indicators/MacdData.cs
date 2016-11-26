@@ -1,4 +1,9 @@
-﻿namespace StockExchange.UnitTest.Indicators
+﻿using System;
+using System.Collections.Generic;
+using StockExchange.Business.Indicators;
+using StockExchange.DataAccess.Models;
+
+namespace StockExchange.UnitTest.Indicators
 {
     /// <summary>
     /// This data are based on example:
@@ -6,16 +11,17 @@
     /// </summary>
     internal class MacdData
     {
-        public static readonly decimal[] HistorcalData;
+        public static readonly DateTime StartDate = new DateTime(2015, 11,1);
+        public static readonly IList<Price> HistorcalData;
 
         static MacdData()
         {
             HistorcalData = GetHistoricalData();
         }
 
-        internal static decimal[] GetHistoricalData()
+        internal static IList<Price> GetHistoricalData()
         {
-            return new[]
+            var tab = new[]
             {
                 459.99m,
                 448.85m,
@@ -84,11 +90,21 @@
                 439.66m,
                 441.35m
             };
+            IList<Price> prices = new List<Price>();
+            for (int i = 0; i < tab.Length; i++)
+            {
+                prices.Add(new Price()
+                {
+                    ClosePrice = tab[i],
+                    Date = StartDate.AddDays(i)
+                });
+            }
+            return prices;
         }
 
-        internal static decimal[] Get12DaysEma()
+        internal static IList<IndicatorValue> Get12DaysEma()
         {
-            return new[]
+            var tab = new[]
             {
                 440.8975m,
                 439.3101923m,
@@ -146,11 +162,21 @@
                 441.0377301m,
                 441.0857716m
             };
+            var prices = new List<IndicatorValue>();
+            for (int i = 0; i < tab.Length; i++)
+            {
+                prices.Add(new IndicatorValue()
+                {
+                    Value = tab[i],
+                    Date = StartDate.AddDays(i+12)
+                });
+            }
+            return prices;
         }
 
-        internal static decimal[] Get26DaysEma()
+        internal static IList<IndicatorValue> Get26DaysEma()
         {
-            return new[]
+            var tab = new[]
             {
                 443.2896154m,
                 443.940755m,
@@ -194,11 +220,21 @@
                 438.0810672m,
                 438.3232104m,
             };
+            var prices = new List<IndicatorValue>();
+            for (int i = 0; i < tab.Length; i++)
+            {
+                prices.Add(new IndicatorValue()
+                {
+                    Value = tab[i],
+                    Date = StartDate.AddDays(i + 26)
+                });
+            }
+            return prices;
         }
 
-        internal static decimal[] Get9DaysSignal()
+        internal static IList<IndicatorValue> Get9DaysSignal()
         {
-            return new[]
+            decimal[] tab = new[]
             {
                 3.037525869m,
                 1.905652229m,
@@ -234,6 +270,16 @@
                 4.260111317m,
                 3.960601297m
             };
+            var prices = new List<IndicatorValue>();
+            for (int i = 0; i < tab.Length; i++)
+            {
+                prices.Add(new IndicatorValue()
+                {
+                    Value = tab[i],
+                    Date = StartDate.AddDays(i + 33)
+                });
+            }
+            return prices;
         }
     }
 }

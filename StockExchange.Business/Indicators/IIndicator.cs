@@ -9,14 +9,6 @@ namespace StockExchange.Business.Indicators
     /// </summary>
     public interface IIndicator
     {
-        IList<decimal> Calculate(IList<Price> historicalPrices);
-    }
-
-    /// <summary>
-    /// Interfejs wskaźnika analizy technicznej rozszerzony o automatyczne pobieranie danych z bazy.
-    /// </summary>
-    public interface IAutoIndicator : IIndicator
-    {
-        IList<decimal> Calculate(DateTime startDate, DateTime endDate);
+        IList<IndicatorValue> Calculate(IList<Price> historicalPrices);
     }
 }
