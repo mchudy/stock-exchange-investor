@@ -26,7 +26,7 @@
                     };
                 } else {
                     return {
-                        startDate: new Date(date.getFullYear() - 1, 0, 1), 
+                        startDate: new Date(date.getFullYear(), 0, 1), 
                         endDate: new Date(date.getFullYear(), 11, 31)
                     }
                 }
