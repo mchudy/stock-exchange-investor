@@ -8,14 +8,14 @@ using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace StockExchange.Business.Business
+namespace StockExchange.Business.Services
 {
-    public sealed class PriceManager : IPriceManager
+    public sealed class PriceService : IPriceService
     {
         private readonly IRepository<Company> _companyRepository;
         private readonly IRepository<Price> _priceRepository;
 
-        public PriceManager(IRepository<Company> companyRepository, IRepository<Price> priceRepository)
+        public PriceService(IRepository<Company> companyRepository, IRepository<Price> priceRepository)
         {
             _priceRepository = priceRepository;
             _companyRepository = companyRepository;

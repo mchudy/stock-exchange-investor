@@ -57,8 +57,8 @@
     <Compile Include="Indicators\MovingAverageHelper.cs" />
     <Compile Include="Indicators\Signal.cs" />
     <Compile Include="Models\CompanyPricesDto.cs" />
-    <Compile Include="Business\IPriceManager.cs" />
-    <Compile Include="Business\PriceManager.cs" />
+    <Compile Include="Services\IPriceService.cs" />
+    <Compile Include="Services\PriceService.cs" />
     <Compile Include="Extensions\PagedListExtension.cs" />
     <Compile Include="Extensions\QueryableExtension.cs" />
     <Compile Include="Extensions\SortOrderAttribute.cs" />

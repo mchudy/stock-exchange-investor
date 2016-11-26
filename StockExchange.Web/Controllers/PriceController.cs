@@ -1,19 +1,19 @@
-﻿using StockExchange.Business.Business;
-using StockExchange.Business.Models;
+﻿using StockExchange.Business.Models;
 using StockExchange.Web.Helpers;
 using StockExchange.Web.Models;
 using StockExchange.Web.Models.DataTables;
 using System.Web.Mvc;
+using StockExchange.Business.Services;
 
 namespace StockExchange.Web.Controllers
 {
     public sealed class PriceController : BaseController
     {
-        private readonly IPriceManager _priceManager;
+        private readonly IPriceService _priceService;
 
-        public PriceController(IPriceManager priceManager)
+        public PriceController(IPriceService priceService)
         {
-            _priceManager = priceManager;
+            _priceService = priceService;
         }
 
         [HttpGet]
@@ -27,7 +27,7 @@ namespace StockExchange.Web.Controllers
         public ActionResult GetPrices(DataTableMessage<PriceFilter> dataTableMessage)
         {
             var searchMessage = DataTableMessageConverter.ToPagedFilterDefinition(dataTableMessage);
-            var pagedList = _priceManager.Get(searchMessage);
+            var pagedList = _priceService.Get(searchMessage);
             var model = new DataTableResponse<PriceDto>
             {
                 RecordsFiltered = pagedList.TotalCount,
@@ -41,7 +41,7 @@ namespace StockExchange.Web.Controllers
         [HttpGet]
         public ActionResult GetFilterValues(DataTableSimpleMessage<PriceFilter> message, string fieldName)
         {
-            var values = _priceManager.GetValues(DataTableMessageConverter.ToFilterDefinition(message), fieldName);
+            var values = _priceService.GetValues(DataTableMessageConverter.ToFilterDefinition(message), fieldName);
             return new JsonNetResult(values, typeof(PriceDto), fieldName);
         }
 
@@ -49,7 +49,7 @@ namespace StockExchange.Web.Controllers
         {
             var model = new PriceViewModel
             {
-                CompanyNames = _priceManager.GetCompanyNames(),
+                CompanyNames = _priceService.GetCompanyNames(),
             };
             return model;
         }

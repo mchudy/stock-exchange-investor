@@ -1,25 +1,25 @@
-﻿using StockExchange.Business.Business;
-using StockExchange.Web.Helpers;
+﻿using StockExchange.Web.Helpers;
 using StockExchange.Web.Models.Charts;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using StockExchange.Business.Services;
 
 namespace StockExchange.Web.Controllers
 {
     public class ChartsController : BaseController
     {
-        private readonly IPriceManager _priceManager;
+        private readonly IPriceService _priceService;
 
-        public ChartsController(IPriceManager priceManager)
+        public ChartsController(IPriceService priceService)
         {
-            _priceManager = priceManager;
+            _priceService = priceService;
         }
 
         public ActionResult Index()
         {
             //TODO: load companies list from the view via AJAX
-            var companies = _priceManager.GetAllCompanies();
+            var companies = _priceService.GetAllCompanies();
             var model = new ChartsIndexModel
             {
                 Companies = companies
@@ -30,7 +30,7 @@ namespace StockExchange.Web.Controllers
         [HttpGet]
         public ActionResult GetLineChartData(IList<int> companyIds)
         {
-            var companyPrices = _priceManager.GetPricesForCompanies(companyIds);
+            var companyPrices = _priceService.GetPricesForCompanies(companyIds);
             var model = companyPrices.Select(cp => new LineChartModel
             {
                 CompanyId = cp.Company.Id,
@@ -43,7 +43,7 @@ namespace StockExchange.Web.Controllers
         [HttpGet]
         public ActionResult GetCandlestickChartData(IList<int> companyIds)
         {
-            var companyPrices = _priceManager.GetPricesForCompanies(companyIds);
+            var companyPrices = _priceService.GetPricesForCompanies(companyIds);
             var model = companyPrices.Select(cp => new LineChartModel
             {
                 CompanyId = cp.Company.Id,

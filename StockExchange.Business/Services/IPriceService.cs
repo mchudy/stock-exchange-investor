@@ -1,10 +1,10 @@
-﻿using StockExchange.Business.Extensions;
+﻿using System.Collections.Generic;
+using StockExchange.Business.Extensions;
 using StockExchange.Business.Models;
-using System.Collections.Generic;
 
-namespace StockExchange.Business.Business
+namespace StockExchange.Business.Services
 {
-    public interface IPriceManager
+    public interface IPriceService
     {
         PagedList<PriceDto> Get(PagedFilterDefinition<PriceFilter> pagedFilterDefinition);
 

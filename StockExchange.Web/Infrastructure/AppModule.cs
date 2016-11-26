@@ -1,6 +1,6 @@
 ﻿using Autofac;
 using Autofac.Integration.Mvc;
-using StockExchange.Business.Business;
+using StockExchange.Business.Services;
 using StockExchange.DataAccess;
 using StockExchange.DataAccess.IRepositories;
 using StockExchange.DataAccess.Models;
@@ -15,7 +15,7 @@ namespace StockExchange.Web.Infrastructure
             builder.RegisterControllers(typeof(MvcApplication).Assembly).PropertiesAutowired();
             builder.RegisterType<GenericRepository<Company>>().As<IRepository<Company>>();
             builder.RegisterType<GenericRepository<Price>>().As<IRepository<Price>>();
-            builder.RegisterType<PriceManager>().As<IPriceManager>();
+            builder.RegisterType<PriceService>().As<IPriceService>();
             builder.RegisterType<StockExchangeModel>().InstancePerRequest();
         }
     }

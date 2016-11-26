@@ -4,7 +4,7 @@
     var getLineChartDataUrl = '/Charts/GetLineChartData';
     var getCandlestickDataUrl = '/Charts/GetCandlestickChartData';
     var loadingText = 'Loading...';
-    var chosenCompanies = [1];
+    var chosenCompanies = [21];
 
     var $isCandleStickCheckbox = $('#is-candlestick-chart');
 
@@ -28,7 +28,7 @@
     function initChart() {
         Highcharts.setOptions({
             global: {
-                useUTC: false
+                useUTC: true
             }
         });
 

@@ -1,5 +1,6 @@
 using Microsoft.AspNet.Identity.EntityFramework;
 using StockExchange.DataAccess.Models;
+using System.Data.Entity.ModelConfiguration.Conventions;
 
 namespace StockExchange.DataAccess
 {
@@ -9,7 +10,6 @@ namespace StockExchange.DataAccess
     {
         public StockExchangeModel() : base("name=StockExchangeModel")
         {
-
         }
 
         public IDbSet<Company> Companies { get; set; }
@@ -23,5 +23,11 @@ namespace StockExchange.DataAccess
         public IDbSet<Simulation> Simulations { get; set; }
 
         public IDbSet<SimulationCompany> SimultionCompanies { get; set; }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
+        }
     }
 }
