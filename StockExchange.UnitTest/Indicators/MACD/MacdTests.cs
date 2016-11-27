@@ -1,8 +1,6 @@
 ﻿using FluentAssertions;
 using StockExchange.Business.Indicators;
 using StockExchange.Business.Models;
-using StockExchange.DataAccess.Models;
-using System.Collections.Generic;
 using Xunit;
 
 namespace StockExchange.UnitTest.Indicators
@@ -13,46 +11,36 @@ namespace StockExchange.UnitTest.Indicators
     /// </summary>
     public class MacdTests
     {
-        public static IEnumerable<object[]> DataFor26DaysEma { get; }
-        public static IEnumerable<object[]> DataFor12DaysEma { get; }
-        public static IEnumerable<object[]> DataFor9DaysSignalLine { get; }
-
-        static MacdTests()
+        public MacdTests()
         {
-            DataFor26DaysEma = new List<object[]> { new object[] { MacdData.HistoricalData, MacdData.Ema26DaysResults } };
-            DataFor12DaysEma = new List<object[]> { new object[] { MacdData.HistoricalData, MacdData.Ema12DaysResults } };
-            DataFor9DaysSignalLine = new List<object[]> { new object[] { MacdData.HistoricalData, MacdData.Signal9DaysResults } };
-
             AssertionOptions.AssertEquivalencyUsing(options =>
                 options.Using<decimal>(ctx => ctx.Subject.Should().BeApproximately(ctx.Expectation, MacdData.DataPrecision)).WhenTypeIs<decimal>());
         }
 
-        [Theory]
-        [MemberData(nameof(DataFor26DaysEma))]
-        public void ExpotentialMovingAverage26Test(IList<Price> data, IList<IndicatorValue> expected26DaysEma)
+        [Fact]
+        public void ExpotentialMovingAverage26Test()
         {
-            var actual26DaysEma = MovingAverageHelper.ExpotentialMovingAverage(data, 26);
+            var actual26DaysEma = MovingAverageHelper.ExpotentialMovingAverage(MacdData.HistoricalData, 26);
 
-            actual26DaysEma.ShouldAllBeEquivalentTo(expected26DaysEma);
+            actual26DaysEma.ShouldAllBeEquivalentTo(MacdData.Ema26DaysResults);
         }
 
-        [Theory]
-        [MemberData(nameof(DataFor12DaysEma))]
-        public void ExpotentialMovingAverage12Test(IList<Price> data, IList<IndicatorValue> expected12DaysEma)
+        [Fact]
+        public void ExpotentialMovingAverage12Test()
         {
-            var actual12DaysEma = MovingAverageHelper.ExpotentialMovingAverage(data, 12);
+            var actual12DaysEma = MovingAverageHelper.ExpotentialMovingAverage(MacdData.HistoricalData, 12);
 
-            actual12DaysEma.ShouldAllBeEquivalentTo(expected12DaysEma);
+            actual12DaysEma.ShouldAllBeEquivalentTo(MacdData.Ema12DaysResults);
         }
 
-        [Theory]
-        [MemberData(nameof(DataFor9DaysSignalLine))]
-        public void SignalLineTest(IList<Price> data, IList<IndicatorValue> expected9DaysSignalLine)
+        [Fact]
+        public void SignalLineTest()
         {
             var indicator = new MacdIndicator();
 
-            var actual9DaysSignalLine = indicator.Calculate(data);
+            var actual9DaysSignalLine = indicator.Calculate(MacdData.HistoricalData);
 
+            var expected9DaysSignalLine = MacdData.Signal9DaysResults;
             Assert.Equal(expected9DaysSignalLine.Count, actual9DaysSignalLine.Count);
             for (var i = 0; i < expected9DaysSignalLine.Count; i++)
             {
