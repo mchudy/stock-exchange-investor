@@ -14,5 +14,6 @@ namespace StockExchange.DataAccess.Models
         public decimal Budget { get; set; }
         public virtual ICollection<UserTransaction> Transactions { get; set; } = new HashSet<UserTransaction>();
         public virtual User User { get; set; }
+        public int UserId { get; set; }
     }
 }

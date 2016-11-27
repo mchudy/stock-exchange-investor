@@ -15,6 +15,8 @@ namespace StockExchange.DataAccess.Models
         public decimal Price { get; set; }
         public int Quantity { get; set; }
         public virtual Company Company { get; set; }
+        public int CompanyId { get; set; }
         public virtual Wallet Wallet { get; set; }
+        public int WalletId { get; set; }
     }
 }
