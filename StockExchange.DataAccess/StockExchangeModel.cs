@@ -16,18 +16,21 @@ namespace StockExchange.DataAccess
 
         public IDbSet<Price> Prices { get; set; }
 
-        public IDbSet<InvestmentStrategy> Strategies { get; set; }
+        public IDbSet<Wallet> Wallets { get; set; }
+        public IDbSet<UserTransaction> UserTransactions { get; set; }
 
-        public IDbSet<InvestmentCondition> Conditions { get; set; }
+        //public IDbSet<InvestmentStrategy> Strategies { get; set; }
 
-        public IDbSet<Simulation> Simulations { get; set; }
+        //public IDbSet<InvestmentCondition> Conditions { get; set; }
 
-        public IDbSet<SimulationCompany> SimultionCompanies { get; set; }
+        //public IDbSet<Simulation> Simulations { get; set; }
 
-        public IDbSet<SimulationResult> SimulationResults { get; set; }
-        public IDbSet<SimulationValue> SimulationValues { get; set; }
-        public IDbSet<CompanyStockQuantity> CompanyStockQuantities { get; set; }
-        public IDbSet<Transaction> Transactions { get; set; }
+        //public IDbSet<SimulationCompany> SimultionCompanies { get; set; }
+
+        //public IDbSet<SimulationResult> SimulationResults { get; set; }
+        //public IDbSet<SimulationValue> SimulationValues { get; set; }
+        //public IDbSet<CompanyStockQuantity> CompanyStockQuantities { get; set; }
+        //public IDbSet<Transaction> Transactions { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
