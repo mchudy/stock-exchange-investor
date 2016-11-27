@@ -2,6 +2,7 @@
 using StockExchange.DataAccess.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace StockExchange.UnitTest.Helpers
 {
@@ -11,13 +12,24 @@ namespace StockExchange.UnitTest.Helpers
 
         public static IList<IndicatorValue> ConvertToIndicatorValues(decimal[] tab, int offset = 0)
         {
-            var prices = new List<IndicatorValue>();
-            for (int i = 0; i < tab.Length; i++)
+            return tab.Select((t, i) => new IndicatorValue
             {
-                prices.Add(new IndicatorValue
+                Value = t,
+                Date = StartDate.AddDays(i + offset)
+            }).ToList();
+        }
+
+        internal static IList<Price> ConvertToPrices(decimal[,] tab, int offset = 0)
+        {
+            var prices = new List<Price>();
+            for (int i = 0; i < tab.GetLength(0); i++)
+            {
+                prices.Add(new Price
                 {
-                    Value = tab[i],
-                    Date = StartDate.AddDays(i + offset)
+                    Date = StartDate.AddDays(i + offset),
+                    HighPrice = tab[i, 0],
+                    LowPrice = tab[i, 1],
+                    ClosePrice = tab[i, 2]
                 });
             }
             return prices;
@@ -25,16 +37,11 @@ namespace StockExchange.UnitTest.Helpers
 
         public static IList<Price> ConvertToPrices(decimal[] tab, int offset = 0)
         {
-            var prices = new List<Price>();
-            for (int i = 0; i < tab.Length; i++)
+            return tab.Select((t, i) => new Price
             {
-                prices.Add(new Price
-                {
-                    ClosePrice = tab[i],
-                    Date = StartDate.AddDays(i + offset)
-                });
-            }
-            return prices;
+                ClosePrice = t,
+                Date = StartDate.AddDays(i + offset)
+            }).ToList();
         }
     }
 }
