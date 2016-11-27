@@ -2551,6 +2551,8 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\ChartsController.cs" />
     <Compile Include="Controllers\PriceController.cs" />
+    <Compile Include="Controllers\SimulationsController.cs" />
+    <Compile Include="Controllers\StrategiesController.cs" />
     <Compile Include="Controllers\TransactionsController.cs" />
     <Compile Include="Controllers\WalletController.cs" />
     <Compile Include="Helpers\CustomFormatResolver.cs" />
@@ -2590,6 +2592,8 @@
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Wallet\Index.cshtml" />
     <Content Include="Views\Transactions\Index.cshtml" />
+    <Content Include="Views\Simulations\Index.cshtml" />
+    <Content Include="Views\Strategies\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
