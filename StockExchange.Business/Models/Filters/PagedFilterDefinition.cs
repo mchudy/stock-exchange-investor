@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using StockExchange.Common.LinqUtils;
 
-namespace StockExchange.Business.Models
+namespace StockExchange.Business.Models.Filters
 {
     public sealed class PagedFilterDefinition<T> where T : IFilter
     {

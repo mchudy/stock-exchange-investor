@@ -3,6 +3,7 @@ using StockExchange.Web.Helpers;
 using StockExchange.Web.Models;
 using StockExchange.Web.Models.DataTables;
 using System.Web.Mvc;
+using StockExchange.Business.Models.Filters;
 using StockExchange.Business.Services;
 
 namespace StockExchange.Web.Controllers

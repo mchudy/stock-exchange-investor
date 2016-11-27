@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace StockExchange.Business.Indicators
+namespace StockExchange.Business.Models
 {
     public enum SignalAction
     {

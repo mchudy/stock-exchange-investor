@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using StockExchange.Business.Models;
 using StockExchange.DataAccess.IRepositories;
 using StockExchange.DataAccess.Models;
 
@@ -28,10 +29,10 @@ namespace StockExchange.Business.Indicators
             SignalTerm = 9;
         }
 
-        public IList<IndicatorValue> Calculate(IList<Price> historicalPrices)
+        public IList<IndicatorValue> Calculate(IList<Price> prices)
         {
-            var longEma = MovingAverageHelper.ExpotentialMovingAverage(historicalPrices, LongTerm);
-            var shortEma = MovingAverageHelper.ExpotentialMovingAverage(historicalPrices, ShortTerm);
+            var longEma = MovingAverageHelper.ExpotentialMovingAverage(prices, LongTerm);
+            var shortEma = MovingAverageHelper.ExpotentialMovingAverage(prices, ShortTerm);
             var macdLine = SubstractLongEmaFromShortEma(shortEma, longEma);
             var signalLine = MovingAverageHelper.ExpotentialMovingAverage(macdLine, SignalTerm);
             return PrepareResult(macdLine, signalLine);

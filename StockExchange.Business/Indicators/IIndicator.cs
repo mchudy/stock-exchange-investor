@@ -1,6 +1,7 @@
 ﻿using StockExchange.DataAccess.Models;
 using System;
 using System.Collections.Generic;
+using StockExchange.Business.Models;
 
 namespace StockExchange.Business.Indicators
 {
@@ -9,6 +10,6 @@ namespace StockExchange.Business.Indicators
     /// </summary>
     public interface IIndicator
     {
-        IList<IndicatorValue> Calculate(IList<Price> historicalPrices);
+        IList<IndicatorValue> Calculate(IList<Price> prices);
     }
 }

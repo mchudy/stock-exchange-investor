@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using FluentAssertions;
 using StockExchange.Business.Indicators;
+using StockExchange.Business.Models;
 using StockExchange.DataAccess.Models;
+using System.Collections.Generic;
 using Xunit;
 
 namespace StockExchange.UnitTest.Indicators
@@ -14,54 +14,52 @@ namespace StockExchange.UnitTest.Indicators
     public class MacdTests
     {
         public static IEnumerable<object[]> DataFor26DaysEma { get; }
-
         public static IEnumerable<object[]> DataFor12DaysEma { get; }
-
         public static IEnumerable<object[]> DataFor9DaysSignalLine { get; }
 
         static MacdTests()
         {
-            DataFor26DaysEma = new List<object[]> { new object[] { MacdData.HistorcalData, MacdData.Get26DaysEma() } };
-            DataFor12DaysEma = new List<object[]> { new object[] { MacdData.HistorcalData, MacdData.Get12DaysEma() } };
-            DataFor9DaysSignalLine = new List<object[]> { new object[] { MacdData.HistorcalData, MacdData.Get9DaysSignal() } };
-        }
+            DataFor26DaysEma = new List<object[]> { new object[] { MacdData.HistoricalData, MacdData.Ema26DaysResults } };
+            DataFor12DaysEma = new List<object[]> { new object[] { MacdData.HistoricalData, MacdData.Ema12DaysResults } };
+            DataFor9DaysSignalLine = new List<object[]> { new object[] { MacdData.HistoricalData, MacdData.Signal9DaysResults } };
 
-        // ReSharper disable once UnusedParameter.Local
-        private static void AssertDecimals(decimal expected, decimal actual, int prec)
-        {
-            var diff = expected - actual;
-            Assert.True(diff <= (decimal)Math.Pow(10, -prec));
+            AssertionOptions.AssertEquivalencyUsing(options =>
+                options.Using<decimal>(ctx => ctx.Subject.Should().BeApproximately(ctx.Expectation, MacdData.DataPrecision)).WhenTypeIs<decimal>());
         }
 
         [Theory]
         [MemberData(nameof(DataFor26DaysEma))]
-        private void ExpotentialMovingAverage26Test(IList<Price> data, IList<IndicatorValue> expected26DaysEma)
+        public void ExpotentialMovingAverage26Test(IList<Price> data, IList<IndicatorValue> expected26DaysEma)
         {
             var actual26DaysEma = MovingAverageHelper.ExpotentialMovingAverage(data, 26);
-            Assert.Equal(expected26DaysEma.Count, actual26DaysEma.Count);
-            for (var i = 0; i < actual26DaysEma.Count; i++)
-                AssertDecimals(expected26DaysEma[i].Value, actual26DaysEma[i].Value, 6);
+
+            actual26DaysEma.ShouldAllBeEquivalentTo(expected26DaysEma);
         }
 
         [Theory]
         [MemberData(nameof(DataFor12DaysEma))]
-        private void ExpotentialMovingAverage12Test(IList<Price> data, IList<IndicatorValue> expected12DaysEma)
+        public void ExpotentialMovingAverage12Test(IList<Price> data, IList<IndicatorValue> expected12DaysEma)
         {
             var actual12DaysEma = MovingAverageHelper.ExpotentialMovingAverage(data, 12);
-            Assert.Equal(expected12DaysEma.Count, actual12DaysEma.Count);
-            for (var i = 0; i < actual12DaysEma.Count; i++)
-                AssertDecimals(expected12DaysEma[i].Value, actual12DaysEma[i].Value, 6);
+
+            actual12DaysEma.ShouldAllBeEquivalentTo(expected12DaysEma);
         }
 
         [Theory]
         [MemberData(nameof(DataFor9DaysSignalLine))]
-        private void SignalLineTest(IList<Price> data, IList<IndicatorValue> expected9DaysSignalLine)
+        public void SignalLineTest(IList<Price> data, IList<IndicatorValue> expected9DaysSignalLine)
         {
             var indicator = new MacdIndicator();
+
             var actual9DaysSignalLine = indicator.Calculate(data);
+
             Assert.Equal(expected9DaysSignalLine.Count, actual9DaysSignalLine.Count);
             for (var i = 0; i < expected9DaysSignalLine.Count; i++)
-                AssertDecimals(expected9DaysSignalLine[i].Value, ((DoubleLineIndicatorValue)actual9DaysSignalLine[i]).SecondLineValue, 6);
+            {
+                var doubleLineIndicator = (DoubleLineIndicatorValue)actual9DaysSignalLine[i];
+                Assert.Equal(expected9DaysSignalLine[i].Date, doubleLineIndicator.Date);
+                Assert.Equal(expected9DaysSignalLine[i].Value, doubleLineIndicator.SecondLineValue, MacdData.DataPrecision);
+            }
         }
     }
 }

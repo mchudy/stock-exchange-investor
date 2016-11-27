@@ -92,8 +92,11 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Helpers\DataHelpers.cs" />
     <Compile Include="Indicators\MacdData.cs" />
     <Compile Include="Indicators\MacdTests.cs" />
+    <Compile Include="Indicators\RsiData.cs" />
+    <Compile Include="Indicators\RsiTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

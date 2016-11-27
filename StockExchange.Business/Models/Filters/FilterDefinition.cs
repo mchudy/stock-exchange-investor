@@ -1,4 +1,4 @@
-﻿namespace StockExchange.Business.Models
+﻿namespace StockExchange.Business.Models.Filters
 {
     public sealed class FilterDefinition<T> where T : IFilter
     {

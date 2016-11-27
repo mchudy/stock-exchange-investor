@@ -53,9 +53,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Indicators\IndicatorValue.cs" />
+    <Compile Include="Models\IndicatorValue.cs" />
     <Compile Include="Indicators\MovingAverageHelper.cs" />
-    <Compile Include="Indicators\Signal.cs" />
+    <Compile Include="Indicators\RsiIndicator.cs" />
+    <Compile Include="Models\Signal.cs" />
     <Compile Include="Models\CompanyPricesDto.cs" />
     <Compile Include="Services\IPriceService.cs" />
     <Compile Include="Services\PriceService.cs" />
@@ -65,11 +66,11 @@
     <Compile Include="Indicators\IIndicator.cs" />
     <Compile Include="Indicators\MacdIndicator.cs" />
     <Compile Include="Models\CompanyDto.cs" />
-    <Compile Include="Models\FilterDefinition.cs" />
-    <Compile Include="Models\IFilter.cs" />
-    <Compile Include="Models\PagedFilterDefinition.cs" />
+    <Compile Include="Models\Filters\FilterDefinition.cs" />
+    <Compile Include="Models\Filters\IFilter.cs" />
+    <Compile Include="Models\Filters\PagedFilterDefinition.cs" />
     <Compile Include="Models\PriceDto.cs" />
-    <Compile Include="Models\PriceFilter.cs" />
+    <Compile Include="Models\Filters\PriceFilter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -2,6 +2,7 @@
 using System.Linq;
 using Newtonsoft.Json;
 using StockExchange.Business.Models;
+using StockExchange.Business.Models.Filters;
 using StockExchange.Common.LinqUtils;
 using StockExchange.Web.Models.DataTables;
 
