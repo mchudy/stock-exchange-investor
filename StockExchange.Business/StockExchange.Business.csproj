@@ -63,6 +63,7 @@
   <ItemGroup>
     <Compile Include="Indicators\AtrIndicator.cs" />
     <Compile Include="Indicators\ObvIndicator.cs" />
+    <Compile Include="Indicators\RocIndicator.cs" />
     <Compile Include="Models\IndicatorValue.cs" />
     <Compile Include="Indicators\MovingAverageHelper.cs" />
     <Compile Include="Indicators\RsiIndicator.cs" />
