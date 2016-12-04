@@ -13,9 +13,9 @@ namespace StockExchange.Web
                 "~/bower_components/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js",
                 "~/bower_components/select2/dist/js/select2.min.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/scripts/jquery-ui").NonOrdering().Include(
-                "~/bower_components/jquery-ui/jquery-ui.min.js",
-                "~/bower_components/jquery-ui-multiselect-widget/src/jquery.multiselect.js",
+            bundles.Add(new ScriptBundle("~/bundles/scripts/jquery-ui").NonOrdering()
+                .Include("~/bower_components/jquery-ui/jquery-ui.min.js", new CssRewriteUrlTransform())
+                .Include("~/bower_components/jquery-ui-multiselect-widget/src/jquery.multiselect.js",
                 "~/bower_components/jquery-ui-multiselect-widget/src/jquery.multiselect.filter.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/scripts/bootstrap").Include(
@@ -34,14 +34,14 @@ namespace StockExchange.Web
                 "~/bower_components/highcharts/modules/exporting.js",
                 "~/bower_components/highcharts/modules/offline-exporting.js"));
 
-            bundles.Add(new StyleBundle("~/bundles/styles/vendor").Include(
-                "~/bower_components/bootstrap/dist/css/bootstrap.min.css",
-                "~/bower_components/jquery-ui/themes/base/jquery-ui.min.css",
-                "~/bower_components/font-awesome/css/font-awesome.min.css",
+            bundles.Add(new StyleBundle("~/bundles/styles/vendor")
+                .Include("~/bower_components/bootstrap/dist/css/bootstrap.min.css", new CssRewriteUrlTransform())
+                .Include("~/bower_components/jquery-ui/themes/base/jquery-ui.min.css",
                 "~/bower_components/Bootflat/bootflat/css/bootflat.min.css",
                 "~/bower_components/select2/dist/css/select2.min.css",
                 "~/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker3.css",
-                "~/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css"));
+                "~/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css")
+                .Include("~/bower_components/font-awesome/css/font-awesome.min.css", new CssRewriteUrlTransform()));
 
             bundles.Add(new StyleBundle("~/bundles/styles/jquery-ui-multiselect").Include(
                 "~/bower_components/jquery-ui-multiselect-widget/jquery.multiselect.css",
