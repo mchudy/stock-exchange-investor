@@ -62,10 +62,9 @@
         var filter = {
             clear: function() {
 
-                $("thead tr.dataTableFilterRow select", that)
+                $(".dataTables_scrollHead thead tr.dataTableFilterRow select", that)
                     .each(function() {
                         $(this).empty();
-
                         try {
                             $(this).multiselect("uncheckAll");
                         } catch (x) {
@@ -145,6 +144,5 @@
         };
         return filter;
     };
-
 
 }(jQuery));
