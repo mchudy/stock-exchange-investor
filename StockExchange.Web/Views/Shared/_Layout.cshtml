@@ -8,12 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Stock Exchange Application</title>
 
-    @Styles.Render("~/bower_components/bootstrap/dist/css/bootstrap.min.css")
-    @Styles.Render("~/bower_components/jquery-ui/themes/base/jquery-ui.min.css")
-    @Styles.Render("~/bower_components/font-awesome/css/font-awesome.min.css")
-    @Styles.Render("~/bower_components/Bootflat/bootflat/css/bootflat.min.css")
-    @Styles.Render("~/bower_components/select2/dist/css/select2.min.css")
-
+    @Styles.Render("~/bundles/styles/vendor")
     @Styles.Render("~/Content/css/main.css")
 
     @RenderSection("css", false)
@@ -115,13 +110,11 @@
             </footer>
         </div>
     </div>
-    @Scripts.Render("~/bower_components/jquery/dist/jquery.min.js")
-    @Scripts.Render("~/bower_components/jquery-validation/dist/jquery.validate.js")
-    @Scripts.Render("~/bower_components/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js")
-    @Scripts.Render("~/bower_components/select2/dist/js/select2.min.js")
 
-    @Scripts.Render("~/bower_components/bootstrap/dist/js/bootstrap.min.js")
-    @Scripts.Render("~/bower_components/Bootflat/bootflat/js/icheck.min.js")
+    @Scripts.Render("~/bundles/scripts/jquery");
+    @Scripts.Render("~/bundles/scripts/jquery-ui")
+    @Scripts.Render("~/bundles/scripts/bootstrap")
+
     @Scripts.Render("~/Scripts/site.js")
     @RenderSection("scripts", false)
 </body>

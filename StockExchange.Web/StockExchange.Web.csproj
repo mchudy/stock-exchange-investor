@@ -17,7 +17,7 @@
     <AssemblyName>StockExchange.Web</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
-    <IISExpressSSLPort />
+    <IISExpressSSLPort>44369</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -513,19 +513,9 @@
     <Content Include="bower_components\datatables.net-bs\js\dataTables.bootstrap.js" />
     <Content Include="bower_components\datatables.net-bs\js\dataTables.bootstrap.min.js" />
     <Content Include="bower_components\datatables.net-bs\License.txt" />
-    <Content Include="bower_components\datatables.net-dt\css\jquery.dataTables.css" />
-    <Content Include="bower_components\datatables.net-dt\css\jquery.dataTables.min.css" />
-    <Content Include="bower_components\datatables.net-dt\images\sort_asc.png" />
-    <Content Include="bower_components\datatables.net-dt\images\sort_asc_disabled.png" />
-    <Content Include="bower_components\datatables.net-dt\images\sort_both.png" />
-    <Content Include="bower_components\datatables.net-dt\images\sort_desc.png" />
-    <Content Include="bower_components\datatables.net-dt\images\sort_desc_disabled.png" />
-    <Content Include="bower_components\datatables.net-dt\License.txt" />
-    <Content Include="bower_components\datatables.net-jqui\css\dataTables.jqueryui.css" />
-    <Content Include="bower_components\datatables.net-jqui\css\dataTables.jqueryui.min.css" />
-    <Content Include="bower_components\datatables.net-jqui\js\dataTables.jqueryui.js" />
-    <Content Include="bower_components\datatables.net-jqui\js\dataTables.jqueryui.min.js" />
-    <Content Include="bower_components\datatables.net-jqui\License.txt" />
+    <Content Include="bower_components\datatables.net-responsive\js\dataTables.responsive.js" />
+    <Content Include="bower_components\datatables.net-responsive\js\dataTables.responsive.min.js" />
+    <Content Include="bower_components\datatables.net-responsive\License.txt" />
     <Content Include="bower_components\datatables.net\js\jquery.dataTables.js" />
     <Content Include="bower_components\datatables.net\js\jquery.dataTables.min.js" />
     <Content Include="bower_components\datatables.net\License.txt" />
@@ -2165,7 +2155,7 @@
     </Content>
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
-    <Content Include="Scripts\charts.js" />
+    <Content Include="Scripts\views\chartsView.js" />
     <Content Include="Scripts\dataTablesExtensions.js" />
     <Content Include="Scripts\dateFilter.js" />
     <Content Include="bower.json" />
@@ -2308,12 +2298,6 @@
     <Content Include="bower_components\datatables.net-bs\.bower.json" />
     <Content Include="bower_components\datatables.net-bs\bower.json" />
     <Content Include="bower_components\datatables.net-bs\Readme.md" />
-    <Content Include="bower_components\datatables.net-dt\.bower.json" />
-    <Content Include="bower_components\datatables.net-dt\bower.json" />
-    <Content Include="bower_components\datatables.net-dt\Readme.md" />
-    <Content Include="bower_components\datatables.net-jqui\.bower.json" />
-    <Content Include="bower_components\datatables.net-jqui\bower.json" />
-    <Content Include="bower_components\datatables.net-jqui\Readme.md" />
     <Content Include="bower_components\datatables.net\.bower.json" />
     <Content Include="bower_components\datatables.net\bower.json" />
     <Content Include="bower_components\datatables.net\Readme.md" />
@@ -2412,6 +2396,7 @@
     <Content Include="bower_components\highcharts\bower.json" />
     <Content Include="bower_components\highcharts\package.json" />
     <Content Include="bower_components\highcharts\README.md" />
+    <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
@@ -2508,6 +2493,9 @@
     <Content Include="bower_components\font-awesome\scss\_screen-reader.scss" />
     <Content Include="bower_components\font-awesome\scss\_stacked.scss" />
     <Content Include="bower_components\font-awesome\scss\_variables.scss" />
+    <Content Include="bower_components\datatables.net-responsive\.bower.json" />
+    <Content Include="bower_components\datatables.net-responsive\bower.json" />
+    <Content Include="bower_components\datatables.net-responsive\Readme.md" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
@@ -2538,8 +2526,9 @@
     <None Include="Properties\PublishProfiles\MiniStockExchangeDev - Web Deploy.pubxml">
       <SubType>Designer</SubType>
     </None>
-    <Content Include="Scripts\price.js" />
+    <Content Include="Scripts\views\pricesView.js" />
     <Content Include="Scripts\site.js" />
+    <Content Include="Scripts\views\walletView.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

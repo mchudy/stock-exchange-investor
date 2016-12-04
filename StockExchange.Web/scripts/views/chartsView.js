@@ -1,14 +1,11 @@
 ﻿(function() {
     'use strict';
 
-    var getLineChartDataUrl = '/Charts/GetLineChartData';
-    var getCandlestickDataUrl = '/Charts/GetCandlestickChartData';
+    var chart;
     var loadingText = 'Loading...';
     var chosenCompanies = [21];
 
     var $isCandleStickCheckbox = $('#is-candlestick-chart');
-
-    var chart;
 
     $('.company-select').select2();
     $('.company-select').val(chosenCompanies).trigger('change');
@@ -52,11 +49,11 @@
         chart.showLoading(loadingText);
 
         if (!$isCandleStickCheckbox.is(':checked')) {
-            $.getJSON(addCompaniesToUrl(getLineChartDataUrl, chosenCompanies), function (data) {
+            $.getJSON(addCompaniesToUrl(config.getLineChartDataUrl, chosenCompanies), function (data) {
                 refreshChartData(data);
             });
         } else {
-            $.getJSON(addCompaniesToUrl(getCandlestickDataUrl, chosenCompanies), function (data) {
+            $.getJSON(addCompaniesToUrl(config.getCandlestickDataUrl, chosenCompanies), function (data) {
                 for (var i = 0; i < data.length; i++) {
                     data[i] = $.extend(data[i], {
                         type: 'candlestick'

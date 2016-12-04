@@ -24,15 +24,16 @@
         getValuesUrlCallback: getFilterValuesUrl
     });
     columnFilters.init();
+
     var dataTable = $("#grid").DataTable(
     {
-        "columns": columns,
-        "columnDefs": columnDefs,
-        "ajax": {
-            "url": ajaxUrl,
-            "contentType": "application/json",
-            "type": "POST",
-            "data": function (d) {
+        columns: columns,
+        columnDefs: columnDefs,
+        ajax: {
+            url: ajaxUrl,
+            contentType: 'application/json',
+            type: "POST",
+            data: function (d) {
                 var params = dateFilter.getPeriod();
                 d.filter = {
                     startDate: params.startDate,
@@ -42,11 +43,12 @@
                 return JSON.stringify(d);
             }
         },
-        "dom": "<'row'<'col-sm-2'l><'col-sm-10'f>>" +
+        dom: "<'row'<'col-sm-2'l><'col-sm-10'f>>" +
             "<'row'<'col-sm-12'tr>>" +
             "<'row'<'col-sm-5'i><'col-sm-7'p>>"
     });
     columnFilters.assign(dataTable);
+
     /* Filters */
     $("#grid_filter").append($("#filters").html());
     var dateFilterControl = $("#grid_filter #dateFilter").DateFilter(dateFilter, {

@@ -34,13 +34,13 @@
 
 @section scripts
 {
-    <script type="text/javascript">
-        var baseUrl = "@Url.Content("~")";
+    <script>
+        var config = {
+            getLineChartDataUrl: '@Url.Action("GetLineChartData")',
+            getCandlestickDataUrl: '@Url.Action("GetCandlestickChartData")'
+        };
     </script>
 
-    @Scripts.Render("~/bower_components/highcharts/highstock.js")
-    @Scripts.Render("~/bower_components/highcharts/modules/exporting.js")
-    @Scripts.Render("~/bower_components/highcharts/modules/offline-exporting.js")
-    @Scripts.Render("~/Scripts/charts.js")
+    @Scripts.Render("~/bundles/scripts/highcharts")
+    @Scripts.Render("~/Scripts/Views/chartsView.js")
 }
-

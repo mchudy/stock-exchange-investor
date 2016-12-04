@@ -1,17 +1,15 @@
 {
-  "name": "datatables.net-jqui",
-  "description": "DataTables for jQuery with styling for [jQuery UI](http://jqueryui.com/)",
+  "name": "datatables.net-responsive",
+  "description": "Responsive for DataTables ",
   "main": [
-    "js/dataTables.jqueryui.js",
-    "css/dataTables.jqueryui.css"
+    "js/dataTables.responsive.js"
   ],
   "keywords": [
-    "filter",
-    "sort",
+    "responsive",
     "DataTables",
     "jQuery",
     "table",
-    "jQuery UI"
+    "DataTables"
   ],
   "dependencies": {
     "jquery": ">=1.7",
@@ -35,14 +33,14 @@
   ],
   "homepage": "https://datatables.net",
   "license": "MIT",
-  "version": "1.10.12",
-  "_release": "1.10.12",
+  "version": "2.0.1",
+  "_release": "2.0.1",
   "_resolution": {
     "type": "version",
-    "tag": "1.10.12",
-    "commit": "d59e50afda258daa3462c03647b22d58bb96388f"
+    "tag": "2.0.1",
+    "commit": "e30f3a449be3e164d676bc9b4e31cb4cca89c36f"
   },
-  "_source": "https://github.com/DataTables/Dist-DataTables-jQueryUI.git",
-  "_target": "1.10.12",
-  "_originalSource": "datatables.net-jqui"
+  "_source": "https://github.com/DataTables/Dist-DataTables-Responsive.git",
+  "_target": "2.0.1",
+  "_originalSource": "datatables.net-responsive"
 }
