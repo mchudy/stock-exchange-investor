@@ -18,11 +18,13 @@ namespace StockExchange.Web.Infrastructure
             builder.RegisterType<GenericRepository<Company>>().As<IRepository<Company>>();
             builder.RegisterType<GenericRepository<Price>>().As<IRepository<Price>>();
             builder.RegisterType<GenericRepository<User>>().As<IRepository<User>>();
+            builder.RegisterType<GenericRepository<InvestmentStrategy>>().As<IRepository<InvestmentStrategy>>();
 
             builder.RegisterType<PriceService>().As<IPriceService>();
 
             builder.RegisterType<StockExchangeModel>().InstancePerRequest();
             builder.RegisterType<IndicatorFactory>().AsSelf().SingleInstance();
+            builder.RegisterType<StrategyService>().AsImplementedInterfaces();
         }
     }
 }

@@ -8,7 +8,5 @@ namespace StockExchange.DataAccess.Models
 
         public int UserId { get; set; }
         public virtual User User { get; set; }
-
-        public virtual ICollection<InvestmentCondition> Conditions { get; set; } = new HashSet<InvestmentCondition>();
     }
 }

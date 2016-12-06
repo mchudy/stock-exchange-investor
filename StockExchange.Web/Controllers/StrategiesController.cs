@@ -1,18 +1,21 @@
 ﻿using System;
 using System.Web.Mvc;
+using StockExchange.Business.Models;
 using StockExchange.Business.Services;
 using StockExchange.Web.Models;
 
 namespace StockExchange.Web.Controllers
 {
     [Authorize]
-    public class StrategiesController : Controller
+    public class StrategiesController : BaseController
     {
         private readonly IPriceService _priceService;
+        private readonly IStrategyService _strategyService;
 
-        public StrategiesController(IPriceService priceService)
+        public StrategiesController(IPriceService priceService, IStrategyService strategyService)
         {
             _priceService = priceService;
+            _strategyService = strategyService;
         }
 
         // GET: Strategies
@@ -23,10 +26,17 @@ namespace StockExchange.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult CreateStrategy(StrategyViewModel model)
+        public ActionResult CreateStrategy(UpdateStrategyViewModel model)
         {
-
-            return RedirectToAction("Index");
+            var strategy = new StrategyDto()
+            {
+                StartDate = model.StartDate,
+                EndDate = model.EndDate,
+                Companies = model.Companies,
+                UserId = CurrentUserId
+            };
+            _strategyService.CreateStrategy(strategy);
+            return RedirectToAction("Index", "Wallet");
         }
 
         private StrategyViewModel GetViewModel()

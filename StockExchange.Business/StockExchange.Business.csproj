@@ -75,10 +75,12 @@
     <Compile Include="Models\CompanyPricesDto.cs" />
     <Compile Include="Models\SimulationResult.cs" />
     <Compile Include="Models\SimulationValue.cs" />
+    <Compile Include="Models\StrategyDto.cs" />
     <Compile Include="Models\Transaction.cs" />
     <Compile Include="Models\UserTransactionDto.cs" />
     <Compile Include="Models\UserWalletDto.cs" />
     <Compile Include="Services\IPriceService.cs" />
+    <Compile Include="Services\IStrategyService.cs" />
     <Compile Include="Services\PriceService.cs" />
     <Compile Include="Extensions\PagedListExtension.cs" />
     <Compile Include="Extensions\QueryableExtension.cs" />
@@ -92,6 +94,7 @@
     <Compile Include="Models\PriceDto.cs" />
     <Compile Include="Models\Filters\PriceFilter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\StrategyService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\StockExchange.Common\StockExchange.Common.csproj">

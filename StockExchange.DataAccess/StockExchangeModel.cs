@@ -16,7 +16,6 @@ namespace StockExchange.DataAccess
         public IDbSet<Price> Prices { get; set; }
         public IDbSet<UserTransaction> UserTransactions { get; set; }
         public IDbSet<InvestmentStrategy> Strategies { get; set; }
-        public IDbSet<InvestmentCondition> Conditions { get; set; }
         public IDbSet<Simulation> Simulations { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
