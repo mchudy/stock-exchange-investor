@@ -62,6 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Indicators\AtrIndicator.cs" />
+    <Compile Include="Indicators\IndicatorFactory.cs" />
     <Compile Include="Indicators\IndicatorProperty.cs" />
     <Compile Include="Indicators\IndicatorType.cs" />
     <Compile Include="Indicators\ObvIndicator.cs" />

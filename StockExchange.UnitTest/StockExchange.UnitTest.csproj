@@ -95,6 +95,7 @@
     <Compile Include="Helpers\DataHelpers.cs" />
     <Compile Include="Indicators\ATR\AtrData.cs" />
     <Compile Include="Indicators\ATR\AtrTests.cs" />
+    <Compile Include="Indicators\IndicatorFactoryTest.cs" />
     <Compile Include="Indicators\IndicatorTypeReflectionTest.cs" />
     <Compile Include="Indicators\MACD\MacdData.cs" />
     <Compile Include="Indicators\MACD\MacdTests.cs" />
