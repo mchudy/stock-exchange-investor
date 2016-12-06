@@ -17,7 +17,7 @@
                     <h3 class="box-title">Define Your Strategy</h3>
                 </div>
                 <div class="box-body">
-                    @using (Html.BeginForm("Index", "Strategies", new { ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                    @using (Html.BeginForm("CreateStrategy", "Strategies", new { ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
                     {
                         @Html.AntiForgeryToken()
                         <div class="form-group">

@@ -5,6 +5,7 @@ using StockExchange.Web.Models;
 
 namespace StockExchange.Web.Controllers
 {
+    [Authorize]
     public class StrategiesController : Controller
     {
         private readonly IPriceService _priceService;
@@ -19,6 +20,13 @@ namespace StockExchange.Web.Controllers
         {
             var model = GetViewModel();
             return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult CreateStrategy(StrategyViewModel model)
+        {
+
+            return RedirectToAction("Index");
         }
 
         private StrategyViewModel GetViewModel()

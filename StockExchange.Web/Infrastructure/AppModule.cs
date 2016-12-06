@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using Autofac.Integration.Mvc;
+using StockExchange.Business.Indicators;
 using StockExchange.Business.Services;
 using StockExchange.DataAccess;
 using StockExchange.DataAccess.IRepositories;
@@ -21,6 +22,7 @@ namespace StockExchange.Web.Infrastructure
             builder.RegisterType<PriceService>().As<IPriceService>();
 
             builder.RegisterType<StockExchangeModel>().InstancePerRequest();
+            builder.RegisterType<IndicatorFactory>().AsSelf().SingleInstance();
         }
     }
 }
