@@ -1,4 +1,57 @@
-﻿
+﻿@using System.Web.Optimization
+@model StockExchange.Web.Models.StrategyViewModel
+
 @{
-    ViewBag.Title = "Strategies";
+    ViewBag.Title = "Charts";
 }
+@section css
+{
+    @Styles.Render("~/Content/css/charts.css")
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-3 col-centered">
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Define Your Strategy</h3>
+                </div>
+                <div class="box-body">
+                    @using (Html.BeginForm("Index", "Strategies", new { ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-clock-o"></i>
+                                </div>
+                                @Html.TextBoxFor(m => m.StartDate, new { placeholder = "StartDate", @class = "form-control" })
+                            </div>
+                            @Html.ValidationMessageFor(m => m.StartDate)
+                        </div>
+
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-clock-o"></i>
+                                </div>
+                                @Html.TextBoxFor(m => m.EndDate, new { placeholder = "EndDate", @class = "form-control" })
+                            </div>
+                            @Html.ValidationMessageFor(m => m.EndDate)
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @Html.DropDownListFor(m => m.Companies, new MultiSelectList(Model.Companies, "Id", "Name"), new { @class = "form-control company-select", multiple = "" })
+                            </div>
+                        </div>
+
+                        <button class="btn btn-primary btn-block" type="submit">Submit</button>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Scripts.Render("~/Scripts/Views/strategyView.js")
