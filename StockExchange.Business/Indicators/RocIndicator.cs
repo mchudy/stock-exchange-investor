@@ -13,9 +13,9 @@ namespace StockExchange.Business.Indicators
         public IList<IndicatorValue> Calculate(IList<Price> prices)
         {
             var values = new List<IndicatorValue>();
-            for (int i = Term; i < prices.Count; i++)
+            for (var i = Term; i < prices.Count; i++)
             {
-                decimal value = (prices[i].ClosePrice - prices[i - Term].ClosePrice) / prices[i - Term].ClosePrice * 100;
+                var value = (prices[i].ClosePrice - prices[i - Term].ClosePrice) / prices[i - Term].ClosePrice * 100;
                 values.Add(new IndicatorValue
                 {
                     Date = prices[i].Date,

@@ -14,9 +14,9 @@ namespace StockExchange.Business.Indicators
         {
             var gains = new List<IndicatorValue>();
             var losses = new List<IndicatorValue>();
-            for (int i = 1; i < prices.Count; i++)
+            for (var i = 1; i < prices.Count; i++)
             {
-                decimal change = prices[i].ClosePrice - prices[i - 1].ClosePrice;
+                var change = prices[i].ClosePrice - prices[i - 1].ClosePrice;
                 if (change > 0)
                 {
                     gains.Add(new IndicatorValue { Date = prices[i].Date, Value = change });
@@ -38,12 +38,12 @@ namespace StockExchange.Business.Indicators
         private static IList<IndicatorValue> ComputeRsiValues(IList<IndicatorValue> averageGains, IList<IndicatorValue> averageLosses)
         {
             var result = new List<IndicatorValue>();
-            for (int i = 0; i < averageGains.Count; i++)
+            for (var i = 0; i < averageGains.Count; i++)
             {
                 decimal rsi;
                 if (averageLosses[i].Value != 0)
                 {
-                    decimal rs = averageGains[i].Value / averageLosses[i].Value;
+                    var rs = averageGains[i].Value / averageLosses[i].Value;
                     rsi = 100m - 100m / (1m + rs);
                 }
                 else
