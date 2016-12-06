@@ -2,11 +2,7 @@
 @model StockExchange.Web.Models.StrategyViewModel
 
 @{
-    ViewBag.Title = "Charts";
-}
-@section css
-{
-    @Styles.Render("~/Content/css/charts.css")
+    ViewBag.Title = "Strategy";
 }
 
 <div class="container-fluid">
@@ -22,27 +18,30 @@
                         @Html.AntiForgeryToken()
                         <div class="form-group">
                             <div class="input-group">
+                                @Html.LabelFor(m => m.StartDate, "Start Date: ")
                                 <div class="input-group-addon">
                                     <i class="fa fa-clock-o"></i>
                                 </div>
-                                @Html.TextBoxFor(m => m.StartDate, new { placeholder = "StartDate", @class = "form-control" })
+                                @Html.TextBoxFor(m => m.StartDate, new {placeholder = "StartDate", @class = "form-control"})
                             </div>
                             @Html.ValidationMessageFor(m => m.StartDate)
                         </div>
 
                         <div class="form-group">
                             <div class="input-group">
+                                @Html.LabelFor(m => m.EndDate, "End Date: ")
                                 <div class="input-group-addon">
                                     <i class="fa fa-clock-o"></i>
                                 </div>
-                                @Html.TextBoxFor(m => m.EndDate, new { placeholder = "EndDate", @class = "form-control" })
+                                @Html.TextBoxFor(m => m.EndDate, new {placeholder = "EndDate", @class = "form-control"})
                             </div>
                             @Html.ValidationMessageFor(m => m.EndDate)
                         </div>
 
                         <div class="col-md-6">
                             <div class="form-group">
-                                @Html.DropDownListFor(m => m.Companies, new MultiSelectList(Model.Companies, "Id", "Name"), new { @class = "form-control company-select", multiple = "" })
+                                @Html.LabelFor(m => m.Companies, "Companies: ")
+                                @Html.DropDownListFor(m => m.Companies, new MultiSelectList(Model.Companies, "Id", "Name"), new {@class = "form-control company-select", multiple = ""})
                             </div>
                         </div>
 
