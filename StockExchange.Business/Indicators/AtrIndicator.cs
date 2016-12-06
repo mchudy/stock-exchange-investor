@@ -19,17 +19,17 @@ namespace StockExchange.Business.Indicators
 
         private static List<IndicatorValue> GetRsValues(IList<Price> prices)
         {
-            var rsValues = new List<IndicatorValue>();
-
-            rsValues.Add(new IndicatorValue
+            var rsValues = new List<IndicatorValue>
             {
-                Date = prices[0].Date,
-                Value = prices[0].HighPrice - prices[0].LowPrice
-            });
-
-            for (int i = 1; i < prices.Count; i++)
+                new IndicatorValue
+                {
+                    Date = prices[0].Date,
+                    Value = prices[0].HighPrice - prices[0].LowPrice
+                }
+            };
+            for (var i = 1; i < prices.Count; i++)
             {
-                decimal rs = Math.Max(
+                var rs = Math.Max(
                     prices[i].HighPrice - prices[i].LowPrice, Math.Max(
                         Math.Abs(prices[i].HighPrice - prices[i - 1].ClosePrice),
                         Math.Abs(prices[i].LowPrice - prices[i - 1].ClosePrice)));
