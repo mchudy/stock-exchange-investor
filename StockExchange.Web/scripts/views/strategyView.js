@@ -3,17 +3,15 @@
 
     var chosenCompanies = [21];
 
-
     $('.company-select').select2();
     $('.company-select').val(chosenCompanies).trigger('change');
-
-
 
     $('.company-select').on('change', function () {
         chosenCompanies = $(this).val();
     });
 
-
+    $('#StartDate').datepicker('setDate', new Date());
+    $('#EndDate').datepicker('setDate', new Date());
 
     function addCompaniesToUrl(baseUrl, companyIds) {
         var newUrl = baseUrl + '?';
@@ -22,6 +20,5 @@
         }
         return newUrl.slice(0, -1);
     }
-
 
 })(jQuery);
