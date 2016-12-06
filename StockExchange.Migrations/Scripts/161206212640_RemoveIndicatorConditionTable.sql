@@ -2,9 +2,9 @@ declare @name varchar(255);
 
 SELECT @name = CONSTRAINT_NAME
 FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE
-WHERE TABLE_NAME = 'InvestmentStrategy'
-	AND COLUMN_NAME = 'InvestmentStrategyId';
+WHERE TABLE_NAME = 'Condition'
+	AND COLUMN_NAME = 'StrategyId';
 
-EXEC('ALTER TABLE [dbo].[InvestmentStrategies] DROP CONSTRAINT ' + @name);
+EXEC('ALTER TABLE [dbo].[Strategy] DROP CONSTRAINT ' + @name);
 
-DROP TABLE [dbo].[InvestementCondition]
+DROP TABLE [dbo].[Condition]
