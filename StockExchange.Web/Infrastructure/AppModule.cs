@@ -16,11 +16,9 @@ namespace StockExchange.Web.Infrastructure
 
             builder.RegisterType<GenericRepository<Company>>().As<IRepository<Company>>();
             builder.RegisterType<GenericRepository<Price>>().As<IRepository<Price>>();
-            builder.RegisterType<GenericRepository<Wallet>>().As<IRepository<Wallet>>();
             builder.RegisterType<GenericRepository<User>>().As<IRepository<User>>();
 
             builder.RegisterType<PriceService>().As<IPriceService>();
-            builder.RegisterType<WalletSerivce>().As<IWalletService>();
 
             builder.RegisterType<StockExchangeModel>().InstancePerRequest();
         }

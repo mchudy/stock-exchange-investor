@@ -2585,7 +2585,6 @@
     <Content Include="Views\Transactions\Index.cshtml" />
     <Content Include="Views\Simulations\Index.cshtml" />
     <Content Include="Views\Strategies\Index.cshtml" />
-    <Content Include="Views\Wallet\CreateWallet.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -82,19 +82,14 @@
   <ItemGroup>
     <Compile Include="IRepositories\IRepository.cs" />
     <Compile Include="Models\Company.cs" />
-    <Compile Include="Models\CompanyStockQuantity.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\InvestmentCondition.cs" />
     <Compile Include="Models\InvestmentStrategy.cs" />
     <Compile Include="Models\Price.cs" />
     <Compile Include="Models\Simulation.cs" />
-    <Compile Include="Models\SimulationResult.cs" />
-    <Compile Include="Models\SimulationValue.cs" />
     <Compile Include="Models\SimulationCompany.cs" />
-    <Compile Include="Models\Transaction.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\UserTransaction.cs" />
-    <Compile Include="Models\Wallet.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\GenericRepository.cs" />
     <Compile Include="StockExchangeModel.cs" />
