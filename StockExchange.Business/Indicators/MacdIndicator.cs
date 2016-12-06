@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using StockExchange.Business.Models;
-using StockExchange.DataAccess.IRepositories;
 using StockExchange.DataAccess.Models;
 
 namespace StockExchange.Business.Indicators
@@ -40,11 +38,11 @@ namespace StockExchange.Business.Indicators
 
         private IList<IndicatorValue> SubstractLongEmaFromShortEma(IList<IndicatorValue> shortEma, IList<IndicatorValue> longEma)
         {
-            int difference = LongTerm - ShortTerm;
+            var difference = LongTerm - ShortTerm;
             IList<IndicatorValue> values=new List<IndicatorValue>();
-            for (int i = difference; i < shortEma.Count; i++)
+            for (var i = difference; i < shortEma.Count; i++)
             {
-                var val = new IndicatorValue()
+                var val = new IndicatorValue
                 {
                     Date = shortEma[i].Date,
                     Value = shortEma[i].Value - longEma[i-difference].Value
@@ -54,13 +52,13 @@ namespace StockExchange.Business.Indicators
             return values;
         }
 
-        private IList<IndicatorValue> PrepareResult(IList<IndicatorValue> macdLine, IList<IndicatorValue> signalLine)
+        private static IList<IndicatorValue> PrepareResult(IList<IndicatorValue> macdLine, IList<IndicatorValue> signalLine)
         {
             IList<IndicatorValue> resultList = new List<IndicatorValue>();
-            int difference = macdLine.Count - signalLine.Count;
-            for (int i = difference; i < macdLine.Count; i++)
+            var difference = macdLine.Count - signalLine.Count;
+            for (var i = difference; i < macdLine.Count; i++)
             {
-                resultList.Add(new DoubleLineIndicatorValue()
+                resultList.Add(new DoubleLineIndicatorValue
                 {
                     Date = macdLine[i].Date,
                     Value = macdLine[i].Value,
