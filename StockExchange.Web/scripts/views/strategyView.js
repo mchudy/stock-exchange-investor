@@ -10,7 +10,7 @@
         chosenCompanies = $(this).val();
     });
 
-    $('#StartDate').datepicker('setDate', new Date());
+    $('#StartDate').datepicker('setDate', new Date(2006,0,1));
     $('#EndDate').datepicker('setDate', new Date());
 
     function addCompaniesToUrl(baseUrl, companyIds) {
