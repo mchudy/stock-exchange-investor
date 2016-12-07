@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
-using StockExchange.Business.Models;
+﻿using StockExchange.Business.Models.Indicators;
 using StockExchange.DataAccess.Models;
+using System.Collections.Generic;
 
 namespace StockExchange.Business.Indicators
 {
@@ -9,23 +9,15 @@ namespace StockExchange.Business.Indicators
     /// </summary>
     public class MacdIndicator : IIndicator
     {
-        public int LongTerm { get; set; }
+        public const int DefaultLongTerm = 26;
+        public const int DefaultShortTerm = 12;
+        public const int DefaultSignalTerm = 9;
 
-        public int ShortTerm { get; set; }
+        public int LongTerm { get; set; } = DefaultLongTerm;
+        public int ShortTerm { get; set; } = DefaultShortTerm;
+        public int SignalTerm { get; set; } = DefaultSignalTerm;
 
-        public int SignalTerm { get; set; }
-
-        public MacdIndicator()
-        {
-            Initialize();
-        }
-
-        private void Initialize()
-        {
-            LongTerm = 26;
-            ShortTerm = 12;
-            SignalTerm = 9;
-        }
+        public IndicatorType Type => IndicatorType.Macd;
 
         public IList<IndicatorValue> Calculate(IList<Price> prices)
         {
@@ -39,13 +31,13 @@ namespace StockExchange.Business.Indicators
         private IList<IndicatorValue> SubstractLongEmaFromShortEma(IList<IndicatorValue> shortEma, IList<IndicatorValue> longEma)
         {
             var difference = LongTerm - ShortTerm;
-            IList<IndicatorValue> values=new List<IndicatorValue>();
+            IList<IndicatorValue> values = new List<IndicatorValue>();
             for (var i = difference; i < shortEma.Count; i++)
             {
                 var val = new IndicatorValue
                 {
                     Date = shortEma[i].Date,
-                    Value = shortEma[i].Value - longEma[i-difference].Value
+                    Value = shortEma[i].Value - longEma[i - difference].Value
                 };
                 values.Add(val);
             }
@@ -62,7 +54,7 @@ namespace StockExchange.Business.Indicators
                 {
                     Date = macdLine[i].Date,
                     Value = macdLine[i].Value,
-                    SecondLineValue = signalLine[i-difference].Value
+                    SecondLineValue = signalLine[i - difference].Value
                 });
             }
             return resultList;

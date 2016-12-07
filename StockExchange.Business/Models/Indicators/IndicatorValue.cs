@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace StockExchange.Business.Models
+namespace StockExchange.Business.Models.Indicators
 {
     public class IndicatorValue
     {

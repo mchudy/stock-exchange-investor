@@ -1,8 +1,8 @@
-﻿using System;
-using System.Web.Mvc;
-using StockExchange.Business.Models;
+﻿using StockExchange.Business.Models;
 using StockExchange.Business.Services;
 using StockExchange.Web.Models;
+using System;
+using System.Web.Mvc;
 
 namespace StockExchange.Web.Controllers
 {
@@ -11,6 +11,7 @@ namespace StockExchange.Web.Controllers
     {
         private readonly IPriceService _priceService;
         private readonly IStrategyService _strategyService;
+        private readonly IIndicatorsService _indicatorsService;
 
         public StrategiesController(IPriceService priceService, IStrategyService strategyService)
         {

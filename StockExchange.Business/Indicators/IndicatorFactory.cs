@@ -1,33 +1,43 @@
-﻿using System;
+﻿using StockExchange.Business.Exceptions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace StockExchange.Business.Indicators
 {
-    public class IndicatorFactory
+    public class IndicatorFactory : IIndicatorFactory
     {
-        private static readonly string IndicatorSuffix = "Indicator";
+        private readonly IDictionary<IndicatorType, Type> _types = new Dictionary<IndicatorType, Type>();
+
+        public IndicatorFactory()
+        {
+            LoadTypes();
+        }
 
         public IIndicator CreateIndicator(IndicatorType indicatorType)
         {
-            var typeName =
-                this.GetType()
-                    .Assembly.GetTypes()
-                    .Where(t => t.GetInterfaces().Contains(typeof(IIndicator)))
-                    .FirstOrDefault(t => t.Name.Equals(indicatorType + IndicatorSuffix));
-            if (typeName == null) return null;
-            IIndicator indicator = null;
-            try
+            Type type;
+            if (!_types.TryGetValue(indicatorType, out type))
             {
-                indicator = Activator.CreateInstance(typeName) as IIndicator;
+                throw new IndicatorNotFoundException($"No indicator class found for {indicatorType} type");
             }
-            catch
+            return Activator.CreateInstance(type) as IIndicator;
+        }
+
+        private void LoadTypes()
+        {
+            var indicatorTypes = GetType().Assembly.GetTypes()
+                .Where(t => !t.IsAbstract && !t.IsInterface
+                    && typeof(IIndicator).IsAssignableFrom(t));
+
+            foreach (var type in indicatorTypes)
             {
-                // ignored
+                var indicator = Activator.CreateInstance(type) as IIndicator;
+                if (indicator != null)
+                {
+                    _types.Add(indicator.Type, type);
+                }
             }
-            return indicator;
         }
     }
 }

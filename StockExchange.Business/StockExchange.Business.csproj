@@ -61,14 +61,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Exceptions\IndicatorNotFoundException.cs" />
     <Compile Include="Indicators\AtrIndicator.cs" />
+    <Compile Include="Indicators\IIndicatorFactory.cs" />
     <Compile Include="Indicators\IndicatorFactory.cs" />
-    <Compile Include="Indicators\IndicatorProperty.cs" />
+    <Compile Include="Models\Indicators\IndicatorProperty.cs" />
     <Compile Include="Indicators\IndicatorType.cs" />
     <Compile Include="Indicators\ObvIndicator.cs" />
     <Compile Include="Indicators\RocIndicator.cs" />
     <Compile Include="Models\CompanyStockQuantity.cs" />
-    <Compile Include="Models\IndicatorValue.cs" />
+    <Compile Include="Models\Indicators\IndicatorValue.cs" />
     <Compile Include="Indicators\MovingAverageHelper.cs" />
     <Compile Include="Indicators\RsiIndicator.cs" />
     <Compile Include="Models\Signal.cs" />
@@ -78,7 +80,8 @@
     <Compile Include="Models\StrategyDto.cs" />
     <Compile Include="Models\Transaction.cs" />
     <Compile Include="Models\UserTransactionDto.cs" />
-    <Compile Include="Models\UserWalletDto.cs" />
+    <Compile Include="Services\IIndicatorsService.cs" />
+    <Compile Include="Services\IndicatorsService.cs" />
     <Compile Include="Services\IPriceService.cs" />
     <Compile Include="Services\IStrategyService.cs" />
     <Compile Include="Services\PriceService.cs" />

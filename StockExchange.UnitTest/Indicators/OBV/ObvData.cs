@@ -2,6 +2,7 @@
 using StockExchange.DataAccess.Models;
 using StockExchange.UnitTest.Helpers;
 using System.Collections.Generic;
+using StockExchange.Business.Models.Indicators;
 
 namespace StockExchange.UnitTest.Indicators.OBV
 {

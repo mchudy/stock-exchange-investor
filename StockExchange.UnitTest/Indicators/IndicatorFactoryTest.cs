@@ -1,11 +1,7 @@
-﻿using System;
-using System.CodeDom;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using FluentAssertions;
+﻿using FluentAssertions;
+using StockExchange.Business.Exceptions;
 using StockExchange.Business.Indicators;
+using System;
 using Xunit;
 
 namespace StockExchange.UnitTest.Indicators
@@ -20,11 +16,19 @@ namespace StockExchange.UnitTest.Indicators
         [InlineData(IndicatorType.Roc, typeof(RocIndicator))]
         [InlineData(IndicatorType.Obv, typeof(ObvIndicator))]
         [InlineData(IndicatorType.Atr, typeof(AtrIndicator))]
-        public void Is_Indicator_Factory_Create_Correct_Instance(IndicatorType type, Type resultType)
+        public void Should_create_correct_IIndicator_instance(IndicatorType type, Type resultType)
         {
             var indicator = _factory.CreateIndicator(type);
             indicator.Should().NotBeNull();
             indicator.GetType().Should().Be(resultType);
+        }
+
+        public void Given_nonexistent_type_should_throw_exception()
+        {
+            var type = (IndicatorType)0;
+            Action act = () => _factory.CreateIndicator(type);
+
+            act.ShouldThrow<IndicatorNotFoundException>();
         }
     }
 }

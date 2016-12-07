@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using StockExchange.Business.Indicators;
 using StockExchange.Business.Models;
+using StockExchange.Business.Models.Indicators;
 using Xunit;
 
 namespace StockExchange.UnitTest.Indicators

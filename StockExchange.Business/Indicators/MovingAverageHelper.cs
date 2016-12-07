@@ -3,6 +3,7 @@ using StockExchange.DataAccess.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using StockExchange.Business.Models.Indicators;
 
 namespace StockExchange.Business.Indicators
 {

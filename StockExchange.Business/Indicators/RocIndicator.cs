@@ -1,6 +1,7 @@
 ﻿using StockExchange.Business.Models;
 using StockExchange.DataAccess.Models;
 using System.Collections.Generic;
+using StockExchange.Business.Models.Indicators;
 
 namespace StockExchange.Business.Indicators
 {
@@ -9,6 +10,8 @@ namespace StockExchange.Business.Indicators
         public const int DefaultRocTerm = 12;
 
         public int Term { get; set; } = DefaultRocTerm;
+
+        public IndicatorType Type => IndicatorType.Roc;
 
         public IList<IndicatorValue> Calculate(IList<Price> prices)
         {

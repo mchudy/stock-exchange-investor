@@ -2,6 +2,7 @@
 using StockExchange.DataAccess.Models;
 using System;
 using System.Collections.Generic;
+using StockExchange.Business.Models.Indicators;
 
 namespace StockExchange.Business.Indicators
 {
@@ -10,6 +11,8 @@ namespace StockExchange.Business.Indicators
         public const int DefaultAtrTerm = 14;
 
         public int Term { get; set; } = DefaultAtrTerm;
+
+        public IndicatorType Type => IndicatorType.Atr;
 
         public IList<IndicatorValue> Calculate(IList<Price> prices)
         {

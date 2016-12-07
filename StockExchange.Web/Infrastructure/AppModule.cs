@@ -1,7 +1,6 @@
 ﻿using Autofac;
 using Autofac.Integration.Mvc;
 using StockExchange.Business.Indicators;
-using StockExchange.Business.Services;
 using StockExchange.DataAccess;
 using StockExchange.DataAccess.IRepositories;
 using StockExchange.DataAccess.Models;
@@ -20,11 +19,12 @@ namespace StockExchange.Web.Infrastructure
             builder.RegisterType<GenericRepository<User>>().As<IRepository<User>>();
             builder.RegisterType<GenericRepository<InvestmentStrategy>>().As<IRepository<InvestmentStrategy>>();
 
-            builder.RegisterType<PriceService>().As<IPriceService>();
+            builder.RegisterAssemblyTypes(typeof(IIndicator).Assembly)
+                .Where(t => t.Namespace != null && t.Namespace.Contains("Services"))
+                .AsImplementedInterfaces();
 
             builder.RegisterType<StockExchangeModel>().InstancePerRequest();
-            builder.RegisterType<IndicatorFactory>().AsSelf().SingleInstance();
-            builder.RegisterType<StrategyService>().AsImplementedInterfaces();
+            builder.RegisterType<IndicatorFactory>().AsImplementedInterfaces().SingleInstance();
         }
     }
 }
