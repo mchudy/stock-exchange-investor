@@ -89,7 +89,7 @@
                 todayHighlight: true,
                 orientation: 'auto right'
             })
-            .on('show', function () {
+            .on('focus', function (e) {
                 var currentDate = new Date($(this).val());
                 $(this).datepicker('setDate', currentDate);
             });
