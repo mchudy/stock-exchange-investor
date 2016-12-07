@@ -2559,6 +2559,7 @@
     <Compile Include="Infrastructure\IdentityModule.cs" />
     <Compile Include="Models\Account\RegisterViewModel.cs" />
     <Compile Include="Models\Charts\ChartsIndexModel.cs" />
+    <Compile Include="Models\IndicatorViewModel.cs" />
     <Compile Include="Models\Charts\LineChartModel.cs" />
     <Compile Include="Models\DataTables\DataTableMessage.cs" />
     <Compile Include="Models\DataTables\DataTableResponse.cs" />

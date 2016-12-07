@@ -1,7 +1,6 @@
 ﻿using StockExchange.Business.Indicators;
 using StockExchange.Business.Models;
 using StockExchange.Business.Models.Indicators;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -32,11 +31,16 @@ namespace StockExchange.Business.Services
             }).ToList();
         }
 
-        public IList<CompanyIndicatorValues> GetIndicatorValues(IIndicator indicator, IList<int> companyIds,
-            DateTime startDate, DateTime endDate)
+        public IList<CompanyIndicatorValues> GetIndicatorValues(IIndicator indicator, IList<int> companyIds)
         {
             IList<CompanyPricesDto> companyPrices = _priceService.GetPricesForCompanies(companyIds);
             return ComputeIndicatorValues(indicator, companyPrices);
+        }
+
+        public IList<CompanyIndicatorValues> GetIndicatorValues(IndicatorType type, IList<int> companyIds)
+        {
+            var indicator = _indicatorFactory.CreateIndicator(type);
+            return GetIndicatorValues(indicator, companyIds);
         }
 
         private static IList<CompanyIndicatorValues> ComputeIndicatorValues(IIndicator indicator, IList<CompanyPricesDto> companyPrices)

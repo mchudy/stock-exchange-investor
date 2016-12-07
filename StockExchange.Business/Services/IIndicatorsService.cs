@@ -7,5 +7,8 @@ namespace StockExchange.Business.Services
     public interface IIndicatorsService
     {
         IList<IndicatorProperty> GetPropertiesForIndicator(IndicatorType type);
+
+        IList<CompanyIndicatorValues> GetIndicatorValues(IIndicator indicator, IList<int> companyIds);
+        IList<CompanyIndicatorValues> GetIndicatorValues(IndicatorType type, IList<int> companyIds);
     }
 }

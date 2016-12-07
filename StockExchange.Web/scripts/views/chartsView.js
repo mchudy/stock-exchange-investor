@@ -3,10 +3,9 @@
 
     var chart;
     var loadingText = 'Loading...';
-
     var $companySelect = $('.company-select');
+    var $indicatorSelect = $('.indicator-select');
     var $isCandleStickCheckbox = $('#is-candlestick-chart');
-
     var chosenCompanies = $companySelect.val();
 
     $companySelect.select2({
@@ -14,8 +13,6 @@
         width: '100%'
     });
     $companySelect.trigger('change');
-
-    $('indicator-select').select2();
 
     initChart();
     loadChart();
@@ -27,6 +24,10 @@
     $companySelect.on('change', function () {
         chosenCompanies = $(this).val();
         loadChart();
+    });
+
+    $indicatorSelect.on('change', function () {
+        loadIndicatorValues($(this).val());
     });
 
     function initChart() {
@@ -52,7 +53,10 @@
             },
             legend: {
                 enabled: true
-            }
+            },
+            yAxis: [{
+                id: 'price-axis'
+            }]
         });
         chart.showLoading(loadingText);
     }
@@ -66,11 +70,15 @@
         chart.showLoading(loadingText);
 
         if (!$isCandleStickCheckbox.is(':checked')) {
-            $.getJSON(addCompaniesToUrl(config.getLineChartDataUrl, chosenCompanies), function (data) {
+            $.get(config.getLineChartDataUrl, $.param({
+                companyIds: chosenCompanies
+            }, true), function (data) {
                 refreshChartData(data);
             });
         } else {
-            $.getJSON(addCompaniesToUrl(config.getCandlestickDataUrl, chosenCompanies), function (data) {
+            $.get(config.getCandlestickDataUrl, $.param({
+                companyIds: chosenCompanies
+            }, true), function (data) {
                 for (var i = 0; i < data.length; i++) {
                     data[i] = $.extend(data[i], {
                         type: 'candlestick'
@@ -78,6 +86,87 @@
                 }
                 refreshChartData(data);
             });
+        }
+    }
+
+    function loadIndicatorValues(type) {
+        if (!type) {
+            removeIndicatorAxis();
+            chart.redraw();
+            return;
+        }
+        $.get(config.getIndicatorValuesUrl,
+            $.param({
+                type: type,
+            companyIds: chosenCompanies
+        }, true), function(data) {
+            drawIndicatorValues(type, data);
+        });
+    }
+
+    function drawIndicatorValues(type, data) {
+        // the false parameters prevent from redrawing the chart on every operation
+        // (we redraw it only once at the end)
+        var oldSeries;
+        while ((oldSeries = chart.get('indicator-series'))) {
+                oldSeries.remove(false);
+        }
+
+        if (!chart.get('indicator-axis')) {
+            addIndicatorAxis();
+        } else if(!type) {
+            removeIndicatorAxis();
+        }
+        if (type) {
+            for (var i = 0; i < data.length; i++) {
+                chart.addSeries({
+                    id: 'indicator-series',
+                    name: data[i].name + ' - ' + type,
+                    data: data[i].data,
+                    yAxis: 2
+                }, false);
+            }
+        }
+        chart.redraw();
+    }
+
+    function removeIndicatorAxis() {
+        var axis = chart.get('indicator-axis');
+        if (axis) {
+            axis.remove();
+        }
+        chart.get('price-axis').update({ height: '100%' }, false);
+    }
+
+    function addIndicatorAxis() {
+        chart.addAxis({
+            id: 'indicator-axis',
+            labels: {
+                align: 'left',
+                x: -3
+            },
+            title: 'Indicator value',
+            top: '65%',
+            height: '35%',
+            offset: 0,
+            lineWidth: 2
+        }, false, false);
+        chart.get('price-axis').update({ height: '60%' }, false);
+    }
+
+    function refreshChartData(data) {
+        clearChart();
+        for (var i = 0; i < data.length; i++) {
+            chart.addSeries(data[i], false);
+        }
+        loadIndicatorValues($indicatorSelect.val());
+        chart.hideLoading();
+        initDatepickers();
+    };
+
+    function clearChart() {
+        while (chart.series.length > 0) {
+            chart.series[0].remove(false);
         }
     }
 
@@ -93,29 +182,6 @@
                 var currentDate = new Date($(this).val());
                 $(this).datepicker('setDate', currentDate);
             });
-    }
-
-    function addCompaniesToUrl(baseUrl, companyIds) {
-        var newUrl = baseUrl + '?';
-        for (var i = 0; i < companyIds.length; i++) {
-            newUrl += 'companyIds=' + companyIds[i] + '&';
-        }
-        return newUrl.slice(0, -1);
-    }
-
-    function refreshChartData(data) {
-        clearChart();
-        for (var i = 0; i < data.length; i++) {
-            chart.addSeries(data[i]);
-        }
-        chart.hideLoading();
-        initDatepickers();
-    };
-
-    function clearChart() {
-        while (chart.series.length > 0) {
-            chart.series[0].remove(true);
-        }
     }
 
 })();

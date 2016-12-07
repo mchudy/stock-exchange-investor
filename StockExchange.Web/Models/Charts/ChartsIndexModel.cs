@@ -6,5 +6,6 @@ namespace StockExchange.Web.Models.Charts
     public class ChartsIndexModel
     {
         public IList<CompanyDto> Companies { get; set; }
+        public IList<IndicatorViewModel> Indicators { get; set; }
     }
 }
