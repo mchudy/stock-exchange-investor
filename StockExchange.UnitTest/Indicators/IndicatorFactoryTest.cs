@@ -23,6 +23,7 @@ namespace StockExchange.UnitTest.Indicators
             indicator.GetType().Should().Be(resultType);
         }
 
+        [Fact]
         public void Given_nonexistent_type_should_throw_exception()
         {
             var type = (IndicatorType)0;

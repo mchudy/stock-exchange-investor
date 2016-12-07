@@ -12,27 +12,29 @@
 }
 
 <div class="row">
-    <div class="col-md-2">
+    <div class="col-sm-2">
         <span class="chart-options-wrapper">
-            <span class="chart-option">Line chart</span>
+            <span class="chart-option">Line</span>
             <label class="toggle">
                 <input type="checkbox" id="is-candlestick-chart">
                 <span class="handle"></span>
             </label>
-            <span class="chart-option">Candlestick chart</span>
+            <span class="chart-option">Candlestick</span>
         </span>
     </div>
-    <div class="col-md-6">
+    <div class="col-sm-4">
         <div class="form-group">
+            <label>Companies</label>
             @Html.DropDownList("selectedCompanies", new MultiSelectList(Model.Companies, "Id", "Name",
-                    new List<int> { Model.Companies.FirstOrDefault()?.Id ?? 0 }),
-                    new { @class = "form-control company-select", multiple = "" })
+                new List<int> {Model.Companies.FirstOrDefault()?.Id ?? 0}),
+                new {@class = "form-control company-select", multiple = ""})
         </div>
     </div>
-</div>
-<div class="row">
-    @Html.DropDownList("Indicators", new SelectList(Enum.GetValues(typeof(IndicatorType)).Cast<IndicatorType>().Select(e => e.GetEnumDescription())))
-    Parameters:
+    <div class="form-group col-sm-2">
+        <label>Indicator</label>
+        @Html.DropDownList("Indicators", new SelectList(Enum.GetValues(typeof(IndicatorType)).Cast<IndicatorType>().Select(e => e.GetEnumDescription())), "Select indicator",
+            new { @class = "form-control indicator-select" })
+    </div>
 </div>
 
 <div class="row">

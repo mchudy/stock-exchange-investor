@@ -5,6 +5,7 @@ using System.Web.Mvc;
 
 namespace StockExchange.Web.Controllers
 {
+    [Authorize]
     public class SimulationsController : Controller
     {
         private readonly IPriceService _priceService;

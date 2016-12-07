@@ -10,9 +10,12 @@
     var chosenCompanies = $companySelect.val();
 
     $companySelect.select2({
-        placeholder: 'Choose companies'
+        placeholder: 'Choose companies',
+        width: '100%'
     });
     $companySelect.trigger('change');
+
+    $('indicator-select').select2();
 
     initChart();
     loadChart();
@@ -33,12 +36,16 @@
             }
         });
 
-        chart = Highcharts.stockChart('chart-container', {
+        chart = new Highcharts.stockChart('chart-container', {
             rangeSelector: {
-                selected: 1
+                inputDateFormat: '%Y-%m-%d',
+                inputEditDateFormat: '%Y-%m-%d'
             },
             title: {
                 text: 'Stock chart'
+            },
+            legend: {
+                enabled: true
             }
         });
         chart.showLoading(loadingText);
@@ -68,6 +75,16 @@
         }
     }
 
+    function initDatepickers() {
+        $('input.highcharts-range-selector', $('#chart-container'))
+            .datepicker({
+                format: 'yyyy-MM-dd',
+                todayBtn: 'linked',
+                todayHighlight: true,
+                orientation: 'auto right'
+            });
+    }
+
     function addCompaniesToUrl(baseUrl, companyIds) {
         var newUrl = baseUrl + '?';
         for (var i = 0; i < companyIds.length; i++) {
@@ -82,6 +99,7 @@
             chart.addSeries(data[i]);
         }
         chart.hideLoading();
+        initDatepickers();
     };
 
     function clearChart() {

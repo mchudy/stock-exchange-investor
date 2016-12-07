@@ -1,22 +1,22 @@
-﻿using System.ComponentModel;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace StockExchange.Business.Indicators
 {
     public enum IndicatorType : byte
     {
-        [Description("ATR")]
+        [Display(Name = "ATR (Average True Range)")]
         Atr = 1,
 
-        [Description("MACD")]
+        [Display(Name = "MACD (Moving Average Convergence Divergence)")]
         Macd = 2,
 
-        [Description("OBV")]
+        [Display(Name = "OBV (On-balance Volume)")]
         Obv = 3,
 
-        [Description("ROC")]
+        [Display(Name = "ROC (Rate of Change)")]
         Roc = 4,
 
-        [Description("RSI")]
+        [Display(Name = "RSI (Relative Strength Index)")]
         Rsi = 5
     }
 }
