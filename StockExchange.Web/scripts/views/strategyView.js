@@ -5,7 +5,7 @@
         placeholder: 'Choose companies'
     });
 
-    $('#StartDate').datepicker('refresh');
-    $('#EndDate').datepicker('refresh');
+    $('#StartDate').datepicker();
+    $('#EndDate').datepicker();
 
 })(jQuery);

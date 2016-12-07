@@ -21,7 +21,7 @@
                                 <div class="input-group-addon">
                                     <i class="fa fa-calendar"></i>
                                 </div>
-                                @Html.TextBoxFor(m => m.StartDate, new { @class = "form-control" })
+                                @Html.TextBoxFor(m => m.StartDate, new { @class = "form-control", Value = Model.StartDate.ToShortDateString() })
                             </div>
                         </div>
 
@@ -31,7 +31,7 @@
                                 <div class="input-group-addon">
                                     <i class="fa fa-calendar"></i>
                                 </div>
-                                @Html.TextBoxFor(m => m.EndDate, new { @class = "form-control" })
+                                @Html.TextBoxFor(m => m.EndDate, new { @class = "form-control", Value = Model.EndDate.ToShortDateString() })
                             </div>
                         </div>
 
