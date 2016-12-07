@@ -39,7 +39,13 @@
         chart = new Highcharts.stockChart('chart-container', {
             rangeSelector: {
                 inputDateFormat: '%Y-%m-%d',
-                inputEditDateFormat: '%Y-%m-%d'
+                inputEditDateFormat: '%Y-%m-%d',
+                inputDateParser: function (value) {
+                    var date = new Date(value);
+                    // hack for dealing with timezone issue
+                    date.setTime(date.getTime() + 1 * 1000 * 60 * 60 * 4);
+                    return date.getTime();
+                }
             },
             title: {
                 text: 'Stock chart'
@@ -78,10 +84,14 @@
     function initDatepickers() {
         $('input.highcharts-range-selector', $('#chart-container'))
             .datepicker({
-                format: 'yyyy-MM-dd',
+                format: 'yyyy-mm-dd',
                 todayBtn: 'linked',
                 todayHighlight: true,
                 orientation: 'auto right'
+            })
+            .on('show', function () {
+                var currentDate = new Date($(this).val());
+                $(this).datepicker('setDate', currentDate);
             });
     }
 
