@@ -22,6 +22,11 @@ namespace StockExchange.DataAccess
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
+            modelBuilder.Entity<InvestmentStrategy>().HasMany(s => s.Companies)
+                .WithMany(c => c.Strategies).Map(cs =>
+                {
+                    cs.ToTable("dbo.StrategiesCompanies");
+                });
         }
     }
 }

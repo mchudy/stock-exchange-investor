@@ -13,10 +13,11 @@ namespace StockExchange.Web.Controllers
         private readonly IStrategyService _strategyService;
         private readonly IIndicatorsService _indicatorsService;
 
-        public StrategiesController(IPriceService priceService, IStrategyService strategyService)
+        public StrategiesController(IPriceService priceService, IStrategyService strategyService, IIndicatorsService indicatorsService)
         {
             _priceService = priceService;
             _strategyService = strategyService;
+            _indicatorsService = indicatorsService;
         }
 
         // GET: Strategies
