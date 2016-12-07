@@ -2155,7 +2155,7 @@
     </Content>
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
-    <Content Include="Scripts\views\strategyView.js" />
+    <Content Include="Scripts\views\simulationView.js" />
     <Content Include="Scripts\views\chartsView.js" />
     <Content Include="Scripts\dataTablesExtensions.js" />
     <Content Include="Scripts\dateFilter.js" />
@@ -2565,6 +2565,7 @@
     <Compile Include="Models\DataTables\DataTableSimpleMessage.cs" />
     <Compile Include="Models\Account\LoginViewModel.cs" />
     <Compile Include="Models\PriceViewModel.cs" />
+    <Compile Include="Models\SimulationViewModel.cs" />
     <Compile Include="Models\StrategyViewModel.cs" />
     <Compile Include="Models\Wallet\CreateWalletViewModel.cs" />
     <Compile Include="Models\Wallet\WalletViewModel.cs" />
@@ -2588,6 +2589,7 @@
     <Content Include="Views\Simulations\Index.cshtml" />
     <Content Include="Views\Strategies\Index.cshtml" />
     <Content Include="Views\Account\Settings.cshtml" />
+    <Content Include="Views\Simulations\Results.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
