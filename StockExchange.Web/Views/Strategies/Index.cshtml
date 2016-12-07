@@ -7,45 +7,45 @@
 
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-3 col-centered">
+        <div class="col-md-4 col-centered">
             <div class="box box-info">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Define Your Strategy</h3>
+                    <h3 class="box-title">Define your strategy</h3>
                 </div>
-                <div class="box-body">
+                <div class="box-body col-sm-10 col-centered">
                     @using (Html.BeginForm("CreateStrategy", "Strategies", new { ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
                     {
-                        @Html.AntiForgeryToken()
                         <div class="form-group">
-                            <div class="input-group">
-                                @Html.LabelFor(m => m.StartDate, "Start Date: ")
+                            @Html.LabelFor(m => m.StartDate, new { @class = "col-sm-4 control-label" })
+                            <div class="input-group col-sm-8">
                                 <div class="input-group-addon">
-                                    <i class="fa fa-clock-o"></i>
+                                    <i class="fa fa-calendar"></i>
                                 </div>
-                                @Html.TextBoxFor(m => m.StartDate, new {placeholder = "StartDate", @class = "form-control"})
+                                @Html.TextBoxFor(m => m.StartDate, new { @class = "form-control" })
                             </div>
-                            @Html.ValidationMessageFor(m => m.StartDate)
                         </div>
 
                         <div class="form-group">
-                            <div class="input-group">
-                                @Html.LabelFor(m => m.EndDate, "End Date: ")
+                            @Html.LabelFor(m => m.EndDate, new { @class = "col-sm-4 control-label" })
+                            <div class="input-group col-sm-8">
                                 <div class="input-group-addon">
-                                    <i class="fa fa-clock-o"></i>
+                                    <i class="fa fa-calendar"></i>
                                 </div>
-                                @Html.TextBoxFor(m => m.EndDate, new {placeholder = "EndDate", @class = "form-control"})
-                            </div>
-                            @Html.ValidationMessageFor(m => m.EndDate)
-                        </div>
-
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                @Html.LabelFor(m => m.Companies, "Companies: ")
-                                @Html.DropDownListFor(m => m.Companies, new MultiSelectList(Model.Companies, "Id", "Name"), new {@class = "form-control company-select", multiple = ""})
+                                @Html.TextBoxFor(m => m.EndDate, new { @class = "form-control" })
                             </div>
                         </div>
 
-                        <button class="btn btn-primary btn-block" type="submit">Submit</button>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Companies, new { @class = "col-sm-4 control-label" })
+                            <div class="col-sm-8 input-group">
+                                @Html.DropDownListFor(m => m.SelectedCompanyIds, new MultiSelectList(Model.Companies, "Id", "Name"),
+                                    new { @class = "form-control company-select", multiple = "" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <button class="btn btn-success pull-right" type="submit">Create</button>
+                        </div>
                     }
                 </div>
             </div>

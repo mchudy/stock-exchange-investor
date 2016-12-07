@@ -93,6 +93,12 @@ namespace StockExchange.Web.Controllers
             return RedirectToAction("Price", "Price");
         }
 
+        [HttpGet]
+        public ActionResult Settings()
+        {
+            return View();
+        }
+
         private ActionResult RedirectToLocal(string returnUrl)
         {
             if (Url.IsLocalUrl(returnUrl))

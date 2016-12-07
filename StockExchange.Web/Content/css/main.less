@@ -240,8 +240,15 @@ footer {
 
 .input-group {
   .input-group-addon {
-    border-radius: @input-radius;
-    border-color: @gray;
+      border-radius: @input-radius;
+      border-color: @gray;
+      background-color: white;
+      padding: 5px 10px;
+      i {
+          color: @light-blue;
+          font-size: 18px;
+          width: 18px;
+      }
   }
 }
 
@@ -260,4 +267,8 @@ footer {
 
 .icon-stock-down, .text-danger {
     color: @red;
+}
+
+.datepicker {
+    background-color: white;
 }

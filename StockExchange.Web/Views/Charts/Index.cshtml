@@ -1,5 +1,7 @@
 ﻿@model StockExchange.Web.Models.Charts.ChartsIndexModel
 @using System.Web.Optimization
+@using StockExchange.Business.Indicators
+@using StockExchange.Common.Extensions
 
 @{
     ViewBag.Title = "Charts";
@@ -22,10 +24,15 @@
     </div>
     <div class="col-md-6">
         <div class="form-group">
-            @Html.DropDownListFor(m => m.Companies, new MultiSelectList(Model.Companies, "Id", "Name"),
-                new { @class = "form-control company-select", multiple = "" })
+            @Html.DropDownList("selectedCompanies", new MultiSelectList(Model.Companies, "Id", "Name",
+                    new List<int> { Model.Companies.FirstOrDefault()?.Id ?? 0 }),
+                    new { @class = "form-control company-select", multiple = "" })
         </div>
     </div>
+</div>
+<div class="row">
+    @Html.DropDownList("Indicators", new SelectList(Enum.GetValues(typeof(IndicatorType)).Cast<IndicatorType>().Select(e => e.GetEnumDescription())))
+    Parameters:
 </div>
 
 <div class="row">

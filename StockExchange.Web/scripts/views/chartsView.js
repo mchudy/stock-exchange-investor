@@ -3,12 +3,16 @@
 
     var chart;
     var loadingText = 'Loading...';
-    var chosenCompanies = [21];
 
+    var $companySelect = $('.company-select');
     var $isCandleStickCheckbox = $('#is-candlestick-chart');
 
-    $('.company-select').select2();
-    $('.company-select').val(chosenCompanies).trigger('change');
+    var chosenCompanies = $companySelect.val();
+
+    $companySelect.select2({
+        placeholder: 'Choose companies'
+    });
+    $companySelect.trigger('change');
 
     initChart();
     loadChart();
@@ -17,7 +21,7 @@
         loadChart();
     });
 
-    $('.company-select').on('change', function () {
+    $companySelect.on('change', function () {
         chosenCompanies = $(this).val();
         loadChart();
     });

@@ -580,6 +580,13 @@ footer {
 .input-group .input-group-addon {
   border-radius: 0;
   border-color: #d2d6de;
+  background-color: white;
+  padding: 5px 10px;
+}
+.input-group .input-group-addon i {
+  color: #3c8dbc;
+  font-size: 18px;
+  width: 18px;
 }
 .btn {
   border-radius: 0;
@@ -595,4 +602,7 @@ footer {
 .icon-stock-down,
 .text-danger {
   color: #dd4b39;
+}
+.datepicker {
+  background-color: white;
 }

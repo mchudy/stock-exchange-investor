@@ -68,16 +68,13 @@
         var $filterValue = $('#filterValue', that);
         $filterValue.datepicker(filterTypeOptions.months);
         $filterValue.datepicker('setDate', dateFilter.getDate())
-            .on('changeDate', function () {
+            .on('changeDate', function() {
                 if (!freezeEvents) {
                     dateFilter.setDate($(this).datepicker('getDate'));
                     if (typeof dateFilter.onChanged === 'function') {
                         dateFilter.onChanged();
                     }
                 }
-            })
-            .on('show', function() {
-                $('.datepicker').addClass('calendar');
             });
 
         $("#filterType", that).on("change", function () {

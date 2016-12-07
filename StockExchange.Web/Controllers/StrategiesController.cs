@@ -27,13 +27,13 @@ namespace StockExchange.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult CreateStrategy(UpdateStrategyViewModel model)
+        public ActionResult CreateStrategy(StrategyViewModel model)
         {
-            var strategy = new StrategyDto()
+            var strategy = new StrategyDto
             {
                 StartDate = model.StartDate,
                 EndDate = model.EndDate,
-                Companies = model.Companies,
+                Companies = model.SelectedCompanyIds,
                 UserId = CurrentUserId
             };
             _strategyService.CreateStrategy(strategy);

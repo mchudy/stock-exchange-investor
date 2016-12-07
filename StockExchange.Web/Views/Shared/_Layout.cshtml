@@ -1,5 +1,4 @@
 ﻿@using System.Web.Optimization
-@using Microsoft.AspNet.Identity
 @using StockExchange.Web.Helpers
 <!DOCTYPE html>
 <html lang="en">
@@ -38,7 +37,7 @@
                             </a>
                             <ul class="dropdown-menu" role="menu">
                                 <li>
-                                    <a href="#"><i class="fa fa-cog fa-lg"></i>  Settings</a>
+                                    <a href="@Url.Action("Settings", "Account")"><i class="fa fa-cog fa-lg"></i>  Settings</a>
                                 </li>
                                 <li><a href="javascript:document.getElementById('logoutForm').submit()"><i class="fa fa-sign-out fa-lg"></i>  Log out</a></li>
                             </ul>
