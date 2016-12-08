@@ -2,6 +2,7 @@
 using StockExchange.Web.Models;
 using System;
 using System.Web.Mvc;
+using StockExchange.Business.ServiceInterfaces;
 
 namespace StockExchange.Web.Controllers
 {

@@ -1,4 +1,5 @@
-﻿@using System.Web.Optimization
+﻿@model StockExchange.Web.Models.Wallet.WalletViewModel
+@using System.Web.Optimization
 @{
     ViewBag.Title = "Wallet";
 }
@@ -9,9 +10,9 @@
             <span class="info-box-icon"><i class="fa fa-money"></i></span>
 
             <div class="info-box-content">
+                @Html.ActionLink("Edit ", "EditBudgetDialog", "Wallet", null, new { @class = "modal-link btn btn-success pull-right" })
                 <span class="info-box-text">Budget</span>
-                <span class="info-box-number">$5,200</span>
-
+                <span class="info-box-number">$@Model.Budget</span>
                 <div class="progress">
                     <div class="progress-bar progress-bar-success" role="progressbar" style="width: 50%"></div>
                 </div>

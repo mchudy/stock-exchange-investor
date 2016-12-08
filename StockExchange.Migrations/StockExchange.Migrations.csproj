@@ -112,6 +112,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Scripts\161207161514_CompanyStrategy.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Scripts\161208170226_UserTransaction_AddUserId.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Scripts\161208172601_UserTransaction_ChangeDateToDateTime.sql" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

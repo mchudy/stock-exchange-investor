@@ -11,5 +11,8 @@ namespace StockExchange.DataAccess.Models
 
         public virtual Company Company { get; set; }
         public int CompanyId { get; set; }
+
+        public virtual User User { get; set; }
+        public int UserId { get; set; }
     }
 }

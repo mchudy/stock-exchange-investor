@@ -1,4 +1,4 @@
-﻿$(function () {
+﻿(function () {
     'use strict';
 
     Highcharts.chart('owned-stocks-pie-chart', {

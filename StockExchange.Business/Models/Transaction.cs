@@ -2,7 +2,7 @@
 
 namespace StockExchange.Business.Models
 {
-    public class Transaction
+    public class SimulationTransaction
     {
         public int Id { get; set; }
         public DateTime Date { get; set; }

@@ -1,4 +1,4 @@
-﻿using StockExchange.Business.Services;
+﻿using StockExchange.Business.ServiceInterfaces;
 using StockExchange.Web.Models;
 using System.Web.Mvc;
 
@@ -18,7 +18,6 @@ namespace StockExchange.Web.Controllers
             _indicatorsService = indicatorsService;
         }
 
-        // GET: Strategies
         public ActionResult Index()
         {
             //var model = GetViewModel();

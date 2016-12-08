@@ -12,40 +12,47 @@
                     <h3 class="box-title">Run simulation</h3>
                 </div>
                 <div class="box-body col-sm-10 col-centered">
-                    @using (Html.BeginForm("RunSimulation", "Simulations", new { ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                    @if (!Model.Strategies.Any())
+                    {
+                        <div class="alert alert-warning alert-dismissable">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                            Looks like you haven't defined any investment strategy yet. To create one, click <a href="@Url.Action("Index", "Strategies")">here</a>.
+                        </div>
+                    }
+                    @using (Html.BeginForm("RunSimulation", "Simulations", new {ViewBag.ReturnUrl}, FormMethod.Post, new {@class = "form-horizontal", role = "form"}))
                     {
                         <div class="form-group">
-                            @Html.LabelFor(m => m.Strategies, new { @class = "col-sm-4 control-label" })
+                            @Html.LabelFor(m => m.Strategies, new {@class = "col-sm-4 control-label"})
                             <div class="col-sm-8 input-group">
-                                @Html.DropDownListFor(m => m.SelectedStrategyId, new SelectList(Model.Strategies), new { @class = "form-control" })
+                                @Html.DropDownListFor(m => m.SelectedStrategyId, new SelectList(Model.Strategies), new {@class = "form-control"})
                             </div>
                         </div>
 
                         <div class="form-group">
-                            @Html.LabelFor(m => m.StartDate, new { @class = "col-sm-4 control-label" })
+                            @Html.LabelFor(m => m.StartDate, new {@class = "col-sm-4 control-label"})
                             <div class="input-group col-sm-8">
                                 <div class="input-group-addon">
                                     <i class="fa fa-calendar"></i>
                                 </div>
-                                @Html.TextBoxFor(m => m.StartDate, new { @class = "form-control", Value = Model.StartDate.ToShortDateString() })
+                                @Html.TextBoxFor(m => m.StartDate, new {@class = "form-control", Value = Model.StartDate.ToShortDateString()})
                             </div>
                         </div>
 
                         <div class="form-group">
-                            @Html.LabelFor(m => m.EndDate, new { @class = "col-sm-4 control-label" })
+                            @Html.LabelFor(m => m.EndDate, new {@class = "col-sm-4 control-label"})
                             <div class="input-group col-sm-8">
                                 <div class="input-group-addon">
                                     <i class="fa fa-calendar"></i>
                                 </div>
-                                @Html.TextBoxFor(m => m.EndDate, new { @class = "form-control", Value = Model.EndDate.ToShortDateString() })
+                                @Html.TextBoxFor(m => m.EndDate, new {@class = "form-control", Value = Model.EndDate.ToShortDateString()})
                             </div>
                         </div>
 
                         <div class="form-group">
-                            @Html.LabelFor(m => m.Companies, new { @class = "col-sm-4 control-label" })
+                            @Html.LabelFor(m => m.Companies, new {@class = "col-sm-4 control-label"})
                             <div class="col-sm-8 input-group">
                                 @Html.DropDownListFor(m => m.SelectedCompanyIds, new MultiSelectList(Model.Companies, "Id", "Name"),
-                                    new { @class = "form-control company-select", multiple = "" })
+                                    new {@class = "form-control company-select", multiple = ""})
                             </div>
                         </div>
 

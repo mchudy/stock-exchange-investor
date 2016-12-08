@@ -81,10 +81,12 @@
     <Compile Include="Models\StrategyDto.cs" />
     <Compile Include="Models\Transaction.cs" />
     <Compile Include="Models\UserTransactionDto.cs" />
-    <Compile Include="Services\IIndicatorsService.cs" />
+    <Compile Include="ServiceInterfaces\IIndicatorsService.cs" />
     <Compile Include="Services\IndicatorsService.cs" />
-    <Compile Include="Services\IPriceService.cs" />
-    <Compile Include="Services\IStrategyService.cs" />
+    <Compile Include="ServiceInterfaces\IPriceService.cs" />
+    <Compile Include="ServiceInterfaces\IStrategyService.cs" />
+    <Compile Include="ServiceInterfaces\ITransactionsService.cs" />
+    <Compile Include="ServiceInterfaces\IUserService.cs" />
     <Compile Include="Services\PriceService.cs" />
     <Compile Include="Extensions\PagedListExtension.cs" />
     <Compile Include="Extensions\QueryableExtension.cs" />
@@ -99,6 +101,8 @@
     <Compile Include="Models\Filters\PriceFilter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\StrategyService.cs" />
+    <Compile Include="Services\TransactionsService.cs" />
+    <Compile Include="Services\UserService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\StockExchange.Common\StockExchange.Common.csproj">

@@ -56,4 +56,6 @@
 	<s:String x:Key="/Default/Environment/InjectedLayers/FileInjectedLayer/=48D8C6933E3825428DBDA28AC1A4C5AF/AbsolutePath/@EntryValue">C:\Users\Marcin\Source\Workspaces\StockExchange\StockExchange_Dev\StockExchange.sln.DotSettings</s:String>
 	<s:String x:Key="/Default/Environment/InjectedLayers/FileInjectedLayer/=48D8C6933E3825428DBDA28AC1A4C5AF/RelativePath/@EntryValue"></s:String>
 	<s:Boolean x:Key="/Default/Environment/InjectedLayers/InjectedLayerCustomization/=File48D8C6933E3825428DBDA28AC1A4C5AF/@KeyIndexDefined">True</s:Boolean>
-	<s:Double x:Key="/Default/Environment/InjectedLayers/InjectedLayerCustomization/=File48D8C6933E3825428DBDA28AC1A4C5AF/RelativePriority/@EntryValue">1</s:Double></wpf:ResourceDictionary>
+	<s:Double x:Key="/Default/Environment/InjectedLayers/InjectedLayerCustomization/=File48D8C6933E3825428DBDA28AC1A4C5AF/RelativePriority/@EntryValue">1</s:Double>
+	<s:Boolean x:Key="/Default/Environment/SettingsMigration/IsMigratorApplied/=JetBrains_002EReSharper_002EPsi_002EJavaScript_002ECodeStyle_002ESettingsUpgrade_002EJsParsFormattingSettingsUpgrader/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/SettingsMigration/IsMigratorApplied/=JetBrains_002EReSharper_002EPsi_002EJavaScript_002ECodeStyle_002ESettingsUpgrade_002EJsWrapperSettingsUpgrader/@EntryIndexedValue">True</s:Boolean></wpf:ResourceDictionary>

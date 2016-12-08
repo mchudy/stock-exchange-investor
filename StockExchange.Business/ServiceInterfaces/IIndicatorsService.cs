@@ -1,8 +1,8 @@
-﻿using StockExchange.Business.Indicators;
+﻿using System.Collections.Generic;
+using StockExchange.Business.Indicators;
 using StockExchange.Business.Models.Indicators;
-using System.Collections.Generic;
 
-namespace StockExchange.Business.Services
+namespace StockExchange.Business.ServiceInterfaces
 {
     public interface IIndicatorsService
     {

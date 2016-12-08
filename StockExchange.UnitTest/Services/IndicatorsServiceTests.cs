@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using Moq;
 using StockExchange.Business.Indicators;
+using StockExchange.Business.ServiceInterfaces;
 using StockExchange.Business.Services;
 using Xunit;
 

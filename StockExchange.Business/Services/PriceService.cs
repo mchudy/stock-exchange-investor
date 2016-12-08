@@ -8,6 +8,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
 using StockExchange.Business.Models.Filters;
+using StockExchange.Business.ServiceInterfaces;
 
 namespace StockExchange.Business.Services
 {

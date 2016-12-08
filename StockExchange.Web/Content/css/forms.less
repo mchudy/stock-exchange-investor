@@ -1,0 +1,107 @@
+﻿@import "colors.less";
+@import "variables.less";
+
+.icheckbox_flat, .iradio_flat {
+    background-image: url("../../bower_components/Bootflat/bootflat/img/check_flat/default.png");
+    height: 25px;
+}
+
+.glyphicon-ok.form-control-feedback {
+    color: @green;
+}
+
+.has-error .form-control-feedback {
+    color: @red;
+}
+
+.form-control {
+  border-radius: @input-radius;
+  box-shadow: none;
+  border-color: @gray;
+  &:focus {
+    border-color: @light-blue;
+    box-shadow: none;
+  }
+  &::-moz-placeholder,
+  &:-ms-input-placeholder,
+  &::-webkit-input-placeholder {
+    color: #bbb;
+    opacity: 1;
+  }
+
+  &:not(select) {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+  }
+}
+
+.form-group {
+  &.has-success {
+    label {
+      color: @green;
+    }
+    .form-control,
+    .input-group-addon {
+      border-color: @green;
+      box-shadow: none;
+    }
+    .help-block {
+      color: @green;
+    }
+  }
+
+  &.has-warning {
+    label {
+      color: @yellow;
+    }
+    .form-control,
+    .input-group-addon {
+      border-color: @yellow;
+      box-shadow: none;
+    }
+    .help-block {
+      color: @yellow;
+    }
+  }
+
+  &.has-error {
+    label {
+      color: @red;
+    }
+    .form-control,
+    .input-group-addon {
+      border-color: @red;
+      box-shadow: none;
+    }
+    .help-block {
+      color: @red;
+    }
+  }
+}
+
+.input-group {
+  .input-group-addon {
+      border-radius: @input-radius;
+      border-color: @gray;
+      background-color: white;
+      padding: 5px 10px;
+      i {
+          color: @light-blue;
+          font-size: 18px;
+          width: 18px;
+      }
+  }
+}
+
+.btn {
+    border-radius: @input-radius;
+}
+
+.select2-container--default .select2-selection--multiple {
+    border-radius: @input-radius;
+}
+
+.radio-label {
+    margin-right: 8px;
+}

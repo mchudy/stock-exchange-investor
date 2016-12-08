@@ -1,0 +1,10 @@
+﻿@using StockExchange.Common.Extensions
+@model Enum
+
+@foreach (var value in Enum.GetValues(Model.GetType()))
+{
+    <div class="iradio_flat">
+        @Html.RadioButtonFor(m => m, value, Model.Equals(value) ? new { @checked = "checked" } : null)
+    </div>
+    @Html.LabelFor(m => m, value.GetEnumDescription(), new { @class = "radio-label" })
+}
