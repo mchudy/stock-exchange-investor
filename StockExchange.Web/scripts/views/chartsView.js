@@ -105,7 +105,7 @@
     }
 
     function drawIndicatorValues(type, data) {
-        // the false parameters prevent from redrawing the chart on every operation
+        // the false parameters in Highcharts functions prevent from redrawing the chart on every operation
         // (we redraw it only once at the end)
         var oldSeries;
         while ((oldSeries = chart.get('indicator-series'))) {
@@ -119,15 +119,39 @@
         }
         if (type) {
             for (var i = 0; i < data.length; i++) {
-                chart.addSeries({
-                    id: 'indicator-series',
-                    name: data[i].name + ' - ' + type.toUpperCase(),
-                    data: data[i].data,
-                    yAxis: 2
-                }, false);
+                var companyData = data[i];
+                if (isDoubleLineIndicator(companyData.data)) {
+                    var firstLine = companyData.data.map(function (elem) {
+                        return [elem[0], elem[1]];
+                    });
+                    var secondLine = data[i].data.map(function(elem) {
+                        return [elem[0], elem[2]];
+                    });
+                    addIndicatorSeries(getIndicatorLineTitle(companyData.name, type.toUpperCase()) + ' (Line 1)', firstLine);
+                    addIndicatorSeries(getIndicatorLineTitle(companyData.name, type.toUpperCase()) + ' (Line 2)', secondLine);
+                } else {
+                    addIndicatorSeries(getIndicatorLineTitle(companyData.name, type.toUpperCase()), companyData.data);
+                }
             }
         }
         chart.redraw();
+    }
+
+    function addIndicatorSeries(name, data) {
+        chart.addSeries({
+            id: 'indicator-series',
+            name: name,
+            data: data,
+            yAxis: 2
+        }, false);
+    }
+
+    function getIndicatorLineTitle(companyName, type) {
+        return name + ' - ' + type.toUpperCase();
+    }
+
+    function isDoubleLineIndicator(data) {
+        return data[0] && data[0].length === 3;
     }
 
     function removeIndicatorAxis() {

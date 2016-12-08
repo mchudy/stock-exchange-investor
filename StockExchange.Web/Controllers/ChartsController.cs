@@ -1,7 +1,7 @@
 ﻿using StockExchange.Business.Indicators;
 using StockExchange.Business.Models;
 using StockExchange.Business.Models.Indicators;
-using StockExchange.Business.Services;
+using StockExchange.Business.ServiceInterfaces;
 using StockExchange.Common.Extensions;
 using StockExchange.Web.Helpers;
 using StockExchange.Web.Models;
@@ -10,7 +10,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
-using StockExchange.Business.ServiceInterfaces;
 
 namespace StockExchange.Web.Controllers
 {
@@ -82,12 +81,27 @@ namespace StockExchange.Web.Controllers
             {
                 CompanyId = cv.Company.Id,
                 Name = cv.Company.Code,
-                Data = cv.IndicatorValues.Select(v => new[]
+                Data = ConvertIndicatorValuesToData(cv.IndicatorValues)
+            });
+        }
+
+        private static IList<decimal[]> ConvertIndicatorValuesToData(IList<IndicatorValue> values)
+        {
+            //TODO: needs refactoring, the inheritance of IndicatorValue is a bit troublesome
+            if (values.FirstOrDefault() is DoubleLineIndicatorValue)
+            {
+                return values.Cast<DoubleLineIndicatorValue>().Select(v => new[]
                 {
                     v.Date.ToJavaScriptTimeStamp(),
-                    v.Value
-                }).ToList()
-            });
+                    v.Value,
+                    v.SecondLineValue
+                }).ToList();
+            }
+            return values.Select(v => new[]
+            {
+                v.Date.ToJavaScriptTimeStamp(),
+                v.Value,
+            }).ToList();
         }
 
         private static IEnumerable<LineChartModel> BuildCandlestickChartModel(IList<CompanyPricesDto> companyPrices)
