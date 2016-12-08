@@ -16,8 +16,8 @@
             public const string DateFormat = "yyyyMMdd";
             public const string DateGpwFormat = "yyyy-MM-dd";
             public const string Currency = "{0:#,##0.00}";
-            public const string Integer = "{0:#,##0}";
-            public const string DisplayDate = "{0:dd/MM/yyyy}";
+            public const string Integer = "{0:###0}";
+            public const string DisplayDate = "{0:MM.dd.yyyy}";
         }
 
         public static class SyncDataParameters

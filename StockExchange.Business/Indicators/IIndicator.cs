@@ -1,6 +1,7 @@
-﻿using StockExchange.DataAccess.Models;
-using System;
+﻿using StockExchange.Business.Models;
+using StockExchange.DataAccess.Models;
 using System.Collections.Generic;
+using StockExchange.Business.Models.Indicators;
 
 namespace StockExchange.Business.Indicators
 {
@@ -9,14 +10,10 @@ namespace StockExchange.Business.Indicators
     /// </summary>
     public interface IIndicator
     {
-        IList<decimal> Calculate(IList<Price> historicalPrices);
-    }
+        IndicatorType Type { get; }
 
-    /// <summary>
-    /// Interfejs wskaźnika analizy technicznej rozszerzony o automatyczne pobieranie danych z bazy.
-    /// </summary>
-    public interface IAutoIndicator : IIndicator
-    {
-        IList<decimal> Calculate(DateTime startDate, DateTime endDate);
+        IList<IndicatorValue> Calculate(IList<Price> prices);
+
+        IList<Signal> GenerateSignals(IList<IndicatorValue> values);
     }
 }

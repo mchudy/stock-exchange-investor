@@ -26,7 +26,7 @@
                     };
                 } else {
                     return {
-                        startDate: new Date(date.getFullYear() - 1, 0, 1), 
+                        startDate: new Date(date.getFullYear(), 0, 1), 
                         endDate: new Date(date.getFullYear(), 11, 31)
                     }
                 }
@@ -68,16 +68,13 @@
         var $filterValue = $('#filterValue', that);
         $filterValue.datepicker(filterTypeOptions.months);
         $filterValue.datepicker('setDate', dateFilter.getDate())
-            .on('changeDate', function () {
+            .on('changeDate', function() {
                 if (!freezeEvents) {
                     dateFilter.setDate($(this).datepicker('getDate'));
                     if (typeof dateFilter.onChanged === 'function') {
                         dateFilter.onChanged();
                     }
                 }
-            })
-            .on('show', function() {
-                $('.datepicker').addClass('calendar');
             });
 
         $("#filterType", that).on("change", function () {

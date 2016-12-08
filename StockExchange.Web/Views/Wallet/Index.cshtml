@@ -1,4 +1,5 @@
-﻿@using System.Web.Optimization
+﻿@model StockExchange.Web.Models.Wallet.WalletViewModel
+@using System.Web.Optimization
 @{
     ViewBag.Title = "Wallet";
 }
@@ -9,9 +10,9 @@
             <span class="info-box-icon"><i class="fa fa-money"></i></span>
 
             <div class="info-box-content">
+                @Html.ActionLink("Edit ", "EditBudgetDialog", "Wallet", null, new { @class = "modal-link btn btn-success pull-right" })
                 <span class="info-box-text">Budget</span>
-                <span class="info-box-number">$5,200</span>
-
+                <span class="info-box-number">$@Model.Budget</span>
                 <div class="progress">
                     <div class="progress-bar progress-bar-success" role="progressbar" style="width: 50%"></div>
                 </div>
@@ -116,48 +117,6 @@
 </div>
 
 @section scripts {
-    @Scripts.Render("~/bower_components/highcharts/highstock.js")
-    <script>
-        $(function () {
-            Highcharts.chart('owned-stocks-pie-chart', {
-                chart: {
-                    plotBackgroundColor: null,
-                    plotBorderWidth: null,
-                    plotShadow: false,
-                    type: 'pie',
-                    height: 300
-                },
-                title: {
-                    text: ''
-                },
-                tooltip: {
-                    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-                },
-                plotOptions: {
-                    pie: {
-                        allowPointSelect: true,
-                        cursor: 'pointer',
-                        dataLabels: {
-                            enabled: false
-                        },
-                        showInLegend: true
-                    }
-                },
-                series: [{
-                    name: 'Company',
-                    colorByPoint: true,
-                    data: [{
-                        name: 'ASSECO',
-                        y: 60
-                    }, {
-                        name: 'ALIOR',
-                        y: 40
-                    }, {
-                        name: 'MBANK',
-                        y: 20
-                    }]
-                }]
-            });
-        });
-    </script>
+    @Scripts.Render("~/bundles/scripts/highcharts")
+    @Scripts.Render("/Scripts/Views/walletView.js")
 }

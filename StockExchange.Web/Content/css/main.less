@@ -1,10 +1,11 @@
 ﻿@import "colors.less";
 @import "boxes.less";
+@import "forms.less";
+@import "variables.less";
 
 @sidebar-width: 200px;
 @navbar-height: 50px;
 @sidebar-transition-time: .30s;
-@input-radius: 0;
 
 body {
     background-color: #f1f4f7;
@@ -150,11 +151,6 @@ footer {
     font-size: 11px;
 }
 
-.icheckbox_flat, .iradio_flat {
-    background-image: url("../../bower_components/Bootflat/bootflat/img/check_flat/default.png");
-    height: 25px;
-}
-
 .col-centered {
     float: none;
     margin: 0 auto;
@@ -164,95 +160,6 @@ footer {
     margin-top: 10px;
 }
 
-.glyphicon-ok.form-control-feedback {
-    color: @green;
-}
-
-.has-error .form-control-feedback {
-    color: @red;
-}
-
-.form-control {
-  border-radius: @input-radius;
-  box-shadow: none;
-  border-color: @gray;
-  &:focus {
-    border-color: @light-blue;
-    box-shadow: none;
-  }
-  &::-moz-placeholder,
-  &:-ms-input-placeholder,
-  &::-webkit-input-placeholder {
-    color: #bbb;
-    opacity: 1;
-  }
-
-  &:not(select) {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-  }
-}
-
-.form-group {
-  &.has-success {
-    label {
-      color: @green;
-    }
-    .form-control,
-    .input-group-addon {
-      border-color: @green;
-      box-shadow: none;
-    }
-    .help-block {
-      color: @green;
-    }
-  }
-
-  &.has-warning {
-    label {
-      color: @yellow;
-    }
-    .form-control,
-    .input-group-addon {
-      border-color: @yellow;
-      box-shadow: none;
-    }
-    .help-block {
-      color: @yellow;
-    }
-  }
-
-  &.has-error {
-    label {
-      color: @red;
-    }
-    .form-control,
-    .input-group-addon {
-      border-color: @red;
-      box-shadow: none;
-    }
-    .help-block {
-      color: @red;
-    }
-  }
-}
-
-.input-group {
-  .input-group-addon {
-    border-radius: @input-radius;
-    border-color: @gray;
-  }
-}
-
-.btn {
-    border-radius: @input-radius;
-}
-
-.select2-container--default .select2-selection--multiple {
-    border-radius: @input-radius;
-}
-
 /* TODO: extends */
 .icon-stock-up, .text-success {
     color: @green;
@@ -260,4 +167,18 @@ footer {
 
 .icon-stock-down, .text-danger {
     color: @red;
+}
+
+.datepicker {
+    background-color: white;
+}
+
+.alert {
+    border-radius: @input-radius;
+}
+
+.modal-content {
+    width: 600px !important;
+    margin: 30px auto !important;
+    padding: 10px;
 }

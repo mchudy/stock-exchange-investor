@@ -3,7 +3,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace StockExchange.DataAccess.Models
 {
-    [Table("Price")]
     public class Price
     {
         public int Id { get; set; }

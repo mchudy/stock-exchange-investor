@@ -9,13 +9,12 @@
     "jquery-ui": "1.12.1",
     "jquery-ui-multiselect-widget": "1.14",
     "datatables.net": "1.10.12",
-    "datatables.net-dt": "1.10.12",
     "datatables.net-bs": "1.10.12",
-    "datatables.net-jqui": "1.10.12",
     "font-awesome": "4.7.0",
     "Bootflat": "2.0.4",
     "highcharts": "5.0.2",
     "jquery-validation-unobtrusive": "3.2.6",
-    "select2": "4.0.3" 
+    "select2": "4.0.3",
+    "datatables.net-responsive":  "2.0.1" 
   }
 }

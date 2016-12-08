@@ -1,0 +1,26 @@
+﻿@using System.Web.Optimization
+@model StockExchange.Web.Models.StrategyViewModel
+
+@{
+    ViewBag.Title = "Strategy";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-4 col-centered">
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Define your strategy</h3>
+                </div>
+                <div class="box-body col-sm-10 col-centered">
+                    @using (Html.BeginForm("CreateStrategy", "Strategies", new {ViewBag.ReturnUrl}, FormMethod.Post, new {@class = "form-horizontal", role = "form"}))
+                    {
+                        <div class="form-group">
+                            <button class="btn btn-success pull-right" type="submit">Create</button>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

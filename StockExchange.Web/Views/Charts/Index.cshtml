@@ -1,5 +1,8 @@
 ﻿@model StockExchange.Web.Models.Charts.ChartsIndexModel
 @using System.Web.Optimization
+@using StockExchange.Business.Indicators
+@using StockExchange.Common.Extensions
+@using StockExchange.Web.Models
 
 @{
     ViewBag.Title = "Charts";
@@ -10,21 +13,28 @@
 }
 
 <div class="row">
-    <div class="col-md-2">
+    <div class="col-sm-2">
         <span class="chart-options-wrapper">
-            <span class="chart-option">Line chart</span>
+            <span class="chart-option">Line</span>
             <label class="toggle">
                 <input type="checkbox" id="is-candlestick-chart">
                 <span class="handle"></span>
             </label>
-            <span class="chart-option">Candlestick chart</span>
+            <span class="chart-option">Candlestick</span>
         </span>
     </div>
-    <div class="col-md-6">
+    <div class="col-sm-4">
         <div class="form-group">
-            @Html.DropDownListFor(m => m.Companies, new MultiSelectList(Model.Companies, "Id", "Name"),
+            <label>Companies</label>
+            @Html.DropDownList("selectedCompanies", new MultiSelectList(Model.Companies, "Id", "Name",
+                new List<int> { Model.Companies.FirstOrDefault()?.Id ?? 0 }),
                 new { @class = "form-control company-select", multiple = "" })
         </div>
+    </div>
+    <div class="form-group col-sm-2">
+        <label>Indicator</label>
+        @Html.DropDownList("Indicators", new SelectList(Model.Indicators, nameof(IndicatorViewModel.Type), nameof(IndicatorViewModel.Name)), "Select indicator",
+            new { @class = "form-control indicator-select" })
     </div>
 </div>
 
@@ -34,13 +44,14 @@
 
 @section scripts
 {
-    <script type="text/javascript">
-        var baseUrl = "@Url.Content("~")";
+    @Scripts.Render("~/bundles/scripts/highcharts")
+
+    <script>
+        var config = {
+            getLineChartDataUrl: '@Url.Action("GetLineChartData")',
+            getCandlestickDataUrl: '@Url.Action("GetCandlestickChartData")',
+            getIndicatorValuesUrl: '@Url.Action("GetIndicatorValues")'
+        };
     </script>
-
-    @Scripts.Render("~/bower_components/highcharts/highstock.js")
-    @Scripts.Render("~/bower_components/highcharts/modules/exporting.js")
-    @Scripts.Render("~/bower_components/highcharts/modules/offline-exporting.js")
-    @Scripts.Render("~/Scripts/charts.js")
+    @Scripts.Render("~/Scripts/Views/chartsView.js")
 }
-

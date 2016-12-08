@@ -1,10 +1,8 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace StockExchange.DataAccess.Models
 {
-    [Table("Company")]
     public class Company
     {
         public int Id { get; set; }
@@ -17,5 +15,7 @@ namespace StockExchange.DataAccess.Models
         public string Name { get; set; }
 
         public virtual ICollection<Price> Prices { get; set; } = new HashSet<Price>();
+
+        public virtual ICollection<InvestmentStrategy> Strategies { get; set; } = new HashSet<InvestmentStrategy>();
     }
 }

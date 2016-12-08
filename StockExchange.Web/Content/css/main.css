@@ -384,6 +384,90 @@
 .progress-description {
   margin: 0;
 }
+.icheckbox_flat,
+.iradio_flat {
+  background-image: url("../../bower_components/Bootflat/bootflat/img/check_flat/default.png");
+  height: 25px;
+}
+.glyphicon-ok.form-control-feedback {
+  color: #00a65a;
+}
+.has-error .form-control-feedback {
+  color: #dd4b39;
+}
+.form-control {
+  border-radius: 0;
+  box-shadow: none;
+  border-color: #d2d6de;
+}
+.form-control:focus {
+  border-color: #3c8dbc;
+  box-shadow: none;
+}
+.form-control::-moz-placeholder,
+.form-control:-ms-input-placeholder,
+.form-control::-webkit-input-placeholder {
+  color: #bbb;
+  opacity: 1;
+}
+.form-control:not(select) {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+.form-group.has-success label {
+  color: #00a65a;
+}
+.form-group.has-success .form-control,
+.form-group.has-success .input-group-addon {
+  border-color: #00a65a;
+  box-shadow: none;
+}
+.form-group.has-success .help-block {
+  color: #00a65a;
+}
+.form-group.has-warning label {
+  color: #f39c12;
+}
+.form-group.has-warning .form-control,
+.form-group.has-warning .input-group-addon {
+  border-color: #f39c12;
+  box-shadow: none;
+}
+.form-group.has-warning .help-block {
+  color: #f39c12;
+}
+.form-group.has-error label {
+  color: #dd4b39;
+}
+.form-group.has-error .form-control,
+.form-group.has-error .input-group-addon {
+  border-color: #dd4b39;
+  box-shadow: none;
+}
+.form-group.has-error .help-block {
+  color: #dd4b39;
+}
+.input-group .input-group-addon {
+  border-radius: 0;
+  border-color: #d2d6de;
+  background-color: white;
+  padding: 5px 10px;
+}
+.input-group .input-group-addon i {
+  color: #3c8dbc;
+  font-size: 18px;
+  width: 18px;
+}
+.btn {
+  border-radius: 0;
+}
+.select2-container--default .select2-selection--multiple {
+  border-radius: 0;
+}
+.radio-label {
+  margin-right: 8px;
+}
 body {
   background-color: #f1f4f7;
   font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -506,86 +590,12 @@ footer {
   padding: 10px 0 10px 0;
   font-size: 11px;
 }
-.icheckbox_flat,
-.iradio_flat {
-  background-image: url("../../bower_components/Bootflat/bootflat/img/check_flat/default.png");
-  height: 25px;
-}
 .col-centered {
   float: none;
   margin: 0 auto;
 }
 .sign-up-text {
   margin-top: 10px;
-}
-.glyphicon-ok.form-control-feedback {
-  color: #00a65a;
-}
-.has-error .form-control-feedback {
-  color: #dd4b39;
-}
-.form-control {
-  border-radius: 0;
-  box-shadow: none;
-  border-color: #d2d6de;
-}
-.form-control:focus {
-  border-color: #3c8dbc;
-  box-shadow: none;
-}
-.form-control::-moz-placeholder,
-.form-control:-ms-input-placeholder,
-.form-control::-webkit-input-placeholder {
-  color: #bbb;
-  opacity: 1;
-}
-.form-control:not(select) {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-}
-.form-group.has-success label {
-  color: #00a65a;
-}
-.form-group.has-success .form-control,
-.form-group.has-success .input-group-addon {
-  border-color: #00a65a;
-  box-shadow: none;
-}
-.form-group.has-success .help-block {
-  color: #00a65a;
-}
-.form-group.has-warning label {
-  color: #f39c12;
-}
-.form-group.has-warning .form-control,
-.form-group.has-warning .input-group-addon {
-  border-color: #f39c12;
-  box-shadow: none;
-}
-.form-group.has-warning .help-block {
-  color: #f39c12;
-}
-.form-group.has-error label {
-  color: #dd4b39;
-}
-.form-group.has-error .form-control,
-.form-group.has-error .input-group-addon {
-  border-color: #dd4b39;
-  box-shadow: none;
-}
-.form-group.has-error .help-block {
-  color: #dd4b39;
-}
-.input-group .input-group-addon {
-  border-radius: 0;
-  border-color: #d2d6de;
-}
-.btn {
-  border-radius: 0;
-}
-.select2-container--default .select2-selection--multiple {
-  border-radius: 0;
 }
 /* TODO: extends */
 .icon-stock-up,
@@ -595,4 +605,15 @@ footer {
 .icon-stock-down,
 .text-danger {
   color: #dd4b39;
+}
+.datepicker {
+  background-color: white;
+}
+.alert {
+  border-radius: 0;
+}
+.modal-content {
+  width: 600px !important;
+  margin: 30px auto !important;
+  padding: 10px;
 }

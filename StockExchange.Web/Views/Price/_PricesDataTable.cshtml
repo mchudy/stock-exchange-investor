@@ -4,14 +4,14 @@
     <template id="filters">
         <label>
             Company Name:
-            @Html.DropDownList("companyName", Model.CompanyNames, new { id = "companyName", @class="form-control" })
+            @Html.DropDownList("companyName", Model.CompanyNames, new { id = "companyName", @class = "form-control" })
         </label>
         <label>
             Choose Filter Type:
             <span id="dateFilter"></span>
         </label>
-    </template>    
-    <table id="grid" class="table table-striped table-hover table-bordered"
+    </template>
+    <table id="grid" class="table table-hover table-striped table-bordered"
            data-length-menu="[12, 25, 50, 100]"
            data-page-length="12"
            data-auto-width="true"
@@ -19,28 +19,28 @@
            data-scroll-x="true"
            data-scroll-collapse="true"
            data-processing="true"
-           data-order='[[1, "desc"]]'
+           data-order='[[1, "asc"]]'
            data-server-side="true"
            data-ajax-url="@Url.Action("GetPrices")"
            data-filter-ajax-url="@Url.Action("GetFilterValues")"
            data-filter-ajax-paramname="fieldName">
         <thead>
-        <tr>
-            <th class="width-big" data-column="CompanyName">@Html.DisplayNameFor(i => Model.Prices.FirstOrDefault().CompanyName)</th>
-            <th class="width-small" data-column="Date">@Html.DisplayNameFor(i => Model.Prices.FirstOrDefault().Date)</th>
-            <th class="width-small" data-column="OpenPrice">@Html.DisplayNameFor(i => Model.Prices.FirstOrDefault().OpenPrice)</th>
-            <th class="width-small" data-column="ClosePrice">@Html.DisplayNameFor(i => Model.Prices.FirstOrDefault().ClosePrice)</th>
-            <th class="width-small" data-column="HighPrice">@Html.DisplayNameFor(i => Model.Prices.FirstOrDefault().HighPrice)</th>
-            <th class="width-small" data-column="LowPrice">@Html.DisplayNameFor(i => Model.Prices.FirstOrDefault().LowPrice)</th>
-            <th class="width-small" data-column="Volume">@Html.DisplayNameFor(i => Model.Prices.FirstOrDefault().Volume)</th>
-        </tr>
+            <tr>
+                <th class="width-big" data-column="CompanyName">@Html.DisplayNameFor(i => Model.Prices.FirstOrDefault().CompanyName)</th>
+                <th class="width-small" data-column="Date">@Html.DisplayNameFor(i => Model.Prices.FirstOrDefault().Date)</th>
+                <th class="width-small" data-column="OpenPrice">@Html.DisplayNameFor(i => Model.Prices.FirstOrDefault().OpenPrice)</th>
+                <th class="width-small" data-column="ClosePrice">@Html.DisplayNameFor(i => Model.Prices.FirstOrDefault().ClosePrice)</th>
+                <th class="width-small" data-column="HighPrice">@Html.DisplayNameFor(i => Model.Prices.FirstOrDefault().HighPrice)</th>
+                <th class="width-small" data-column="LowPrice">@Html.DisplayNameFor(i => Model.Prices.FirstOrDefault().LowPrice)</th>
+                <th class="width-small" data-column="Volume">@Html.DisplayNameFor(i => Model.Prices.FirstOrDefault().Volume)</th>
+            </tr>
         </thead>
         <tbody>
-        <tr>
-            <td colspan="7">
-                <span>Loading Data...</span>
-            </td>
-        </tr>
+            <tr>
+                <td colspan="7">
+                    <span>Loading Data...</span>
+                </td>
+            </tr>
         </tbody>
     </table>
 </div>

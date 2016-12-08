@@ -16,9 +16,9 @@ namespace StockExchange.Web.Controllers
         {
             get
             {
-                if (_currentUser != null || !User.Identity.IsAuthenticated) return null;
-                _currentUser = UserManager.FindById(CurrentUserId);
-                return _currentUser;
+                if (!User.Identity.IsAuthenticated)
+                    return null;
+                return _currentUser ?? (_currentUser = UserManager.FindById(CurrentUserId));
             }
         }
 

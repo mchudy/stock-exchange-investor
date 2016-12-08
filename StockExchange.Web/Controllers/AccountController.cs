@@ -79,7 +79,7 @@ namespace StockExchange.Web.Controllers
             if (result.Succeeded)
             {
                 await _signInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-                return RedirectToAction("Price", "Price");
+                return RedirectToAction("Index", "Wallet");
             }
             AddErrors(result);
             return View(model);
@@ -93,13 +93,19 @@ namespace StockExchange.Web.Controllers
             return RedirectToAction("Price", "Price");
         }
 
+        [HttpGet]
+        public ActionResult Settings()
+        {
+            return View();
+        }
+
         private ActionResult RedirectToLocal(string returnUrl)
         {
             if (Url.IsLocalUrl(returnUrl))
             {
                 return Redirect(returnUrl);
             }
-            return RedirectToAction("Price", "Price");
+            return RedirectToAction("Index", "Wallet");
         }
 
         private void AddErrors(IdentityResult result)

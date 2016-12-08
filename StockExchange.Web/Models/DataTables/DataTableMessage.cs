@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using StockExchange.Business.Models;
+using StockExchange.Business.Models.Filters;
 
 namespace StockExchange.Web.Models.DataTables
 {

@@ -10,12 +10,13 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Reflection;
 
 namespace StockExchange.Task.Business
 {
     public sealed class DataSynchronizerGpw : IDataSynchronizerGpw
     {
-        private static readonly ILog Logger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        private static readonly ILog Logger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         private readonly IRepository<Company> _companyRepository;
         private readonly IRepository<Price> _priceRepository;
 
@@ -84,11 +85,12 @@ namespace StockExchange.Task.Business
         private static string[,] LoadData(string dateString)
         {
             var url = CreatePathUrl(dateString);
-            var client = new WebClient();
             var fullPath = Path.GetTempFileName();
-            client.DownloadFile(url, fullPath);
-            var data = ReadExcel(fullPath);
-            return data;
+            using (var client = new WebClient())
+            {
+                client.DownloadFile(url, fullPath);
+            }
+            return ReadExcel(fullPath);
         }
 
         private static string[,] ReadExcel(string fullPath)

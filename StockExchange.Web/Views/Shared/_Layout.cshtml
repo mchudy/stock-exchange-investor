@@ -1,5 +1,4 @@
 ﻿@using System.Web.Optimization
-@using Microsoft.AspNet.Identity
 @using StockExchange.Web.Helpers
 <!DOCTYPE html>
 <html lang="en">
@@ -8,12 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Stock Exchange Application</title>
 
-    @Styles.Render("~/bower_components/bootstrap/dist/css/bootstrap.min.css")
-    @Styles.Render("~/bower_components/jquery-ui/themes/base/jquery-ui.min.css")
-    @Styles.Render("~/bower_components/font-awesome/css/font-awesome.min.css")
-    @Styles.Render("~/bower_components/Bootflat/bootflat/css/bootflat.min.css")
-    @Styles.Render("~/bower_components/select2/dist/css/select2.min.css")
-
+    @Styles.Render("~/bundles/styles/vendor")
     @Styles.Render("~/Content/css/main.css")
 
     @RenderSection("css", false)
@@ -43,7 +37,7 @@
                             </a>
                             <ul class="dropdown-menu" role="menu">
                                 <li>
-                                    <a href="#"><i class="fa fa-cog fa-lg"></i>  Settings</a>
+                                    <a href="@Url.Action("Settings", "Account")"><i class="fa fa-cog fa-lg"></i>  Settings</a>
                                 </li>
                                 <li><a href="javascript:document.getElementById('logoutForm').submit()"><i class="fa fa-sign-out fa-lg"></i>  Log out</a></li>
                             </ul>
@@ -60,21 +54,21 @@
                     @if (Request.IsAuthenticated)
                     {
                         <li class="list-header"></li>
-                        <li class="">
-                            <a href="#">
+                        <li class="@Html.IsSelected("Wallet")">
+                            <a href="@Url.Action("Index", "Wallet")">
                                 <i class="fa fa-dashboard fa-lg"></i>
                                 <span>Dashboard</span>
                             </a>
                         </li>
                     }
                     <li class="list-header">Data</li>
-                    <li class="@Html.IsSelected("Price", "Price")">
+                    <li class="@Html.IsSelected("Price")">
                         <a href="@Url.Action("Price", "Price")">
                             <i class="fa fa-table fa-lg"></i>
                             <span>Prices</span>
                         </a>
                     </li>
-                    <li class="@Html.IsSelected("Charts", "Index")">
+                    <li class="@Html.IsSelected("Charts")">
                         <a href="@Url.Action("Index", "Charts")">
                             <i class="fa fa-line-chart fa-lg"></i>
                             <span>Charts</span>
@@ -83,16 +77,22 @@
                     @if (Request.IsAuthenticated)
                     {
                         <li class="list-header">Your investments</li>
-                        <li class="@Html.IsSelected("Wallet", "Index")">
-                            <a href="@Url.Action("Index", "Wallet")">
-                                <i class="fa fa-pie-chart fa-lg"></i>
-                                <span>Wallet</span>
-                            </a>
-                        </li>
                         <li class="@Html.IsSelected("Transactions", "Index")">
                             <a href="@Url.Action("Index", "Transactions")">
                                 <i class="fa fa-usd fa-lg"></i>
                                 <span>Transactions</span>
+                            </a>
+                        </li>
+                        <li class="@Html.IsSelected("Strategies")">
+                            <a href="@Url.Action("Index", "Strategies")">
+                                <i class="glyphicon glyphicon-pawn"></i>
+                                <span>Strategies</span>
+                            </a>
+                        </li>
+                        <li class="@Html.IsSelected("Simulations")">
+                            <a href="@Url.Action("Index", "Simulations")">
+                                <i class="fa fa-play-circle fa-lg"></i>
+                                <span>Simulations</span>
                             </a>
                         </li>
                     }
@@ -105,17 +105,21 @@
             </h1>
             @RenderBody()
             <footer>
-                &copy; Bartosz Woźniak @DateTime.Now.Year - Stock Exchange Investor
+                &copy; Bartosz Woźniak, Marcin Chudy, Mateusz Bąkała @DateTime.Now.Year - Stock Exchange Investor
             </footer>
         </div>
-    </div>
-    @Scripts.Render("~/bower_components/jquery/dist/jquery.min.js")
-    @Scripts.Render("~/bower_components/jquery-validation/dist/jquery.validate.js")
-    @Scripts.Render("~/bower_components/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js")
-    @Scripts.Render("~/bower_components/select2/dist/js/select2.min.js")
 
-    @Scripts.Render("~/bower_components/bootstrap/dist/js/bootstrap.min.js")
-    @Scripts.Render("~/bower_components/Bootflat/bootflat/js/icheck.min.js")
+        <div id="modal-container" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content"></div>
+            </div>
+        </div>
+    </div>
+
+    @Scripts.Render("~/bundles/scripts/jquery");
+    @Scripts.Render("~/bundles/scripts/jquery-ui")
+    @Scripts.Render("~/bundles/scripts/bootstrap")
+
     @Scripts.Render("~/Scripts/site.js")
     @RenderSection("scripts", false)
 </body>

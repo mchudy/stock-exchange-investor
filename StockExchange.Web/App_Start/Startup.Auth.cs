@@ -5,6 +5,8 @@ using Microsoft.Owin.Security.Cookies;
 using Owin;
 using StockExchange.DataAccess.Models;
 using System;
+// ReSharper disable ArgumentsStyleOther
+// ReSharper disable ArgumentsStyleAnonymousFunction
 
 namespace StockExchange.Web
 {
