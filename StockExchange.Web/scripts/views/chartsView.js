@@ -147,7 +147,7 @@
     }
 
     function getIndicatorLineTitle(companyName, type) {
-        return name + ' - ' + type.toUpperCase();
+        return companyName + ' - ' + type.toUpperCase();
     }
 
     function isDoubleLineIndicator(data) {
