@@ -1,4 +1,6 @@
-﻿namespace StockExchange.DataAccess.Models
+﻿using StockExchange.DataAccess.Models;
+
+namespace StockExchange.Business.Models.Simulations
 {
     public class SimulationCompany
     {

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using StockExchange.DataAccess.Models;
 
-namespace StockExchange.Business.Models
+namespace StockExchange.Business.Models.Simulations
 {
     public class SimulationResult
     {

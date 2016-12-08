@@ -40,7 +40,7 @@ namespace StockExchange.UnitTest.Services
 
             var properties = _service.GetPropertiesForIndicator(type);
 
-            properties.Count.Should().Be(1);
+            properties.Count.Should().Be(3);
             properties.Should().Contain(p => p.Name == "Term" && p.Value == RsiIndicator.DefaultRsiTerm);
         }
     }

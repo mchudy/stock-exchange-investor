@@ -86,7 +86,6 @@
     <Compile Include="Models\InvestmentStrategy.cs" />
     <Compile Include="Models\Price.cs" />
     <Compile Include="Models\Simulation.cs" />
-    <Compile Include="Models\SimulationCompany.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\UserTransaction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

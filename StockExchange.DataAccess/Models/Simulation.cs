@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace StockExchange.DataAccess.Models
 {
@@ -12,7 +11,5 @@ namespace StockExchange.DataAccess.Models
 
         public int StrategyId { get; set; }
         public virtual InvestmentStrategy Strategy { get; set; }
-
-        public virtual ICollection<SimulationCompany> SimultionCompanies { get; set; } = new HashSet<SimulationCompany>();
     }
 }

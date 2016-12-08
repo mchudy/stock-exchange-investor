@@ -16,6 +16,7 @@ namespace StockExchange.DataAccess.Models
         public decimal Budget { get; set; }
 
         public ICollection<UserTransaction> Transactions { get; set; } = new HashSet<UserTransaction>();
+        public ICollection<InvestmentStrategy> Strategies { get; set; } = new HashSet<InvestmentStrategy>();
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<User, int> manager)
         {
