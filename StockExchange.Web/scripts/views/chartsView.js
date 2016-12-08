@@ -38,6 +38,15 @@
         });
 
         chart = new Highcharts.stockChart('chart-container', {
+            title: {
+                text: 'Stock chart'
+            },
+            legend: {
+                enabled: true
+            },
+            yAxis: [{
+                id: 'price-axis'
+            }],
             rangeSelector: {
                 inputDateFormat: '%Y-%m-%d',
                 inputEditDateFormat: '%Y-%m-%d',
@@ -47,16 +56,7 @@
                     date.setTime(date.getTime() + 1 * 1000 * 60 * 60 * 4);
                     return date.getTime();
                 }
-            },
-            title: {
-                text: 'Stock chart'
-            },
-            legend: {
-                enabled: true
-            },
-            yAxis: [{
-                id: 'price-axis'
-            }]
+            }
         });
         chart.showLoading(loadingText);
     }
@@ -109,7 +109,7 @@
         // (we redraw it only once at the end)
         var oldSeries;
         while ((oldSeries = chart.get('indicator-series'))) {
-                oldSeries.remove(false);
+            oldSeries.remove(false);
         }
 
         if (!chart.get('indicator-axis')) {
