@@ -1,7 +1,9 @@
 ﻿using FluentAssertions;
 using StockExchange.Business.Indicators;
-using StockExchange.Business.Models;
 using StockExchange.Business.Models.Indicators;
+using StockExchange.DataAccess.Models;
+using System;
+using System.Collections.Generic;
 using Xunit;
 
 namespace StockExchange.UnitTest.Indicators
@@ -32,6 +34,20 @@ namespace StockExchange.UnitTest.Indicators
             var actual12DaysEma = MovingAverageHelper.ExpotentialMovingAverage(MacdData.HistoricalData, 12);
 
             actual12DaysEma.ShouldAllBeEquivalentTo(MacdData.Ema12DaysResults);
+        }
+
+        [Fact]
+        public void Moving_averages_should_ignore_holes_between_dates()
+        {
+            var data = new List<Price>
+            {
+                new Price {ClosePrice = 10, Date = new DateTime(2016, 10, 1)},
+                new Price {ClosePrice = 20, Date = new DateTime(2016, 10, 4)}
+            };
+
+            var ema = MovingAverageHelper.ExpotentialMovingAverage(data, 1);
+
+            ema.Count.Should().Be(2);
         }
 
         [Fact]

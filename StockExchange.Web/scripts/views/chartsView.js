@@ -121,7 +121,7 @@
             for (var i = 0; i < data.length; i++) {
                 chart.addSeries({
                     id: 'indicator-series',
-                    name: data[i].name + ' - ' + type,
+                    name: data[i].name + ' - ' + type.toUpperCase(),
                     data: data[i].data,
                     yAxis: 2
                 }, false);

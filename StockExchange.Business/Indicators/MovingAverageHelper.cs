@@ -1,9 +1,8 @@
-﻿using StockExchange.Business.Models;
+﻿using StockExchange.Business.Models.Indicators;
 using StockExchange.DataAccess.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using StockExchange.Business.Models.Indicators;
 
 namespace StockExchange.Business.Indicators
 {
@@ -101,7 +100,7 @@ namespace StockExchange.Business.Indicators
         private static bool CheckDates(IList<DateTime> dates)
         {
             for (var i = 1; i < dates.Count; i++)
-                if (dates[i].Date - dates[i - 1].Date > TimeSpan.FromDays(1))
+                if (dates[i].Date <= dates[i - 1].Date)
                     return false;
             return true;
         }
