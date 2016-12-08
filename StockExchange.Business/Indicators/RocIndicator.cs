@@ -1,6 +1,7 @@
 ﻿using StockExchange.Business.Models.Indicators;
 using StockExchange.DataAccess.Models;
 using System.Collections.Generic;
+using StockExchange.Business.Models;
 
 namespace StockExchange.Business.Indicators
 {
@@ -25,6 +26,12 @@ namespace StockExchange.Business.Indicators
                 });
             }
             return values;
+        }
+
+        public IList<Signal> GenerateSignals(IList<IndicatorValue> values)
+        {
+            var signals = new List<Signal>();
+            return signals;
         }
     }
 }

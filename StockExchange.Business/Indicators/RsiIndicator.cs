@@ -8,8 +8,12 @@ namespace StockExchange.Business.Indicators
     public class RsiIndicator : IIndicator
     {
         public const int DefaultRsiTerm = 14;
+        public const int DefaultMinimum = 30;
+        public const int DefaultMaximum = 70;
 
         public int Term { get; set; } = DefaultRsiTerm;
+        public int Minimum { get; set; } = DefaultMinimum;
+        public int Maximum { get; set; } = DefaultMaximum;
 
         public IndicatorType Type => IndicatorType.Rsi;
 
@@ -56,6 +60,28 @@ namespace StockExchange.Business.Indicators
                 result.Add(new IndicatorValue { Date = averageGains[i].Date, Value = rsi });
             }
             return result;
+        }
+
+        public IList<Signal> GenerateSignals(IList<IndicatorValue> values)
+        {
+            var signals = new List<Signal>();
+            SignalAction previousAction = SignalAction.NoSignal;
+            foreach (var indicatorValue in values)
+            {
+                if (indicatorValue.Value < Minimum && previousAction != SignalAction.Buy)
+                {
+                    signals.Add(new Signal(SignalAction.Buy) { Date = indicatorValue.Date });
+                    previousAction = SignalAction.Buy;
+                }
+                else if (indicatorValue.Value > Maximum && previousAction != SignalAction.Sell)
+                {
+                    signals.Add(new Signal(SignalAction.Sell) {Date = indicatorValue.Date});
+                    previousAction = SignalAction.Sell;
+                }
+                else
+                    previousAction = SignalAction.NoSignal;
+            }
+            return signals;
         }
     }
 }
