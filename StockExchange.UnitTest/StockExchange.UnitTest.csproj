@@ -112,6 +112,8 @@
     <Compile Include="Indicators\MACD\MacdTests.cs" />
     <Compile Include="Indicators\OBV\ObvData.cs" />
     <Compile Include="Indicators\OBV\ObvTests.cs" />
+    <Compile Include="Indicators\PP\PivotPointData.cs" />
+    <Compile Include="Indicators\PP\PivotPointTests.cs" />
     <Compile Include="Indicators\ROC\RocData.cs" />
     <Compile Include="Indicators\ROC\RocTests.cs" />
     <Compile Include="Indicators\RSI\RsiData.cs" />
