@@ -65,6 +65,7 @@
     <Compile Include="Indicators\AtrIndicator.cs" />
     <Compile Include="Indicators\IIndicatorFactory.cs" />
     <Compile Include="Indicators\IndicatorFactory.cs" />
+    <Compile Include="Indicators\PivotPointIndicator.cs" />
     <Compile Include="Models\Indicators\CompanyIndicatorValues.cs" />
     <Compile Include="Models\Indicators\IndicatorProperty.cs" />
     <Compile Include="Indicators\IndicatorType.cs" />
