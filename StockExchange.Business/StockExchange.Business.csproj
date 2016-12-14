@@ -71,6 +71,7 @@
     <Compile Include="Indicators\IndicatorType.cs" />
     <Compile Include="Indicators\ObvIndicator.cs" />
     <Compile Include="Indicators\RocIndicator.cs" />
+    <Compile Include="Models\OwnedCompanyStocksDto.cs" />
     <Compile Include="Models\Simulations\CompanyStockQuantity.cs" />
     <Compile Include="Models\Indicators\IndicatorValue.cs" />
     <Compile Include="Indicators\MovingAverageHelper.cs" />
@@ -89,6 +90,7 @@
     <Compile Include="ServiceInterfaces\IStrategyService.cs" />
     <Compile Include="ServiceInterfaces\ITransactionsService.cs" />
     <Compile Include="ServiceInterfaces\IUserService.cs" />
+    <Compile Include="ServiceInterfaces\IWalletService.cs" />
     <Compile Include="Services\PriceService.cs" />
     <Compile Include="Extensions\PagedListExtension.cs" />
     <Compile Include="Extensions\QueryableExtension.cs" />
@@ -105,6 +107,7 @@
     <Compile Include="Services\StrategyService.cs" />
     <Compile Include="Services\TransactionsService.cs" />
     <Compile Include="Services\UserService.cs" />
+    <Compile Include="Services\WalletService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\StockExchange.Common\StockExchange.Common.csproj">

@@ -7,5 +7,6 @@ namespace StockExchange.Business.ServiceInterfaces
     {
         bool AddUserTransaction(UserTransactionDto dto);
         IList<UserTransactionDto> GetUserTransactions(int userId);
+        int GetUserTransactionsCount(int userId);
     }
 }

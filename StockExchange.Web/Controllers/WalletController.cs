@@ -1,7 +1,6 @@
-﻿using StockExchange.Business.Models;
-using StockExchange.Business.ServiceInterfaces;
+﻿using StockExchange.Business.ServiceInterfaces;
 using StockExchange.Web.Models.Wallet;
-using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 
 namespace StockExchange.Web.Controllers
@@ -10,19 +9,26 @@ namespace StockExchange.Web.Controllers
     public class WalletController : BaseController
     {
         private readonly IUserService _userService;
+        private readonly ITransactionsService _transactionsService;
+        private readonly IWalletService _walletService;
 
-        public WalletController(IUserService userService)
+        public WalletController(IUserService userService, ITransactionsService transactionsService, IWalletService walletService)
         {
             _userService = userService;
+            _transactionsService = transactionsService;
+            _walletService = walletService;
         }
 
         [HttpGet]
         public ActionResult Index()
         {
+            var ownedStocks = _walletService.GetOwnedStocks(CurrentUserId);
             var walletModel = new WalletViewModel
             {
-                Budget = CurrentUser.Budget,
-                Transactions = new List<UserTransactionDto>()
+                FreeBudget = CurrentUser.Budget,
+                AllStocksValue = ownedStocks.Sum(s => s.CurrentValue),
+                AllTransactionsCount = _transactionsService.GetUserTransactionsCount(CurrentUserId),
+                OwnedCompanyStocks = ownedStocks
             };
             return View(walletModel);
         }

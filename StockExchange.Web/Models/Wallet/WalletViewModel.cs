@@ -1,15 +1,17 @@
-﻿using System;
+﻿using StockExchange.Business.Models;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using StockExchange.Business.Models;
 
 namespace StockExchange.Web.Models.Wallet
 {
     public class WalletViewModel
     {
-        public decimal Budget { get; set; }
+        public decimal FreeBudget { get; set; }
+        public decimal AllStocksValue { get; set; }
+        public decimal TotalBudget => FreeBudget + AllStocksValue;
+        
+        public int AllTransactionsCount { get; set; }
+        public int CurrentSignalsCount { get; set; }
 
-        public IList<UserTransactionDto> Transactions { get; set; }
+        public IList<OwnedCompanyStocksDto> OwnedCompanyStocks { get; set; } = new List<OwnedCompanyStocksDto>();
     }
 }

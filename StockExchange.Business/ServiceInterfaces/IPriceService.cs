@@ -1,7 +1,8 @@
-﻿using System.Collections.Generic;
-using StockExchange.Business.Extensions;
+﻿using StockExchange.Business.Extensions;
 using StockExchange.Business.Models;
 using StockExchange.Business.Models.Filters;
+using StockExchange.DataAccess.Models;
+using System.Collections.Generic;
 
 namespace StockExchange.Business.ServiceInterfaces
 {
@@ -16,5 +17,7 @@ namespace StockExchange.Business.ServiceInterfaces
         object GetValues(FilterDefinition<PriceFilter> toPagedFilterDefinition, string fieldName);
 
         IList<CompanyPricesDto> GetPricesForCompanies(IList<int> companyIds);
+
+        IList<Price> GetCurrentPrices(IList<int> companyIds);
     }
 }
