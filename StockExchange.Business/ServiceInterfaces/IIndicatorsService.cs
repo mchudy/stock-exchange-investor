@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
-using StockExchange.Business.Indicators;
+﻿using StockExchange.Business.Indicators;
 using StockExchange.Business.Models.Indicators;
+using System.Collections.Generic;
 
 namespace StockExchange.Business.ServiceInterfaces
 {

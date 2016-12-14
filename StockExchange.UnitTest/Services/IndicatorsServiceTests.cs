@@ -52,7 +52,7 @@ namespace StockExchange.UnitTest.Services
             availableIndicators.Should().NotBeNull();
             availableIndicators.Should().Contain(IndicatorType.Macd);
             availableIndicators.Should().Contain(IndicatorType.Rsi);
-            availableIndicators.Should().Contain(IndicatorType.PP);
+            availableIndicators.Should().Contain(IndicatorType.PivotPoint);
             availableIndicators.Should().Contain(IndicatorType.Atr);
             availableIndicators.Should().Contain(IndicatorType.Roc);
         }
