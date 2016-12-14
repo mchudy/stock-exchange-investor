@@ -19,6 +19,14 @@ namespace StockExchange.Business.Services
             _priceService = priceService;
         }
 
+        public IList<IndicatorType> GetAvailableIndicators()
+        {
+            List<IndicatorType> list = new List<IndicatorType>();
+            foreach (IndicatorType type in typeof(IndicatorType).GetEnumValues())
+                list.Add(type);
+            return list;
+        }
+
         public IList<IndicatorProperty> GetPropertiesForIndicator(IndicatorType type)
         {
             var indicator = _indicatorFactory.CreateIndicator(type);
