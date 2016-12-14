@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using StockExchange.Business.Indicators;
 using StockExchange.DataAccess.Models;
+using StockExchange.UnitTest.TestHelpers;
 using System.Collections.Generic;
 using Xunit;
 
@@ -16,9 +17,7 @@ namespace StockExchange.UnitTest.Indicators.OBV
 
         public ObvTests()
         {
-            AssertionOptions.AssertEquivalencyUsing(options =>
-                options.Using<decimal>(ctx => ctx.Subject.Should().BeApproximately(ctx.Expectation, ObvData.DataPrecision))
-                       .WhenTypeIs<decimal>());
+            DataHelper.SetPrecisionForDecimal(ObvData.DataPrecision);
         }
 
         [Fact]

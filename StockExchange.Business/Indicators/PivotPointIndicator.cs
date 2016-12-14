@@ -1,17 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using StockExchange.Business.Models;
+﻿using StockExchange.Business.Models;
 using StockExchange.Business.Models.Indicators;
 using StockExchange.DataAccess.Models;
+using System.Collections.Generic;
 
 namespace StockExchange.Business.Indicators
 {
     public class PivotPointIndicator : IIndicator
     {
-        public IndicatorType Type => IndicatorType.PP;
+        public IndicatorType Type => IndicatorType.PivotPoint;
+
         public IList<IndicatorValue> Calculate(IList<Price> prices)
         {
             IList<IndicatorValue> values = new List<IndicatorValue>();

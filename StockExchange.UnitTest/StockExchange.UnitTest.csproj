@@ -104,7 +104,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="Helpers\DataHelpers.cs" />
+    <Compile Include="TestHelpers\DataHelpers.cs" />
     <Compile Include="Indicators\ATR\AtrData.cs" />
     <Compile Include="Indicators\ATR\AtrTests.cs" />
     <Compile Include="Indicators\IndicatorFactoryTest.cs" />

@@ -590,6 +590,7 @@ footer {
   right: 0;
   font-size: 11px;
   overflow: hidden;
+  padding-bottom: 5px;
 }
 .col-centered {
   float: none;

@@ -1,10 +1,10 @@
 ﻿using StockExchange.Business.Indicators;
 using StockExchange.Business.Models;
 using StockExchange.Business.Models.Indicators;
+using StockExchange.Business.ServiceInterfaces;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using StockExchange.Business.ServiceInterfaces;
 
 namespace StockExchange.Business.Services
 {
@@ -21,10 +21,9 @@ namespace StockExchange.Business.Services
 
         public IList<IndicatorType> GetAvailableIndicators()
         {
-            List<IndicatorType> list = new List<IndicatorType>();
-            foreach (IndicatorType type in typeof(IndicatorType).GetEnumValues())
-                list.Add(type);
-            return list;
+            return typeof(IndicatorType).GetEnumValues()
+                .Cast<IndicatorType>()
+                .ToList();
         }
 
         public IList<IndicatorProperty> GetPropertiesForIndicator(IndicatorType type)

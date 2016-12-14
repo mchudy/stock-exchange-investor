@@ -1,18 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using StockExchange.Business.Models.Indicators;
+﻿using StockExchange.Business.Models.Indicators;
 using StockExchange.DataAccess.Models;
-using StockExchange.UnitTest.Helpers;
+using StockExchange.UnitTest.TestHelpers;
+using System.Collections.Generic;
 
 namespace StockExchange.UnitTest.Indicators.PP
 {
     internal class PivotPointData
     {
+        public const int DataPrecision = 7;
+
         public static IList<Price> HistoricalPrices = DataHelper.ConvertToPrices(
-            new decimal[,]
+            new[,]
             {
                 { 67.27m,   65.75m,   65.98m},
                 { 65.7m,    65.04m,   65.11m} ,
@@ -47,7 +45,7 @@ namespace StockExchange.UnitTest.Indicators.PP
             });
 
         public static IList<IndicatorValue> PivotPointValues = DataHelper.ConvertToIndicatorValues(
-            new decimal[]
+            new[]
             {
                 66.33333333m,
                 65.28333333m,

@@ -1,8 +1,7 @@
-﻿using StockExchange.Business.Models;
+﻿using StockExchange.Business.Models.Indicators;
 using StockExchange.DataAccess.Models;
-using StockExchange.UnitTest.Helpers;
+using StockExchange.UnitTest.TestHelpers;
 using System.Collections.Generic;
-using StockExchange.Business.Models.Indicators;
 
 namespace StockExchange.UnitTest.Indicators.OBV
 {

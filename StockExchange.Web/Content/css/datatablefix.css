@@ -38,3 +38,7 @@ table.dataTable thead .dataTableFilterRow th button {
   max-width: 75px !important;
   width: 75px !important;
 }
+#grid-filter label {
+  padding-left: 10px;
+  padding-right: 10px;
+}

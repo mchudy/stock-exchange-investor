@@ -39,7 +39,6 @@ namespace StockExchange.Web.Controllers
             {
                 return View(model);
             }
-
             var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
             // ReSharper disable once SwitchStatementMissingSomeCases
             switch (result)
@@ -47,7 +46,7 @@ namespace StockExchange.Web.Controllers
                 case SignInStatus.Success:
                     return RedirectToLocal(returnUrl);
                 default:
-                    ModelState.AddModelError("", "Invalid login attempt.");
+                    ModelState.AddModelError("", "The provided username or password is incorrect.");
                     return View(model);
             }
         }

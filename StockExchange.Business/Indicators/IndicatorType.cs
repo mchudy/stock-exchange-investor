@@ -20,7 +20,7 @@ namespace StockExchange.Business.Indicators
         Rsi = 5,
 
         [Display(Name = "PP (Pivot Point)")]
-        PP = 6, //Pivot point
+        PivotPoint = 6,
         
     }
 }

@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using StockExchange.Business.Indicators;
 using StockExchange.DataAccess.Models;
+using StockExchange.UnitTest.TestHelpers;
 using System.Collections.Generic;
 using Xunit;
 
@@ -12,8 +13,7 @@ namespace StockExchange.UnitTest.Indicators.ROC
 
         public RocTests()
         {
-            AssertionOptions.AssertEquivalencyUsing(options =>
-                options.Using<decimal>(ctx => ctx.Subject.Should().BeApproximately(ctx.Expectation, RocData.DataPrecision)).WhenTypeIs<decimal>());
+            DataHelper.SetPrecisionForDecimal(RocData.DataPrecision);
         }
 
         [Fact]
