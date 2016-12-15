@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using StockExchange.Business.Indicators;
 using StockExchange.DataAccess.Models;
+using StockExchange.UnitTest.TestHelpers;
 using System;
 using System.Collections.Generic;
 using Xunit;
@@ -13,8 +14,7 @@ namespace StockExchange.UnitTest.Indicators.ATR
 
         public AtrTests()
         {
-            AssertionOptions.AssertEquivalencyUsing(options =>
-                options.Using<decimal>(ctx => ctx.Subject.Should().BeApproximately(ctx.Expectation, AtrData.DataPrecision)).WhenTypeIs<decimal>());
+            DataHelper.SetPrecisionForDecimal(AtrData.DataPrecision);
         }
 
         [Fact]

@@ -25,6 +25,7 @@ namespace StockExchange.DataAccess.Repositories
             DbSet = context.Set<TEntity>();
         }
 
+        //TODO: remove parameters and add paging as an extension method for IQueryable (bad for testability)
         public IQueryable<TEntity> GetQueryable(Expression<Func<TEntity, bool>> filter = null,
            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
            List<Expression<Func<TEntity, object>>> includeProperties = null,

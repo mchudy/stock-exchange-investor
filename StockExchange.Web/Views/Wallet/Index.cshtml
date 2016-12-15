@@ -1,5 +1,8 @@
 ﻿@model StockExchange.Web.Models.Wallet.WalletViewModel
 @using System.Web.Optimization
+@using Newtonsoft.Json
+@using StockExchange.Common.Extensions
+@using StockExchange.Web.Helpers
 @{
     ViewBag.Title = "Wallet";
 }
@@ -11,14 +14,16 @@
 
             <div class="info-box-content">
                 @Html.ActionLink("Edit ", "EditBudgetDialog", "Wallet", null, new { @class = "modal-link btn btn-success pull-right" })
-                <span class="info-box-text">Budget</span>
-                <span class="info-box-number">$@Model.Budget</span>
-                <div class="progress">
-                    <div class="progress-bar progress-bar-success" role="progressbar" style="width: 50%"></div>
+                <div class="col-sm-4">
+                    <span class="info-box-text">Free budget</span>
+                    <span class="info-box-number">@Model.FreeBudget.FormatCurrency()</span>
+                    <span class="info-box-text">Stocks value</span>
+                    <span class="info-box-number">@Model.AllStocksValue.FormatCurrency()</span>
                 </div>
-                <span class="progress-description">
-                    50% Increase in 30 Days
-                </span>
+                <div class="col-sm-4">
+                    <span class="info-box-text">Total budget</span>
+                    <span class="info-box-number">@Model.TotalBudget.FormatCurrency()</span>
+                </div>
             </div>
         </div>
     </div>
@@ -27,7 +32,7 @@
             <span class="info-box-icon"><i class="fa fa-signal"></i></span>
             <div class="info-box-content">
                 <span class="info-box-text">Signals</span>
-                <span class="info-box-number">3</span>
+                <span class="info-box-number">@Model.CurrentSignalsCount</span>
             </div>
         </div>
     </div>
@@ -36,7 +41,7 @@
             <span class="info-box-icon"><i class="fa fa-handshake-o"></i></span>
             <div class="info-box-content">
                 <span class="info-box-text">All transactions</span>
-                <span class="info-box-number">120</span>
+                <span class="info-box-number">@Model.AllTransactionsCount</span>
             </div>
         </div>
     </div>
@@ -54,36 +59,36 @@
                         <thead>
                         <tr>
                             <th>Company</th>
-                            <th>Price</th>
+                            <th>Current price</th>
+                            <th>Owned stocks</th>
+                            <th>Buy value</th>
+                            <th>Current value</th>
                             <th>Change</th>
                         </tr>
+                        @foreach (var ownedStock in Model.OwnedCompanyStocks)
+                        {
+                            <tr>
+                                <td>@ownedStock.CompanyName</td>
+                                <td>@ownedStock.CurrentPrice</td>
+                                <td>@ownedStock.OwnedStocksCount</td>
+                                <td>@ownedStock.TotalBuyPrice</td>
+                                <td>@ownedStock.CurrentValue</td>
+                                <td>
+                                    @if (ownedStock.Profit < 0)
+                                    {
+                                        <i class="fa fa-arrow-down icon-stock-down"></i>
+                                        <span class="text-danger">@ownedStock.Profit</span>
+                                    }
+                                    else
+                                    {
+                                        <i class="fa fa-arrow-up icon-stock-up"></i>
+                                        <span class="text-success">@ownedStock.Profit</span>
+                                    }
+                                </td>
+
+                            </tr>
+                        }
                         </thead>
-                        <tbody>
-                        <tr>
-                            <td>ALIOR</td>
-                            <td>43,96</td>
-                            <td>
-                                <i class="fa fa-arrow-up icon-stock-up"></i>
-                                <span class="text-success">2,80%</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>ASSECO</td>
-                            <td>56,30</td>
-                            <td>
-                                <i class="fa fa-arrow-down icon-stock-down"></i>
-                                <span class="text-danger">-12,00%</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>MBANK</td>
-                            <td>546,30</td>
-                            <td>
-                                <i class="fa fa-arrow-down icon-stock-down"></i>
-                                <span class="text-danger">-3,09%</span>
-                            </td>
-                        </tr>
-                        </tbody>
                     </table>
                 </div>
             </div>
@@ -99,17 +104,19 @@
                 
             </div>
             <div class="box-footer">
-                <span class="text-muted">Currently used strategy: </span>
+                <span class="text-muted">Currently used strategy: <em>@Model.CurrentStrategyName</em></span>
             </div>
         </div>
     </div>
     <div class="col-md-4">
         <div class="box box-warning">
             <div class="box-header with-border">
-                <h3 class="box-title">Owned stocks</h3>
+                <h3 class="box-title">Statistics</h3>
             </div>
             <div class="box-body">
-                <div id="owned-stocks-pie-chart">
+                <div id="stocks-by-value-chart">
+                </div>
+                <div id="stocks-by-quantity-chart">
                 </div>
             </div>
         </div>
@@ -118,5 +125,13 @@
 
 @section scripts {
     @Scripts.Render("~/bundles/scripts/highcharts")
+
+    <script>
+        var config = {
+            stocksByQuantityData: @Html.ToJsonString(Model.StocksByQuantity),
+            stocksByValueData: @Html.ToJsonString(Model.StocksByValue)
+        };
+    </script>
+
     @Scripts.Render("/Scripts/Views/walletView.js")
 }

@@ -17,6 +17,10 @@ namespace StockExchange.Business.Indicators
         Roc = 4,
 
         [Display(Name = "RSI (Relative Strength Index)")]
-        Rsi = 5
+        Rsi = 5,
+
+        [Display(Name = "PP (Pivot Point)")]
+        PivotPoint = 6,
+        
     }
 }

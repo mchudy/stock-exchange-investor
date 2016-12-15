@@ -1,7 +1,7 @@
 ﻿using FluentAssertions;
 using StockExchange.Business.Indicators;
 using StockExchange.DataAccess.Models;
-using StockExchange.UnitTest.Helpers;
+using StockExchange.UnitTest.TestHelpers;
 using System.Collections.Generic;
 using Xunit;
 
@@ -13,8 +13,7 @@ namespace StockExchange.UnitTest.Indicators
 
         public RsiTests()
         {
-            AssertionOptions.AssertEquivalencyUsing(options =>
-                options.Using<decimal>(ctx => ctx.Subject.Should().BeApproximately(ctx.Expectation, RsiData.DataPrecision)).WhenTypeIs<decimal>());
+            DataHelper.SetPrecisionForDecimal(RsiData.DataPrecision);
         }
 
         [Fact]

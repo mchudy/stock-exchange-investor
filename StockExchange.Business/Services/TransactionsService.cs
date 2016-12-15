@@ -36,7 +36,13 @@ namespace StockExchange.Business.Services
                 }).ToList();
         }
 
-        //TODO: return some status
+        public int GetUserTransactionsCount(int userId)
+        {
+            return _transactionsRepository.GetQueryable()
+                .Count(t => t.UserId == userId);
+        }
+
+        //TODO: return validation messages
         public bool AddUserTransaction(UserTransactionDto dto)
         {
             var user = _userRepository.GetQueryable()

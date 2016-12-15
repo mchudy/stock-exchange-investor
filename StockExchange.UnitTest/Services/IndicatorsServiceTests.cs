@@ -43,5 +43,18 @@ namespace StockExchange.UnitTest.Services
             properties.Count.Should().Be(3);
             properties.Should().Contain(p => p.Name == "Term" && p.Value == RsiIndicator.DefaultRsiTerm);
         }
+
+        [Fact]
+        public void Getting_available_indicators_returns_correct_values()
+        {
+            var availableIndicators = _service.GetAvailableIndicators();
+
+            availableIndicators.Should().NotBeNull();
+            availableIndicators.Should().Contain(IndicatorType.Macd);
+            availableIndicators.Should().Contain(IndicatorType.Rsi);
+            availableIndicators.Should().Contain(IndicatorType.PivotPoint);
+            availableIndicators.Should().Contain(IndicatorType.Atr);
+            availableIndicators.Should().Contain(IndicatorType.Roc);
+        }
     }
 }

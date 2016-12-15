@@ -1,5 +1,7 @@
 ﻿using StockExchange.Business.Extensions;
 using StockExchange.Business.Models;
+using StockExchange.Business.Models.Filters;
+using StockExchange.Business.ServiceInterfaces;
 using StockExchange.DataAccess.IRepositories;
 using StockExchange.DataAccess.Models;
 using System;
@@ -7,8 +9,6 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
-using StockExchange.Business.Models.Filters;
-using StockExchange.Business.ServiceInterfaces;
 
 namespace StockExchange.Business.Services
 {
@@ -71,6 +71,14 @@ namespace StockExchange.Business.Services
                     Company = g.Key,
                     Prices = g.OrderBy(p => p.Date).ToList()
                 })
+                .ToList();
+        }
+
+        public IList<Price> GetCurrentPrices(IList<int> companyIds)
+        {
+            return _priceRepository.GetQueryable()
+                .Where(p => companyIds.Contains(p.CompanyId))
+                .GroupBy(p => p.CompanyId, (id, prices) => prices.OrderByDescending(pr => pr.Date).FirstOrDefault())
                 .ToList();
         }
 

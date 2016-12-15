@@ -65,11 +65,13 @@
     <Compile Include="Indicators\AtrIndicator.cs" />
     <Compile Include="Indicators\IIndicatorFactory.cs" />
     <Compile Include="Indicators\IndicatorFactory.cs" />
+    <Compile Include="Indicators\PivotPointIndicator.cs" />
     <Compile Include="Models\Indicators\CompanyIndicatorValues.cs" />
     <Compile Include="Models\Indicators\IndicatorProperty.cs" />
     <Compile Include="Indicators\IndicatorType.cs" />
     <Compile Include="Indicators\ObvIndicator.cs" />
     <Compile Include="Indicators\RocIndicator.cs" />
+    <Compile Include="Models\Wallet\OwnedCompanyStocksDto.cs" />
     <Compile Include="Models\Simulations\CompanyStockQuantity.cs" />
     <Compile Include="Models\Indicators\IndicatorValue.cs" />
     <Compile Include="Indicators\MovingAverageHelper.cs" />
@@ -88,6 +90,7 @@
     <Compile Include="ServiceInterfaces\IStrategyService.cs" />
     <Compile Include="ServiceInterfaces\ITransactionsService.cs" />
     <Compile Include="ServiceInterfaces\IUserService.cs" />
+    <Compile Include="ServiceInterfaces\IWalletService.cs" />
     <Compile Include="Services\PriceService.cs" />
     <Compile Include="Extensions\PagedListExtension.cs" />
     <Compile Include="Extensions\QueryableExtension.cs" />
@@ -104,6 +107,7 @@
     <Compile Include="Services\StrategyService.cs" />
     <Compile Include="Services\TransactionsService.cs" />
     <Compile Include="Services\UserService.cs" />
+    <Compile Include="Services\WalletService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\StockExchange.Common\StockExchange.Common.csproj">
@@ -119,7 +123,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Signals\" />
+    <Folder Include="Validation\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

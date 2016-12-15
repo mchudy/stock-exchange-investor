@@ -1,11 +1,11 @@
-﻿using StockExchange.Business.Models;
+﻿using FluentAssertions;
+using StockExchange.Business.Models.Indicators;
 using StockExchange.DataAccess.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using StockExchange.Business.Models.Indicators;
 
-namespace StockExchange.UnitTest.Helpers
+namespace StockExchange.UnitTest.TestHelpers
 {
     //TODO: think about loading all test data from csv files
     public class DataHelper
@@ -49,6 +49,13 @@ namespace StockExchange.UnitTest.Helpers
                 ClosePrice = t,
                 Date = StartDate.AddDays(i + offset)
             }).ToList();
+        }
+
+        public static void SetPrecisionForDecimal(int precision)
+        {
+            AssertionOptions.AssertEquivalencyUsing(options =>
+                options.Using<decimal>(ctx => ctx.Subject.Should()
+                .BeApproximately(ctx.Expectation, precision)).WhenTypeIs<decimal>());
         }
     }
 }

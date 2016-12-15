@@ -1,5 +1,6 @@
 ﻿@using System.Web.Optimization
 @using StockExchange.Web.Helpers
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -99,7 +100,7 @@
                 </ul>
             </div>
         </div>
-        <div id="body" class="main-content">
+        <div class="main-content">
             <h1 class="page-header">
                 @ViewBag.Title
             </h1>
@@ -109,14 +110,15 @@
             </footer>
         </div>
 
-        <div id="modal-container" class="modal fade" tabindex="-1" role="dialog">
-            <div class="modal-dialog">
-                <div class="modal-content"></div>
-            </div>
+    </div>
+
+    <div id="modal-container" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content"></div>
         </div>
     </div>
 
-    @Scripts.Render("~/bundles/scripts/jquery");
+    @Scripts.Render("~/bundles/scripts/jquery")
     @Scripts.Render("~/bundles/scripts/jquery-ui")
     @Scripts.Render("~/bundles/scripts/bootstrap")
 

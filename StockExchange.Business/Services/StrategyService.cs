@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using StockExchange.Business.Models;
+﻿using StockExchange.Business.Models;
 using StockExchange.Business.ServiceInterfaces;
 using StockExchange.DataAccess.IRepositories;
 using StockExchange.DataAccess.Models;

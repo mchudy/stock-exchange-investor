@@ -35,6 +35,7 @@ namespace StockExchange.Web.Controllers
             //    UserId = CurrentUserId
             //};
             //_strategyService.CreateStrategy(strategy);
+            
             return RedirectToAction("Index", "Wallet");
         }
 

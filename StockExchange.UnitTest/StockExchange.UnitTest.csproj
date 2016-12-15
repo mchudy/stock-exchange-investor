@@ -104,7 +104,9 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="Helpers\DataHelpers.cs" />
+    <Compile Include="Services\PriceServiceTests.cs" />
+    <Compile Include="Services\WalletServiceTests.cs" />
+    <Compile Include="TestHelpers\DataHelpers.cs" />
     <Compile Include="Indicators\ATR\AtrData.cs" />
     <Compile Include="Indicators\ATR\AtrTests.cs" />
     <Compile Include="Indicators\IndicatorFactoryTest.cs" />
@@ -112,6 +114,8 @@
     <Compile Include="Indicators\MACD\MacdTests.cs" />
     <Compile Include="Indicators\OBV\ObvData.cs" />
     <Compile Include="Indicators\OBV\ObvTests.cs" />
+    <Compile Include="Indicators\PP\PivotPointData.cs" />
+    <Compile Include="Indicators\PP\PivotPointTests.cs" />
     <Compile Include="Indicators\ROC\RocData.cs" />
     <Compile Include="Indicators\ROC\RocTests.cs" />
     <Compile Include="Indicators\RSI\RsiData.cs" />

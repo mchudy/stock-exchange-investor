@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
-using StockExchange.Business.Indicators;
+﻿using StockExchange.Business.Indicators;
 using StockExchange.Business.Models.Indicators;
+using System.Collections.Generic;
 
 namespace StockExchange.Business.ServiceInterfaces
 {
@@ -10,5 +10,7 @@ namespace StockExchange.Business.ServiceInterfaces
 
         IList<CompanyIndicatorValues> GetIndicatorValues(IIndicator indicator, IList<int> companyIds);
         IList<CompanyIndicatorValues> GetIndicatorValues(IndicatorType type, IList<int> companyIds);
+
+        IList<IndicatorType> GetAvailableIndicators();
     }
 }

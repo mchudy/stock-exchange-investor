@@ -18,6 +18,7 @@
             public const string Currency = "{0:#,##0.00}";
             public const string Integer = "{0:###0}";
             public const string DisplayDate = "{0:MM.dd.yyyy}";
+            public const string CurrencyCode = "PLN";
         }
 
         public static class SyncDataParameters

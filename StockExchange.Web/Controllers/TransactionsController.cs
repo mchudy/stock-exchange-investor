@@ -39,6 +39,11 @@ namespace StockExchange.Web.Controllers
         [HttpPost]
         public ActionResult AddTransaction(AddTransactionViewModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                Response.StatusCode = 400;
+                return new JsonNetResult(false);
+            }
             var dto = new UserTransactionDto
             {
                 Date = DateTime.Now,

@@ -1,5 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
+using System.Collections.Generic;
 using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 using System.Web.Mvc.Html;
 
@@ -37,6 +40,15 @@ namespace StockExchange.Web.Helpers
             var items = options.Select(o => new SelectListItem { Value = o, Text = o, Selected = o == null });
             items = SingleEmptyItem.Concat(items);
             return htmlHelper.DropDownList(name, items, htmlAttributes);
+        }
+
+        public static IHtmlString ToJsonString(this HtmlHelper htmlHelper, object model)
+        {
+            return htmlHelper.Raw(JsonConvert.SerializeObject(model,
+            new JsonSerializerSettings
+            {
+                ContractResolver = new CamelCasePropertyNamesContractResolver()
+            }));
         }
 
         private static readonly SelectListItem[] SingleEmptyItem = { new SelectListItem { Text = "", Value = "" } };
