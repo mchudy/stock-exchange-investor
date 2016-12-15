@@ -82,6 +82,25 @@ namespace StockExchange.UnitTest.Services
 
         }
 
+        [Fact]
+        public void Should_include_transactions_only_for_the_given_user()
+        {
+            SetupTransactions(
+                new UserTransaction { CompanyId = 1, Price = 10, Quantity = 3, UserId = userId },
+                new UserTransaction { CompanyId = 1, Price = 10, Quantity = 3, UserId = userId + 1 },
+                new UserTransaction { CompanyId = 2, Price = 5, Quantity = -2, UserId = userId + 1 }
+            );
+            SetupCurrentPrices(
+                new Price { CompanyId = 1, ClosePrice = 10 },
+                new Price { CompanyId = 2, ClosePrice = 40 }
+            );
+
+            var results = _service.GetOwnedStocks(userId);
+
+            results.Count.Should().Be(1);
+            results.Should().ContainSingle(r => r.CompanyId == 1 && r.OwnedStocksCount == 3);
+        }
+
         private void SetupTransactions(params UserTransaction[] transactions)
         {
             _transactionsRepository.Setup(r => r.GetQueryable(null, null, null, null, null))
@@ -90,8 +109,7 @@ namespace StockExchange.UnitTest.Services
 
         private void SetupCurrentPrices(params Price[] prices)
         {
-            var companyIds = prices.Select(p => p.CompanyId).Distinct().OrderBy(c => c).ToList();
-            _priceService.Setup(p => p.GetCurrentPrices(It.Is<IList<int>>(c => c.OrderBy(cc => cc).SequenceEqual(companyIds))))
+            _priceService.Setup(p => p.GetCurrentPrices(It.IsAny<IList<int>>()))
                 .Returns(prices);
         }
     }

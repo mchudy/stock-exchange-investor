@@ -21,7 +21,7 @@ namespace StockExchange.Business.Services
 
         public IList<OwnedCompanyStocksDto> GetOwnedStocks(int userId)
         {
-            var transactionsByCompany = GetTransactionsByCompany();
+            var transactionsByCompany = GetTransactionsByCompany(userId);
             var currentPrices = _priceService.GetCurrentPrices(transactionsByCompany.Keys.ToList());
 
             return transactionsByCompany
@@ -46,10 +46,11 @@ namespace StockExchange.Business.Services
             };
         }
 
-        private Dictionary<int, List<UserTransaction>> GetTransactionsByCompany()
+        private Dictionary<int, List<UserTransaction>> GetTransactionsByCompany(int userId)
         {
             return _transactionsRepository.GetQueryable()
                 .Include(t => t.Company)
+                .Where(t => t.UserId == userId)
                 .GroupBy(t => t.CompanyId)
                 .Where(t => t.Sum(tr => tr.Quantity) > 0)
                 .ToDictionary(t => t.Key, t => t.ToList());
