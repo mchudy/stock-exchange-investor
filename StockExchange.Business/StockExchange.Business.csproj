@@ -71,7 +71,7 @@
     <Compile Include="Indicators\IndicatorType.cs" />
     <Compile Include="Indicators\ObvIndicator.cs" />
     <Compile Include="Indicators\RocIndicator.cs" />
-    <Compile Include="Models\OwnedCompanyStocksDto.cs" />
+    <Compile Include="Models\Wallet\OwnedCompanyStocksDto.cs" />
     <Compile Include="Models\Simulations\CompanyStockQuantity.cs" />
     <Compile Include="Models\Indicators\IndicatorValue.cs" />
     <Compile Include="Indicators\MovingAverageHelper.cs" />

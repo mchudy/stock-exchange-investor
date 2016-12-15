@@ -55,6 +55,7 @@
   <ItemGroup>
     <Compile Include="AttributeHelper.cs" />
     <Compile Include="Consts.cs" />
+    <Compile Include="Extensions\DecimalExtensions.cs" />
     <Compile Include="Extensions\EnumExtension.cs" />
     <Compile Include="Factory.cs" />
     <Compile Include="IFactory.cs" />

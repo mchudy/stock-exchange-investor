@@ -21,32 +21,38 @@ namespace StockExchange.Business.Services
 
         public IList<OwnedCompanyStocksDto> GetOwnedStocks(int userId)
         {
-            var results = new List<OwnedCompanyStocksDto>();
-            var transactionsByCompany = _transactionsRepository.GetQueryable()
+            var transactionsByCompany = GetTransactionsByCompany();
+            var currentPrices = _priceService.GetCurrentPrices(transactionsByCompany.Keys.ToList());
+
+            return transactionsByCompany
+                .Select(entry => BuildCompanyOwnedStocksDto(userId, entry, currentPrices))
+                .ToList();;
+        }
+
+        private OwnedCompanyStocksDto BuildCompanyOwnedStocksDto(int userId, KeyValuePair<int, List<UserTransaction>> entry, IList<Price> currentPrices)
+        {
+            var transactions = entry.Value;
+            decimal currentPrice = currentPrices.FirstOrDefault(p => p.CompanyId == entry.Key)?.ClosePrice ?? 0;
+            int ownedStocksCount = transactions.Sum(t => t.Quantity);
+            return new OwnedCompanyStocksDto
+            {
+                CompanyId = entry.Key,
+                CompanyName = transactions.FirstOrDefault()?.Company?.Code,
+                CurrentPrice = currentPrice,
+                OwnedStocksCount = ownedStocksCount,
+                CurrentValue = currentPrice*ownedStocksCount,
+                UserId = userId,
+                TotalBuyPrice = transactions.Sum(t => t.Quantity*t.Price)
+            };
+        }
+
+        private Dictionary<int, List<UserTransaction>> GetTransactionsByCompany()
+        {
+            return _transactionsRepository.GetQueryable()
                 .Include(t => t.Company)
                 .GroupBy(t => t.CompanyId)
                 .Where(t => t.Sum(tr => tr.Quantity) > 0)
                 .ToDictionary(t => t.Key, t => t.ToList());
-            var currentPrices = _priceService.GetCurrentPrices(transactionsByCompany.Keys.ToList());
-
-            foreach (var entry in transactionsByCompany)
-            {
-                var transactions = entry.Value;
-                decimal currentPrice = currentPrices.FirstOrDefault(p => p.CompanyId == entry.Key)?.ClosePrice ?? 0;
-                int ownedStocksCount = transactions.Sum(t => t.Quantity);
-                results.Add(new OwnedCompanyStocksDto
-                {
-                    CompanyId = entry.Key,
-                    CompanyName = transactions.FirstOrDefault()?.Company?.Code,
-                    CurrentPrice = currentPrice,
-                    OwnedStocksCount = ownedStocksCount,
-                    CurrentValue = currentPrice * ownedStocksCount,
-                    UserId = userId,
-                    TotalBuyPrice = transactions.Sum(t => t.Quantity * t.Price)
-                });
-            }
-
-            return results;;
         }
     }
 }
