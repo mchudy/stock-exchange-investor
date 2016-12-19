@@ -67,6 +67,7 @@
     <Compile Include="Indicators\IndicatorFactory.cs" />
     <Compile Include="Indicators\PivotPointIndicator.cs" />
     <Compile Include="Indicators\EmaIndicator.cs" />
+    <Compile Include="Indicators\VptIndicator.cs" />
     <Compile Include="Indicators\VhfIndicator.cs" />
     <Compile Include="Indicators\VrocIndicator.cs" />
     <Compile Include="Indicators\SmaIndicator.cs" />

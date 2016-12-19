@@ -34,5 +34,7 @@ namespace StockExchange.Business.Indicators
         [Display(Name = "VHF (Vertical Horizontal Filter)")]
         Vhf = 10,
 
+        [Display(Name = "VPT (Volume Price Trend)")]
+        Vpt = 11,
     }
 }

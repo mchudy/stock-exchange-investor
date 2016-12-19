@@ -55,6 +55,12 @@ namespace StockExchange.UnitTest.Services
             availableIndicators.Should().Contain(IndicatorType.PivotPoint);
             availableIndicators.Should().Contain(IndicatorType.Atr);
             availableIndicators.Should().Contain(IndicatorType.Roc);
+            availableIndicators.Should().Contain(IndicatorType.Obv);
+            availableIndicators.Should().Contain(IndicatorType.Sma);
+            availableIndicators.Should().Contain(IndicatorType.Ema);
+            availableIndicators.Should().Contain(IndicatorType.Vhf);
+            availableIndicators.Should().Contain(IndicatorType.Vroc);
+            availableIndicators.Should().Contain(IndicatorType.Vpt);
         }
     }
 }

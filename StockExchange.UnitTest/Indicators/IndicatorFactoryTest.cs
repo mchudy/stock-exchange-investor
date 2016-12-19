@@ -16,6 +16,12 @@ namespace StockExchange.UnitTest.Indicators
         [InlineData(IndicatorType.Roc, typeof(RocIndicator))]
         [InlineData(IndicatorType.Obv, typeof(ObvIndicator))]
         [InlineData(IndicatorType.Atr, typeof(AtrIndicator))]
+        [InlineData(IndicatorType.Sma, typeof(SmaIndicator))]
+        [InlineData(IndicatorType.Ema, typeof(EmaIndicator))]
+        [InlineData(IndicatorType.Vroc, typeof(VrocIndicator))]
+        [InlineData(IndicatorType.Vhf, typeof(VhfIndicator))]
+        [InlineData(IndicatorType.PivotPoint, typeof(PivotPointIndicator))]
+        [InlineData(IndicatorType.Vpt, typeof(VptIndicator))]
         public void Should_create_correct_IIndicator_instance(IndicatorType type, Type resultType)
         {
             var indicator = _factory.CreateIndicator(type);

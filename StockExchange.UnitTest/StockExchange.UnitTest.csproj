@@ -106,6 +106,8 @@
   <ItemGroup>
     <Compile Include="Indicators\EMA\EmaData.cs" />
     <Compile Include="Indicators\EMA\EmaTests.cs" />
+    <Compile Include="Indicators\VPT\VptData.cs" />
+    <Compile Include="Indicators\VPT\VptTests.cs" />
     <Compile Include="Indicators\VHF\VhfData.cs" />
     <Compile Include="Indicators\VHF\VhfTests.cs" />
     <Compile Include="Indicators\VROC\VrocData.cs" />
