@@ -21,6 +21,12 @@ namespace StockExchange.Business.Indicators
 
         [Display(Name = "PP (Pivot Point)")]
         PivotPoint = 6,
-        
+
+        [Display(Name = "Sma (Simple Moving Average)")]
+        Sma = 7,
+
+        [Display(Name = "Ema (Expotential Moving Average)")]
+        Ema = 8,
+
     }
 }

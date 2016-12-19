@@ -66,6 +66,8 @@
     <Compile Include="Indicators\IIndicatorFactory.cs" />
     <Compile Include="Indicators\IndicatorFactory.cs" />
     <Compile Include="Indicators\PivotPointIndicator.cs" />
+    <Compile Include="Indicators\EmaIndicator.cs" />
+    <Compile Include="Indicators\SmaIndicator.cs" />
     <Compile Include="Models\Indicators\CompanyIndicatorValues.cs" />
     <Compile Include="Models\Indicators\IndicatorProperty.cs" />
     <Compile Include="Indicators\IndicatorType.cs" />
