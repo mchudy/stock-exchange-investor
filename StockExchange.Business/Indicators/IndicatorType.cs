@@ -36,5 +36,8 @@ namespace StockExchange.Business.Indicators
 
         [Display(Name = "VPT (Volume Price Trend)")]
         Vpt = 11,
+
+        [Display(Name = "ADX (Average Directional Movement Index)")]
+        Adx = 12
     }
 }

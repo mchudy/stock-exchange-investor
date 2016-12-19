@@ -22,6 +22,7 @@ namespace StockExchange.UnitTest.Indicators
         [InlineData(IndicatorType.Vhf, typeof(VhfIndicator))]
         [InlineData(IndicatorType.PivotPoint, typeof(PivotPointIndicator))]
         [InlineData(IndicatorType.Vpt, typeof(VptIndicator))]
+        [InlineData(IndicatorType.Adx, typeof(AdxIndicator))]
         public void Should_create_correct_IIndicator_instance(IndicatorType type, Type resultType)
         {
             var indicator = _factory.CreateIndicator(type);

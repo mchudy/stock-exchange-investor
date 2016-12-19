@@ -61,6 +61,7 @@ namespace StockExchange.UnitTest.Services
             availableIndicators.Should().Contain(IndicatorType.Vhf);
             availableIndicators.Should().Contain(IndicatorType.Vroc);
             availableIndicators.Should().Contain(IndicatorType.Vpt);
+            availableIndicators.Should().Contain(IndicatorType.Adx);
         }
     }
 }

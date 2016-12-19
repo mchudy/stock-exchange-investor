@@ -1,6 +1,10 @@
-﻿using StockExchange.Business.ServiceInterfaces;
+﻿using System;
+using System.Linq;
+using StockExchange.Business.ServiceInterfaces;
 using StockExchange.Web.Models;
 using System.Web.Mvc;
+using StockExchange.Business.Indicators;
+using StockExchange.Common.Extensions;
 
 namespace StockExchange.Web.Controllers
 {
@@ -20,8 +24,8 @@ namespace StockExchange.Web.Controllers
 
         public ActionResult Index()
         {
-            //var model = GetViewModel();
-            return View(new StrategyViewModel());
+            var model = GetViewModel();
+            return View(model);
         }
 
         [HttpPost]
@@ -39,15 +43,18 @@ namespace StockExchange.Web.Controllers
             return RedirectToAction("Index", "Wallet");
         }
 
-        //private StrategyViewModel GetViewModel()
-        //{
-        //    var model = new StrategyViewModel
-        //    {
-        //        Companies = _priceService.GetAllCompanies(),
-        //        StartDate = new DateTime(2006, 01, 01),
-        //        EndDate = DateTime.Today
-        //    };
-        //    return model;
-        //}
+        private StrategyViewModel GetViewModel()
+        {
+            var model = new StrategyViewModel
+            {
+                Indicators = Enum.GetValues(typeof(IndicatorType)).Cast<IndicatorType>()
+                    .Select(i => new IndicatorViewModel
+                    {
+                        Name = i.GetEnumDescription(),
+                        Type = i
+                    }).ToList()
+            };
+            return model;
+        }
     }
 }
