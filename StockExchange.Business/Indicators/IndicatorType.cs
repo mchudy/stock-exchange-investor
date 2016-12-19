@@ -31,5 +31,8 @@ namespace StockExchange.Business.Indicators
         [Display(Name = "VROC (Volume Rate of Change)")]
         Vroc = 9,
 
+        [Display(Name = "VHF (Vertical Horizontal Filter)")]
+        Vhf = 10,
+
     }
 }
