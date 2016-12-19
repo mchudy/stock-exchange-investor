@@ -51,6 +51,15 @@ namespace StockExchange.UnitTest.TestHelpers
             }).ToList();
         }
 
+        public static IList<Price> ConvertToPricesVolume(int[] tab, int offset = 0)
+        {
+            return tab.Select((t, i) => new Price
+            {
+                Volume = t,
+                Date = StartDate.AddDays(i + offset)
+            }).ToList();
+        }
+
         public static void SetPrecisionForDecimal(int precision)
         {
             AssertionOptions.AssertEquivalencyUsing(options =>

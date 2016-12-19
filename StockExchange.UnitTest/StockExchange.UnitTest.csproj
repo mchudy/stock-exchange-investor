@@ -106,6 +106,8 @@
   <ItemGroup>
     <Compile Include="Indicators\EMA\EmaData.cs" />
     <Compile Include="Indicators\EMA\EmaTests.cs" />
+    <Compile Include="Indicators\VROC\VrocData.cs" />
+    <Compile Include="Indicators\VROC\VrocTests.cs" />
     <Compile Include="Indicators\SMA\SmaData.cs" />
     <Compile Include="Indicators\SMA\SmaTests.cs" />
     <Compile Include="Services\PriceServiceTests.cs" />
