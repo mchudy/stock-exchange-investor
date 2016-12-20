@@ -1,16 +1,14 @@
 ﻿using System.Collections.Generic;
 using StockExchange.Business.Models.Indicators;
 
-namespace StockExchange.Business.Models
+namespace StockExchange.Business.Models.Strategy
 {
-    public class StrategyDto
+    public class CreateStrategyDto
     {
-        public int Id { get; set; }
-
         public string Name { get; set; }
 
         public int UserId { get; set; }
 
-        public IDictionary<IndicatorProperty, string> Indicators { get; set; }
+        public IList<ParameterizedIndicator> Indicators { get; set; }
     }
 }

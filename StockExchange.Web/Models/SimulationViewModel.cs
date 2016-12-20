@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using StockExchange.Business.Models.Strategy;
 
 namespace StockExchange.Web.Models
 {

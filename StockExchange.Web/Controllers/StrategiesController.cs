@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using StockExchange.Business.Indicators;
 using StockExchange.Business.Models;
 using StockExchange.Business.Models.Indicators;
+using StockExchange.Business.Models.Strategy;
 using StockExchange.Common.Extensions;
 
 namespace StockExchange.Web.Controllers
@@ -34,21 +35,38 @@ namespace StockExchange.Web.Controllers
         [HttpPost]
         public ActionResult CreateStrategy(IList<IndicatorMessage> indicators)
         {
-            var dto = new StrategyDto
+            var dto = new CreateStrategyDto
             {
-                Id = -1,
                 Name = indicators[0].Indicator,
-                UserId = 1
+                UserId = CurrentUserId,
+                Indicators = ConvertPropertiesToIndicators(indicators.Skip(1))
             };
-            var dictionary = indicators.Skip(1).ToDictionary(item => new IndicatorProperty
-            {
-                Name = item.Property, Value = int.Parse(item.Value)
-            }, item => item.Indicator);
-            dto.Indicators = dictionary;
             _strategyService.CreateStrategy(dto);
-            var model = GetViewModel();
-            return View("Index", model);
+            return RedirectToAction("Index", "Wallet");
         }
+
+        private IList<ParameterizedIndicator> ConvertPropertiesToIndicators(IEnumerable<IndicatorMessage> indicators)
+        {
+            var indicatorsDictionary = new Dictionary<string, IList<IndicatorProperty>>();
+            foreach (var indicatorMessage in indicators)
+            {
+                if (!indicatorsDictionary.ContainsKey(indicatorMessage.Indicator))
+                    indicatorsDictionary.Add(indicatorMessage.Indicator, new List<IndicatorProperty>());
+                int value;
+                if (!int.TryParse(indicatorMessage.Value, out value))
+                    value = 0;
+                indicatorsDictionary[indicatorMessage.Indicator].Add(new IndicatorProperty()
+                {
+                    Name = indicatorMessage.Property,
+                    Value = value
+                });
+            }
+            return indicatorsDictionary.Select(item => new ParameterizedIndicator()
+            {
+                IndicatorType = IndicatorType.Adx,
+                Properties = item.Value
+            }).ToList();
+        } 
 
         private StrategyViewModel GetViewModel()
         {

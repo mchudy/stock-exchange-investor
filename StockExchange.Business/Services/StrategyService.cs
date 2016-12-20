@@ -1,4 +1,5 @@
 ﻿using StockExchange.Business.Models;
+using StockExchange.Business.Models.Strategy;
 using StockExchange.Business.ServiceInterfaces;
 using StockExchange.DataAccess.IRepositories;
 using StockExchange.DataAccess.Models;
@@ -14,7 +15,7 @@ namespace StockExchange.Business.Services
             _strategiesRepository = strategiesRepository;
         }
 
-        public void CreateStrategy(StrategyDto strategy)
+        public void CreateStrategy(CreateStrategyDto strategy)
         {
             InvestmentStrategy investmentStrategy = new InvestmentStrategy()
             {
