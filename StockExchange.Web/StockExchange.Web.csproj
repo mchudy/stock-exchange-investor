@@ -2531,6 +2531,7 @@
     </None>
     <Content Include="Scripts\views\pricesView.js" />
     <Content Include="Scripts\site.js" />
+    <Content Include="Scripts\views\strategyView.js" />
     <Content Include="Scripts\views\transactionsView.js" />
     <Content Include="Scripts\views\walletView.js" />
     <Content Include="Web.config">

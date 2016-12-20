@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using StockExchange.Business.ServiceInterfaces;
 using StockExchange.Web.Models;
 using System.Web.Mvc;
 using StockExchange.Business.Indicators;
+using StockExchange.Business.Models.Indicators;
 using StockExchange.Common.Extensions;
 
 namespace StockExchange.Web.Controllers
@@ -54,6 +56,16 @@ namespace StockExchange.Web.Controllers
                         Type = i
                     }).ToList()
             };
+            var dictionary = new Dictionary<IndicatorProperty, IndicatorViewModel>();
+            foreach (var indicator in model.Indicators)
+            {
+                var properties = _indicatorsService.GetPropertiesForIndicator(indicator.Type);
+                foreach (var property in properties)
+                {
+                    dictionary.Add(property, indicator);
+                }
+            }
+            model.Properties = dictionary;
             return model;
         }
     }

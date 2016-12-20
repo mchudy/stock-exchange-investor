@@ -6,6 +6,17 @@
     ViewBag.Title = "Strategy";
 }
 
+<style>
+    .hidden {
+        display: none;
+
+    }
+    .shown {
+        display: block;
+
+    }
+</style>
+
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-4 col-centered">
@@ -14,19 +25,31 @@
                     <h3 class="box-title">Define your strategy</h3>
                 </div>
                 <div class="box-body col-sm-10 col-centered">
-                    @using (Html.BeginForm("CreateStrategy", "Strategies", new { ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                    <div>
+                        <label>Select indicators that You are interested in: </label>
+                        @Html.DropDownList("Indicators", new SelectList(Model.Indicators, nameof(IndicatorViewModel.Type), nameof(IndicatorViewModel.Name)), " --- ", new { @class = "form-control indicator-select" })
+                    </div>
+                    @foreach (var indicator in Model.Indicators)
                     {
-                        <div class="form-group col-sm-2">
-                            <label>Indicator</label>
-                            @Html.DropDownList("Indicators", new SelectList(Model.Indicators, nameof(IndicatorViewModel.Type), nameof(IndicatorViewModel.Name)), "Select indicator",
-            new { @class = "form-control indicator-select" })
+                        <div class="@indicator.Type hidden">
+                            <label>@indicator.Name</label>
+                            @foreach (var property in Model.Properties.Where(item => item.Value.Type == indicator.Type))
+                            {
+                                <label>@property.Key.Name</label>
+                                @Html.TextBox(property.Key.Value.ToString(), property.Key.Value.ToString(), new { @class = property.Key.Name })
+                            }
                         </div>
-                        <div class="form-group">
-                            <button class="btn btn-success pull-right" type="submit">Create</button>
-                        </div>
-                    }
+                    } 
+                    <div>
+                        <button class="btn btn-success pull-right" type="submit">Create</button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+@section scripts
+{
+    @Scripts.Render("~/Scripts/Views/strategyView.js")
+}
