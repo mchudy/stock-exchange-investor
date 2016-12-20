@@ -12,5 +12,9 @@ namespace StockExchange.Business.ServiceInterfaces
         IList<CompanyIndicatorValues> GetIndicatorValues(IndicatorType type, IList<int> companyIds);
 
         IList<IndicatorType> GetAvailableIndicators();
+
+        IList<IndicatorDto> GetIndicatorsForStrategy();
+
+        IndicatorType? GetTypeFromName(string indicatorName);
     }
 }

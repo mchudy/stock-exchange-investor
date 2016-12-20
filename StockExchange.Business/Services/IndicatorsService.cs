@@ -5,6 +5,7 @@ using StockExchange.Business.ServiceInterfaces;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using StockExchange.Common.Extensions;
 
 namespace StockExchange.Business.Services
 {
@@ -24,6 +25,22 @@ namespace StockExchange.Business.Services
             return typeof(IndicatorType).GetEnumValues()
                 .Cast<IndicatorType>()
                 .ToList();
+        }
+
+        public IList<IndicatorDto> GetIndicatorsForStrategy()
+        {
+            return typeof(IndicatorType).GetEnumValues().Cast<IndicatorType>().Select(i => new IndicatorDto()
+            {
+                IndicatorType = i,
+                IndicatorName = i.GetEnumDescription()
+            }).ToList();
+        }
+
+        public IndicatorType? GetTypeFromName(string indicatorName)
+        {
+            return typeof(IndicatorType).GetEnumValues()
+                    .Cast<IndicatorType>()
+                    .FirstOrDefault(i => i.ToString() == indicatorName);
         }
 
         public IList<IndicatorProperty> GetPropertiesForIndicator(IndicatorType type)

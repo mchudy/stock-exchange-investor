@@ -73,6 +73,7 @@
     <Compile Include="Indicators\VrocIndicator.cs" />
     <Compile Include="Indicators\SmaIndicator.cs" />
     <Compile Include="Models\Indicators\CompanyIndicatorValues.cs" />
+    <Compile Include="Models\Indicators\IndicatorDto.cs" />
     <Compile Include="Models\Indicators\IndicatorProperty.cs" />
     <Compile Include="Indicators\IndicatorType.cs" />
     <Compile Include="Indicators\ObvIndicator.cs" />

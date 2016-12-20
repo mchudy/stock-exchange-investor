@@ -7,9 +7,9 @@ using StockExchange.Business.Indicators;
 
 namespace StockExchange.Business.Models.Indicators
 {
-    public class ParameterizedIndicator
+    public class IndicatorDto
     {
-        public IndicatorType? IndicatorType { get; set; }
-        public IList<IndicatorProperty> Properties { get; set; } 
+        public IndicatorType IndicatorType { get; set; }
+        public string IndicatorName { get; set; }
     }
 }

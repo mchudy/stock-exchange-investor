@@ -63,7 +63,7 @@ namespace StockExchange.Web.Controllers
             }
             return indicatorsDictionary.Select(item => new ParameterizedIndicator()
             {
-                IndicatorType = IndicatorType.Adx,
+                IndicatorType = _indicatorsService.GetTypeFromName(item.Key),
                 Properties = item.Value
             }).ToList();
         } 
@@ -72,12 +72,11 @@ namespace StockExchange.Web.Controllers
         {
             var model = new StrategyViewModel
             {
-                Indicators = Enum.GetValues(typeof(IndicatorType)).Cast<IndicatorType>()
-                    .Select(i => new IndicatorViewModel
-                    {
-                        Name = i.GetEnumDescription(),
-                        Type = i
-                    }).ToList()
+                Indicators = _indicatorsService.GetIndicatorsForStrategy().Select(dto=>new IndicatorViewModel()
+                {
+                    Name = dto.IndicatorName,
+                    Type = dto.IndicatorType
+                }).ToList()
             };
             var dictionary = new Dictionary<IndicatorProperty, IndicatorViewModel>();
             foreach (var indicator in model.Indicators)
