@@ -18,6 +18,9 @@ namespace StockExchange.DataAccess
         public IDbSet<InvestmentStrategy> Strategies { get; set; }
         public IDbSet<Simulation> Simulations { get; set; }
 
+        public IDbSet<StrategyIndicator> StrategyIndicators { get; set; }
+        public IDbSet<StrategyIndicatorProperty> StrategyIndicatorProperties { get; set; } 
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

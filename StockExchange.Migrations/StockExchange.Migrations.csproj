@@ -122,6 +122,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Scripts\161208223544_DropCompaniesStrategies.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Scripts\161221002247_Adding_table_for_indicators.sql" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
