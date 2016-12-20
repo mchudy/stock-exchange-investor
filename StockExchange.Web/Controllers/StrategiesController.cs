@@ -5,6 +5,7 @@ using StockExchange.Business.ServiceInterfaces;
 using StockExchange.Web.Models;
 using System.Web.Mvc;
 using StockExchange.Business.Indicators;
+using StockExchange.Business.Models;
 using StockExchange.Business.Models.Indicators;
 using StockExchange.Common.Extensions;
 
@@ -31,18 +32,22 @@ namespace StockExchange.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult CreateStrategy(StrategyViewModel model)
+        public ActionResult CreateStrategy(IList<IndicatorMessage> indicators)
         {
-            //var strategy = new StrategyDto
-            //{
-            //    StartDate = model.StartDate,
-            //    EndDate = model.EndDate,
-            //    Companies = model.SelectedCompanyIds,
-            //    UserId = CurrentUserId
-            //};
-            //_strategyService.CreateStrategy(strategy);
-            
-            return RedirectToAction("Index", "Wallet");
+            var dto = new StrategyDto
+            {
+                Id = -1,
+                Name = indicators[0].Indicator,
+                UserId = 1
+            };
+            var dictionary = indicators.Skip(1).ToDictionary(item => new IndicatorProperty
+            {
+                Name = item.Property, Value = int.Parse(item.Value)
+            }, item => item.Indicator);
+            dto.Indicators = dictionary;
+            _strategyService.CreateStrategy(dto);
+            var model = GetViewModel();
+            return View("Index", model);
         }
 
         private StrategyViewModel GetViewModel()

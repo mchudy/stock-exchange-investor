@@ -11,9 +11,8 @@
         display: none;
 
     }
-    .shown {
-        display: block;
-
+    .margin {
+        margin-top: 20px;
     }
 </style>
 
@@ -25,23 +24,29 @@
                     <h3 class="box-title">Define your strategy</h3>
                 </div>
                 <div class="box-body col-sm-10 col-centered">
-                    <div>
+                    <div class="property">
+                        <label>Strategy Name: </label>
+                        @Html.TextBox("strname", "", new { @class = "strategyname" })
+                    </div>      
+                    <div class="margin">
                         <label>Select indicators that You are interested in: </label>
-                        @Html.DropDownList("Indicators", new SelectList(Model.Indicators, nameof(IndicatorViewModel.Type), nameof(IndicatorViewModel.Name)), " --- ", new { @class = "form-control indicator-select" })
+                        @Html.DropDownList("Indicators", new SelectList(Model.Indicators, nameof(IndicatorViewModel.Type), nameof(IndicatorViewModel.Name)), " --- ", new {@class = "form-control indicator-select"})
                     </div>
                     @foreach (var indicator in Model.Indicators)
                     {
-                        <div class="@indicator.Type hidden">
+                        <div id="@indicator.Type" class="@indicator.Type hidden indicator margin">
                             <label>@indicator.Name</label>
                             @foreach (var property in Model.Properties.Where(item => item.Value.Type == indicator.Type))
                             {
-                                <label>@property.Key.Name</label>
-                                @Html.TextBox(property.Key.Value.ToString(), property.Key.Value.ToString(), new { @class = property.Key.Name })
+                                <div class="property">
+                                    <label class="propertyname">@property.Key.Name</label>
+                                    @Html.TextBox(property.Key.Value.ToString(), property.Key.Value.ToString(), new {@class = property.Key.Name})
+                                </div>
                             }
                         </div>
-                    } 
+                    }
                     <div>
-                        <button class="btn btn-success pull-right" type="submit">Create</button>
+                        <button class="btn btn-success pull-right create" type="submit">Create</button>
                     </div>
                 </div>
             </div>
