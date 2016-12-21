@@ -37,11 +37,12 @@ namespace StockExchange.Web.Controllers
         {
             var dto = new CreateStrategyDto
             {
-                Name = indicators[0].Indicator,
+                Name = indicators[0]?.Indicator,
                 UserId = CurrentUserId,
                 Indicators = ConvertPropertiesToIndicators(indicators.Skip(1))
             };
-            _strategyService.CreateStrategy(dto);
+            if (!_strategyService.CreateStrategy(dto))
+                return new EmptyResult();
             return RedirectToAction("Index", "Wallet");
         }
 
