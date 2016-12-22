@@ -619,3 +619,7 @@ footer {
   margin: 30px auto !important;
   padding: 10px;
 }
+.select2-container--default .select2-selection--single {
+  border-radius: 0;
+  border: 1px solid #d2d6de;
+}

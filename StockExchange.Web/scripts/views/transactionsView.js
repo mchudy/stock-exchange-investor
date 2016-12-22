@@ -9,6 +9,8 @@
         radioClass: 'iradio_flat'
     });
 
+    $('#SelectedCompanyId').select2();
+
     $('#add-transaction-form').on('submit', function(event) {
         event.preventDefault();
 

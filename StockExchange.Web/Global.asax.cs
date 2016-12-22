@@ -22,7 +22,7 @@ namespace StockExchange.Web
         protected void Application_Error(object sender, EventArgs e)
         {
             Exception ex = Server.GetLastError().GetBaseException();
-            log.Error("App_Error", ex);
+            log.Error("Application Error", ex);
         }
 
     }

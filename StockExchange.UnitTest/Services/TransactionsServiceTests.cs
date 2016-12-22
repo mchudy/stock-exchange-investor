@@ -1,10 +1,13 @@
 ﻿using FluentAssertions;
 using Moq;
+using StockExchange.Business.ErrorHandling;
+using StockExchange.Business.Exceptions;
 using StockExchange.Business.Models;
 using StockExchange.Business.ServiceInterfaces;
 using StockExchange.Business.Services;
 using StockExchange.DataAccess.IRepositories;
 using StockExchange.DataAccess.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
@@ -48,8 +51,10 @@ namespace StockExchange.UnitTest.Services
         public void Should_return_false_if_user_does_not_exist()
         {
             var dto = new UserTransactionDto { UserId = 4 };
+            
+            Action act = () => _service.AddUserTransaction(dto);
 
-            _service.AddUserTransaction(dto).Should().BeFalse();
+            act.ShouldThrow<BusinessException>().Where(e => e.Status == ErrorStatus.DataNotFound);
         }
 
         [Fact]
@@ -95,7 +100,9 @@ namespace StockExchange.UnitTest.Services
                 CompanyId = notOwnedCompanyId
             };
 
-            _service.AddUserTransaction(dto).Should().BeFalse();
+            Action act = () => _service.AddUserTransaction(dto);
+
+            act.ShouldThrow<BusinessException>().Where(e => e.Status == ErrorStatus.BusinessRuleViolation);
             _user.Transactions.Count.Should().Be(1);
         }
 
@@ -110,7 +117,9 @@ namespace StockExchange.UnitTest.Services
                 CompanyId = ownedCompanyId
             };
 
-            _service.AddUserTransaction(dto).Should().BeFalse();
+            Action act = () => _service.AddUserTransaction(dto);
+
+            act.ShouldThrow<BusinessException>().Where(e => e.Status == ErrorStatus.BusinessRuleViolation);
             _user.Transactions.Count.Should().Be(1);
         }
 
@@ -125,7 +134,9 @@ namespace StockExchange.UnitTest.Services
                 CompanyId = notOwnedCompanyId
             };
 
-            _service.AddUserTransaction(dto).Should().BeFalse();
+            Action act = () => _service.AddUserTransaction(dto);
+
+            act.ShouldThrow<BusinessException>().Where(e => e.Status == ErrorStatus.BusinessRuleViolation);
             _user.Transactions.Count.Should().Be(1);
         }
     }

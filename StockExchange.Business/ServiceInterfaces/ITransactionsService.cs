@@ -5,7 +5,7 @@ namespace StockExchange.Business.ServiceInterfaces
 {
     public interface ITransactionsService
     {
-        bool AddUserTransaction(UserTransactionDto dto);
+        void AddUserTransaction(UserTransactionDto dto);
         IList<UserTransactionDto> GetUserTransactions(int userId);
         int GetUserTransactionsCount(int userId);
     }

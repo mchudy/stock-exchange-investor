@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using StockExchange.Business.ServiceInterfaces;
-using StockExchange.Web.Models;
-using System.Web.Mvc;
-using StockExchange.Business.Indicators;
-using StockExchange.Business.Models;
+﻿using StockExchange.Business.Exceptions;
 using StockExchange.Business.Models.Indicators;
 using StockExchange.Business.Models.Strategy;
-using StockExchange.Common.Extensions;
+using StockExchange.Business.ServiceInterfaces;
+using StockExchange.Web.Models;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web.Mvc;
 
 namespace StockExchange.Web.Controllers
 {
@@ -35,15 +32,27 @@ namespace StockExchange.Web.Controllers
         [HttpPost]
         public ActionResult CreateStrategy(IList<IndicatorMessage> indicators)
         {
+            var dto = BuildCreateStrategyDto(indicators);
+            try
+            {
+                _strategyService.CreateStrategy(dto);
+            }
+            catch (BusinessException)
+            {
+                return View("Index");
+            }
+            return RedirectToAction("Index", "Wallet");
+        }
+
+        private CreateStrategyDto BuildCreateStrategyDto(IList<IndicatorMessage> indicators)
+        {
             var dto = new CreateStrategyDto
             {
                 Name = indicators[0]?.Indicator,
                 UserId = CurrentUserId,
                 Indicators = ConvertPropertiesToIndicators(indicators.Skip(1))
             };
-            if (!_strategyService.CreateStrategy(dto))
-                return new EmptyResult();
-            return RedirectToAction("Index", "Wallet");
+            return dto;
         }
 
         private IList<ParameterizedIndicator> ConvertPropertiesToIndicators(IEnumerable<IndicatorMessage> indicators)

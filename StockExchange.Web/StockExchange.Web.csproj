@@ -2549,6 +2549,7 @@
     <Compile Include="Controllers\StrategiesController.cs" />
     <Compile Include="Controllers\TransactionsController.cs" />
     <Compile Include="Controllers\WalletController.cs" />
+    <Compile Include="Filters\HandleJsonErrorAttribute.cs" />
     <Compile Include="Helpers\CustomFormatResolver.cs" />
     <Compile Include="Helpers\DataTableMessageConverter.cs" />
     <Compile Include="Global.asax.cs">
