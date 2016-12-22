@@ -449,6 +449,9 @@
 .form-group.has-error .help-block {
   color: #dd4b39;
 }
+.form-group legend {
+  font-size: 16px;
+}
 .input-group .input-group-addon {
   border-radius: 0;
   border-color: #d2d6de;
@@ -622,4 +625,10 @@ footer {
 .select2-container--default .select2-selection--single {
   border-radius: 0;
   border: 1px solid #d2d6de;
+}
+.fa-trash {
+  color: #bbb;
+}
+.fa-trash:hover {
+  color: #111;
 }

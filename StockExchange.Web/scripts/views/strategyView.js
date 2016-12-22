@@ -19,6 +19,7 @@
             property: '',
             value: 0
         });
+        //TODO: get rid of that
         $('.indicator')
             .each(function () {
                 if (!$(this).hasClass('hidden')) {
