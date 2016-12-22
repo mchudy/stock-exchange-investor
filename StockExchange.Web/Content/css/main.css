@@ -472,6 +472,13 @@
 .radio-label {
   margin-right: 8px;
 }
+.select2-container {
+  width: 100% !important;
+}
+.select2-container--default .select2-selection--single {
+  border-radius: 0;
+  border: 1px solid #d2d6de;
+}
 body {
   background-color: #f1f4f7;
   font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -621,10 +628,6 @@ footer {
   width: 600px !important;
   margin: 30px auto !important;
   padding: 10px;
-}
-.select2-container--default .select2-selection--single {
-  border-radius: 0;
-  border: 1px solid #d2d6de;
 }
 .fa-trash {
   color: #bbb;

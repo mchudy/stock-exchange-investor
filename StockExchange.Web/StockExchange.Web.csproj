@@ -2135,6 +2135,10 @@
     <Content Include="bower_components\select2\docs\_layouts\default.html" />
     <Content Include="bower_components\select2\docs\_layouts\home.html" />
     <Content Include="bower_components\select2\Gruntfile.js" />
+    <Content Include="bower_components\toastr\toastr.css" />
+    <Content Include="bower_components\toastr\toastr.js" />
+    <Content Include="bower_components\toastr\toastr.min.css" />
+    <Content Include="bower_components\toastr\toastr.min.js" />
     <Content Include="Content\css\charts.css">
       <DependentUpon>charts.less</DependentUpon>
     </Content>
@@ -2497,6 +2501,13 @@
     <Content Include="bower_components\datatables.net-responsive\.bower.json" />
     <Content Include="bower_components\datatables.net-responsive\bower.json" />
     <Content Include="bower_components\datatables.net-responsive\Readme.md" />
+    <Content Include="bower_components\toastr\.bower.json" />
+    <Content Include="bower_components\toastr\bower.json" />
+    <Content Include="bower_components\toastr\LICENSE" />
+    <Content Include="bower_components\toastr\README.md" />
+    <Content Include="bower_components\toastr\toastr.js.map" />
+    <Content Include="bower_components\toastr\toastr.less" />
+    <Content Include="bower_components\toastr\toastr.scss" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>

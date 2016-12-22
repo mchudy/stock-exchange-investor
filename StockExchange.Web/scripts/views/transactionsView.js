@@ -20,13 +20,12 @@
             type: $this.attr('method'),
             data: $this.serialize()
         }).done(function () {
+            toastr.success('Transaction has been added');
             loadTable();
-        }).fail(function(data) {
-            console.error('Could not add transaction');
-            console.log(data);
         });
     });
 
+    //TODO: show throbber
     function loadTable() {
         $.get(config.getTransactionsTableUrl)
             .done(function (data) {

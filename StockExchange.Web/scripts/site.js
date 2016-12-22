@@ -5,6 +5,7 @@
     setValidatorDefaults();
     setDatepickerDefaults();
     initModals();
+    initAjaxErrorToasts();
 
     function initSidebarToggle() {
         $('.sidebar-toggle').click(function () {
@@ -51,6 +52,21 @@
         });
         $('#CancelModal').on('click', function () {
             return false;
+        });
+    }
+
+    function initAjaxErrorToasts() {
+        toastr.options = {
+            "closeButton": true
+        };
+
+        $(document).ajaxError(function (event, jqxhr, settings, thrownError) {
+            var message = 'An unexpected error occurred';
+            var response = jqxhr.responseJSON;
+            if (response && response.length > 0 && response[0].message) {
+                message = response[0].message;
+            }
+            toastr.error(message, 'Error');
         });
     }
 
