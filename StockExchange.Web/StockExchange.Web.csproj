@@ -2519,9 +2519,6 @@
       <TransformOnBuild>true</TransformOnBuild>
     </Content>
     <Content Include="Content\css\charts.less" />
-    <Content Include="Connections.config">
-      <SubType>Designer</SubType>
-    </Content>
     <Content Include="Content\css\colors.less" />
     <Content Include="Content\css\boxes.less" />
     <Content Include="Content\css\forms.less" />
@@ -2625,6 +2622,11 @@
     </None>
   </ItemGroup>
   <ItemGroup />
+  <ItemGroup Condition="'$(Configuration)' != 'Production'">
+    <Content Include="Connections.config">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\StockExchange.Business\StockExchange.Business.csproj">
       <Project>{14a3ba8d-7d94-46f3-a1b9-3c9fc0e2fac5}</Project>
