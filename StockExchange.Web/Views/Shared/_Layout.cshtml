@@ -1,5 +1,6 @@
 ﻿@using System.Web.Optimization
 @using StockExchange.Web.Helpers
+@using StockExchange.Web.Helpers.ToastNotifications
 
 <!DOCTYPE html>
 <html lang="en">
@@ -123,6 +124,9 @@
     @Scripts.Render("~/bundles/scripts/bootstrap")
 
     @Scripts.Render("~/Scripts/site.js")
+    
+    @NotificationsBuilder.ShowToastMessages(TempData?["Notifications"] as NotificationsWrapper);
+
     @RenderSection("scripts", false)
 </body>
 </html>

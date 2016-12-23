@@ -1,0 +1,16 @@
+﻿@using StockExchange.Web.Helpers.ToastNotifications
+@helper ShowToastMessages(NotificationsWrapper notifications)
+{
+    if (notifications != null)
+    {
+        <script>
+          $(document).ready(function () {
+            @foreach (ToastMessage message in notifications.Messages)
+            {
+              string toastTypeValue = message.ToastType.ToString("F").ToLower();
+              @:toastr['@toastTypeValue']('@message.Message', '@message.Title');
+            }
+          });
+        </script>
+    }
+}

@@ -43,3 +43,6 @@ trzymać w repo i żeby się nie mieszały.
 
 ## Frontend
 Biblioteki frontendowe instalujemy przez **Bowera**. Można to zrobić z konsoli `bower install --save nazwa_pakietu`, dopisując do pliku `bower.json` (jest Intellisense) lub z VS (prawym na bower.json -> Manage Bower Packages).
+
+### Toast notifications
+Toasty można pokazywać z poziomu kontrolera (metoda `ShowNotification`) lub z JS `toastr.error("title", "message")`. Oprócz `error` jest też `success`, `info` i `warning`.

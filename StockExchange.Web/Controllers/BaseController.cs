@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNet.Identity;
 using StockExchange.DataAccess.Models;
+using StockExchange.Web.Helpers.ToastNotifications;
 using System.Web.Mvc;
 
 namespace StockExchange.Web.Controllers
@@ -26,6 +27,16 @@ namespace StockExchange.Web.Controllers
         {
             base.OnActionExecuting(filterContext);
             InjectViewBagProperties();
+        }
+
+        protected ToastMessage ShowNotification(string title, string message, ToastType toastType = ToastType.Info)
+        {
+            NotificationsWrapper toastr = TempData["Notifications"] as NotificationsWrapper;
+            toastr = toastr ?? new NotificationsWrapper();
+
+            var toastMessage = toastr.AddToastMessage(title, message, toastType);
+            TempData["Notifications"] = toastr;
+            return toastMessage;
         }
 
         private void InjectViewBagProperties()

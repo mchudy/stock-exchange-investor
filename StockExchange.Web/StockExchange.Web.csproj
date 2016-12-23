@@ -2508,6 +2508,7 @@
     <Content Include="bower_components\toastr\toastr.js.map" />
     <Content Include="bower_components\toastr\toastr.less" />
     <Content Include="bower_components\toastr\toastr.scss" />
+    <Content Include="App_Code\NotificationsBuilder.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
@@ -2558,16 +2559,19 @@
     <Compile Include="Controllers\TransactionsController.cs" />
     <Compile Include="Controllers\WalletController.cs" />
     <Compile Include="Filters\HandleJsonErrorAttribute.cs" />
-    <Compile Include="Helpers\CustomFormatResolver.cs" />
+    <Compile Include="Helpers\Json\CustomFormatResolver.cs" />
     <Compile Include="Helpers\DataTableMessageConverter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\DateTimeExtensions.cs" />
-    <Compile Include="Helpers\DisplayFormatConverter.cs" />
-    <Compile Include="Helpers\EnumDisplayFormatConverter.cs" />
+    <Compile Include="Helpers\Json\DisplayFormatConverter.cs" />
+    <Compile Include="Helpers\Json\EnumDisplayFormatConverter.cs" />
     <Compile Include="Helpers\HtmlExtension.cs" />
-    <Compile Include="Helpers\JsonNetResult.cs" />
+    <Compile Include="Helpers\Json\JsonNetResult.cs" />
+    <Compile Include="Helpers\ToastNotifications\ToastMessage.cs" />
+    <Compile Include="Helpers\ToastNotifications\ToastType.cs" />
+    <Compile Include="Helpers\ToastNotifications\NotificationsWrapper.cs" />
     <Compile Include="Infrastructure\AppModule.cs" />
     <Compile Include="Infrastructure\IdentityModule.cs" />
     <Compile Include="Models\Account\RegisterViewModel.cs" />
