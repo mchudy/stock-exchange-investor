@@ -17,12 +17,12 @@ namespace StockExchange.Business.Services
             _strategiesRepository = strategiesRepository;
         }
 
-        public void CreateStrategy(CreateStrategyDto strategy)
+        public int CreateStrategy(StrategyDto strategy)
         {
-            if(_strategiesRepository.GetQueryable().Where(s=>s.UserId == strategy.UserId).Any(s=>s.Name == strategy.Name))
+            if(_strategiesRepository.GetQueryable().Any(s => s.UserId == strategy.UserId && s.Name == strategy.Name))
                 throw new BusinessException(nameof(strategy.Name), "Strategy with this name already exists");
 
-            InvestmentStrategy investmentStrategy = new InvestmentStrategy
+            var investmentStrategy = new InvestmentStrategy
             {
                 UserId = strategy.UserId,
                 Name = strategy.Name,
@@ -35,23 +35,27 @@ namespace StockExchange.Business.Services
 
                 var strategyIndicator = new StrategyIndicator
                 {
-                    IndicatorType = (int) indicator.IndicatorType.Value,
+                    IndicatorType = (int)indicator.IndicatorType.Value,
                     Strategy = investmentStrategy,
                     Properties = new List<StrategyIndicatorProperty>()
                 };
+
+                //TODO: check if properties' names are valid
                 foreach (var indicatorProperty in indicator.Properties)
                 {
                     strategyIndicator.Properties.Add(new StrategyIndicatorProperty
                     {
-                        Indicator = strategyIndicator, 
+                        Indicator = strategyIndicator,
                         Name = indicatorProperty.Name,
                         Value = indicatorProperty.Value
                     });
                 }
                 investmentStrategy.Indicators.Add(strategyIndicator);
             }
-            //_strategiesRepository.Insert(investmentStrategy);
-            //_strategiesRepository.Save();
+
+            _strategiesRepository.Insert(investmentStrategy);
+            _strategiesRepository.Save();
+            return investmentStrategy.Id;
         }
     }
 }

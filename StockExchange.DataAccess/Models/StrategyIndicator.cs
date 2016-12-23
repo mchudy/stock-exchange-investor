@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace StockExchange.DataAccess.Models
 {
-    [Table("StrategyIndicator")]
     public class StrategyIndicator
     {
         public int Id { get; set; }

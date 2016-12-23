@@ -4,6 +4,6 @@ namespace StockExchange.Business.ServiceInterfaces
 {
     public interface IStrategyService
     {
-        void CreateStrategy(CreateStrategyDto strategy);
+        int CreateStrategy(StrategyDto strategy);
     }
 }

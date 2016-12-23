@@ -125,6 +125,7 @@
     <Compile Include="Indicators\SMA\SmaData.cs" />
     <Compile Include="Indicators\SMA\SmaTests.cs" />
     <Compile Include="Services\PriceServiceTests.cs" />
+    <Compile Include="Services\StrategyServiceTests.cs" />
     <Compile Include="Services\WalletServiceTests.cs" />
     <Compile Include="TestHelpers\DataHelpers.cs" />
     <Compile Include="Indicators\ATR\AtrData.cs" />

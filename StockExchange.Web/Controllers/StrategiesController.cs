@@ -1,7 +1,8 @@
-﻿using StockExchange.Business.Exceptions;
-using StockExchange.Business.Models.Indicators;
+﻿using StockExchange.Business.Models.Indicators;
 using StockExchange.Business.Models.Strategy;
 using StockExchange.Business.ServiceInterfaces;
+using StockExchange.Web.Filters;
+using StockExchange.Web.Helpers;
 using StockExchange.Web.Models;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,24 +31,23 @@ namespace StockExchange.Web.Controllers
         }
 
         [HttpPost]
+        [HandleJsonError]
         public ActionResult CreateStrategy(IList<IndicatorMessage> indicators)
         {
-            if (!indicators?.Any() ?? false) return View("Index");
+            //TODO: refactor
+            if (!indicators?.Any() ?? false)
+            {
+                Response.StatusCode = 400;
+                return new JsonNetResult(new [] {new {message = "At least one indicator has to chosen"} });
+            }
             var dto = BuildCreateStrategyDto(indicators);
-            try
-            {
-                _strategyService.CreateStrategy(dto);
-            }
-            catch (BusinessException)
-            {
-                return View("Index");
-            }
-            return RedirectToAction("Index", "Wallet");
+            int id = _strategyService.CreateStrategy(dto);
+            return new JsonNetResult(new {id});
         }
 
-        private CreateStrategyDto BuildCreateStrategyDto(IList<IndicatorMessage> indicators)
+        private StrategyDto BuildCreateStrategyDto(IList<IndicatorMessage> indicators)
         {
-            var dto = new CreateStrategyDto
+            var dto = new StrategyDto
             {
                 Name = indicators[0]?.Indicator,
                 UserId = CurrentUserId,
@@ -66,16 +66,16 @@ namespace StockExchange.Web.Controllers
                 int value;
                 if (!int.TryParse(indicatorMessage.Value, out value))
                     value = 0;
-                indicatorsDictionary[indicatorMessage.Indicator].Add(new IndicatorProperty()
+                indicatorsDictionary[indicatorMessage.Indicator].Add(new IndicatorProperty
                 {
                     Name = indicatorMessage.Property,
                     Value = value
                 });
             }
-            return indicatorsDictionary.Select(item => new ParameterizedIndicator()
+            return indicatorsDictionary.Select(item => new ParameterizedIndicator
             {
                 IndicatorType = _indicatorsService.GetTypeFromName(item.Key),
-                Properties = item.Value
+                Properties = item.Value.Where(v => !string.IsNullOrWhiteSpace(v.Name)).ToList()
             }).ToList();
         } 
 
