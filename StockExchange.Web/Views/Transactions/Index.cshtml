@@ -28,7 +28,7 @@
                     <div class="form-group has-feedback">
                         @Html.LabelFor(m => m.Companies, new { @class = "col-sm-4 control-label" })
                         <div class="col-sm-8 input-group">
-                            @Html.DropDownListFor(m => m.SelectedCompanyId, new SelectList(Model.Companies, "Id", "Name"), new { @class = "form-control" })
+                            @Html.DropDownListFor(m => m.SelectedCompanyId, new SelectList(Model.Companies, "Id", "Name"), new { @class = "form-control", style="width: 100%;" })
                             <span class="glyphicon form-control-feedback"></span>
                             @Html.ValidationMessageFor(m => m.SelectedCompanyId, null, new { @class = "help-block" })
                         </div>
