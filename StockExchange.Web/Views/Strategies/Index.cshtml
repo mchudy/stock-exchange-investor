@@ -19,8 +19,10 @@
                     @*TODO: use LabelFor and TextBoxFor*@
                     @*TODO: remove magic CSS classes and replace them with data tags*@
                     @*TODO: implement removing added indicators*@
-                    @using (Html.BeginForm("CreateStrategy", "Strategies", null, FormMethod.Post, new {@class = "form-horizontal"}))
-                    {
+
+                    @*Commented to aviod double sent post - from both form and javascript.*@
+                    @*@using (Html.BeginForm("CreateStrategy", "Strategies", null, FormMethod.Post, new {@class = "form-horizontal"}))*@
+                    @*{*@
                         <div class="form-group property">
                             <label class="col-sm-4 control-label">Strategy Name: </label>
                             <div class="col-sm-8 input-group">
@@ -31,7 +33,7 @@
                             <label class="control-label">Add indicators: </label>
                             @Html.DropDownList("Indicators", new SelectList(Model.Indicators, nameof(IndicatorViewModel.Type), nameof(IndicatorViewModel.Name)), " --- ", new {@class = "form-control indicator-select"})
                         </div>
-                        foreach (var indicator in Model.Indicators)
+                        @foreach (var indicator in Model.Indicators)
                         {
                             <fieldset id="@indicator.Type" class="@indicator.Type hidden indicator form-group">
                                 <legend class="col-sm-12">@indicator.Name<i class="fa fa-trash fa-pull-right"></i></legend>
@@ -49,7 +51,7 @@
                         <div class="form-group">
                             <button class="btn btn-success pull-right create" type="submit">Create</button>
                         </div>
-                    }
+                    @*}*@
                 </div>
             </div>
         </div>

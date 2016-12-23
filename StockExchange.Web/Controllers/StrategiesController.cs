@@ -32,6 +32,7 @@ namespace StockExchange.Web.Controllers
         [HttpPost]
         public ActionResult CreateStrategy(IList<IndicatorMessage> indicators)
         {
+            if (!indicators?.Any() ?? false) return View("Index");
             var dto = BuildCreateStrategyDto(indicators);
             try
             {
