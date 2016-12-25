@@ -12,10 +12,12 @@ namespace StockExchange.Web.Controllers
     public sealed class PriceController : BaseController
     {
         private readonly IPriceService _priceService;
+        private readonly ICompanyService _companyService;
 
-        public PriceController(IPriceService priceService)
+        public PriceController(IPriceService priceService, ICompanyService companyService)
         {
             _priceService = priceService;
+            _companyService = companyService;
         }
 
         [HttpGet]
@@ -57,7 +59,7 @@ namespace StockExchange.Web.Controllers
         {
             var model = new PriceViewModel
             {
-                CompanyNames = _priceService.GetCompanyNames(),
+                CompanyNames = _companyService.GetCompanyNames(),
             };
             return model;
         }

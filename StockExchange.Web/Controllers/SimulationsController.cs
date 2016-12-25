@@ -10,10 +10,12 @@ namespace StockExchange.Web.Controllers
     public class SimulationsController : Controller
     {
         private readonly IPriceService _priceService;
+        private readonly ICompanyService _companyService;
 
-        public SimulationsController(IPriceService priceService)
+        public SimulationsController(IPriceService priceService, ICompanyService companyService)
         {
             _priceService = priceService;
+            _companyService = companyService;
         }
 
         public ActionResult Index()
@@ -38,7 +40,7 @@ namespace StockExchange.Web.Controllers
         {
             var model = new SimulationViewModel
             {
-                Companies = _priceService.GetAllCompanies(),
+                Companies = _companyService.GetAllCompanies(),
                 StartDate = new DateTime(2006, 01, 01),
                 EndDate = DateTime.Today
             };

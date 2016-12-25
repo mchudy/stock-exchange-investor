@@ -1,6 +1,7 @@
 ﻿using StockExchange.Business.Models;
 using StockExchange.Web.Models.Charts;
 using System.Collections.Generic;
+using StockExchange.Business.Models.Wallet;
 
 namespace StockExchange.Web.Models.Wallet
 {

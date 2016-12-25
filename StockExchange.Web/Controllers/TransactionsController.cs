@@ -13,11 +13,13 @@ namespace StockExchange.Web.Controllers
     {
         private readonly ITransactionsService _transactionsService;
         private readonly IPriceService _priceService;
+        private readonly ICompanyService _companyService;
 
-        public TransactionsController(ITransactionsService transactionsService, IPriceService priceService)
+        public TransactionsController(ITransactionsService transactionsService, IPriceService priceService, ICompanyService companyService)
         {
             _transactionsService = transactionsService;
             _priceService = priceService;
+            _companyService = companyService;
         }
 
         [HttpGet]
@@ -25,7 +27,7 @@ namespace StockExchange.Web.Controllers
         {
             var model = new AddTransactionViewModel
             {
-                Companies = _priceService.GetAllCompanies()
+                Companies = _companyService.GetAllCompanies()
             };
             return View(model);
         }

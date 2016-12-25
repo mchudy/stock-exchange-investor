@@ -14,13 +14,11 @@ namespace StockExchange.Business.Services
 {
     public sealed class PriceService : IPriceService
     {
-        private readonly IRepository<Company> _companyRepository;
         private readonly IRepository<Price> _priceRepository;
 
-        public PriceService(IRepository<Company> companyRepository, IRepository<Price> priceRepository)
+        public PriceService(IRepository<Price> priceRepository)
         {
             _priceRepository = priceRepository;
-            _companyRepository = companyRepository;
         }
 
         public PagedList<PriceDto> Get(PagedFilterDefinition<PriceFilter> pagedFilterDefinition)
@@ -42,26 +40,8 @@ namespace StockExchange.Business.Services
             return values.ToList();
         }
 
-        //TODO: move to CompanyService, change code to name
-        public IEnumerable<string> GetCompanyNames()
-        {
-            return _companyRepository.GetQueryable().Select(item => item.Code).Distinct().ToList();
-        }
-
-        //TODO: move to CompanyService, change Code to Name!!!
-        public IList<CompanyDto> GetAllCompanies()
-        {
-            return _companyRepository.GetQueryable().Select(c => new CompanyDto
-            {
-                Code = c.Code,
-                Id = c.Id,
-                Name = c.Code
-            }).ToList();
-        }
-
         public IList<CompanyPricesDto> GetPricesForCompanies(IList<int> companyIds)
         {
-            //TODO: move to repository
             return _priceRepository.GetQueryable()
                 .Include(p => p.Company)
                 .Where(p => companyIds.Contains(p.CompanyId))
@@ -101,7 +81,6 @@ namespace StockExchange.Business.Services
             return results;
         }
 
-        // TODO change code to name
         private static Expression<Func<Price, PriceDto>> GetSelectDtoExpression()
         {
             return price => new PriceDto

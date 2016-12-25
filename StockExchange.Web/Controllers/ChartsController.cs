@@ -17,17 +17,19 @@ namespace StockExchange.Web.Controllers
     {
         private readonly IPriceService _priceService;
         private readonly IIndicatorsService _indicatorsService;
+        private readonly ICompanyService _companyService;
 
-        public ChartsController(IPriceService priceService, IIndicatorsService indicatorsService)
+        public ChartsController(IPriceService priceService, IIndicatorsService indicatorsService, ICompanyService companyService)
         {
             _priceService = priceService;
             _indicatorsService = indicatorsService;
+            _companyService = companyService;
         }
 
         public ActionResult Index()
         {
             //TODO: load companies list from the view via AJAX
-            var companies = _priceService.GetAllCompanies();
+            var companies = _companyService.GetAllCompanies();
             var model = BuildChartIndexModel(companies);
             return View(model);
         }

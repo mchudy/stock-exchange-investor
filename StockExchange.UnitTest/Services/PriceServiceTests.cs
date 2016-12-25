@@ -14,12 +14,11 @@ namespace StockExchange.UnitTest.Services
     public class PriceServiceTests
     {
         private readonly IPriceService _service;
-        private readonly Mock<IRepository<Company>> _companyRepository = new Mock<IRepository<Company>>();
         private readonly Mock<IRepository<Price>> _priceRepository = new Mock<IRepository<Price>>();
 
         public PriceServiceTests()
         {
-            _service = new PriceService(_companyRepository.Object, _priceRepository.Object);
+            _service = new PriceService(_priceRepository.Object);
         }
 
         [Fact]

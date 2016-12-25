@@ -20,6 +20,7 @@ namespace StockExchange.Business.Exceptions
         }
 
         public IList<ValidationError> Errors { get; } = new List<ValidationError>();
+
         public ErrorStatus Status { get; }
     }
 }

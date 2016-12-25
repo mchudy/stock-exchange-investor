@@ -1,10 +1,11 @@
-﻿namespace StockExchange.Business.Models
+﻿namespace StockExchange.Business.Models.Wallet
 {
     public class OwnedCompanyStocksDto
     {
         public int UserId { get; set; }
 
         public int CompanyId { get; set; }
+
         public string CompanyName { get; set; }
 
         public int OwnedStocksCount { get; set; }

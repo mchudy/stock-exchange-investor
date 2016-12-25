@@ -12,6 +12,7 @@ namespace StockExchange.Business.Extensions
     {
         private sealed class ValueContainer
         {
+            // ReSharper disable once UnusedMember.Local
             public object Value { get; set; }
         }
 

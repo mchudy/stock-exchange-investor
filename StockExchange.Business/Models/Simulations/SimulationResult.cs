@@ -10,7 +10,9 @@ namespace StockExchange.Business.Models.Simulations
         public Simulation Simulation { get; set; }
 
         public IList<SimulationValue> SimulationValues { get; set; }
+
         public IList<SimulationTransaction> Transactions { get; set; }
+
         public IList<CompanyStockQuantity> CompanyStockQuantities { get; set; }
     }
 }

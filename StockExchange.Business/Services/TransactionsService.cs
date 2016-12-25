@@ -49,12 +49,9 @@ namespace StockExchange.Business.Services
             var user = _userRepository.GetQueryable()
                 .Include(u => u.Transactions)
                 .FirstOrDefault(u => u.Id == dto.UserId);
-
             if (user == null)
                 throw new BusinessException(nameof(dto.UserId), "User does not exist", ErrorStatus.DataNotFound);
-
             VerifyTransaction(dto, user);
-
             user.Budget -= dto.Quantity * dto.Price;
             user.Transactions.Add(new UserTransaction
             {
@@ -65,6 +62,16 @@ namespace StockExchange.Business.Services
                 Quantity = dto.Quantity
             });
             _userRepository.Save();
+        }
+
+        public Dictionary<int, List<UserTransaction>> GetTransactionsByCompany(int userId)
+        {
+            return _transactionsRepository.GetQueryable()
+                .Include(t => t.Company)
+                .Where(t => t.UserId == userId)
+                .GroupBy(t => t.CompanyId)
+                .Where(t => t.Sum(tr => tr.Quantity) > 0)
+                .ToDictionary(t => t.Key, t => t.ToList());
         }
 
         private static void VerifyTransaction(UserTransactionDto dto, User user)

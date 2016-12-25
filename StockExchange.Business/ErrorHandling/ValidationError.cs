@@ -9,6 +9,7 @@
         }
 
         public string Key { get; }
+
         public string Message { get; }
     }
 }

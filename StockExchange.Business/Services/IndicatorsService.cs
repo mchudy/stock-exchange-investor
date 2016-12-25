@@ -48,7 +48,6 @@ namespace StockExchange.Business.Services
             var indicator = _indicatorFactory.CreateIndicator(type);
             var properties = indicator.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance)
                 .Where(p => p.Name != nameof(IIndicator.Type));
-
             return properties.Select(property => new IndicatorProperty
             {
                 Name = property.Name,
@@ -68,19 +67,14 @@ namespace StockExchange.Business.Services
             return GetIndicatorValues(indicator, companyIds);
         }
 
-        private static IList<CompanyIndicatorValues> ComputeIndicatorValues(IIndicator indicator, IList<CompanyPricesDto> companyPrices)
+        private static IList<CompanyIndicatorValues> ComputeIndicatorValues(IIndicator indicator, IEnumerable<CompanyPricesDto> companyPrices)
         {
-            var result = new List<CompanyIndicatorValues>();
-            foreach (var company in companyPrices)
-            {
-                var values = indicator.Calculate(company.Prices);
-                result.Add(new CompanyIndicatorValues
+            return (from company in companyPrices
+                let values = indicator.Calculate(company.Prices)
+                select new CompanyIndicatorValues
                 {
-                    Company = company.Company,
-                    IndicatorValues = values
-                });
-            }
-            return result;
+                    Company = company.Company, IndicatorValues = values
+                }).ToList();
         }
     }
 }

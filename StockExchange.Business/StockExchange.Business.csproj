@@ -106,12 +106,14 @@
     <Compile Include="Models\Simulations\SimulationTransaction.cs" />
     <Compile Include="Models\UserTransactionDto.cs" />
     <Compile Include="ServiceInterfaces\IIndicatorsService.cs" />
+    <Compile Include="ServiceInterfaces\ICompanyService.cs" />
     <Compile Include="Services\IndicatorsService.cs" />
     <Compile Include="ServiceInterfaces\IPriceService.cs" />
     <Compile Include="ServiceInterfaces\IStrategyService.cs" />
     <Compile Include="ServiceInterfaces\ITransactionsService.cs" />
     <Compile Include="ServiceInterfaces\IUserService.cs" />
     <Compile Include="ServiceInterfaces\IWalletService.cs" />
+    <Compile Include="Services\CompanyService.cs" />
     <Compile Include="Services\PriceService.cs" />
     <Compile Include="Extensions\PagedListExtension.cs" />
     <Compile Include="Extensions\QueryableExtension.cs" />

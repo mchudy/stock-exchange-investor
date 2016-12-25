@@ -10,10 +10,6 @@ namespace StockExchange.Business.ServiceInterfaces
     {
         PagedList<PriceDto> Get(PagedFilterDefinition<PriceFilter> pagedFilterDefinition);
 
-        IEnumerable<string> GetCompanyNames();
-
-        IList<CompanyDto> GetAllCompanies();
-
         object GetValues(FilterDefinition<PriceFilter> toPagedFilterDefinition, string fieldName);
 
         IList<CompanyPricesDto> GetPricesForCompanies(IList<int> companyIds);
