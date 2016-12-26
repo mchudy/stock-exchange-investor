@@ -9,6 +9,8 @@ using StockExchange.DataAccess.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using StockExchange.Business.Indicators;
+using StockExchange.DataAccess.Repositories;
 using Xunit;
 
 namespace StockExchange.UnitTest.Services
@@ -17,6 +19,7 @@ namespace StockExchange.UnitTest.Services
     {
         private readonly IStrategyService _service;
         private readonly Mock<IRepository<InvestmentStrategy>> _strategyRepository = new Mock<IRepository<InvestmentStrategy>>();
+        private readonly IIndicatorsService _indicatorsService;
 
         private readonly IList<InvestmentStrategy> _strategies = new List<InvestmentStrategy>
         {
@@ -30,7 +33,8 @@ namespace StockExchange.UnitTest.Services
 
         public StrategyServiceTests()
         {
-            _service = new StrategyService(_strategyRepository.Object);
+            _indicatorsService = new IndicatorsService(new IndicatorFactory(), new PriceService(new GenericRepository<Price>()));
+            _service = new StrategyService(_strategyRepository.Object, _indicatorsService);
             _strategyRepository.Setup(s => s.GetQueryable(null, null, null, null, null))
                 .Returns(_strategies.AsQueryable());
         }

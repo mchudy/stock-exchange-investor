@@ -11,10 +11,12 @@ namespace StockExchange.Business.Services
     public class StrategyService : IStrategyService
     {
         private readonly IRepository<InvestmentStrategy> _strategiesRepository;
+        private readonly IIndicatorsService _indicatorsService;
 
-        public StrategyService(IRepository<InvestmentStrategy> strategiesRepository)
+        public StrategyService(IRepository<InvestmentStrategy> strategiesRepository, IIndicatorsService indicatorsService)
         {
             _strategiesRepository = strategiesRepository;
+            _indicatorsService = indicatorsService;
         }
 
         public int CreateStrategy(StrategyDto strategy)
@@ -39,10 +41,11 @@ namespace StockExchange.Business.Services
                     Strategy = investmentStrategy,
                     Properties = new List<StrategyIndicatorProperty>()
                 };
-
-                //TODO: check if properties' names are valid
                 foreach (var indicatorProperty in indicator.Properties)
                 {
+                    if (
+                        _indicatorsService.GetPropertiesForIndicator(indicator.IndicatorType.Value)
+                            .All(item => item.Name != indicatorProperty.Name)) continue;
                     strategyIndicator.Properties.Add(new StrategyIndicatorProperty
                     {
                         Indicator = strategyIndicator,
