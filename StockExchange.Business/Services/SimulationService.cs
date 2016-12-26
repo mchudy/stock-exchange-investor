@@ -7,17 +7,22 @@ namespace StockExchange.Business.Services
 {
     public class SimulationService : ISimulationService
     {
-        private readonly IRepository<InvestmentStrategy> _strategiesRepository;
+        private readonly IStrategyService _strategyService;
         private readonly IIndicatorsService _indicatorsService;
 
-        public SimulationService(IRepository<InvestmentStrategy> strategiesRepository, IIndicatorsService indicatorsService)
+        public SimulationService(IStrategyService strategyService, IIndicatorsService indicatorsService)
         {
-            _strategiesRepository = strategiesRepository;
+            _strategyService = strategyService;
             _indicatorsService = indicatorsService;
         }
 
         public SimulationResult RunSimulation(SimulationDto simulationDto)
         {
+            var strategy = _strategyService.GetUserStrategy(simulationDto.UserId, simulationDto.SelectedStrategyId);
+            foreach (var indicator in strategy.Indicators)
+            {
+                
+            }
             return new SimulationResult();
         }
     }

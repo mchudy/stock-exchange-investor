@@ -6,6 +6,8 @@ using StockExchange.DataAccess.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Data.Entity;
+using StockExchange.Business.Indicators.Common;
+using StockExchange.Business.Models.Indicators;
 
 namespace StockExchange.Business.Services
 {
@@ -34,9 +36,43 @@ namespace StockExchange.Business.Services
                 }).ToList();
         }
 
+        public StrategyDto GetUserStrategy(int userId, int strategyId)
+        {
+            var ret =
+                _strategiesRepository
+                    .GetQueryable().FirstOrDefault(item => item.Id == strategyId && item.UserId == userId);
+            if (ret != null)
+                return new StrategyDto
+                {
+                    Name = ret.Name,
+                    Id = ret.Id,
+                    UserId = ret.UserId,
+                    Indicators = ConvertIndicators(ret.Indicators)
+                };
+            return new StrategyDto();
+        }
+
+        private static IList<ParameterizedIndicator> ConvertIndicators(IEnumerable<StrategyIndicator> i)
+        {
+            return i.Select(item => new ParameterizedIndicator
+            {
+                IndicatorType = (IndicatorType)item.IndicatorType,
+                Properties = ConvertIndicatorProperties(item.Properties)
+            }).ToList();
+        }
+
+        private static IList<IndicatorProperty> ConvertIndicatorProperties(IEnumerable<StrategyIndicatorProperty> p)
+        {
+            return p.Select(item => new IndicatorProperty
+            {
+                Value = item.Value,
+                Name = item.Name
+            }).ToList();
+        }
+
         public int CreateStrategy(StrategyDto strategy)
         {
-            if(_strategiesRepository.GetQueryable().Any(s => s.UserId == strategy.UserId && s.Name == strategy.Name))
+            if (_strategiesRepository.GetQueryable().Any(s => s.UserId == strategy.UserId && s.Name == strategy.Name))
                 throw new BusinessException(nameof(strategy.Name), "Strategy with this name already exists");
 
             var investmentStrategy = new InvestmentStrategy

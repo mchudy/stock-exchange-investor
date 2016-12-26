@@ -8,5 +8,7 @@ namespace StockExchange.Business.ServiceInterfaces
         int CreateStrategy(StrategyDto strategy);
 
         IList<StrategyDto> GetUserStrategies(int userId);
+
+        StrategyDto GetUserStrategy(int userId, int strategyId);
     }
 }
