@@ -6,14 +6,14 @@ using StockExchange.Web.Models.Simulation;
 namespace StockExchange.Web.Controllers
 {
     [Authorize]
-    public class SimulationsController : Controller
+    public class SimulationsController : BaseController
     {
-        private readonly IPriceService _priceService;
+        private readonly IStrategyService _strategyService;
         private readonly ICompanyService _companyService;
 
-        public SimulationsController(IPriceService priceService, ICompanyService companyService)
+        public SimulationsController(IStrategyService strategyService, ICompanyService companyService)
         {
-            _priceService = priceService;
+            _strategyService = strategyService;
             _companyService = companyService;
         }
 
@@ -41,7 +41,8 @@ namespace StockExchange.Web.Controllers
             {
                 Companies = _companyService.GetAllCompanies(),
                 StartDate = new DateTime(2006, 01, 01),
-                EndDate = DateTime.Today
+                EndDate = DateTime.Today, 
+                Strategies = _strategyService.GetUserStrategies(CurrentUserId)
             };
             return model;
         }
