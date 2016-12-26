@@ -5,6 +5,7 @@ using StockExchange.DataAccess.Models;
 using StockExchange.UnitTest.TestHelpers;
 using System;
 using System.Collections.Generic;
+using StockExchange.Business.Indicators.Common;
 using Xunit;
 
 namespace StockExchange.UnitTest.Indicators

@@ -1,10 +1,10 @@
-﻿using StockExchange.Business.Indicators;
-using StockExchange.Business.Models;
-using StockExchange.Business.Models.Indicators;
+﻿using StockExchange.Business.Models.Indicators;
 using StockExchange.Business.ServiceInterfaces;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using StockExchange.Business.Indicators.Common;
+using StockExchange.Business.Models.Price;
 using StockExchange.Common.Extensions;
 
 namespace StockExchange.Business.Services

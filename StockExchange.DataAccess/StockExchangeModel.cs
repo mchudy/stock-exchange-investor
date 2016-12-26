@@ -13,12 +13,17 @@ namespace StockExchange.DataAccess
         }
 
         public IDbSet<Company> Companies { get; set; }
+
         public IDbSet<Price> Prices { get; set; }
+
         public IDbSet<UserTransaction> UserTransactions { get; set; }
+
         public IDbSet<InvestmentStrategy> Strategies { get; set; }
+
         public IDbSet<Simulation> Simulations { get; set; }
 
         public IDbSet<StrategyIndicator> StrategyIndicators { get; set; }
+
         public IDbSet<StrategyIndicatorProperty> StrategyIndicatorProperties { get; set; } 
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

@@ -1,7 +1,7 @@
 ﻿using StockExchange.Business.Models.Indicators;
 using StockExchange.DataAccess.Models;
 using System.Collections.Generic;
-using StockExchange.Business.Models;
+using StockExchange.Business.Indicators.Common;
 
 namespace StockExchange.Business.Indicators
 {

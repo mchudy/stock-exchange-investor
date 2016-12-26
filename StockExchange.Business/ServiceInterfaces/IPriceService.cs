@@ -1,8 +1,8 @@
 ﻿using StockExchange.Business.Extensions;
-using StockExchange.Business.Models;
 using StockExchange.Business.Models.Filters;
 using StockExchange.DataAccess.Models;
 using System.Collections.Generic;
+using StockExchange.Business.Models.Price;
 
 namespace StockExchange.Business.ServiceInterfaces
 {

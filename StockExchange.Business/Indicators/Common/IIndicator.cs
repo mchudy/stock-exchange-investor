@@ -1,9 +1,8 @@
-﻿using StockExchange.Business.Models;
-using StockExchange.DataAccess.Models;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using StockExchange.Business.Models.Indicators;
+using StockExchange.DataAccess.Models;
 
-namespace StockExchange.Business.Indicators
+namespace StockExchange.Business.Indicators.Common
 {
     /// <summary>
     /// Interfejs wskaźnika analizy technicznej.

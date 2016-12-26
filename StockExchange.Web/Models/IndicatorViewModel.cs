@@ -1,4 +1,5 @@
 ﻿using StockExchange.Business.Indicators;
+using StockExchange.Business.Indicators.Common;
 
 namespace StockExchange.Web.Models
 {

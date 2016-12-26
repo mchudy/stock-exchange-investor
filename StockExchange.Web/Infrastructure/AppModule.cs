@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using Autofac.Integration.Mvc;
 using StockExchange.Business.Indicators;
+using StockExchange.Business.Indicators.Common;
 using StockExchange.DataAccess;
 using StockExchange.DataAccess.IRepositories;
 using StockExchange.DataAccess.Models;

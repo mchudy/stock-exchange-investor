@@ -21,9 +21,7 @@ namespace StockExchange.Migrations
                 Console.ResetColor();
                 return -1;
             }
-
             var connectionStringBuilder = new SqlConnectionStringBuilder(connectionString);
-
             Console.WriteLine($"Running migration on {connectionStringBuilder.DataSource}");
             var upgrader = DeployChanges.To
                     .SqlDatabase(connectionString)

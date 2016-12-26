@@ -1,6 +1,6 @@
-﻿using StockExchange.Business.Models;
-using StockExchange.DataAccess.Models;
+﻿using StockExchange.DataAccess.Models;
 using System.Collections.Generic;
+using StockExchange.Business.Indicators.Common;
 using StockExchange.Business.Models.Indicators;
 
 namespace StockExchange.Business.Indicators
@@ -12,7 +12,9 @@ namespace StockExchange.Business.Indicators
         public const int DefaultMaximum = 70;
 
         public int Term { get; set; } = DefaultRsiTerm;
+
         public int Minimum { get; set; } = DefaultMinimum;
+
         public int Maximum { get; set; } = DefaultMaximum;
 
         public IndicatorType Type => IndicatorType.Rsi;
@@ -35,10 +37,8 @@ namespace StockExchange.Business.Indicators
                     gains.Add(new IndicatorValue { Date = prices[i].Date, Value = 0 });
                 }
             }
-
             var averageGains = MovingAverageHelper.SmoothedMovingAverage(gains, Term);
             var averageLosses = MovingAverageHelper.SmoothedMovingAverage(losses, Term);
-
             return ComputeRsiValues(averageGains, averageLosses);
         }
 

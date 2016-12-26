@@ -1,9 +1,9 @@
-﻿using StockExchange.Business.Models;
-using StockExchange.Business.ServiceInterfaces;
+﻿using StockExchange.Business.ServiceInterfaces;
 using StockExchange.DataAccess.IRepositories;
 using StockExchange.DataAccess.Models;
 using System.Collections.Generic;
 using System.Linq;
+using StockExchange.Business.Models.Company;
 
 namespace StockExchange.Business.Services
 {

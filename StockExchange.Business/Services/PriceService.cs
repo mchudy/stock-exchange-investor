@@ -1,5 +1,4 @@
 ﻿using StockExchange.Business.Extensions;
-using StockExchange.Business.Models;
 using StockExchange.Business.Models.Filters;
 using StockExchange.Business.ServiceInterfaces;
 using StockExchange.DataAccess.IRepositories;
@@ -9,6 +8,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
+using StockExchange.Business.Models.Price;
 
 namespace StockExchange.Business.Services
 {

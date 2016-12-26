@@ -1,5 +1,5 @@
-﻿using StockExchange.Business.Models;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using StockExchange.Business.Models.Transaction;
 using StockExchange.DataAccess.Models;
 
 namespace StockExchange.Business.ServiceInterfaces

@@ -2,6 +2,7 @@
 using StockExchange.Business.Exceptions;
 using StockExchange.Business.Indicators;
 using System;
+using StockExchange.Business.Indicators.Common;
 using Xunit;
 
 namespace StockExchange.UnitTest.Indicators
@@ -20,7 +21,7 @@ namespace StockExchange.UnitTest.Indicators
         [InlineData(IndicatorType.Ema, typeof(EmaIndicator))]
         [InlineData(IndicatorType.Vroc, typeof(VrocIndicator))]
         [InlineData(IndicatorType.Vhf, typeof(VhfIndicator))]
-        [InlineData(IndicatorType.PivotPoint, typeof(PivotPointIndicator))]
+        [InlineData(IndicatorType.PivotPoint, typeof(PpIndicator))]
         [InlineData(IndicatorType.Vpt, typeof(VptIndicator))]
         [InlineData(IndicatorType.Adx, typeof(AdxIndicator))]
         public void Should_create_correct_IIndicator_instance(IndicatorType type, Type resultType)

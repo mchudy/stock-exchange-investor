@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace StockExchange.Business.Models
+namespace StockExchange.Business.Models.Company
 {
     public sealed class CompanyDto
     {

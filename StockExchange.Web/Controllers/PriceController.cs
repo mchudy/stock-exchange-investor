@@ -6,6 +6,7 @@ using StockExchange.Web.Helpers;
 using StockExchange.Web.Models;
 using StockExchange.Web.Models.DataTables;
 using System.Web.Mvc;
+using StockExchange.Business.Models.Price;
 
 namespace StockExchange.Web.Controllers
 {

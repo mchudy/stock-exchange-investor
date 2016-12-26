@@ -13,6 +13,7 @@ namespace StockExchange.DataAccess.IRepositories
             int? page = null, int? pageSize = null);
 
         void Insert(TEntity entity);
+
         void BulkInsert(IEnumerable<TEntity> entities);
 
         int Save();

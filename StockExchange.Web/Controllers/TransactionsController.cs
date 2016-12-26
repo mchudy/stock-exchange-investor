@@ -5,6 +5,7 @@ using StockExchange.Web.Helpers;
 using StockExchange.Web.Models.Transactions;
 using System;
 using System.Web.Mvc;
+using StockExchange.Business.Models.Transaction;
 
 namespace StockExchange.Web.Controllers
 {

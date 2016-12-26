@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using StockExchange.Common;
 
-namespace StockExchange.Business.Models
+namespace StockExchange.Business.Models.Price
 {
     public sealed class PriceDto
     {

@@ -1,7 +1,7 @@
-﻿using StockExchange.Business.Models;
-using StockExchange.DataAccess.Models;
+﻿using StockExchange.DataAccess.Models;
 using System;
 using System.Collections.Generic;
+using StockExchange.Business.Indicators.Common;
 using StockExchange.Business.Models.Indicators;
 
 namespace StockExchange.Business.Indicators
@@ -36,7 +36,6 @@ namespace StockExchange.Business.Indicators
                     prices[i].HighPrice - prices[i].LowPrice, Math.Max(
                         Math.Abs(prices[i].HighPrice - prices[i - 1].ClosePrice),
                         Math.Abs(prices[i].LowPrice - prices[i - 1].ClosePrice)));
-
                 rsValues.Add(new IndicatorValue
                 {
                     Date = prices[i].Date,

@@ -16,13 +16,10 @@ namespace StockExchange.Common.Extensions
         public static string FormatCurrency(this decimal amount, string currencyCode = Consts.Formats.CurrencyCode)
         {
             CultureInfo culture;
-            if (ISOCurrenciesToACultureMap.TryGetValue(currencyCode, out culture))
-            {
-                CultureInfo customCulture = (CultureInfo) culture.Clone();
-                customCulture.NumberFormat.CurrencyDecimalSeparator = ".";
-                return string.Format(customCulture, "{0:C}", amount);
-            }
-            return amount.ToString("0.00");
+            if (!ISOCurrenciesToACultureMap.TryGetValue(currencyCode, out culture)) return amount.ToString("0.00");
+            CultureInfo customCulture = (CultureInfo)culture.Clone();
+            customCulture.NumberFormat.CurrencyDecimalSeparator = ".";
+            return string.Format(customCulture, "{0:C}", amount);
         }
     }
 }

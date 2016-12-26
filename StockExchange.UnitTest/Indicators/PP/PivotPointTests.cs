@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using StockExchange.Business.Indicators;
+using StockExchange.Business.Indicators.Common;
 using StockExchange.UnitTest.TestHelpers;
 using Xunit;
 
@@ -7,7 +8,7 @@ namespace StockExchange.UnitTest.Indicators.PP
 {
     public class PivotPointTests
     {
-        private readonly IIndicator _indicator = new PivotPointIndicator();
+        private readonly IIndicator _indicator = new PpIndicator();
 
         public PivotPointTests()
         {

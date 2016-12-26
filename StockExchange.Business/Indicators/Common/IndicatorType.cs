@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace StockExchange.Business.Indicators
+namespace StockExchange.Business.Indicators.Common
 {
     public enum IndicatorType : byte
     {

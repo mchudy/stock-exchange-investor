@@ -1,6 +1,6 @@
-﻿using StockExchange.Business.Models;
-using StockExchange.DataAccess.Models;
+﻿using StockExchange.DataAccess.Models;
 using System.Collections.Generic;
+using StockExchange.Business.Indicators.Common;
 using StockExchange.Business.Models.Indicators;
 
 namespace StockExchange.Business.Indicators

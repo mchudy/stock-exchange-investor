@@ -1,6 +1,5 @@
 ﻿using StockExchange.Business.ErrorHandling;
 using StockExchange.Business.Exceptions;
-using StockExchange.Business.Models;
 using StockExchange.Business.ServiceInterfaces;
 using StockExchange.DataAccess.IRepositories;
 using StockExchange.DataAccess.Models;
@@ -8,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using StockExchange.Business.Models.Transaction;
 
 namespace StockExchange.Business.Services
 {

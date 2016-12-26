@@ -10,7 +10,7 @@ namespace StockExchange.Business.Models.Simulations
 
         public int CompanyId { get; set; }
 
-        public virtual Company Company { get; set; }
+        public virtual DataAccess.Models.Company Company { get; set; }
 
         public int SimulationId { get; set; }
 

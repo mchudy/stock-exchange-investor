@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using StockExchange.Business.Indicators;
+using StockExchange.Business.Indicators.Common;
 using StockExchange.DataAccess.Repositories;
 using Xunit;
 

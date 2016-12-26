@@ -1,4 +1,4 @@
-﻿namespace StockExchange.Business.Indicators
+﻿namespace StockExchange.Business.Indicators.Common
 {
     public interface IIndicatorFactory
     {

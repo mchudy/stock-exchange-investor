@@ -1,7 +1,6 @@
-﻿using StockExchange.DataAccess.Models;
-using System;
+﻿using System;
 
-namespace StockExchange.Business.Models
+namespace StockExchange.Business.Models.Transaction
 {
     public class UserTransactionDto
     {
@@ -15,7 +14,7 @@ namespace StockExchange.Business.Models
 
         public int UserId { get; set; }
 
-        public Company Company { get; set; }
+        public DataAccess.Models.Company Company { get; set; }
 
         public int CompanyId { get; set; }
     }

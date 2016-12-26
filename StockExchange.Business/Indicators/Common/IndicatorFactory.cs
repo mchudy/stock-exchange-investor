@@ -1,9 +1,9 @@
-﻿using StockExchange.Business.Exceptions;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using StockExchange.Business.Exceptions;
 
-namespace StockExchange.Business.Indicators
+namespace StockExchange.Business.Indicators.Common
 {
     public class IndicatorFactory : IIndicatorFactory
     {
@@ -29,7 +29,6 @@ namespace StockExchange.Business.Indicators
             var indicatorTypes = GetType().Assembly.GetTypes()
                 .Where(t => !t.IsAbstract && !t.IsInterface
                     && typeof(IIndicator).IsAssignableFrom(t));
-
             foreach (var type in indicatorTypes)
             {
                 var indicator = Activator.CreateInstance(type) as IIndicator;

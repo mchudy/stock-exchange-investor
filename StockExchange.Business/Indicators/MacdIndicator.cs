@@ -2,8 +2,7 @@
 using StockExchange.DataAccess.Models;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
-using StockExchange.Business.Models;
+using StockExchange.Business.Indicators.Common;
 
 namespace StockExchange.Business.Indicators
 {
@@ -17,7 +16,9 @@ namespace StockExchange.Business.Indicators
         public const int DefaultSignalTerm = 9;
 
         public int LongTerm { get; set; } = DefaultLongTerm;
+
         public int ShortTerm { get; set; } = DefaultShortTerm;
+
         public int SignalTerm { get; set; } = DefaultSignalTerm;
 
         public IndicatorType Type => IndicatorType.Macd;
@@ -70,20 +71,20 @@ namespace StockExchange.Business.Indicators
             var previousValue = doubleLineValues[0];
             for (int i = 1; i < doubleLineValues.Count; i++)
             {
-                //we consider 2 lines - indicator and signal line
-                //with equations 
-                //y = (curr.* - prev.*)x + prev.* (y = Ax+B and y=Cx+D) - * may be Value or SecondLineValue
-                //intersection exists when their difference
-                //has value 0 somewhere, thus (C-A)x=B-D -> a=C-A, b=B-D
-                //intersection exists if a=b=0 (lines overlap -> NOSIGNAL) or (x=B/A and 0<x<1)
-                //if MACD intersects signal line upside -> BUY otherwise SELL
+                // we consider 2 lines - indicator and signal line
+                // with equations 
+                // y = (curr.* - prev.*)x + prev.* (y = Ax+B and y=Cx+D) - * may be Value or SecondLineValue
+                // intersection exists when their difference
+                // has value 0 somewhere, thus (C-A)x=B-D -> a=C-A, b=B-D
+                // intersection exists if a=b=0 (lines overlap -> NOSIGNAL) or (x=B/A and 0<x<1)
+                // if MACD intersects signal line upside -> BUY otherwise SELL
                 var currentValue = doubleLineValues[i];
                 decimal a = currentValue.SecondLineValue - previousValue.SecondLineValue - currentValue.Value +
                             previousValue.Value;
                 decimal b = previousValue.Value - currentValue.Value;
-                if ((a == 0 && b == 0) || (a*b > 0 && b < a)) //intersection
+                if ((a == 0 && b == 0) || (a*b > 0 && b < a))   // intersection
                 {
-                    decimal diff = previousValue.Value - previousValue.SecondLineValue; //B-D
+                    decimal diff = previousValue.Value - previousValue.SecondLineValue;     // B - D
                     SignalAction action = ( diff== 0) ? SignalAction.NoSignal : (diff < 0 ? SignalAction.Buy : SignalAction.Sell);
                     var signal = new Signal(action)
                     {

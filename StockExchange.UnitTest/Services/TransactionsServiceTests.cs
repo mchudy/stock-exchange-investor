@@ -10,6 +10,7 @@ using StockExchange.DataAccess.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using StockExchange.Business.Models.Transaction;
 using Xunit;
 
 namespace StockExchange.UnitTest.Services

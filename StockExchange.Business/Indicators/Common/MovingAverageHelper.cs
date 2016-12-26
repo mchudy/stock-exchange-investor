@@ -1,10 +1,10 @@
-﻿using StockExchange.Business.Models.Indicators;
-using StockExchange.DataAccess.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using StockExchange.Business.Models.Indicators;
+using StockExchange.DataAccess.Models;
 
-namespace StockExchange.Business.Indicators
+namespace StockExchange.Business.Indicators.Common
 {
     public static class MovingAverageHelper
     {

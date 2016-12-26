@@ -55,7 +55,6 @@ namespace StockExchange.Business.Services
                 }
                 investmentStrategy.Indicators.Add(strategyIndicator);
             }
-
             _strategiesRepository.Insert(investmentStrategy);
             _strategiesRepository.Save();
             return investmentStrategy.Id;
