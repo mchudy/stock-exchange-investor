@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Web.Mvc;
+using StockExchange.Business.Models.Simulations;
 using StockExchange.Business.ServiceInterfaces;
 using StockExchange.Web.Models.Simulation;
 
@@ -10,11 +11,13 @@ namespace StockExchange.Web.Controllers
     {
         private readonly IStrategyService _strategyService;
         private readonly ICompanyService _companyService;
+        private readonly ISimulationService _simulationService;
 
-        public SimulationsController(IStrategyService strategyService, ICompanyService companyService)
+        public SimulationsController(IStrategyService strategyService, ICompanyService companyService, ISimulationService simulationService)
         {
             _strategyService = strategyService;
             _companyService = companyService;
+            _simulationService = simulationService;
         }
 
         public ActionResult Index()
@@ -26,7 +29,8 @@ namespace StockExchange.Web.Controllers
         [HttpPost]
         public ActionResult RunSimulation(SimulationViewModel model)
         {
-            return RedirectToAction("Results");
+            var ret = _simulationService.RunSimulation(ConvertViewModelToDto(model));
+            return RedirectToAction("Results", ret);
         }
 
         [HttpGet]
@@ -34,6 +38,19 @@ namespace StockExchange.Web.Controllers
         {
             return View();
         }
+
+        private SimulationDto ConvertViewModelToDto(SimulationViewModel viewModel)
+        {
+            return new SimulationDto
+            {
+                StartDate = viewModel.StartDate,
+                EndDate = viewModel.EndDate,
+                SelectedStrategyId = viewModel.SelectedStrategyId,
+                SelectedCompanyIds = viewModel.SelectedCompanyIds,
+                UserId = CurrentUserId
+            };
+        }
+
 
         private SimulationViewModel GetViewModel()
         {

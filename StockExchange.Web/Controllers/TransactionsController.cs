@@ -12,13 +12,11 @@ namespace StockExchange.Web.Controllers
     public class TransactionsController : BaseController
     {
         private readonly ITransactionsService _transactionsService;
-        private readonly IPriceService _priceService;
         private readonly ICompanyService _companyService;
 
-        public TransactionsController(ITransactionsService transactionsService, IPriceService priceService, ICompanyService companyService)
+        public TransactionsController(ITransactionsService transactionsService, ICompanyService companyService)
         {
             _transactionsService = transactionsService;
-            _priceService = priceService;
             _companyService = companyService;
         }
 

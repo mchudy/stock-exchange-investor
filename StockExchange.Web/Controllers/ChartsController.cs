@@ -2,7 +2,6 @@
 using StockExchange.Business.ServiceInterfaces;
 using StockExchange.Common.Extensions;
 using StockExchange.Web.Helpers;
-using StockExchange.Web.Models;
 using StockExchange.Web.Models.Charts;
 using System;
 using System.Collections.Generic;

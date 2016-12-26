@@ -100,13 +100,14 @@
     <Compile Include="Indicators\RsiIndicator.cs" />
     <Compile Include="Models\Indicators\Signal.cs" />
     <Compile Include="Models\Price\CompanyPricesDto.cs" />
-    <Compile Include="Models\Simulations\SimulationCompany.cs" />
+    <Compile Include="Models\Simulations\SimulationDto.cs" />
     <Compile Include="Models\Simulations\SimulationResult.cs" />
     <Compile Include="Models\Simulations\SimulationValue.cs" />
     <Compile Include="Models\Simulations\SimulationTransaction.cs" />
     <Compile Include="Models\Transaction\UserTransactionDto.cs" />
     <Compile Include="ServiceInterfaces\IIndicatorsService.cs" />
     <Compile Include="ServiceInterfaces\ICompanyService.cs" />
+    <Compile Include="ServiceInterfaces\ISimulationService.cs" />
     <Compile Include="Services\IndicatorsService.cs" />
     <Compile Include="ServiceInterfaces\IPriceService.cs" />
     <Compile Include="ServiceInterfaces\IStrategyService.cs" />
@@ -127,6 +128,7 @@
     <Compile Include="Models\Price\PriceDto.cs" />
     <Compile Include="Models\Filters\PriceFilter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\SimulationService.cs" />
     <Compile Include="Services\StrategyService.cs" />
     <Compile Include="Services\TransactionsService.cs" />
     <Compile Include="Services\UserService.cs" />
