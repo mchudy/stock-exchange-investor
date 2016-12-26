@@ -33,7 +33,7 @@ namespace StockExchange.UnitTest.Services
 
         public StrategyServiceTests()
         {
-            _indicatorsService = new IndicatorsService(new IndicatorFactory(), new PriceService(new GenericRepository<Price>()));
+            _indicatorsService = new IndicatorsService(new IndicatorFactory(), new PriceService(new Mock<IRepository<Price>>().Object));
             _service = new StrategyService(_strategyRepository.Object, _indicatorsService);
             _strategyRepository.Setup(s => s.GetQueryable(null, null, null, null, null))
                 .Returns(_strategies.AsQueryable());
