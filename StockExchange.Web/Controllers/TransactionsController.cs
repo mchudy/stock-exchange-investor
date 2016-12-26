@@ -1,11 +1,10 @@
-﻿using StockExchange.Business.Models;
-using StockExchange.Business.ServiceInterfaces;
+﻿using StockExchange.Business.ServiceInterfaces;
 using StockExchange.Web.Filters;
-using StockExchange.Web.Helpers;
 using StockExchange.Web.Models.Transactions;
 using System;
 using System.Web.Mvc;
 using StockExchange.Business.Models.Transaction;
+using StockExchange.Web.Helpers.Json;
 
 namespace StockExchange.Web.Controllers
 {

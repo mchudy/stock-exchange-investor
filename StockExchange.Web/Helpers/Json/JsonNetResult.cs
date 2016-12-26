@@ -1,12 +1,12 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
-using StockExchange.Common;
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 using System.Web.Mvc;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
+using StockExchange.Common;
 
-namespace StockExchange.Web.Helpers
+namespace StockExchange.Web.Helpers.Json
 {
     internal sealed class JsonNetResult : ActionResult
     {

@@ -1,5 +1,4 @@
-﻿using StockExchange.Business.Models;
-using StockExchange.Business.ServiceInterfaces;
+﻿using StockExchange.Business.ServiceInterfaces;
 using StockExchange.Web.Models.Charts;
 using StockExchange.Web.Models.Wallet;
 using System.Collections.Generic;

@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
-using StockExchange.Business.Models;
 using StockExchange.Business.Models.Price;
 
-namespace StockExchange.Web.Models
+namespace StockExchange.Web.Models.Price
 {
     public sealed class PriceViewModel
     {

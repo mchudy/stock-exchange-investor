@@ -1,5 +1,4 @@
-﻿@using System.Web.UI.WebControls
-@model StockExchange.Web.Models.Account.LoginViewModel
+﻿@model StockExchange.Web.Models.Account.LoginViewModel
 
 <div class="container-fluid">
     <div class="row">
@@ -9,7 +8,7 @@
                     <h3 class="box-title">Sign in</h3>
                 </div>
                 <div class="box-body">
-                    @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                    @using (Html.BeginForm("Login", "Account", new { ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
                     {
 
                         @Html.AntiForgeryToken()

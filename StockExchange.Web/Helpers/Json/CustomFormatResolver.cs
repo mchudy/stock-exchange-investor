@@ -1,11 +1,11 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reflection;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
-namespace StockExchange.Web.Helpers
+namespace StockExchange.Web.Helpers.Json
 {
     internal sealed class CustomFormatResolver : DefaultContractResolver
     {

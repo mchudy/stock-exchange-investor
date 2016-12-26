@@ -1,6 +1,4 @@
-﻿using StockExchange.Business.Indicators;
-using StockExchange.Business.Models;
-using StockExchange.Business.Models.Indicators;
+﻿using StockExchange.Business.Models.Indicators;
 using StockExchange.Business.ServiceInterfaces;
 using StockExchange.Common.Extensions;
 using StockExchange.Web.Helpers;
@@ -13,6 +11,8 @@ using System.Web.Mvc;
 using StockExchange.Business.Indicators.Common;
 using StockExchange.Business.Models.Company;
 using StockExchange.Business.Models.Price;
+using StockExchange.Web.Helpers.Json;
+using StockExchange.Web.Models.Indicator;
 
 namespace StockExchange.Web.Controllers
 {

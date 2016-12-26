@@ -1,4 +1,4 @@
-﻿namespace StockExchange.Web.Models
+﻿namespace StockExchange.Web.Models.Indicator
 {
     public class IndicatorMessage
     {

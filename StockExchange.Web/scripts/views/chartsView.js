@@ -202,7 +202,7 @@
                 todayHighlight: true,
                 orientation: 'auto right'
             })
-            .on('focus', function (e) {
+            .on('focus', function () {
                 var currentDate = new Date($(this).val());
                 $(this).datepicker('setDate', currentDate);
             });

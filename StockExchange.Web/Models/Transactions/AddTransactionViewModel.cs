@@ -1,5 +1,4 @@
-﻿using StockExchange.Business.Models;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using StockExchange.Business.Models.Company;
 
@@ -8,6 +7,7 @@ namespace StockExchange.Web.Models.Transactions
     public class AddTransactionViewModel
     {
         public IList<CompanyDto> Companies { get; set; } = new List<CompanyDto>();
+
         public int SelectedCompanyId { get; set; }
 
         [DataType(DataType.Currency)]

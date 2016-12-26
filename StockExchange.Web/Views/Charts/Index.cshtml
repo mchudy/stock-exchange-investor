@@ -1,8 +1,6 @@
 ﻿@model StockExchange.Web.Models.Charts.ChartsIndexModel
 @using System.Web.Optimization
-@using StockExchange.Business.Indicators
-@using StockExchange.Common.Extensions
-@using StockExchange.Web.Models
+@using StockExchange.Web.Models.Indicator
 
 @{
     ViewBag.Title = "Charts";
@@ -26,6 +24,7 @@
     <div class="col-sm-4">
         <div class="form-group">
             <label>Companies</label>
+            @* ReSharper disable once UnknownCssClass *@
             @Html.DropDownList("selectedCompanies", new MultiSelectList(Model.Companies, "Id", "Name",
                 new List<int> { Model.Companies.FirstOrDefault()?.Id ?? 0 }),
                 new { @class = "form-control company-select", multiple = "" })
@@ -33,6 +32,7 @@
     </div>
     <div class="form-group col-sm-2">
         <label>Indicator</label>
+        @* ReSharper disable once UnknownCssClass *@
         @Html.DropDownList("Indicators", new SelectList(Model.Indicators, nameof(IndicatorViewModel.Type), nameof(IndicatorViewModel.Name)), "Select indicator",
             new { @class = "form-control indicator-select" })
     </div>

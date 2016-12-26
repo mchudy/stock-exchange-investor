@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 using StockExchange.Business.Models.Indicators;
+using StockExchange.Web.Models.Indicator;
 
-namespace StockExchange.Web.Models
+namespace StockExchange.Web.Models.Strategy
 {
     public class StrategyViewModel
     {

@@ -1,12 +1,12 @@
 ﻿using StockExchange.Business.Extensions;
-using StockExchange.Business.Models;
 using StockExchange.Business.Models.Filters;
 using StockExchange.Business.ServiceInterfaces;
 using StockExchange.Web.Helpers;
-using StockExchange.Web.Models;
 using StockExchange.Web.Models.DataTables;
 using System.Web.Mvc;
 using StockExchange.Business.Models.Price;
+using StockExchange.Web.Helpers.Json;
+using StockExchange.Web.Models.Price;
 
 namespace StockExchange.Web.Controllers
 {

@@ -16,7 +16,7 @@
 
     function setValidatorDefaults() {
         $.validator.setDefaults({
-            highlight: function (e, v) {
+            highlight: function (e) {
                 var $formGroup = $(e).parents('.form-group');
                 $formGroup.addClass('has-error')
                     .find('.field-validation-error').addClass('text-danger');
@@ -60,7 +60,7 @@
             "closeButton": true
         };
 
-        $(document).ajaxError(function (event, jqxhr, settings, thrownError) {
+        $(document).ajaxError(function (event, jqxhr) {
             var message = 'An unexpected error occurred';
             var response = jqxhr.responseJSON;
             if (response && response.length > 0 && response[0].message) {

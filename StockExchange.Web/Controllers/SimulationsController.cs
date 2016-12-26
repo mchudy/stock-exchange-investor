@@ -1,8 +1,7 @@
-﻿using StockExchange.Business.Services;
-using StockExchange.Web.Models;
-using System;
+﻿using System;
 using System.Web.Mvc;
 using StockExchange.Business.ServiceInterfaces;
+using StockExchange.Web.Models.Simulation;
 
 namespace StockExchange.Web.Controllers
 {

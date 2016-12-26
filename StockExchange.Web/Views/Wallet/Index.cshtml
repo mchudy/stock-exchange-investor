@@ -1,6 +1,5 @@
 ﻿@model StockExchange.Web.Models.Wallet.WalletViewModel
 @using System.Web.Optimization
-@using Newtonsoft.Json
 @using StockExchange.Common.Extensions
 @using StockExchange.Web.Helpers
 @{
@@ -13,6 +12,7 @@
             <span class="info-box-icon"><i class="fa fa-money"></i></span>
 
             <div class="info-box-content">
+                @* ReSharper disable once UnknownCssClass *@
                 @Html.ActionLink("Edit ", "EditBudgetDialog", "Wallet", null, new { @class = "modal-link btn btn-success pull-right" })
                 <div class="col-sm-4">
                     <span class="info-box-text">Free budget</span>

@@ -1,11 +1,11 @@
 ﻿using log4net;
 using StockExchange.Business.ErrorHandling;
 using StockExchange.Business.Exceptions;
-using StockExchange.Web.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Web.Mvc;
+using StockExchange.Web.Helpers.Json;
 
 namespace StockExchange.Web.Filters
 {

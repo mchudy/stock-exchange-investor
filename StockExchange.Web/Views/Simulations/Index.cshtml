@@ -1,5 +1,5 @@
 ﻿@using System.Web.Optimization
-@model StockExchange.Web.Models.SimulationViewModel
+@model StockExchange.Web.Models.Simulation.SimulationViewModel
 @{
     ViewBag.Title = "Simulations";
 }
@@ -51,6 +51,7 @@
                         <div class="form-group">
                             @Html.LabelFor(m => m.Companies, new {@class = "col-sm-4 control-label"})
                             <div class="col-sm-8 input-group">
+                                @* ReSharper disable once UnknownCssClass *@
                                 @Html.DropDownListFor(m => m.SelectedCompanyIds, new MultiSelectList(Model.Companies, "Id", "Name"),
                                     new {@class = "form-control company-select", multiple = ""})
                             </div>

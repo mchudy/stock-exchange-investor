@@ -1,11 +1,10 @@
-﻿using StockExchange.Business.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using StockExchange.Business.Models.Company;
 using StockExchange.Business.Models.Strategy;
 
-namespace StockExchange.Web.Models
+namespace StockExchange.Web.Models.Simulation
 {
     public class SimulationViewModel
     {

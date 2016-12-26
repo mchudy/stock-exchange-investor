@@ -1,7 +1,7 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
+using Newtonsoft.Json;
 
-namespace StockExchange.Web.Helpers
+namespace StockExchange.Web.Helpers.Json
 {
     internal sealed class DisplayFormatConverter : JsonConverter
     {

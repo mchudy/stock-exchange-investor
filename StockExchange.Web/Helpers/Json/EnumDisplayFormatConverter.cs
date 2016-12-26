@@ -2,7 +2,7 @@
 using Newtonsoft.Json;
 using StockExchange.Common.Extensions;
 
-namespace StockExchange.Web.Helpers
+namespace StockExchange.Web.Helpers.Json
 {
     internal sealed class EnumDisplayFormatConverter : JsonConverter
     {

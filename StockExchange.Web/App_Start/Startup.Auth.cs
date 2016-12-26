@@ -23,7 +23,7 @@ namespace StockExchange.Web
                     OnValidateIdentity = SecurityStampValidator.OnValidateIdentity<ApplicationUserManager, User, int>(
                          validateInterval: TimeSpan.FromMinutes(30),
                          regenerateIdentityCallback: (manager, user) => user.GenerateUserIdentityAsync(manager),
-                         getUserIdCallback: (id) => id.GetUserId<int>()
+                         getUserIdCallback: id => id.GetUserId<int>()
                     )
                 }
             });

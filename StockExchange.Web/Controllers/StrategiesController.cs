@@ -2,11 +2,12 @@
 using StockExchange.Business.Models.Strategy;
 using StockExchange.Business.ServiceInterfaces;
 using StockExchange.Web.Filters;
-using StockExchange.Web.Helpers;
-using StockExchange.Web.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using StockExchange.Web.Helpers.Json;
+using StockExchange.Web.Models.Indicator;
+using StockExchange.Web.Models.Strategy;
 
 namespace StockExchange.Web.Controllers
 {

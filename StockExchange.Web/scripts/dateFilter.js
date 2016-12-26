@@ -1,8 +1,10 @@
 ﻿(function ($) {
+    'use strict';
+
     $.DateFilter = function () {
         var date = new Date();
         date = new Date(date.getFullYear(), date.getMonth(), 1);
-        var dateType = "month";
+        var dateType = 'month';
 
         return {
             setDateType: function (value) {
@@ -19,7 +21,7 @@
             },
             onChanged: function () { },
             getPeriod: function () {
-                if (dateType === "month") {
+                if (dateType === 'month') {
                     return {
                         startDate: new Date(date.getFullYear(), date.getMonth(), 1),
                         endDate: new Date(date.getFullYear(), date.getMonth() + 1, 0) 
@@ -46,24 +48,24 @@
 
         var filterTypeOptions = {
             years: {
-                format: "yyyy",
-                viewMode: "years",
-                minViewMode: "years",
+                format: 'yyyy',
+                viewMode: 'years',
+                minViewMode: 'years',
                 immediateUpdates: true,
                 autoclose: true,
                 startDate: options.startDate
             },
             months: {
-                format: "mm/yyyy",
-                viewMode: "months",
-                minViewMode: "months",
+                format: 'mm/yyyy',
+                viewMode: 'months',
+                minViewMode: 'months',
                 immediateUpdates: true,
                 autoclose: true,
                 startDate: options.startDate
             }
         };
 
-        $("<select id=\"filterType\" class=\"form-control\"><option value=\"month\">Monthly</option><option value=\"year\">Yearly</option></select><input type=\"text\" class=\"form-control\" id=\"filterValue\"/>").appendTo(that);
+        $('<select id="filterType" class="form-control"><option value="month">Monthly</option><option value="year">Yearly</option></select><input type="text" class="form-control" id="filterValue"/>').appendTo(that);
 
         var $filterValue = $('#filterValue', that);
         $filterValue.datepicker(filterTypeOptions.months);
@@ -77,21 +79,21 @@
                 }
             });
 
-        $("#filterType", that).on("change", function () {
+        $('#filterType', that).on('change', function () {
             dateFilter.setDateType($(this).val());
 
             freezeEvents = true;
-            if (dateFilter.getDateType() === "month") {
-                $("#filterValue", that).datepicker("remove");
-                $("#filterValue", that).datepicker(filterTypeOptions.months);
-                $("#filterValue", that).datepicker("setDate", dateFilter.getDate());
+            if (dateFilter.getDateType() === 'month') {
+                $('#filterValue', that).datepicker('remove');
+                $('#filterValue', that).datepicker(filterTypeOptions.months);
+                $('#filterValue', that).datepicker('setDate', dateFilter.getDate());
             } else {
-                $("#filterValue", that).datepicker("remove");
-                $("#filterValue", that).datepicker(filterTypeOptions.years);
-                $("#filterValue", that).datepicker("setDate", dateFilter.getDate());
+                $('#filterValue', that).datepicker('remove');
+                $('#filterValue', that).datepicker(filterTypeOptions.years);
+                $('#filterValue', that).datepicker('setDate', dateFilter.getDate());
             }
             freezeEvents = false;
-            if (typeof dateFilter.onChanged === "function") {
+            if (typeof dateFilter.onChanged === 'function') {
                 dateFilter.onChanged();
             }
         });
