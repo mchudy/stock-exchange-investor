@@ -5,6 +5,7 @@ using StockExchange.DataAccess.IRepositories;
 using StockExchange.DataAccess.Models;
 using System.Collections.Generic;
 using System.Linq;
+using System.Data.Entity;
 
 namespace StockExchange.Business.Services
 {
@@ -17,6 +18,20 @@ namespace StockExchange.Business.Services
         {
             _strategiesRepository = strategiesRepository;
             _indicatorsService = indicatorsService;
+        }
+
+        public IList<StrategyDto> GetUserStrategies(int userId)
+        {
+            return _strategiesRepository.GetQueryable()
+                .Include(t => t.Indicators)
+                .Where(t => t.UserId == userId)
+                .OrderBy(t => t.Name)
+                .Select(t => new StrategyDto
+                {
+                    Id = t.Id,
+                    UserId = t.UserId,
+                    Name = t.Name
+                }).ToList();
         }
 
         public int CreateStrategy(StrategyDto strategy)

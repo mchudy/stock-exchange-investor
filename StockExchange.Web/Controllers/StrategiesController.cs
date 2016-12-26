@@ -46,6 +46,13 @@ namespace StockExchange.Web.Controllers
             return new JsonNetResult(new {id});
         }
 
+        [HttpGet]
+        public ActionResult StrategiesTable()
+        {
+            var strategies = _strategyService.GetUserStrategies(CurrentUserId);
+            return PartialView("_StrategiesTable", strategies);
+        }
+
         private StrategyDto BuildCreateStrategyDto(IList<IndicatorMessage> indicators)
         {
             var dto = new StrategyDto
