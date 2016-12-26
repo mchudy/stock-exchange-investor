@@ -28,9 +28,7 @@ namespace StockExchange.UnitTest.Services
                 new Price { CompanyId = 1, ClosePrice = 10, Date = new DateTime(2016, 12, 1) },
                 new Price { CompanyId = 1, ClosePrice = 20, Date = new DateTime(2016, 12, 4) }
             );
-
-            var currentPrices = _service.GetCurrentPrices(new List<int> { 1 } );
-
+            var currentPrices = _service.GetCurrentPrices(new List<int> { 1 });
             currentPrices.Count.Should().Be(1);
             currentPrices.Should().ContainSingle(p => p.CompanyId == 1 && p.ClosePrice == 20);
         }
@@ -44,9 +42,7 @@ namespace StockExchange.UnitTest.Services
                 new Price { CompanyId = 2, ClosePrice = 40, Date = new DateTime(2016, 12, 8) },
                 new Price { CompanyId = 2, ClosePrice = 30, Date = new DateTime(2016, 12, 5) }
             );
-
             var currentPrices = _service.GetCurrentPrices(new List<int> { 1, 2 });
-
             currentPrices.Count.Should().Be(2);
             currentPrices.Should().ContainSingle(p => p.CompanyId == 1 && p.ClosePrice == 20);
             currentPrices.Should().ContainSingle(p => p.CompanyId == 2 && p.ClosePrice == 40);

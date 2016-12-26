@@ -12,7 +12,8 @@ namespace StockExchange.DataAccess.Models
 
         public DateTime EndDate { get; set; }
 
-        //public int StrategyId { get; set; }
-        //public virtual InvestmentStrategy Strategy { get; set; }
+        public int StrategyId { get; set; }
+
+        public virtual InvestmentStrategy Strategy { get; set; }
     }
 }

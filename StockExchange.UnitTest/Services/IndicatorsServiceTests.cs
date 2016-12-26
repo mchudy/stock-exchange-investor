@@ -22,11 +22,9 @@ namespace StockExchange.UnitTest.Services
         [Fact]
         public void Are_Macd_indicator_properties_correct()
         {
-            var type = IndicatorType.Macd;
+            const IndicatorType type = IndicatorType.Macd;
             _factory.Setup(f => f.CreateIndicator(type)).Returns(new MacdIndicator());
-
             var properties = _service.GetPropertiesForIndicator(type);
-
             properties.Count.Should().Be(3);
             properties.Should().Contain(p => p.Name == "LongTerm" && p.Value == MacdIndicator.DefaultLongTerm);
             properties.Should().Contain(p => p.Name == "ShortTerm" && p.Value == MacdIndicator.DefaultShortTerm);
@@ -36,11 +34,9 @@ namespace StockExchange.UnitTest.Services
         [Fact]
         public void Are_Rsi_indicator_properties_correct()
         {
-            var type = IndicatorType.Macd;
+            const IndicatorType type = IndicatorType.Macd;
             _factory.Setup(f => f.CreateIndicator(type)).Returns(new RsiIndicator());
-
             var properties = _service.GetPropertiesForIndicator(type);
-
             properties.Count.Should().Be(3);
             properties.Should().Contain(p => p.Name == "Term" && p.Value == RsiIndicator.DefaultRsiTerm);
         }
@@ -49,7 +45,6 @@ namespace StockExchange.UnitTest.Services
         public void Getting_available_indicators_returns_correct_values()
         {
             var availableIndicators = _service.GetAvailableIndicators();
-
             availableIndicators.Should().NotBeNull();
             availableIndicators.Should().Contain(IndicatorType.Macd);
             availableIndicators.Should().Contain(IndicatorType.Rsi);

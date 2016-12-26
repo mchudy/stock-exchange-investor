@@ -6,21 +6,20 @@ using Xunit;
 
 namespace StockExchange.UnitTest.Indicators.PP
 {
-    public class PivotPointTests
+    public class PpTests
     {
         private readonly IIndicator _indicator = new PpIndicator();
 
-        public PivotPointTests()
+        public PpTests()
         {
-            DataHelper.SetPrecisionForDecimal(PivotPointData.DataPrecision);
+            DataHelper.SetPrecisionForDecimal(PpData.DataPrecision);
         }
 
         [Fact]
         public void Pivot_Point_On_Sample_Data_Test()
         {
-            var values = _indicator.Calculate(PivotPointData.HistoricalPrices);
-            var expectedValues = PivotPointData.PivotPointValues;
-
+            var values = _indicator.Calculate(PpData.HistoricalPrices);
+            var expectedValues = PpData.PivotPointValues;
             values.ShouldAllBeEquivalentTo(expectedValues);
         } 
     }

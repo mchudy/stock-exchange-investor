@@ -1,9 +1,6 @@
 ﻿using FluentAssertions;
 using StockExchange.Business.Indicators;
-using StockExchange.DataAccess.Models;
 using StockExchange.UnitTest.TestHelpers;
-using System;
-using System.Collections.Generic;
 using Xunit;
 
 namespace StockExchange.UnitTest.Indicators.SMA
@@ -23,6 +20,5 @@ namespace StockExchange.UnitTest.Indicators.SMA
             var values = _indicator.Calculate(SmaData.HistoricalData);
             values.ShouldAllBeEquivalentTo(SmaData.Results);
         }
-
     }
 }

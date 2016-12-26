@@ -1,11 +1,11 @@
-﻿using FluentAssertions;
+﻿using System.Collections.Generic;
+using FluentAssertions;
 using StockExchange.Business.Indicators;
 using StockExchange.DataAccess.Models;
 using StockExchange.UnitTest.TestHelpers;
-using System.Collections.Generic;
 using Xunit;
 
-namespace StockExchange.UnitTest.Indicators
+namespace StockExchange.UnitTest.Indicators.RSI
 {
     public class RsiTests
     {
@@ -20,7 +20,6 @@ namespace StockExchange.UnitTest.Indicators
         public void Test_data_with_default_term()
         {
             var values = _indicator.Calculate(RsiData.HistoricalData);
-
             values.ShouldAllBeEquivalentTo(RsiData.Term14Results);
         }
 
@@ -28,9 +27,7 @@ namespace StockExchange.UnitTest.Indicators
         public void Test_data_for_nondefault_term()
         {
             _indicator.Term = 20;
-
             var values = _indicator.Calculate(RsiData.HistoricalData);
-
             values.ShouldAllBeEquivalentTo(RsiData.Term20Results);
         }
 
@@ -39,9 +36,7 @@ namespace StockExchange.UnitTest.Indicators
         {
             const int pricesCount = 30;
             _indicator.Term = 20;
-
             var result = _indicator.Calculate(GetEmptyPrices(pricesCount));
-
             result.Count.Should().Be(10);
         }
 
@@ -49,9 +44,7 @@ namespace StockExchange.UnitTest.Indicators
         public void When_average_loss_is_zero_should_return_100()
         {
             var prices = GetEmptyPrices(15);
-
             var result = _indicator.Calculate(prices);
-
             result[0].Value.Should().Be(100);
         }
 

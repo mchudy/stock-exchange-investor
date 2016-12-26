@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace StockExchange.UnitTest.Indicators.PP
 {
-    internal class PivotPointData
+    internal class PpData
     {
         public const int DataPrecision = 7;
 

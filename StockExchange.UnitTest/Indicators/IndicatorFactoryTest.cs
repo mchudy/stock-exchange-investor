@@ -34,9 +34,8 @@ namespace StockExchange.UnitTest.Indicators
         [Fact]
         public void Given_nonexistent_type_should_throw_exception()
         {
-            var type = (IndicatorType)0;
+            const IndicatorType type = (IndicatorType)0;
             Action act = () => _factory.CreateIndicator(type);
-
             act.ShouldThrow<IndicatorNotFoundException>();
         }
     }

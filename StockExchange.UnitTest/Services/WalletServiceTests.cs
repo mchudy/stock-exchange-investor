@@ -2,11 +2,9 @@
 using Moq;
 using StockExchange.Business.ServiceInterfaces;
 using StockExchange.Business.Services;
-using StockExchange.DataAccess.IRepositories;
 using StockExchange.DataAccess.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Xunit;
 
 namespace StockExchange.UnitTest.Services
@@ -45,9 +43,7 @@ namespace StockExchange.UnitTest.Services
             };
             SetupTransactions(d);
             SetupCurrentPrices(new Price { CompanyId = 2, ClosePrice = 10 });
-
             var results = _service.GetOwnedStocks(userId);
-
             results.Count.Should().Be(1);
             results[0].CompanyId.Should().Be(2);
         }
@@ -75,9 +71,7 @@ namespace StockExchange.UnitTest.Services
                 new Price { CompanyId = 1, ClosePrice = 10 },
                 new Price { CompanyId = 2, ClosePrice = 40 }
             );
-
             var results = _service.GetOwnedStocks(userId);
-
             results.Count.Should().Be(2);
             results.Should().ContainSingle(o => o.CurrentPrice == 10 && o.CompanyId == 1);
             results.Should().ContainSingle(o => o.CurrentPrice == 40 && o.CompanyId == 2);
@@ -90,28 +84,24 @@ namespace StockExchange.UnitTest.Services
             {
                 {
                     1, new List<UserTransaction>
-                    {   new UserTransaction { CompanyId = 1, Price = 10, Quantity = 3, UserId = userId }, // 30
-                new UserTransaction { CompanyId = 1, Price = 5, Quantity = -2, UserId = userId }, // -10
-                new UserTransaction { CompanyId = 1, Price = 20, Quantity = 2, UserId = userId }  // 40
+                    {
+                        new UserTransaction { CompanyId = 1, Price = 10, Quantity = 3, UserId = userId }, // 30
+                        new UserTransaction { CompanyId = 1, Price = 5, Quantity = -2, UserId = userId }, // -10
+                        new UserTransaction { CompanyId = 1, Price = 20, Quantity = 2, UserId = userId }  // 40
                      
                     }
                 }
             };
             SetupTransactions(d);
-
-
             SetupCurrentPrices(
                 new Price { CompanyId = 1, ClosePrice = 10, Date = new DateTime(2016, 12, 1) }
             );
-
             var results = _service.GetOwnedStocks(userId);
-
             results.Count.Should().Be(1);
-            results.Should().ContainSingle(o => o.CompanyId == 1 
+            results.Should().ContainSingle(o => o.CompanyId == 1
                 && o.TotalBuyPrice == 60
                 && o.CurrentValue == 30
                 && o.OwnedStocksCount == 3);
-
         }
 
         [Fact]
@@ -125,7 +115,8 @@ namespace StockExchange.UnitTest.Services
                         new UserTransaction {CompanyId = 1, Price = 10, Quantity = 3, UserId = userId},
                         //new UserTransaction {CompanyId = 1, Price = 10, Quantity = 3, UserId = userId + 1}
                     }
-                }//,
+                }
+                //,
                 //{
                 //    2, new List<UserTransaction>
                 //    {
@@ -134,14 +125,11 @@ namespace StockExchange.UnitTest.Services
                 //}
             };
             SetupTransactions(d);
-  
             SetupCurrentPrices(
                 new Price { CompanyId = 1, ClosePrice = 10 },
                 new Price { CompanyId = 2, ClosePrice = 40 }
             );
-
             var results = _service.GetOwnedStocks(userId);
-
             results.Count.Should().Be(1);
             results.Should().ContainSingle(r => r.CompanyId == 1 && r.OwnedStocksCount == 3);
         }

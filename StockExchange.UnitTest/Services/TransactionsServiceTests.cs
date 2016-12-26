@@ -2,7 +2,6 @@
 using Moq;
 using StockExchange.Business.ErrorHandling;
 using StockExchange.Business.Exceptions;
-using StockExchange.Business.Models;
 using StockExchange.Business.ServiceInterfaces;
 using StockExchange.Business.Services;
 using StockExchange.DataAccess.IRepositories;
@@ -51,10 +50,8 @@ namespace StockExchange.UnitTest.Services
         [Fact]
         public void Should_return_false_if_user_does_not_exist()
         {
-            var dto = new UserTransactionDto { UserId = 4 };
-            
+            var dto = new UserTransactionDto { UserId = 4 };        
             Action act = () => _service.AddUserTransaction(dto);
-
             act.ShouldThrow<BusinessException>().Where(e => e.Status == ErrorStatus.DataNotFound);
         }
 
@@ -68,9 +65,7 @@ namespace StockExchange.UnitTest.Services
                 Price = 5,
                 CompanyId = ownedCompanyId
             };
-
             _service.AddUserTransaction(dto);
-
             _user.Budget.Should().Be(110);
         }
 
@@ -84,9 +79,7 @@ namespace StockExchange.UnitTest.Services
                 Price = 10,
                 CompanyId = notOwnedCompanyId
             };
-
             _service.AddUserTransaction(dto);
-
             _user.Budget.Should().Be(80);
         }
 
@@ -100,9 +93,7 @@ namespace StockExchange.UnitTest.Services
                 Price = 10,
                 CompanyId = notOwnedCompanyId
             };
-
             Action act = () => _service.AddUserTransaction(dto);
-
             act.ShouldThrow<BusinessException>().Where(e => e.Status == ErrorStatus.BusinessRuleViolation);
             _user.Transactions.Count.Should().Be(1);
         }
@@ -117,9 +108,7 @@ namespace StockExchange.UnitTest.Services
                 Price = 10,
                 CompanyId = ownedCompanyId
             };
-
             Action act = () => _service.AddUserTransaction(dto);
-
             act.ShouldThrow<BusinessException>().Where(e => e.Status == ErrorStatus.BusinessRuleViolation);
             _user.Transactions.Count.Should().Be(1);
         }
@@ -134,9 +123,7 @@ namespace StockExchange.UnitTest.Services
                 Price = 1000,
                 CompanyId = notOwnedCompanyId
             };
-
             Action act = () => _service.AddUserTransaction(dto);
-
             act.ShouldThrow<BusinessException>().Where(e => e.Status == ErrorStatus.BusinessRuleViolation);
             _user.Transactions.Count.Should().Be(1);
         }

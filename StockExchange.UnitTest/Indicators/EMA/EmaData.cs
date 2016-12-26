@@ -20,10 +20,6 @@ namespace StockExchange.UnitTest.Indicators.EMA
 
         internal static IList<IndicatorValue> Results => DataHelper.ConvertToIndicatorValues(new[]
         {
-            //17m,
-            //18m,
-            //28.67m,
-            //26.44m,
             25.3m
         }, 4);
     }

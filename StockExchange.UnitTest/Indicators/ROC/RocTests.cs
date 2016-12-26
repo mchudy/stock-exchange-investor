@@ -25,9 +25,7 @@ namespace StockExchange.UnitTest.Indicators.ROC
                 new Price {ClosePrice = 2},
                 new Price {ClosePrice = 10}
             };
-
             var values = _indicator.Calculate(prices);
-
             values[0].Value.Should().Be(400);
         }
 
@@ -35,7 +33,6 @@ namespace StockExchange.UnitTest.Indicators.ROC
         public void Test_on_sample_data_with_default_term()
         {
             var values = _indicator.Calculate(RocData.HistoricalData);
-
             values.ShouldAllBeEquivalentTo(RocData.Term12Results);
         }
     }
