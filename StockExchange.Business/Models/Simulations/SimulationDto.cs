@@ -14,5 +14,7 @@ namespace StockExchange.Business.Models.Simulations
         public int SelectedStrategyId { get; set; }
 
         public int UserId { get; set; }
+
+        public decimal Budget { get; set; }
     }
 }

@@ -47,7 +47,8 @@ namespace StockExchange.Web.Controllers
                 EndDate = viewModel.EndDate,
                 SelectedStrategyId = viewModel.SelectedStrategyId,
                 SelectedCompanyIds = viewModel.SelectedCompanyIds,
-                UserId = CurrentUserId
+                UserId = CurrentUserId,
+                Budget = viewModel.Budget
             };
         }
 

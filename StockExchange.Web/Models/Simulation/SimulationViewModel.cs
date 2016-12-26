@@ -26,5 +26,7 @@ namespace StockExchange.Web.Models.Simulation
         public IList<StrategyDto> Strategies { get; set; } = new List<StrategyDto>();
 
         public int SelectedStrategyId { get; set; }
+
+        public decimal Budget { get; set; }
     }
 }
