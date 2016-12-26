@@ -77,6 +77,12 @@ namespace StockExchange.Business.Services
             }).ToList();
         }
 
+        public IList<Signal> GetIndicatorSignals(IList<IndicatorValue> values, IndicatorType type)
+        {
+            var indicator = _indicatorFactory.CreateIndicator(type);
+            return indicator.GenerateSignals(values);
+        }
+
         private static IList<IndicatorProperty> ConvertIndicatorProperties(IEnumerable<StrategyIndicatorProperty> p)
         {
             return p.Select(item => new IndicatorProperty

@@ -20,5 +20,7 @@ namespace StockExchange.Business.ServiceInterfaces
         IndicatorType? GetTypeFromName(string indicatorName);
 
         IList<ParameterizedIndicator> ConvertIndicators(IEnumerable<StrategyIndicator> i);
+
+        IList<Signal> GetIndicatorSignals(IList<IndicatorValue> values, IndicatorType type);
     }
 }

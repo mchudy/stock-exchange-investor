@@ -19,7 +19,13 @@ namespace StockExchange.Business.Services
             var strategy = _strategyService.GetUserStrategy(simulationDto.UserId, simulationDto.SelectedStrategyId);
             foreach (var indicator in strategy.Indicators)
             {
-                
+                if (indicator.IndicatorType == null) continue;
+                var indicatorValues = _indicatorsService.GetIndicatorValues(indicator.IndicatorType.Value, simulationDto.SelectedCompanyIds);
+                foreach (var companyIndicatorValuese in indicatorValues)
+                {
+                    var signals = _indicatorsService.GetIndicatorSignals(companyIndicatorValuese.IndicatorValues,
+                        indicator.IndicatorType.Value);
+                }
             }
             return new SimulationResult();
         }

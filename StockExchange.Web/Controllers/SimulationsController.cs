@@ -51,7 +51,6 @@ namespace StockExchange.Web.Controllers
             };
         }
 
-
         private SimulationViewModel GetViewModel()
         {
             var model = new SimulationViewModel
