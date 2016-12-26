@@ -1,6 +1,7 @@
 ﻿using StockExchange.Business.Models.Indicators;
 using System.Collections.Generic;
 using StockExchange.Business.Indicators.Common;
+using StockExchange.DataAccess.Models;
 
 namespace StockExchange.Business.ServiceInterfaces
 {
@@ -17,5 +18,7 @@ namespace StockExchange.Business.ServiceInterfaces
         IList<IndicatorDto> GetIndicatorsForStrategy();
 
         IndicatorType? GetTypeFromName(string indicatorName);
+
+        IList<ParameterizedIndicator> ConvertIndicators(IEnumerable<StrategyIndicator> i);
     }
 }

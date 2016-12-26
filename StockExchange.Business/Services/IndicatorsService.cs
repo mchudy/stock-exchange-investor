@@ -6,6 +6,7 @@ using System.Reflection;
 using StockExchange.Business.Indicators.Common;
 using StockExchange.Business.Models.Price;
 using StockExchange.Common.Extensions;
+using StockExchange.DataAccess.Models;
 
 namespace StockExchange.Business.Services
 {
@@ -65,6 +66,24 @@ namespace StockExchange.Business.Services
         {
             var indicator = _indicatorFactory.CreateIndicator(type);
             return GetIndicatorValues(indicator, companyIds);
+        }
+
+        public IList<ParameterizedIndicator> ConvertIndicators(IEnumerable<StrategyIndicator> i)
+        {
+            return i.Select(item => new ParameterizedIndicator
+            {
+                IndicatorType = (IndicatorType)item.IndicatorType,
+                Properties = ConvertIndicatorProperties(item.Properties)
+            }).ToList();
+        }
+
+        private static IList<IndicatorProperty> ConvertIndicatorProperties(IEnumerable<StrategyIndicatorProperty> p)
+        {
+            return p.Select(item => new IndicatorProperty
+            {
+                Value = item.Value,
+                Name = item.Name
+            }).ToList();
         }
 
         private static IList<CompanyIndicatorValues> ComputeIndicatorValues(IIndicator indicator, IEnumerable<CompanyPricesDto> companyPrices)

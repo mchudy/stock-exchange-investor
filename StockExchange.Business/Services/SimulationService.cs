@@ -1,6 +1,4 @@
 ﻿using StockExchange.Business.ServiceInterfaces;
-using StockExchange.DataAccess.IRepositories;
-using StockExchange.DataAccess.Models;
 using StockExchange.Business.Models.Simulations;
 
 namespace StockExchange.Business.Services

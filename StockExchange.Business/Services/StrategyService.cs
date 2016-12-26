@@ -6,8 +6,6 @@ using StockExchange.DataAccess.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Data.Entity;
-using StockExchange.Business.Indicators.Common;
-using StockExchange.Business.Models.Indicators;
 
 namespace StockExchange.Business.Services
 {
@@ -47,27 +45,9 @@ namespace StockExchange.Business.Services
                     Name = ret.Name,
                     Id = ret.Id,
                     UserId = ret.UserId,
-                    Indicators = ConvertIndicators(ret.Indicators)
+                    Indicators = _indicatorsService.ConvertIndicators(ret.Indicators)
                 };
             return new StrategyDto();
-        }
-
-        private static IList<ParameterizedIndicator> ConvertIndicators(IEnumerable<StrategyIndicator> i)
-        {
-            return i.Select(item => new ParameterizedIndicator
-            {
-                IndicatorType = (IndicatorType)item.IndicatorType,
-                Properties = ConvertIndicatorProperties(item.Properties)
-            }).ToList();
-        }
-
-        private static IList<IndicatorProperty> ConvertIndicatorProperties(IEnumerable<StrategyIndicatorProperty> p)
-        {
-            return p.Select(item => new IndicatorProperty
-            {
-                Value = item.Value,
-                Name = item.Name
-            }).ToList();
         }
 
         public int CreateStrategy(StrategyDto strategy)
