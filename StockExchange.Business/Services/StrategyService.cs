@@ -1,11 +1,13 @@
 ﻿using StockExchange.Business.Exceptions;
+using StockExchange.Business.Indicators.Common;
+using StockExchange.Business.Models.Indicators;
 using StockExchange.Business.Models.Strategy;
 using StockExchange.Business.ServiceInterfaces;
 using StockExchange.DataAccess.IRepositories;
 using StockExchange.DataAccess.Models;
 using System.Collections.Generic;
-using System.Linq;
 using System.Data.Entity;
+using System.Linq;
 
 namespace StockExchange.Business.Services
 {
@@ -30,7 +32,11 @@ namespace StockExchange.Business.Services
                 {
                     Id = t.Id,
                     UserId = t.UserId,
-                    Name = t.Name
+                    Name = t.Name,
+                    Indicators = t.Indicators.Select(i => new ParameterizedIndicator
+                    {
+                        IndicatorType = (IndicatorType?)i.IndicatorType
+                    }).ToList()
                 }).ToList();
         }
 
@@ -54,6 +60,8 @@ namespace StockExchange.Business.Services
         {
             if (_strategiesRepository.GetQueryable().Any(s => s.UserId == strategy.UserId && s.Name == strategy.Name))
                 throw new BusinessException(nameof(strategy.Name), "Strategy with this name already exists");
+            if (!strategy.Indicators.Any())
+                throw new BusinessException(nameof(strategy.Indicators), "At least one indicator has to be chosen");
 
             var investmentStrategy = new InvestmentStrategy
             {

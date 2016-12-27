@@ -2540,7 +2540,7 @@
     </None>
     <Content Include="Scripts\views\pricesView.js" />
     <Content Include="Scripts\site.js" />
-    <Content Include="Scripts\views\strategyView.js" />
+    <Content Include="Scripts\views\editStrategyView.js" />
     <Content Include="Scripts\views\transactionsView.js" />
     <Content Include="Scripts\views\walletView.js" />
     <Content Include="Web.config">
@@ -2609,13 +2609,13 @@
     <Content Include="Views\Wallet\Index.cshtml" />
     <Content Include="Views\Transactions\Index.cshtml" />
     <Content Include="Views\Simulations\Index.cshtml" />
-    <Content Include="Views\Strategies\Index.cshtml" />
+    <Content Include="Views\Strategies\EditStrategy.cshtml" />
     <Content Include="Views\Account\Settings.cshtml" />
     <Content Include="Views\Simulations\Results.cshtml" />
     <Content Include="Views\Transactions\_TransactionsTable.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\EnumTemplate.cshtml" />
     <Content Include="Views\Wallet\_EditBudgetDialog.cshtml" />
-    <Content Include="Views\Strategies\_StrategiesTable.cshtml" />
+    <Content Include="Views\Strategies\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -626,9 +626,15 @@ footer {
   margin: 30px auto !important;
   padding: 10px;
 }
-.fa-trash {
+:not(a) > .fa-trash {
   color: #bbb;
 }
-.fa-trash:hover {
+:not(a) > .fa-trash:hover {
   color: #111;
+}
+.margin-top-10 {
+  margin-top: 10px;
+}
+.margin-top-20 {
+  margin-top: 10px;
 }

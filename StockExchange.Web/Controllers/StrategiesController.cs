@@ -25,13 +25,19 @@ namespace StockExchange.Web.Controllers
 
         public ActionResult Index()
         {
-            var model = GetViewModel();
-            return View(model);
+            var strategies = _strategyService.GetUserStrategies(CurrentUserId);
+            return View(strategies);
+        }
+
+        [HttpGet]
+        public ActionResult EditStrategy(int? id)
+        {
+            return View(GetViewModel());
         }
 
         [HttpPost]
         [HandleJsonError]
-        public ActionResult CreateStrategy(EditStrategyViewModel model)
+        public ActionResult EditStrategy(EditStrategyViewModel model)
         {
             //TODO: refactor
             if (!model.Indicators?.Any() ?? false)
@@ -44,12 +50,6 @@ namespace StockExchange.Web.Controllers
             return new JsonNetResult(new {id});
         }
 
-        [HttpGet]
-        public ActionResult StrategiesTable()
-        {
-            var strategies = _strategyService.GetUserStrategies(CurrentUserId);
-            return PartialView("_StrategiesTable", strategies);
-        }
 
         private StrategyDto BuildCreateStrategyDto(EditStrategyViewModel model)
         {

@@ -1,0 +1,62 @@
+﻿@using System.Web.Optimization
+@using StockExchange.Web.Models.Indicator
+@model StockExchange.Web.Models.Strategy.StrategyViewModel
+
+@{
+    ViewBag.Title = "Edit strategy";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-5 col-centered">
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Define your strategy</h3>
+                </div>
+                <div class="box-body col-sm-10 col-centered">
+                    @using (Html.BeginForm("EditStrategy", "Strategies", null, FormMethod.Post, new {@class = "form-horizontal"}))
+                    {
+                    <div class="form-group property">
+                        <label class="col-sm-4 control-label">Strategy Name: </label>
+                        <div class="col-sm-8 input-group">
+                            @Html.TextBox("strategy-name", "", new {@class = "strategy-name form-control"})
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Add indicators: </label>
+                        @Html.DropDownList("Indicators", new SelectList(Model.Indicators, nameof(IndicatorViewModel.Type), nameof(IndicatorViewModel.Name)), " --- ", new {@class = "form-control indicator-select"})
+                    </div>
+                    foreach (var indicator in Model.Indicators)
+                    {
+                        <fieldset data-id="@indicator.Type" class="@indicator.Type hidden indicator form-group">
+                            <legend class="col-sm-12">@indicator.Name<i class="fa fa-trash fa-pull-right"></i></legend>
+                            @foreach (var property in Model.Properties.Where(item => item.Value.Type == indicator.Type))
+                            {
+                                <div class="property form-group" data-name="@property.Key.Name">
+                                    <label class="col-sm-4 control-label">@property.Key.Name</label>
+                                    <div class="input-group col-sm-8">
+                                        @Html.TextBox(property.Key.Value.ToString(), property.Key.Value.ToString(), new {@class = "property-value form-control"})
+                                    </div>
+                                </div>
+                            }
+                        </fieldset>
+                    }
+                    <div class="form-group">
+                        <button class="btn btn-success pull-right create-strategy" type="submit">Create</button>
+                    </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script>
+        var config = {
+            createStrategyUrl: '@Url.Action("EditStrategy")'
+        };
+    </script>
+    @Scripts.Render("~/Scripts/Views/editStrategyView.js")
+}

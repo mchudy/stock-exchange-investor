@@ -1,9 +1,5 @@
 ﻿(function ($) {
 
-    var $strategiesTable = $('#strategies-table-container');
-
-    loadTable();
-
     $('.indicator-select').change(function () {
         var str = '';
         $('select option:selected').each(function () {
@@ -41,13 +37,5 @@
             toastr.success('Strategy has been added');
         });
     });
-
-    //TODO: show throbber
-    function loadTable() {
-        $.get(config.getStrategiesTableUrl)
-            .done(function (data) {
-                $strategiesTable.html(data);
-            });
-    }
 
 })(jQuery);
