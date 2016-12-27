@@ -22,19 +22,11 @@ namespace StockExchange.Business.Services
             var strategy = _strategyService.GetUserStrategy(simulationDto.UserId, simulationDto.SelectedStrategyId);
             if (simulationDto.SelectedCompanyIds == null)
                 simulationDto.SelectedCompanyIds = _companyService.GetAllCompanies().Select(item => item.Id).ToList();
-            foreach (var indicator in strategy.Indicators)
+            var signalEvents = _indicatorsService.GetSignals(simulationDto.StartDate, simulationDto.EndDate,
+                simulationDto.SelectedCompanyIds, strategy.Indicators);
+            foreach (var signalEvent in signalEvents)
             {
-                if (indicator.IndicatorType == null) continue;
-                var indicatorValues = _indicatorsService.GetIndicatorValues(indicator.IndicatorType.Value, simulationDto.SelectedCompanyIds);
-                foreach (var companyIndicatorValuese in indicatorValues)
-                {
-                    var signals = _indicatorsService.GetIndicatorSignals(companyIndicatorValuese.IndicatorValues.Where(item => item.Date >= simulationDto.StartDate && item.Date <= simulationDto.EndDate).ToList(),
-                        indicator.IndicatorType.Value);
-                    foreach (var signal in signals)
-                    {
-                        
-                    }
-                }
+                
             }
             return new SimulationResult();
         }

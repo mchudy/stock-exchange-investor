@@ -1,4 +1,5 @@
-﻿using StockExchange.Business.Models.Indicators;
+﻿using System;
+using StockExchange.Business.Models.Indicators;
 using StockExchange.Business.ServiceInterfaces;
 using System.Collections.Generic;
 using System.Linq;
@@ -83,6 +84,49 @@ namespace StockExchange.Business.Services
             return indicator.GenerateSignals(values);
         }
 
+        public IList<SignalEvent> GetSignals(DateTime startDate, DateTime endDate, IList<int> companiesIds, IList<ParameterizedIndicator> indicators)
+        {
+            var errors = new List<int>();
+            var signalEvents = new List<SignalEvent>();
+            for (var date = startDate; date < endDate; date = date.AddDays(1))
+            {
+                signalEvents.Add(new SignalEvent
+                {
+                    Date = date,
+                    CompaniesToBuy = new List<int>(),
+                    CompaniesToSell = new List<int>()
+                });
+            }
+            foreach (var company in companiesIds)
+            {
+                foreach (var indicator in indicators)
+                {
+                    if (indicator.IndicatorType == null) continue;
+                    var ind = _indicatorFactory.CreateIndicator(indicator.IndicatorType.Value);
+                    IList<Signal> signals = new List<Signal>();
+                    try
+                    {
+                        signals = ind.GenerateSignals(ind.Calculate(_priceService.GetPrices(company, endDate)));
+                    }
+                    catch (Exception ex)
+                    {
+                        if(!errors.Contains(company)) errors.Add(company);
+                    }
+                    foreach (var signal in signals)
+                    {
+                        var signaEvent = signalEvents.FirstOrDefault(item => item.Date == signal.Date);
+                        if (signaEvent == null) continue;
+                        if (signal.Action == SignalAction.Buy && !signaEvent.CompaniesToBuy.Contains(company))
+                            signaEvent.CompaniesToBuy.Add(company);
+                        if (signal.Action == SignalAction.Sell && !signaEvent.CompaniesToSell.Contains(company))
+                            signaEvent.CompaniesToSell.Add(company);
+                    }
+                }
+            }
+            var e = errors;
+            return signalEvents;
+        }
+
         private static IList<IndicatorProperty> ConvertIndicatorProperties(IEnumerable<StrategyIndicatorProperty> p)
         {
             return p.Select(item => new IndicatorProperty
@@ -95,11 +139,12 @@ namespace StockExchange.Business.Services
         private static IList<CompanyIndicatorValues> ComputeIndicatorValues(IIndicator indicator, IEnumerable<CompanyPricesDto> companyPrices)
         {
             return (from company in companyPrices
-                let values = indicator.Calculate(company.Prices)
-                select new CompanyIndicatorValues
-                {
-                    Company = company.Company, IndicatorValues = values
-                }).ToList();
+                    let values = indicator.Calculate(company.Prices)
+                    select new CompanyIndicatorValues
+                    {
+                        Company = company.Company,
+                        IndicatorValues = values
+                    }).ToList();
         }
     }
 }

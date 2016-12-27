@@ -92,6 +92,7 @@
     <Compile Include="Indicators\ObvIndicator.cs" />
     <Compile Include="Indicators\RocIndicator.cs" />
     <Compile Include="Models\Indicators\ParameterizedIndicator.cs" />
+    <Compile Include="Models\Indicators\SignalEvent.cs" />
     <Compile Include="Models\Strategy\StrategyDto.cs" />
     <Compile Include="Models\Wallet\OwnedCompanyStocksDto.cs" />
     <Compile Include="Models\Simulations\CompanyStockQuantity.cs" />

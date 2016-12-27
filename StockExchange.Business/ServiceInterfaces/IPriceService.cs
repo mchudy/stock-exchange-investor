@@ -1,4 +1,5 @@
-﻿using StockExchange.Business.Extensions;
+﻿using System;
+using StockExchange.Business.Extensions;
 using StockExchange.Business.Models.Filters;
 using StockExchange.DataAccess.Models;
 using System.Collections.Generic;
@@ -15,5 +16,7 @@ namespace StockExchange.Business.ServiceInterfaces
         IList<CompanyPricesDto> GetPricesForCompanies(IList<int> companyIds);
 
         IList<Price> GetCurrentPrices(IList<int> companyIds);
+
+        IList<Price> GetPrices(int companyId, DateTime endDate);
     }
 }
