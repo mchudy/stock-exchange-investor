@@ -1,9 +1,10 @@
-﻿using System;
+﻿using StockExchange.Business.Models.Indicators;
+using StockExchange.Business.Models.Price;
+using StockExchange.Business.Models.Simulations;
+using StockExchange.Business.ServiceInterfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using StockExchange.Business.Models.Indicators;
-using StockExchange.Business.ServiceInterfaces;
-using StockExchange.Business.Models.Simulations;
 
 namespace StockExchange.Business.Services
 {
@@ -30,14 +31,16 @@ namespace StockExchange.Business.Services
                 simulationDto.SelectedCompanyIds = _companyService.GetAllCompanies().Select(item => item.Id).ToList();
             var signalEvents = _indicatorsService.GetSignals(simulationDto.StartDate, simulationDto.EndDate,
                 simulationDto.SelectedCompanyIds, strategy.Indicators);
+
+            var allPrices = _priceService.GetPricesForCompanies(simulationDto.SelectedCompanyIds);
+
             foreach (var signalEvent in signalEvents.OrderBy(item => item.Date))
             {
                 var flag = false;
                 if (signalEvent.CompaniesToBuy.Count > 0)
                 {
-                    var prices =
-                        _priceService.GetPrices(signalEvent.CompaniesToBuy, signalEvent.Date)
-                            .OrderByDescending(item => item.Value);
+                    var prices = ConvertPrices(allPrices, signalEvent.CompaniesToBuy, signalEvent.Date)
+                        .OrderByDescending(item => item.Value);
                     foreach (var price in prices)
                     {
                         if (simulationDto.Budget <= price.Value) continue;
@@ -65,9 +68,8 @@ namespace StockExchange.Business.Services
                 // ReSharper disable once InvertIf
                 if (signalEvent.CompaniesToSell.Count > 0)
                 {
-                    var prices =
-                        _priceService.GetPrices(signalEvent.CompaniesToSell, signalEvent.Date)
-                            .OrderByDescending(item => item.Value);
+                    var prices = ConvertPrices(allPrices, signalEvent.CompaniesToSell, signalEvent.Date)
+                        .OrderByDescending(item => item.Value);
                     foreach (var price in prices)
                     {
                         if (!simulationResult.CurrentCompanyQuantity.ContainsKey(price.Key)) continue;
@@ -87,6 +89,13 @@ namespace StockExchange.Business.Services
                 }
             }
             return simulationResult;
+        }
+
+        private Dictionary<int, decimal> ConvertPrices(IList<CompanyPricesDto> allPrices, IList<int> companyIds, DateTime date)
+        {
+            return allPrices.Where(p => companyIds.Contains(p.Company.Id) && p.Prices.Any(pr => pr.Date == date))
+                .Select(p => new { Company = p.Company.Id, Price = p.Prices.FirstOrDefault(pr => pr.Date == date)})
+                .ToDictionary(p => p.Company, p => (p.Price.ClosePrice + p.Price.HighPrice + p.Price.LowPrice + p.Price.OpenPrice) / 4 );
         }
     }
 }

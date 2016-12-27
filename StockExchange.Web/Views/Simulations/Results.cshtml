@@ -1,4 +1,5 @@
-﻿@model StockExchange.Web.Models.Simulation.SimulationResultViewModel
+﻿@using StockExchange.Common.Extensions
+@model StockExchange.Web.Models.Simulation.SimulationResultViewModel
 
 @{
     ViewBag.Title = "Simulation Results";
@@ -58,12 +59,12 @@
                                 @foreach (var transaction in Model.TransactionsLog)
                                 {
                                     <tr>
-                                        <td>@transaction.Date</td>
+                                        <td>@transaction.Date.ToShortDateString()</td>
                                         <td>@transaction.Company.Code</td>
-                                        <td>@transaction.Price</td>
+                                        <td>@transaction.Price.ToString("0.00")</td>
                                         <td>@transaction.Quantity</td>
                                         <td>@transaction.Action</td>
-                                        <td>@transaction.BudgetAfter</td>                     
+                                        <td>@transaction.BudgetAfter.ToString("0.00")</td>
                                     </tr>
                                 }
                             </tbody>

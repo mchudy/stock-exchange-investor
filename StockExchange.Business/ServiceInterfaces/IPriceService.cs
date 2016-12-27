@@ -1,9 +1,9 @@
-﻿using System;
-using StockExchange.Business.Extensions;
+﻿using StockExchange.Business.Extensions;
 using StockExchange.Business.Models.Filters;
-using StockExchange.DataAccess.Models;
-using System.Collections.Generic;
 using StockExchange.Business.Models.Price;
+using StockExchange.DataAccess.Models;
+using System;
+using System.Collections.Generic;
 
 namespace StockExchange.Business.ServiceInterfaces
 {
@@ -18,7 +18,5 @@ namespace StockExchange.Business.ServiceInterfaces
         IList<Price> GetCurrentPrices(IList<int> companyIds);
 
         IList<Price> GetPrices(int companyId, DateTime endDate);
-
-        Dictionary<int, decimal> GetPrices(IList<int> companyIds, DateTime date);
     }
 }
