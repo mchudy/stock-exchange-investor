@@ -1,5 +1,77 @@
-﻿
+﻿@model StockExchange.Business.Models.Simulations.SimulationResultDto
+
 @{
-    ViewBag.Title = "Simulation results";
+    ViewBag.Title = "Simulation Results";
 }
 
+<div class="row">
+    <div class="col-sm-5">
+        <div id="simulationresult-table-container">
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Results</h3>
+                </div>
+                <div class="box-body">
+                    <div class="table-responsive">
+                        <table class="table no-margin">
+                            <thead>
+                                <tr>
+                                    <th>Company ID</th>
+                                    <th>Quantity</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var transaction in Model.CurrentCompanyQuantity)
+                                {
+                                    <tr>
+                                        <td>@transaction.Key</td>
+                                        <td>@transaction.Value</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-5">
+        <div id="simulationlog-table-container">
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Transactions Log</h3>
+                </div>
+                <div class="box-body">
+                    <div class="table-responsive">
+                        <table class="table no-margin">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Company ID</th>
+                                    <th>Price</th>
+                                    <th>Quantity</th>
+                                    <th>Action</th>
+                                    <th>Budget After</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var transaction in Model.TransactionsLog)
+                                {
+                                    <tr>
+                                        <td>@transaction.Date</td>
+                                        <td>@transaction.CompanyId</td>
+                                        <td>@transaction.Price</td>
+                                        <td>@transaction.Quantity</td>
+                                        <td>@transaction.Action</td>
+                                        <td>@transaction.BudgetAfter</td>
+                                        <td>@transaction.</td>                       
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

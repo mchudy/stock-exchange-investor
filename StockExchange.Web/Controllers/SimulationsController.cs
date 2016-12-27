@@ -38,7 +38,7 @@ namespace StockExchange.Web.Controllers
             }
 
             var ret = _simulationService.RunSimulation(ConvertViewModelToDto(model));
-            return RedirectToAction("Results", ret);
+            return View("Results", ret);
         }
 
         [HttpGet]
