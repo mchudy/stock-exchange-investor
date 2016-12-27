@@ -67,6 +67,11 @@ namespace StockExchange.Business.Services
             return _priceRepository.GetQueryable().Where(p => p.CompanyId == companyId && p.Date <= endDate).OrderBy(item => item.Date).ToList();
         }
 
+        public Dictionary<int, decimal> GetPrices(IList<int> companyIds, DateTime date)
+        {
+            return _priceRepository.GetQueryable().Where(p => p.Date == date && companyIds.Contains(p.CompanyId)).Select(p => new { p.CompanyId, val = (p.ClosePrice + p.HighPrice + p.LowPrice + p.OpenPrice) / 4 }).ToDictionary(item => item.CompanyId, item => item.val);
+        }
+
         private static IQueryable<PriceDto> Filter(PriceFilter filter, IQueryable<PriceDto> results)
         {
             if (filter == null) return results;

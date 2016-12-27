@@ -1,11 +1,10 @@
 ﻿using System;
+using StockExchange.Business.Models.Indicators;
 
 namespace StockExchange.Business.Models.Simulations
 {
-    public class CompanyStockQuantity
+    public class SimulationTransactionDto
     {
-        public int Id { get; set; }
-
         public DateTime Date { get; set; }
 
         public decimal Price { get; set; }
@@ -14,6 +13,8 @@ namespace StockExchange.Business.Models.Simulations
 
         public int CompanyId { get; set; }
 
-        public SimulationResult SimulationResult { get; set; }
+        public decimal BudgetAfter { get; set; }
+
+        public SignalAction Action { get; set; }
     }
 }
