@@ -2559,6 +2559,7 @@
     <Compile Include="Controllers\TransactionsController.cs" />
     <Compile Include="Controllers\WalletController.cs" />
     <Compile Include="Filters\HandleJsonErrorAttribute.cs" />
+    <Compile Include="Helpers\DateCompareAttribute.cs" />
     <Compile Include="Helpers\Json\CustomFormatResolver.cs" />
     <Compile Include="Helpers\DataTableMessageConverter.cs" />
     <Compile Include="Global.asax.cs">
@@ -2608,7 +2609,7 @@
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Wallet\Index.cshtml" />
     <Content Include="Views\Transactions\Index.cshtml" />
-    <Content Include="Views\Simulations\Index.cshtml" />
+    <Content Include="Views\Simulations\RunSimulation.cshtml" />
     <Content Include="Views\Strategies\EditStrategy.cshtml" />
     <Content Include="Views\Account\Settings.cshtml" />
     <Content Include="Views\Simulations\Results.cshtml" />

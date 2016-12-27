@@ -79,7 +79,7 @@
                     @if (Request.IsAuthenticated)
                     {
                         <li class="list-header">Your investments</li>
-                        <li class="@Html.IsSelected("Transactions", "Index")">
+                        <li class="@Html.IsSelected("Transactions")">
                             <a href="@Url.Action("Index", "Transactions")">
                                 <i class="fa fa-usd fa-lg"></i>
                                 <span>Transactions</span>
@@ -92,7 +92,7 @@
                             </a>
                         </li>
                         <li class="@Html.IsSelected("Simulations")">
-                            <a href="@Url.Action("Index", "Simulations")">
+                            <a href="@Url.Action("RunSimulation", "Simulations")">
                                 <i class="fa fa-play-circle fa-lg"></i>
                                 <span>Simulations</span>
                             </a>

@@ -1,8 +1,8 @@
-﻿using System;
-using System.Web.Mvc;
-using StockExchange.Business.Models.Simulations;
+﻿using StockExchange.Business.Models.Simulations;
 using StockExchange.Business.ServiceInterfaces;
 using StockExchange.Web.Models.Simulation;
+using System;
+using System.Web.Mvc;
 
 namespace StockExchange.Web.Controllers
 {
@@ -20,7 +20,8 @@ namespace StockExchange.Web.Controllers
             _simulationService = simulationService;
         }
 
-        public ActionResult Index()
+        [HttpGet]
+        public ActionResult RunSimulation()
         {
             var model = GetViewModel();
             return View(model);
@@ -29,6 +30,13 @@ namespace StockExchange.Web.Controllers
         [HttpPost]
         public ActionResult RunSimulation(SimulationViewModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                model.Strategies = _strategyService.GetUserStrategies(CurrentUserId);
+                model.Companies = _companyService.GetAllCompanies();
+                return View(model);
+            }
+
             var ret = _simulationService.RunSimulation(ConvertViewModelToDto(model));
             return RedirectToAction("Results", ret);
         }

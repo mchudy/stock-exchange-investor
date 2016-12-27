@@ -1,4 +1,4 @@
-﻿(function() {
+﻿(function($) {
     'use strict';
 
     initSidebarToggle();
@@ -31,6 +31,13 @@
                     .removeClass('glyphicon-remove').addClass('glyphicon-ok');
             }
         });
+
+        //fix for chrome
+        //https://github.com/jzaefferer/jquery-validation/issues/153
+        $.validator.methods.date = function (value, element) {
+            var dateRegex = /^(0?[1-9]\/|[12]\d\/|3[01]\/){2}(19|20)\d\d$/;
+            return this.optional(element) || dateRegex.test(value);
+        };
     }
 
     function setDatepickerDefaults() {
@@ -70,4 +77,4 @@
         });
     }
 
-})();
+})(jQuery);
