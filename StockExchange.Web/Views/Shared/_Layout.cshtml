@@ -125,7 +125,7 @@
 
     @Scripts.Render("~/Scripts/site.js")
     
-    @NotificationsBuilder.ShowToastMessages(TempData?["Notifications"] as NotificationsWrapper);
+    @NotificationsBuilder.ShowToastMessages(TempData?["Notifications"] as NotificationsWrapper)
 
     @RenderSection("scripts", false)
 </body>
