@@ -1,9 +1,14 @@
 ﻿(function ($) {
     'use strict';
 
-    $('.delete-strategy').on('click', function() {
-        var id = $(this).parents('.strategy-item').data('id');
-        var url = config.deleteStrategyUrl + '/' + id;
+    $('#confirm-delete-modal').on('show.bs.modal', function (e) {
+        var target = $(e.relatedTarget);
+        var url = target.data('url');
+        $('.btn-confirm-delete', this).data('url', url);
+    });
+
+    $('.btn-confirm-delete').on('click', function() {
+        var url = $(this).data('url');
 
         $.ajax(url, {
             type: 'POST'
