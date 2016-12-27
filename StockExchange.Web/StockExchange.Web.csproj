@@ -2509,6 +2509,7 @@
     <Content Include="bower_components\toastr\toastr.less" />
     <Content Include="bower_components\toastr\toastr.scss" />
     <Content Include="App_Code\NotificationsBuilder.cshtml" />
+    <None Include="App_Code\Modals.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
