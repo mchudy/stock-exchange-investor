@@ -8,8 +8,16 @@
         $('.' + str).toggleClass('hidden');
     });
 
+    $('.remove-indicator').on('click', function() {
+        $(this).parents('.indicator').addClass('hidden');
+    });
+
     $('.create-strategy').click(function (e) {
         e.preventDefault();
+
+        if (!$('#edit-strategy-form').validate()) {
+            return;
+        }
 
         var indicators = [];
         $('.indicator:not(.hidden)').each(function () {

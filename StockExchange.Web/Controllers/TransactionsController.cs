@@ -1,10 +1,10 @@
-﻿using StockExchange.Business.ServiceInterfaces;
+﻿using StockExchange.Business.Models.Transaction;
+using StockExchange.Business.ServiceInterfaces;
 using StockExchange.Web.Filters;
+using StockExchange.Web.Helpers.Json;
 using StockExchange.Web.Models.Transactions;
 using System;
 using System.Web.Mvc;
-using StockExchange.Business.Models.Transaction;
-using StockExchange.Web.Helpers.Json;
 
 namespace StockExchange.Web.Controllers
 {
@@ -42,14 +42,11 @@ namespace StockExchange.Web.Controllers
         public ActionResult AddTransaction(AddTransactionViewModel model)
         {
             if (!ModelState.IsValid)
-            {
-                Response.StatusCode = 400;
-                return new JsonNetResult(ModelState);
-            }
+                return JsonErrorResult(ModelState);
 
             var dto = BuildUserTransactionDto(model);
             _transactionsService.AddUserTransaction(dto);
-            return new JsonNetResult(true);
+            return new JsonNetResult(new { dto.Id } );
         }
 
         private UserTransactionDto BuildUserTransactionDto(AddTransactionViewModel model)

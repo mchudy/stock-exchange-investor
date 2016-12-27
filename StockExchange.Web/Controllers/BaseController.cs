@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNet.Identity;
 using StockExchange.DataAccess.Models;
+using StockExchange.Web.Helpers.Json;
 using StockExchange.Web.Helpers.ToastNotifications;
+using System.Net;
 using System.Web.Mvc;
 
 namespace StockExchange.Web.Controllers
@@ -37,6 +39,17 @@ namespace StockExchange.Web.Controllers
             var toastMessage = toastr.AddToastMessage(title, message, toastType);
             TempData["Notifications"] = toastr;
             return toastMessage;
+        }
+
+        protected ActionResult JsonErrorResult(string message, HttpStatusCode statusCode = HttpStatusCode.BadRequest)
+        {
+            Response.StatusCode = (int) statusCode;
+            return new JsonNetResult(new[] { new { message } });
+        }
+
+        protected ActionResult JsonErrorResult(ModelStateDictionary message, HttpStatusCode statusCode = HttpStatusCode.BadRequest)
+        {
+            return new JsonNetResult(message);
         }
 
         private void InjectViewBagProperties()

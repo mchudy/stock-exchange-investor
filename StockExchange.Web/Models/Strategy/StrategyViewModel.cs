@@ -8,6 +8,8 @@ namespace StockExchange.Web.Models.Strategy
     {
         public int? Id { get; set; }
 
+        public string Name { get; set; }
+
         public IList<IndicatorViewModel> Indicators { get; set; }
 
         public IDictionary<IndicatorProperty, IndicatorViewModel> Properties { get; set; }

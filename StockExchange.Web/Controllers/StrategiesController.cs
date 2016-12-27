@@ -3,6 +3,7 @@ using StockExchange.Business.Models.Strategy;
 using StockExchange.Business.ServiceInterfaces;
 using StockExchange.Web.Filters;
 using StockExchange.Web.Helpers.Json;
+using StockExchange.Web.Helpers.ToastNotifications;
 using StockExchange.Web.Models.Indicator;
 using StockExchange.Web.Models.Strategy;
 using System.Collections.Generic;
@@ -32,24 +33,30 @@ namespace StockExchange.Web.Controllers
         [HttpGet]
         public ActionResult EditStrategy(int? id)
         {
-            return View(GetViewModel());
+            return View(GetViewModel(id));
         }
 
         [HttpPost]
         [HandleJsonError]
         public ActionResult EditStrategy(EditStrategyViewModel model)
         {
-            //TODO: refactor
             if (!model.Indicators?.Any() ?? false)
             {
-                Response.StatusCode = 400;
-                return new JsonNetResult(new [] {new {message = "At least one indicator has to chosen"} });
+                return JsonErrorResult("Strategy must have at least one indicator");
             }
             var dto = BuildCreateStrategyDto(model);
             int id = _strategyService.CreateStrategy(dto);
             return new JsonNetResult(new {id});
         }
 
+        [HttpPost]
+        [HandleJsonError]
+        public ActionResult DeleteStrategy(int id)
+        {
+            _strategyService.DeleteStrategy(id, CurrentUserId);
+            ShowNotification("Success", "Strategy has been deleted", ToastType.Success);
+            return new JsonNetResult(true);
+        }
 
         private StrategyDto BuildCreateStrategyDto(EditStrategyViewModel model)
         {
@@ -72,16 +79,21 @@ namespace StockExchange.Web.Controllers
             return dto;
         }
 
-        private StrategyViewModel GetViewModel()
+        private StrategyViewModel GetViewModel(int? id)
         {
             var model = new StrategyViewModel
             {
-                Indicators = _indicatorsService.GetIndicatorsForStrategy().Select(dto=>new IndicatorViewModel()
+                Indicators = _indicatorsService.GetIndicatorsForStrategy().Select(dto=>new IndicatorViewModel
                 {
                     Name = dto.IndicatorName,
                     Type = dto.IndicatorType
                 }).ToList()
             };
+            if (id.HasValue)
+            {
+                var strategy = _strategyService.GetUserStrategy(CurrentUserId, id.Value);
+                model.Name = strategy.Name;
+            }
             var dictionary = new Dictionary<IndicatorProperty, IndicatorViewModel>();
             foreach (var indicator in model.Indicators)
             {

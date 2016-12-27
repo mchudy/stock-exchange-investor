@@ -14,6 +14,8 @@ namespace StockExchange.DataAccess.Models
 
         public string Name { get; set; }
 
+        public bool IsDeleted { get; set; }
+
         public virtual ICollection<StrategyIndicator> Indicators { get; set; } = new HashSet<StrategyIndicator>();
     }
 }

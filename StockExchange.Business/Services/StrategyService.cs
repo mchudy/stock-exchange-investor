@@ -1,4 +1,5 @@
-﻿using StockExchange.Business.Exceptions;
+﻿using StockExchange.Business.ErrorHandling;
+using StockExchange.Business.Exceptions;
 using StockExchange.Business.Indicators.Common;
 using StockExchange.Business.Models.Indicators;
 using StockExchange.Business.Models.Strategy;
@@ -26,7 +27,7 @@ namespace StockExchange.Business.Services
         {
             return _strategiesRepository.GetQueryable()
                 .Include(t => t.Indicators)
-                .Where(t => t.UserId == userId)
+                .Where(t => t.UserId == userId && !t.IsDeleted)
                 .OrderBy(t => t.Name)
                 .Select(t => new StrategyDto
                 {
@@ -44,7 +45,7 @@ namespace StockExchange.Business.Services
         {
             var ret =
                 _strategiesRepository
-                    .GetQueryable().FirstOrDefault(item => item.Id == strategyId && item.UserId == userId);
+                    .GetQueryable().FirstOrDefault(item => item.Id == strategyId && item.UserId == userId && !item.IsDeleted);
             if (ret != null)
                 return new StrategyDto
                 {
@@ -54,6 +55,20 @@ namespace StockExchange.Business.Services
                     Indicators = _indicatorsService.ConvertIndicators(ret.Indicators)
                 };
             return new StrategyDto();
+        }
+
+        public void DeleteStrategy(int strategyId, int userId)
+        {
+            var strategy = _strategiesRepository.GetQueryable().FirstOrDefault(item => item.Id == strategyId && !item.IsDeleted);
+
+            if(strategy == null)
+                throw new BusinessException("Strategy not found", ErrorStatus.DataNotFound);
+
+            if(strategy.UserId != userId)
+                throw new BusinessException("You do not have permissions to this action", ErrorStatus.AccessDenied);
+
+            strategy.IsDeleted = true;
+            _strategiesRepository.Save();
         }
 
         public int CreateStrategy(StrategyDto strategy)
