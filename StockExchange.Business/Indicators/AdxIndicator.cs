@@ -55,7 +55,7 @@ namespace StockExchange.Business.Indicators
             return sma.Select((t, i) => new IndicatorValue { Date = t.Date, Value = 100 * t.Value / diDifferences2[i].Value }).ToList();
         }
 
-        public IList<Signal> GenerateSignals(IList<IndicatorValue> values)
+        public IList<Signal> GenerateSignals(IList<Price> prices)
         {
             var signals = new List<Signal>();
             return signals;

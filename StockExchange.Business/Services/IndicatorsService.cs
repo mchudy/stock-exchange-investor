@@ -78,11 +78,11 @@ namespace StockExchange.Business.Services
             }).ToList();
         }
 
-        public IList<Signal> GetIndicatorSignals(IList<IndicatorValue> values, IndicatorType type)
-        {
-            var indicator = _indicatorFactory.CreateIndicator(type);
-            return indicator.GenerateSignals(values);
-        }
+        //public IList<Signal> GetIndicatorSignals(IList<IndicatorValue> values, IndicatorType type)
+        //{
+        //    var indicator = _indicatorFactory.CreateIndicator(type);
+        //    return indicator.GenerateSignals(values);
+        //}
 
         public IList<SignalEvent> GetSignals(DateTime startDate, DateTime endDate, IList<int> companiesIds, IList<ParameterizedIndicator> indicators)
         {
@@ -105,7 +105,7 @@ namespace StockExchange.Business.Services
                     IList<Signal> signals = new List<Signal>();
                     try
                     {
-                        signals = ind.GenerateSignals(ind.Calculate(_priceService.GetPrices(company, endDate)));
+                        signals = ind.GenerateSignals(_priceService.GetPrices(company, endDate));
                     }
                     catch (Exception)
                     {

@@ -64,9 +64,9 @@ namespace StockExchange.Business.Indicators
             return resultList;
         }
 
-        public IList<Signal> GenerateSignals(IList<IndicatorValue> values)
+        public IList<Signal> GenerateSignals(IList<Price> prices)
         {
-            var doubleLineValues = values.Cast<DoubleLineIndicatorValue>().ToList();
+            var doubleLineValues = Calculate(prices).Cast<DoubleLineIndicatorValue>().ToList();
             var signals = new List<Signal>();
             var previousValue = doubleLineValues[0];
             for (int i = 1; i < doubleLineValues.Count; i++)

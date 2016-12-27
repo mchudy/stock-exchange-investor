@@ -13,6 +13,6 @@ namespace StockExchange.Business.Indicators.Common
 
         IList<IndicatorValue> Calculate(IList<Price> prices);
 
-        IList<Signal> GenerateSignals(IList<IndicatorValue> values);
+        IList<Signal> GenerateSignals(IList<Price> prices);
     }
 }

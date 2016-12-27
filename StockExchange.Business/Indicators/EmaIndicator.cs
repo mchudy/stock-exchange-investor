@@ -18,7 +18,7 @@ namespace StockExchange.Business.Indicators
             return MovingAverageHelper.ExpotentialMovingAverage(prices, Term);
         }
 
-        public IList<Signal> GenerateSignals(IList<IndicatorValue> values)
+        public IList<Signal> GenerateSignals(IList<Price> prices)
         {
             var signals = new List<Signal>();
             return signals;

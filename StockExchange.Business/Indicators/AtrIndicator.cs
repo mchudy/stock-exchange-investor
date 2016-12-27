@@ -45,7 +45,7 @@ namespace StockExchange.Business.Indicators
             return rsValues;
         }
 
-        public IList<Signal> GenerateSignals(IList<IndicatorValue> values)
+        public IList<Signal> GenerateSignals(IList<Price> prices)
         {
             var signals = new List<Signal>();
             return signals;

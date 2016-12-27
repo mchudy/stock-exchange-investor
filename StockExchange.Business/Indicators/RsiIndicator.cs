@@ -62,8 +62,9 @@ namespace StockExchange.Business.Indicators
             return result;
         }
 
-        public IList<Signal> GenerateSignals(IList<IndicatorValue> values)
+        public IList<Signal> GenerateSignals(IList<Price> prices)
         {
+            var values = Calculate(prices);
             var signals = new List<Signal>();
             SignalAction previousAction = SignalAction.NoSignal;
             foreach (var indicatorValue in values)
