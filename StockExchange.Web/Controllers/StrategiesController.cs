@@ -2,12 +2,12 @@
 using StockExchange.Business.Models.Strategy;
 using StockExchange.Business.ServiceInterfaces;
 using StockExchange.Web.Filters;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web.Mvc;
 using StockExchange.Web.Helpers.Json;
 using StockExchange.Web.Models.Indicator;
 using StockExchange.Web.Models.Strategy;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web.Mvc;
 
 namespace StockExchange.Web.Controllers
 {
@@ -31,15 +31,15 @@ namespace StockExchange.Web.Controllers
 
         [HttpPost]
         [HandleJsonError]
-        public ActionResult CreateStrategy(IList<IndicatorMessage> indicators)
+        public ActionResult CreateStrategy(EditStrategyViewModel model)
         {
             //TODO: refactor
-            if (!indicators?.Any() ?? false)
+            if (!model.Indicators?.Any() ?? false)
             {
                 Response.StatusCode = 400;
                 return new JsonNetResult(new [] {new {message = "At least one indicator has to chosen"} });
             }
-            var dto = BuildCreateStrategyDto(indicators);
+            var dto = BuildCreateStrategyDto(model);
             int id = _strategyService.CreateStrategy(dto);
             return new JsonNetResult(new {id});
         }
@@ -51,39 +51,26 @@ namespace StockExchange.Web.Controllers
             return PartialView("_StrategiesTable", strategies);
         }
 
-        private StrategyDto BuildCreateStrategyDto(IList<IndicatorMessage> indicators)
+        private StrategyDto BuildCreateStrategyDto(EditStrategyViewModel model)
         {
             var dto = new StrategyDto
             {
-                Name = indicators[0]?.Indicator,
+                Name = model.Name,
                 UserId = CurrentUserId,
-                Indicators = ConvertPropertiesToIndicators(indicators.Skip(1))
+                Indicators = model.Indicators.Select(i => new ParameterizedIndicator
+                {
+                    IndicatorType = i.Type,
+                    Properties = i.Properties
+                        .Where(p => !string.IsNullOrWhiteSpace(p.Name))
+                        .Select(p => new IndicatorProperty
+                        {
+                            Name = p.Name,
+                            Value = p.Value
+                        }).ToList()
+                }).ToList()
             };
             return dto;
         }
-
-        private IList<ParameterizedIndicator> ConvertPropertiesToIndicators(IEnumerable<IndicatorMessage> indicators)
-        {
-            var indicatorsDictionary = new Dictionary<string, IList<IndicatorProperty>>();
-            foreach (var indicatorMessage in indicators)
-            {
-                if (!indicatorsDictionary.ContainsKey(indicatorMessage.Indicator))
-                    indicatorsDictionary.Add(indicatorMessage.Indicator, new List<IndicatorProperty>());
-                int value;
-                if (!int.TryParse(indicatorMessage.Value, out value))
-                    value = 0;
-                indicatorsDictionary[indicatorMessage.Indicator].Add(new IndicatorProperty
-                {
-                    Name = indicatorMessage.Property,
-                    Value = value
-                });
-            }
-            return indicatorsDictionary.Select(item => new ParameterizedIndicator
-            {
-                IndicatorType = _indicatorsService.GetTypeFromName(item.Key),
-                Properties = item.Value.Where(v => !string.IsNullOrWhiteSpace(v.Name)).ToList()
-            }).ToList();
-        } 
 
         private StrategyViewModel GetViewModel()
         {
