@@ -1,6 +1,7 @@
 ﻿using StockExchange.Business.Models.Company;
 using StockExchange.Business.Models.Strategy;
 using StockExchange.Web.Helpers;
+using StockExchange.Web.Helpers.ValidationAttributes;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -23,8 +24,11 @@ namespace StockExchange.Web.Models.Simulation
 
         public IList<CompanyDto> Companies { get; set; }
 
-        [Required]
         public IList<int> SelectedCompanyIds { get; set; }
+
+        [RequiredIf(nameof(AllCompanies), false)]
+        [Display(Name = "All companies")]
+        public bool AllCompanies { get; set; }
 
         [Display(Name = "Strategy")]
         public IList<StrategyDto> Strategies { get; set; } = new List<StrategyDto>();

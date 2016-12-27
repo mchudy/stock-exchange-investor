@@ -2561,7 +2561,7 @@
     <Compile Include="Controllers\TransactionsController.cs" />
     <Compile Include="Controllers\WalletController.cs" />
     <Compile Include="Filters\HandleJsonErrorAttribute.cs" />
-    <Compile Include="Helpers\DateCompareAttribute.cs" />
+    <Compile Include="Helpers\ValidationAttributes\DateCompareAttribute.cs" />
     <Compile Include="Helpers\Json\CustomFormatResolver.cs" />
     <Compile Include="Helpers\DataTableMessageConverter.cs" />
     <Compile Include="Global.asax.cs">
@@ -2575,6 +2575,7 @@
     <Compile Include="Helpers\ToastNotifications\ToastMessage.cs" />
     <Compile Include="Helpers\ToastNotifications\ToastType.cs" />
     <Compile Include="Helpers\ToastNotifications\NotificationsWrapper.cs" />
+    <Compile Include="Helpers\ValidationAttributes\RequiredIfAttribute.cs" />
     <Compile Include="Infrastructure\AppModule.cs" />
     <Compile Include="Infrastructure\IdentityModule.cs" />
     <Compile Include="Models\Account\RegisterViewModel.cs" />

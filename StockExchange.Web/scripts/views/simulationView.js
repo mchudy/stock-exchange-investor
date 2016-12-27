@@ -5,6 +5,10 @@
         placeholder: 'Choose companies'
     });
 
+    $("input[type='checkbox']").iCheck({
+        checkboxClass: 'icheckbox_flat'
+    });
+
     $('#StartDate').datepicker();
     $('#EndDate').datepicker();
 

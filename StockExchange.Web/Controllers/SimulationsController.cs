@@ -70,7 +70,9 @@ namespace StockExchange.Web.Controllers
                 StartDate = viewModel.StartDate,
                 EndDate = viewModel.EndDate,
                 SelectedStrategyId = viewModel.SelectedStrategyId,
-                SelectedCompanyIds = viewModel.SelectedCompanyIds,
+                SelectedCompanyIds = viewModel.AllCompanies ?
+                    _companyService.GetAllCompanies().Select(c => c.Id).ToList() :
+                    viewModel.SelectedCompanyIds,
                 UserId = CurrentUserId,
                 Budget = viewModel.Budget
             };

@@ -29,6 +29,7 @@ namespace StockExchange.Business.Services
             var strategy = _strategyService.GetUserStrategy(simulationDto.UserId, simulationDto.SelectedStrategyId);
             if (simulationDto.SelectedCompanyIds == null)
                 simulationDto.SelectedCompanyIds = _companyService.GetAllCompanies().Select(item => item.Id).ToList();
+
             var signalEvents = _indicatorsService.GetSignals(simulationDto.StartDate, simulationDto.EndDate,
                 simulationDto.SelectedCompanyIds, strategy.Indicators);
 

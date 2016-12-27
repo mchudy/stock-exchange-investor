@@ -1,18 +1,21 @@
-﻿using System;
+﻿using log4net;
+using StockExchange.Business.Indicators.Common;
 using StockExchange.Business.Models.Indicators;
+using StockExchange.Business.Models.Price;
 using StockExchange.Business.ServiceInterfaces;
+using StockExchange.Common.Extensions;
+using StockExchange.DataAccess.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using StockExchange.Business.Indicators.Common;
-using StockExchange.Business.Models.Price;
-using StockExchange.Common.Extensions;
-using StockExchange.DataAccess.Models;
 
 namespace StockExchange.Business.Services
 {
     public class IndicatorsService : IIndicatorsService
     {
+        private static readonly ILog logger = LogManager.GetLogger(typeof(IndicatorsService));
+
         private readonly IIndicatorFactory _indicatorFactory;
         private readonly IPriceService _priceService;
 
@@ -101,9 +104,9 @@ namespace StockExchange.Business.Services
                     {
                         signals = ind.GenerateSignals(_priceService.GetPrices(company, endDate));
                     }
-                    catch (Exception)
+                    catch (ArgumentException e)
                     {
-                        // ignored
+                        logger.Warn($"Error when generating signals for company {company} and indicator {ind.Type}, end date {endDate}", e);
                     }
                     foreach (var signal in signals)
                     {
