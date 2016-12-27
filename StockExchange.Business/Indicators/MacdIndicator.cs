@@ -1,4 +1,5 @@
-﻿using StockExchange.Business.Models.Indicators;
+﻿using System;
+using StockExchange.Business.Models.Indicators;
 using StockExchange.DataAccess.Models;
 using System.Collections.Generic;
 using System.Linq;
@@ -67,34 +68,21 @@ namespace StockExchange.Business.Indicators
         public IList<Signal> GenerateSignals(IList<Price> prices)
         {
             var doubleLineValues = Calculate(prices).Cast<DoubleLineIndicatorValue>().ToList();
-            var signals = new List<Signal>();
-            var previousValue = doubleLineValues[0];
-            for (int i = 1; i < doubleLineValues.Count; i++)
+            return IntersectionHelper.FindIntersection(doubleLineValues).
+                Select(i=>new Signal(Convert(i.IntersectionType)) { Date = i.Date}).ToList();
+        }
+
+        private static SignalAction Convert(IntersectionType intersectionType)
+        {
+            switch (intersectionType)
             {
-                // we consider 2 lines - indicator and signal line
-                // with equations 
-                // y = (curr.* - prev.*)x + prev.* (y = Ax+B and y=Cx+D) - * may be Value or SecondLineValue
-                // intersection exists when their difference
-                // has value 0 somewhere, thus (C-A)x=B-D -> a=C-A, b=B-D
-                // intersection exists if a=b=0 (lines overlap -> NOSIGNAL) or (x=B/A and 0<x<1)
-                // if MACD intersects signal line upside -> BUY otherwise SELL
-                var currentValue = doubleLineValues[i];
-                decimal a = currentValue.SecondLineValue - previousValue.SecondLineValue - currentValue.Value +
-                            previousValue.Value;
-                decimal b = previousValue.Value - currentValue.Value;
-                if ((a == 0 && b == 0) || (a*b > 0 && b < a))   // intersection
-                {
-                    decimal diff = previousValue.Value - previousValue.SecondLineValue;     // B - D
-                    SignalAction action = ( diff== 0) ? SignalAction.NoSignal : (diff < 0 ? SignalAction.Buy : SignalAction.Sell);
-                    var signal = new Signal(action)
-                    {
-                        Date = currentValue.Date
-                    };
-                    signals.Add(signal);
-                }
-                previousValue = currentValue;
+                case IntersectionType.FirstAbove:
+                    return SignalAction.Buy;
+                case IntersectionType.SecondAbove:
+                    return SignalAction.Sell;
+                default:
+                    return SignalAction.NoSignal;
             }
-            return signals;
         }
     }
 }

@@ -82,6 +82,7 @@
     <Compile Include="Indicators\AtrIndicator.cs" />
     <Compile Include="Indicators\Common\IIndicatorFactory.cs" />
     <Compile Include="Indicators\Common\IndicatorFactory.cs" />
+    <Compile Include="Indicators\Common\IntersectionHelper.cs" />
     <Compile Include="Indicators\PpIndicator.cs" />
     <Compile Include="Indicators\EmaIndicator.cs" />
     <Compile Include="Indicators\AdxIndicator.cs" />
