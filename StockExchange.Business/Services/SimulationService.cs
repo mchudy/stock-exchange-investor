@@ -47,23 +47,23 @@ namespace StockExchange.Business.Services
                             CompanyId = price.Key,
                             Price = price.Value,
                             Action = SignalAction.Buy,
-                            Quantity = (int) Math.Floor(simulationDto.Budget/price.Value),
+                            Quantity = (int)Math.Floor(simulationDto.Budget / price.Value),
                             BudgetAfter =
-                                simulationDto.Budget - (int) Math.Floor(simulationDto.Budget/price.Value)*price.Value
+                                simulationDto.Budget - (int)Math.Floor(simulationDto.Budget / price.Value) * price.Value
                         });
-                        simulationDto.Budget = simulationResult.TransactionsLog.Last().BudgetAfter;
                         flag = true;
                         if (simulationResult.CurrentCompanyQuantity.ContainsKey(price.Key))
                             simulationResult.CurrentCompanyQuantity[price.Key] +=
-                                (int) Math.Floor(simulationDto.Budget/price.Value);
+                                (int)Math.Floor(simulationDto.Budget / price.Value);
                         else
                             simulationResult.CurrentCompanyQuantity.Add(price.Key,
-                                (int) Math.Floor(simulationDto.Budget/price.Value));
+                                (int)Math.Floor(simulationDto.Budget / price.Value));
+                        simulationDto.Budget = simulationResult.TransactionsLog.Last().BudgetAfter;
                     }
                 }
                 if (flag) continue;
                 // ReSharper disable once InvertIf
-                if (signalEvent.CompaniesToSell.Count == 0)
+                if (signalEvent.CompaniesToSell.Count > 0)
                 {
                     var prices =
                         _priceService.GetPrices(signalEvent.CompaniesToSell, signalEvent.Date)
@@ -79,7 +79,7 @@ namespace StockExchange.Business.Services
                             Action = SignalAction.Sell,
                             Quantity = simulationResult.CurrentCompanyQuantity[price.Key],
                             BudgetAfter =
-                                simulationDto.Budget + simulationResult.CurrentCompanyQuantity[price.Key]*price.Value
+                                simulationDto.Budget + simulationResult.CurrentCompanyQuantity[price.Key] * price.Value
                         });
                         simulationDto.Budget = simulationResult.TransactionsLog.Last().BudgetAfter;
                         simulationResult.CurrentCompanyQuantity.Remove(price.Key);
