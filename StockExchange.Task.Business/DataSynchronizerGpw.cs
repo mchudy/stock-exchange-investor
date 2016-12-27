@@ -32,7 +32,7 @@ namespace StockExchange.Task.Business
 
             var dateString = date.ToString(Consts.Formats.DateGpwFormat);
             IList<Company> companies = _companyRepository.GetQueryable().ToList();
-            IList<Price> prices = _priceRepository.GetQueryable(item => item.Date == date).ToList();
+            IList<Price> prices = _priceRepository.GetQueryable().Where(item => item.Date == date).ToList();
             var pricesToInsert = new List<Price>();
             string[,] data;
             try

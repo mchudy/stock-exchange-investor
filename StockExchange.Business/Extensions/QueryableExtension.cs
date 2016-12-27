@@ -1,10 +1,10 @@
-﻿using System;
+﻿using StockExchange.Common;
+using StockExchange.Common.Extensions;
+using StockExchange.Common.LinqUtils;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using StockExchange.Common;
-using StockExchange.Common.Extensions;
-using StockExchange.Common.LinqUtils;
 
 namespace StockExchange.Business.Extensions
 {
@@ -14,6 +14,11 @@ namespace StockExchange.Business.Extensions
         {
             // ReSharper disable once UnusedMember.Local
             public object Value { get; set; }
+        }
+
+        public static IQueryable<TSource> Page<TSource>(this IQueryable<TSource> query, int page, int pageSize)
+        {
+            return query.Skip((page - 1) * pageSize).Take(pageSize);
         }
 
         public static IQueryable<object> Select<TSource>(this IQueryable<TSource> query, string propertyName)

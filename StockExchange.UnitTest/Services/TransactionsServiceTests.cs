@@ -43,7 +43,7 @@ namespace StockExchange.UnitTest.Services
         public TransactionsServiceTests()
         {
             _service = new TransactionsService(_userRepository.Object, _transactionRepository.Object);
-            _userRepository.Setup(u => u.GetQueryable(null, null, null, null, null))
+            _userRepository.Setup(u => u.GetQueryable())
                 .Returns(new List<User> { _user }.AsQueryable());
         }
 

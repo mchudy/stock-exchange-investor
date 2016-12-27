@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Linq.Expressions;
 
 namespace StockExchange.DataAccess.Repositories
 {
@@ -25,22 +24,7 @@ namespace StockExchange.DataAccess.Repositories
             DbSet = context.Set<TEntity>();
         }
 
-        //TODO: remove parameters and add paging as an extension method for IQueryable (bad for testability)
-        public IQueryable<TEntity> GetQueryable(Expression<Func<TEntity, bool>> filter = null,
-           Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-           List<Expression<Func<TEntity, object>>> includeProperties = null,
-           int? page = null, int? pageSize = null)
-        {
-            IQueryable<TEntity> query = DbSet;
-            includeProperties?.ForEach(i => { query = query.Include(i); });
-            if (filter != null)
-                query = query.Where(filter);
-            if (orderBy != null)
-                query = orderBy(query);
-            if (page != null && pageSize != null)
-                query = query.Skip((page.Value - 1) * pageSize.Value).Take(pageSize.Value);
-            return query;
-        }
+        public IQueryable<TEntity> GetQueryable() => DbSet;
 
         public void Insert(TEntity entity)
         {

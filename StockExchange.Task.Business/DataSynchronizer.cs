@@ -27,7 +27,9 @@ namespace StockExchange.Task.Business
             Logger.Debug("Syncing historical data started");
             var startDateString = startDate.ToString(Consts.Formats.DateFormat);
             var endDateString = endDate.ToString(Consts.Formats.DateFormat);
-            IList<Company> companies = companyCodes == null ? _companyRepository.GetQueryable().ToList() : _companyRepository.GetQueryable(item => companyCodes.ToList().Contains(item.Code)).ToList();
+            IList<Company> companies = companyCodes == null 
+                ? _companyRepository.GetQueryable().ToList() 
+                : _companyRepository.GetQueryable().Where(item => companyCodes.ToList().Contains(item.Code)).ToList();
             IList<Price> prices = _priceRepositoryFactory.CreateInstance().GetQueryable().ToList();
             Parallel.ForEach(companies, company => ThreadSync(startDateString, endDateString, company, prices));
             Logger.Debug("Syncing historical data ended.");

@@ -50,7 +50,7 @@ namespace StockExchange.UnitTest.Services
 
         private void SetupPrices(params Price[] prices)
         {
-            _priceRepository.Setup(p => p.GetQueryable(null, null, null, null, null))
+            _priceRepository.Setup(p => p.GetQueryable())
                 .Returns(prices.AsQueryable());
         }
     }
