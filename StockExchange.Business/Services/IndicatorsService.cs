@@ -86,7 +86,6 @@ namespace StockExchange.Business.Services
 
         public IList<SignalEvent> GetSignals(DateTime startDate, DateTime endDate, IList<int> companiesIds, IList<ParameterizedIndicator> indicators)
         {
-            var errors = new List<int>();
             var signalEvents = new List<SignalEvent>();
             for (var date = startDate; date < endDate; date = date.AddDays(1))
             {
@@ -108,9 +107,9 @@ namespace StockExchange.Business.Services
                     {
                         signals = ind.GenerateSignals(ind.Calculate(_priceService.GetPrices(company, endDate)));
                     }
-                    catch (Exception ex)
+                    catch (Exception)
                     {
-                        if(!errors.Contains(company)) errors.Add(company);
+                        // ignored
                     }
                     foreach (var signal in signals)
                     {
@@ -123,7 +122,7 @@ namespace StockExchange.Business.Services
                     }
                 }
             }
-            var e = errors;
+            signalEvents.RemoveAll(item => item.CompaniesToBuy.Count == 0 && item.CompaniesToSell.Count == 0);
             return signalEvents;
         }
 
