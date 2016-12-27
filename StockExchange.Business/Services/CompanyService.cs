@@ -30,5 +30,15 @@ namespace StockExchange.Business.Services
                 Name = c.Code
             }).ToList();
         }
+
+        public IList<CompanyDto> GetCompanies(IList<int> ids)
+        {
+            return _companyRepository.GetQueryable().Where(item => ids.Contains(item.Id)).Select( item => new CompanyDto
+            {
+                Name = item.Name,
+                Code = item.Code,
+                Id = item.Id
+            }).ToList();
+        }
     }
 }

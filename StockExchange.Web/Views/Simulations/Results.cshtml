@@ -1,11 +1,11 @@
-﻿@model StockExchange.Business.Models.Simulations.SimulationResultDto
+﻿@model StockExchange.Web.Models.Simulation.SimulationResultViewModel
 
 @{
     ViewBag.Title = "Simulation Results";
 }
 
 <div class="row">
-    <div class="col-sm-5">
+    <div class="col-sm-3">
         <div id="simulationresult-table-container">
             <div class="box box-info">
                 <div class="box-header with-border">
@@ -16,7 +16,7 @@
                         <table class="table no-margin">
                             <thead>
                                 <tr>
-                                    <th>Company ID</th>
+                                    <th>Company Name</th>
                                     <th>Quantity</th>
                                 </tr>
                             </thead>
@@ -24,7 +24,7 @@
                                 @foreach (var transaction in Model.CurrentCompanyQuantity)
                                 {
                                     <tr>
-                                        <td>@transaction.Key</td>
+                                        <td>@transaction.Key.Code</td>
                                         <td>@transaction.Value</td>
                                     </tr>
                                 }
@@ -59,12 +59,11 @@
                                 {
                                     <tr>
                                         <td>@transaction.Date</td>
-                                        <td>@transaction.CompanyId</td>
+                                        <td>@transaction.Company.Code</td>
                                         <td>@transaction.Price</td>
                                         <td>@transaction.Quantity</td>
                                         <td>@transaction.Action</td>
-                                        <td>@transaction.BudgetAfter</td>
-                                        <td>@transaction.</td>                       
+                                        <td>@transaction.BudgetAfter</td>                     
                                     </tr>
                                 }
                             </tbody>

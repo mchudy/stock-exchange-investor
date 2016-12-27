@@ -2,6 +2,7 @@
 using StockExchange.Business.ServiceInterfaces;
 using StockExchange.Web.Models.Simulation;
 using System;
+using System.Linq;
 using System.Web.Mvc;
 
 namespace StockExchange.Web.Controllers
@@ -38,7 +39,22 @@ namespace StockExchange.Web.Controllers
             }
 
             var ret = _simulationService.RunSimulation(ConvertViewModelToDto(model));
-            return View("Results", ret);
+            var ids = ret.CurrentCompanyQuantity.Keys.ToList();
+            ids.AddRange(ret.TransactionsLog.Select(item => item.CompanyId));
+            var companies = _companyService.GetCompanies(ids);
+            return View("Results", new SimulationResultViewModel
+            {
+                CurrentCompanyQuantity = ret.CurrentCompanyQuantity.ToDictionary(item => companies.FirstOrDefault(x => x.Id == item.Key), item => item.Value),
+                TransactionsLog = ret.TransactionsLog.Select(item => new SimulationTransaction
+                {
+                    Date = item.Date,
+                    Price = item.Price,
+                    Action = item.Action,
+                    BudgetAfter = item.BudgetAfter,
+                    Quantity = item.Quantity,
+                    Company = companies.FirstOrDefault(x => x.Id == item.CompanyId)
+                }).ToList()
+            });
         }
 
         [HttpGet]

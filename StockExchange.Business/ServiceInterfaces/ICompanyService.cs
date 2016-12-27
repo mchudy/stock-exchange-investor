@@ -8,5 +8,7 @@ namespace StockExchange.Business.ServiceInterfaces
         IEnumerable<string> GetCompanyNames();
 
         IList<CompanyDto> GetAllCompanies();
+
+        IList<CompanyDto> GetCompanies(IList<int> ids);
     }
 }
