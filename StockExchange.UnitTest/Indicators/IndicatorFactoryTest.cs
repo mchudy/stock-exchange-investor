@@ -1,8 +1,10 @@
 ﻿using FluentAssertions;
 using StockExchange.Business.Exceptions;
 using StockExchange.Business.Indicators;
-using System;
 using StockExchange.Business.Indicators.Common;
+using StockExchange.DataAccess.Models;
+using System;
+using System.Collections.Generic;
 using Xunit;
 
 namespace StockExchange.UnitTest.Indicators
@@ -37,6 +39,27 @@ namespace StockExchange.UnitTest.Indicators
             const IndicatorType type = (IndicatorType)0;
             Action act = () => _factory.CreateIndicator(type);
             act.ShouldThrow<IndicatorNotFoundException>();
+        }
+
+        [Fact]
+        public void Should_assign_custom_properties_to_indicator()
+        {
+            var strategyIndicator = new StrategyIndicator
+            {
+                IndicatorType = (int) IndicatorType.Rsi,
+                Properties = new List<StrategyIndicatorProperty>
+                {
+                    new StrategyIndicatorProperty {Name = nameof(RsiIndicator.Term), Value = 50},
+                    new StrategyIndicatorProperty {Name = nameof(RsiIndicator.Maximum), Value = 99},
+                    new StrategyIndicatorProperty {Name = nameof(RsiIndicator.Minimum), Value = 10}
+                }
+            };
+
+            var indicator = (RsiIndicator)_factory.CreateIndicator(strategyIndicator);
+
+            indicator.Minimum.Should().Be(10);
+            indicator.Maximum.Should().Be(99);
+            indicator.Term.Should().Be(50);
         }
     }
 }

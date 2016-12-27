@@ -2,7 +2,7 @@
 
 namespace StockExchange.Business.Indicators.Common
 {
-    public enum IndicatorType : byte
+    public enum IndicatorType
     {
         [Display(Name = "ATR (Average True Range)")]
         Atr = 1,
