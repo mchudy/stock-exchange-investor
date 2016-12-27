@@ -78,12 +78,6 @@ namespace StockExchange.Business.Services
             }).ToList();
         }
 
-        //public IList<Signal> GetIndicatorSignals(IList<IndicatorValue> values, IndicatorType type)
-        //{
-        //    var indicator = _indicatorFactory.CreateIndicator(type);
-        //    return indicator.GenerateSignals(values);
-        //}
-
         public IList<SignalEvent> GetSignals(DateTime startDate, DateTime endDate, IList<int> companiesIds, IList<ParameterizedIndicator> indicators)
         {
             var signalEvents = new List<SignalEvent>();

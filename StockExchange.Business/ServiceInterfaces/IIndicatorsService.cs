@@ -22,8 +22,6 @@ namespace StockExchange.Business.ServiceInterfaces
 
         IList<ParameterizedIndicator> ConvertIndicators(IEnumerable<StrategyIndicator> i);
 
-        //IList<Signal> GetIndicatorSignals(IList<IndicatorValue> values, IndicatorType type);
-
         IList<SignalEvent> GetSignals(DateTime startDate, DateTime endDate, IList<int> companiesIds, IList<ParameterizedIndicator> indicators);
     }
 }
