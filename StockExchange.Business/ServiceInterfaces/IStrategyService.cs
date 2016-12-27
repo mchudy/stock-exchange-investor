@@ -12,5 +12,6 @@ namespace StockExchange.Business.ServiceInterfaces
         StrategyDto GetUserStrategy(int userId, int strategyId);
 
         void DeleteStrategy(int strategyId, int userId);
+        void UpdateStrategy(StrategyDto dto);
     }
 }

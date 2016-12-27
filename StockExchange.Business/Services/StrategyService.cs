@@ -14,10 +14,10 @@ namespace StockExchange.Business.Services
 {
     public class StrategyService : IStrategyService
     {
-        private readonly IRepository<InvestmentStrategy> _strategiesRepository;
+        private readonly IStrategiesRepository _strategiesRepository;
         private readonly IIndicatorsService _indicatorsService;
 
-        public StrategyService(IRepository<InvestmentStrategy> strategiesRepository, IIndicatorsService indicatorsService)
+        public StrategyService(IStrategiesRepository strategiesRepository, IIndicatorsService indicatorsService)
         {
             _strategiesRepository = strategiesRepository;
             _indicatorsService = indicatorsService;
@@ -43,9 +43,8 @@ namespace StockExchange.Business.Services
 
         public StrategyDto GetUserStrategy(int userId, int strategyId)
         {
-            var ret =
-                _strategiesRepository
-                    .GetQueryable().FirstOrDefault(item => item.Id == strategyId && item.UserId == userId && !item.IsDeleted);
+            var ret =_strategiesRepository
+                .GetQueryable().FirstOrDefault(item => item.Id == strategyId && item.UserId == userId && !item.IsDeleted);
             if (ret != null)
                 return new StrategyDto
                 {
@@ -71,6 +70,39 @@ namespace StockExchange.Business.Services
             _strategiesRepository.Save();
         }
 
+        public void UpdateStrategy(StrategyDto dto)
+        {
+            var strategy = _strategiesRepository.GetQueryable()
+                .FirstOrDefault(item => item.Id == dto.Id && item.UserId == dto.UserId && !item.IsDeleted);
+            if(strategy == null)
+                throw new BusinessException("Strategy not found", ErrorStatus.DataNotFound);
+
+            strategy.Name = dto.Name;
+            var toDelete = strategy.Indicators.Where(i => !dto.Indicators.Any(im => im.IndicatorType == (IndicatorType)i.IndicatorType)).ToList();
+            foreach (var strategyIndicator in toDelete)
+            {
+                _strategiesRepository.DeleteIndicator(strategyIndicator);
+            }
+
+            foreach (var indicatorDto in dto.Indicators)
+            {
+                var indicator = strategy.Indicators.FirstOrDefault(i => (IndicatorType)i.IndicatorType == indicatorDto.IndicatorType);
+                if(indicator == null)
+                    AddIndicator(indicatorDto, strategy);
+                else
+                {
+                    foreach (var property in indicatorDto.Properties)
+                    {
+                        var indicatorProperty = indicator.Properties.FirstOrDefault(p => p.Name == property.Name);
+                        if(indicatorProperty == null)
+                            continue;
+                        indicatorProperty.Value = property.Value;
+                    }
+                }
+            }
+            _strategiesRepository.Save();
+        }
+
         public int CreateStrategy(StrategyDto strategy)
         {
             if (_strategiesRepository.GetQueryable().Any(s => s.UserId == strategy.UserId && s.Name == strategy.Name))
@@ -86,32 +118,37 @@ namespace StockExchange.Business.Services
             };
             foreach (var indicator in strategy.Indicators)
             {
-                if (!indicator.IndicatorType.HasValue)
-                    throw new BusinessException("Wrong indicator value");
-
-                var strategyIndicator = new StrategyIndicator
-                {
-                    IndicatorType = (int)indicator.IndicatorType.Value,
-                    Strategy = investmentStrategy,
-                    Properties = new List<StrategyIndicatorProperty>()
-                };
-                foreach (var indicatorProperty in indicator.Properties)
-                {
-                    if (
-                        _indicatorsService.GetPropertiesForIndicator(indicator.IndicatorType.Value)
-                            .All(item => item.Name != indicatorProperty.Name)) continue;
-                    strategyIndicator.Properties.Add(new StrategyIndicatorProperty
-                    {
-                        Indicator = strategyIndicator,
-                        Name = indicatorProperty.Name,
-                        Value = indicatorProperty.Value
-                    });
-                }
-                investmentStrategy.Indicators.Add(strategyIndicator);
+                AddIndicator(indicator, investmentStrategy);
             }
             _strategiesRepository.Insert(investmentStrategy);
             _strategiesRepository.Save();
             return investmentStrategy.Id;
+        }
+
+        private void AddIndicator(ParameterizedIndicator indicator, InvestmentStrategy investmentStrategy)
+        {
+            if (!indicator.IndicatorType.HasValue)
+                throw new BusinessException("Wrong indicator value");
+
+            var strategyIndicator = new StrategyIndicator
+            {
+                IndicatorType = (int) indicator.IndicatorType.Value,
+                Strategy = investmentStrategy,
+                Properties = new List<StrategyIndicatorProperty>()
+            };
+            foreach (var indicatorProperty in indicator.Properties)
+            {
+                if (
+                    _indicatorsService.GetPropertiesForIndicator(indicator.IndicatorType.Value)
+                        .All(item => item.Name != indicatorProperty.Name)) continue;
+                strategyIndicator.Properties.Add(new StrategyIndicatorProperty
+                {
+                    Indicator = strategyIndicator,
+                    Name = indicatorProperty.Name,
+                    Value = indicatorProperty.Value
+                });
+            }
+            investmentStrategy.Indicators.Add(strategyIndicator);
         }
     }
 }

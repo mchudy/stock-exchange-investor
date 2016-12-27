@@ -36,6 +36,11 @@ namespace StockExchange.DataAccess.Repositories
             Context.BulkInsert(entities);
         }
 
+        public void Remove(TEntity entity)
+        {
+            DbSet.Remove(entity);
+        }
+
         public int Save()
         {
             return Context.SaveChanges();

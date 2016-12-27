@@ -16,7 +16,7 @@ namespace StockExchange.UnitTest.Services
     public class StrategyServiceTests
     {
         private readonly IStrategyService _service;
-        private readonly Mock<IRepository<InvestmentStrategy>> _strategyRepository = new Mock<IRepository<InvestmentStrategy>>();
+        private readonly Mock<IStrategiesRepository> _strategyRepository = new Mock<IStrategiesRepository>();
         private readonly Mock<IIndicatorsService> _indicatorsService = new Mock<IIndicatorsService>();
 
         private readonly IList<InvestmentStrategy> _strategies = new List<InvestmentStrategy>

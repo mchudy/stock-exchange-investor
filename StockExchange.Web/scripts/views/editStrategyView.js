@@ -37,12 +37,13 @@
             type: 'POST',
             contentType: 'application/json',
             data: JSON.stringify({
+                id: config.strategyId,
                 name: $('.strategy-name').val(),
                 indicators: indicators
             })
         })
-        .done(function() {
-            toastr.success('Strategy has been added');
+        .done(function(response) {
+            window.location = response.redirectUrl;
         });
     });
 

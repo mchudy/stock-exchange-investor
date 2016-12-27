@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using StockExchange.DataAccess.Models;
 
 namespace StockExchange.DataAccess.IRepositories
 {
@@ -11,6 +12,8 @@ namespace StockExchange.DataAccess.IRepositories
         void Insert(TEntity entity);
 
         void BulkInsert(IEnumerable<TEntity> entities);
+
+        void Remove(TEntity entity);
 
         int Save();
     }

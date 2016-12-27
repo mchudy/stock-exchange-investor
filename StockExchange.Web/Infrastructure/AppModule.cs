@@ -16,7 +16,7 @@ namespace StockExchange.Web.Infrastructure
             builder.RegisterType<GenericRepository<Company>>().As<IRepository<Company>>();
             builder.RegisterType<GenericRepository<Price>>().As<IRepository<Price>>();
             builder.RegisterType<GenericRepository<User>>().As<IRepository<User>>();
-            builder.RegisterType<GenericRepository<InvestmentStrategy>>().As<IRepository<InvestmentStrategy>>();
+            builder.RegisterType<StrategiesRepository>().AsImplementedInterfaces();
             builder.RegisterType<GenericRepository<UserTransaction>>().AsImplementedInterfaces();
             builder.RegisterAssemblyTypes(typeof(IIndicator).Assembly)
                 .Where(t => t.Namespace != null && t.Namespace.Contains("Services"))
