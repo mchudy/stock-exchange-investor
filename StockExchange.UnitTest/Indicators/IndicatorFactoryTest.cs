@@ -2,7 +2,7 @@
 using StockExchange.Business.Exceptions;
 using StockExchange.Business.Indicators;
 using StockExchange.Business.Indicators.Common;
-using StockExchange.DataAccess.Models;
+using StockExchange.Business.Models.Indicators;
 using System;
 using System.Collections.Generic;
 using Xunit;
@@ -44,14 +44,14 @@ namespace StockExchange.UnitTest.Indicators
         [Fact]
         public void Should_assign_custom_properties_to_indicator()
         {
-            var strategyIndicator = new StrategyIndicator
+            var strategyIndicator = new ParameterizedIndicator()
             {
-                IndicatorType = (int) IndicatorType.Rsi,
-                Properties = new List<StrategyIndicatorProperty>
+                IndicatorType = IndicatorType.Rsi,
+                Properties = new List<IndicatorProperty>
                 {
-                    new StrategyIndicatorProperty {Name = nameof(RsiIndicator.Term), Value = 50},
-                    new StrategyIndicatorProperty {Name = nameof(RsiIndicator.Maximum), Value = 99},
-                    new StrategyIndicatorProperty {Name = nameof(RsiIndicator.Minimum), Value = 10}
+                    new IndicatorProperty {Name = nameof(RsiIndicator.Term), Value = 50},
+                    new IndicatorProperty {Name = nameof(RsiIndicator.Maximum), Value = 99},
+                    new IndicatorProperty {Name = nameof(RsiIndicator.Minimum), Value = 10}
                 }
             };
 
@@ -60,6 +60,23 @@ namespace StockExchange.UnitTest.Indicators
             indicator.Minimum.Should().Be(10);
             indicator.Maximum.Should().Be(99);
             indicator.Term.Should().Be(50);
+        }
+
+        [Fact]
+        public void Should_throw_exception_given_incorrect_property()
+        {
+            var strategyIndicator = new ParameterizedIndicator
+            {
+                IndicatorType = IndicatorType.Ema,
+                Properties = new List<IndicatorProperty>
+                {
+                    new IndicatorProperty {Name = "aaa", Value = 50},
+                }
+            };
+
+            Action act = () => _factory.CreateIndicator(strategyIndicator);
+
+            act.ShouldThrow<ArgumentException>();
         }
     }
 }

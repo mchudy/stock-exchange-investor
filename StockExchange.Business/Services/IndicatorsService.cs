@@ -95,14 +95,15 @@ namespace StockExchange.Business.Services
             }
             foreach (var company in companiesIds)
             {
+                var prices = _priceService.GetPrices(company, endDate);
                 foreach (var indicator in indicators)
                 {
                     if (indicator.IndicatorType == null) continue;
-                    var ind = _indicatorFactory.CreateIndicator(indicator.IndicatorType.Value);
+                    var ind = _indicatorFactory.CreateIndicator(indicator);
                     IList<Signal> signals = new List<Signal>();
                     try
                     {
-                        signals = ind.GenerateSignals(_priceService.GetPrices(company, endDate));
+                        signals = ind.GenerateSignals(prices);
                     }
                     catch (ArgumentException e)
                     {

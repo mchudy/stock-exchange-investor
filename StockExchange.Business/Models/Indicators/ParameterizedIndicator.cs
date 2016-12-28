@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using StockExchange.Business.Indicators.Common;
+﻿using StockExchange.Business.Indicators.Common;
+using System.Collections.Generic;
 
 namespace StockExchange.Business.Models.Indicators
 {

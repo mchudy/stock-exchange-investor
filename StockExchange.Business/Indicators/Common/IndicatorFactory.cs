@@ -1,5 +1,5 @@
 ﻿using StockExchange.Business.Exceptions;
-using StockExchange.DataAccess.Models;
+using StockExchange.Business.Models.Indicators;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,16 +21,19 @@ namespace StockExchange.Business.Indicators.Common
             return Activator.CreateInstance(type) as IIndicator;
         }
 
-        public IIndicator CreateIndicator(StrategyIndicator strategyIndicator)
+        public IIndicator CreateIndicator(ParameterizedIndicator parameterizedIndicator)
         {
-            if(!Enum.IsDefined(typeof(IndicatorType), strategyIndicator.IndicatorType))
-                throw new IndicatorNotFoundException($"Invalid indicator type {strategyIndicator.IndicatorType} in strategy {strategyIndicator.StrategyId}");
+            if (!parameterizedIndicator.IndicatorType.HasValue)
+                throw new ArgumentNullException(nameof(parameterizedIndicator.IndicatorType));
 
-            var indicator = CreateIndicator((IndicatorType) strategyIndicator.IndicatorType);
+            var indicator = CreateIndicator(parameterizedIndicator.IndicatorType.Value);
             Type type = indicator.GetType();
-            foreach (var property in strategyIndicator.Properties)
+            foreach (var property in parameterizedIndicator.Properties)
             {
-                type.GetProperty(property.Name).SetValue(indicator, property.Value);
+                var prop = type.GetProperty(property.Name);
+                if(prop == null)
+                    throw new ArgumentException($"Nonexistent property {property.Name} for indicator {indicator.Type}");
+                prop.SetValue(indicator, property.Value);
             }
             return indicator;
         }

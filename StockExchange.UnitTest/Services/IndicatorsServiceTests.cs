@@ -2,8 +2,11 @@
 using Moq;
 using StockExchange.Business.Indicators;
 using StockExchange.Business.Indicators.Common;
+using StockExchange.Business.Models.Indicators;
 using StockExchange.Business.ServiceInterfaces;
 using StockExchange.Business.Services;
+using System;
+using System.Collections.Generic;
 using Xunit;
 
 namespace StockExchange.UnitTest.Services
@@ -58,6 +61,25 @@ namespace StockExchange.UnitTest.Services
             availableIndicators.Should().Contain(IndicatorType.Vroc);
             availableIndicators.Should().Contain(IndicatorType.Vpt);
             availableIndicators.Should().Contain(IndicatorType.Adx);
+        }
+
+        [Fact]
+        public void GetSignals_should_create_indicator_with_custom_properties()
+        {
+            var indicator = new ParameterizedIndicator
+            {
+                IndicatorType = IndicatorType.Ema,
+                Properties = new List<IndicatorProperty>
+                {
+                    new IndicatorProperty {Name = nameof(EmaIndicator.Term), Value = 10}
+                }
+            };
+            _factory.Setup(f => f.CreateIndicator(indicator)).Returns(new EmaIndicator {Term = 10});
+
+            _service.GetSignals(new DateTime(2016, 1, 1), new DateTime(2016, 1, 30), new List<int> {1},
+                new List<ParameterizedIndicator> {indicator});
+
+            _factory.Verify(f => f.CreateIndicator(indicator));
         }
     }
 }
