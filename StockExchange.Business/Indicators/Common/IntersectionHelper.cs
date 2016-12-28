@@ -26,7 +26,16 @@ namespace StockExchange.Business.Indicators.Common
 
     public static class IntersectionHelper
     {
-        public static IList<IntersectionInfo> FindIntersection(IList<DoubleLineIndicatorValue> doubleLineValues)
+        public static IList<IntersectionInfo> FindIntersections(IList<IndicatorValue> line1, IList<IndicatorValue> line2)
+        {
+            var doubleLine = line1.Select((t, i) => new DoubleLineIndicatorValue()
+            {
+                Date = t.Date, Value = t.Value, SecondLineValue = line2[i].Value
+            }).ToList();
+            return FindIntersections(doubleLine);
+        } 
+
+        public static IList<IntersectionInfo> FindIntersections(IList<DoubleLineIndicatorValue> doubleLineValues)
         {
             var intersections = new List<IntersectionInfo>();
             var previousValue = doubleLineValues[0];
