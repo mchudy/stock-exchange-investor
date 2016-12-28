@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using StockExchange.Business.Indicators;
+using StockExchange.UnitTest.TestHelpers;
 using Xunit;
 
 namespace StockExchange.UnitTest.Indicators.ADX
@@ -11,6 +12,7 @@ namespace StockExchange.UnitTest.Indicators.ADX
 
         public AdxTests()
         {
+            DataHelper.SetPrecisionForDecimal(AdxData.AdxPrecision);
         }
 
         [Fact]
@@ -19,7 +21,11 @@ namespace StockExchange.UnitTest.Indicators.ADX
             var data = AdxData.GetData();
             var actualValues = AdxData.GetValues();
             var values = _indicator.Calculate(data);
-            //values.ShouldAllBeEquivalentTo(actualValues);
+            Assert.Equal(actualValues.Count, values.Count);
+            for(int i=0; i<values.Count; i++)
+            {
+                Assert.Equal(actualValues[i].Value, values[i].Value, AdxData.AdxPrecision);
+            }
         }
     }
 }

@@ -41,22 +41,23 @@ namespace StockExchange.Business.Indicators
                 plusDms.Add(new IndicatorValue { Date = prices[i].Date, Value = plusDm });
                 minusDms.Add(new IndicatorValue { Date = prices[i].Date, Value = minusDm });
             }
-            var plusDisMovingAverage = MovingAverageHelper.SmoothedMovingAverage(plusDms, Term);
-            var minusDisMovingAverage = MovingAverageHelper.SmoothedMovingAverage(minusDms, Term);
-            var atr = new AtrIndicator().Calculate(prices.Skip(1).ToList());
+            var plusDisMovingAverage = MovingAverageHelper.SmoothedSum(plusDms, Term);
+            var minusDisMovingAverage = MovingAverageHelper.SmoothedSum(minusDms, Term);
+            var atr = MovingAverageHelper.SmoothedSum(GetRsValues(prices.Skip(1).ToList()), Term);
             var plusDis = new List<IndicatorValue>();
             var minusDis = new List<IndicatorValue>();
             var diDifferences = new List<IndicatorValue>();
             var diDifferences2 = new List<IndicatorValue>();
+            var dxs = new List<IndicatorValue>();
             for (var i = 0; i < atr.Count; ++i)
             {
                 plusDis.Add(new IndicatorValue { Date = atr[i].Date, Value = 100 * plusDisMovingAverage[i].Value / atr[i].Value });
                 minusDis.Add(new IndicatorValue { Date = atr[i].Date, Value = 100 * minusDisMovingAverage[i].Value / atr[i].Value });
                 diDifferences.Add(new IndicatorValue { Date = plusDis[i].Date, Value = Math.Abs(plusDis[i].Value - minusDis[i].Value) });
-                diDifferences2.Add(new IndicatorValue { Date = plusDis[i].Date, Value = plusDis[i].Value - minusDis[i].Value });
-
+                diDifferences2.Add(new IndicatorValue { Date = plusDis[i].Date, Value = plusDis[i].Value + minusDis[i].Value });
+                dxs.Add(new IndicatorValue() {Date = atr[i].Date, Value = 100 * diDifferences[i].Value/diDifferences2[i].Value});
             }
-            var sma = MovingAverageHelper.SmoothedMovingAverage(diDifferences, Term);
+            var sma = MovingAverageHelper.SmoothedMovingAverage2(dxs, Term);
             diDifferences2 = diDifferences2.Skip(Term - 1).ToList();
             smaValues = sma;
             diplus = plusDis;
@@ -65,11 +66,36 @@ namespace StockExchange.Business.Indicators
             differences2 = diDifferences2;
         }
 
+        private static List<IndicatorValue> GetRsValues(IList<Price> prices)
+        {
+            var rsValues = new List<IndicatorValue>
+            {
+                new IndicatorValue
+                {
+                    Date = prices[0].Date,
+                    Value = prices[0].HighPrice - prices[0].LowPrice
+                }
+            };
+            for (var i = 1; i < prices.Count; i++)
+            {
+                var rs = Math.Max(
+                    prices[i].HighPrice - prices[i].LowPrice, Math.Max(
+                        Math.Abs(prices[i].HighPrice - prices[i - 1].ClosePrice),
+                        Math.Abs(prices[i].LowPrice - prices[i - 1].ClosePrice)));
+                rsValues.Add(new IndicatorValue
+                {
+                    Date = prices[i].Date,
+                    Value = rs
+                });
+            }
+            return rsValues;
+        }
+
         public IList<IndicatorValue> Calculate(IList<Price> prices)
         {
             IList<IndicatorValue> sma, diplus, diminus, diDifferences, diDifferences2;
             CalculateHelper(prices, out sma, out diplus, out diminus, out diDifferences, out diDifferences2);
-            return sma.Select((t, i) => new IndicatorValue { Date = t.Date, Value = 100 * t.Value / diDifferences2[i].Value }).ToList();
+            return sma;
         }
 
         public IList<Signal> GenerateSignals(IList<Price> prices)

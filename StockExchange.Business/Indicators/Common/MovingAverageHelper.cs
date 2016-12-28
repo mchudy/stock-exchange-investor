@@ -72,6 +72,50 @@ namespace StockExchange.Business.Indicators.Common
             return ExponentialMovingAverageInternal(values, terms, alpha);
         }
 
+        public static IList<IndicatorValue> SmoothedSum(IList<IndicatorValue> indicatorValues, int terms)
+        {
+            var values = new List<IndicatorValue>();
+            var prev = new IndicatorValue()
+            {
+                Date = indicatorValues[terms - 1].Date,
+                Value = indicatorValues.Take(terms).Sum(x => x.Value)
+            };
+            values.Add(prev);
+            for (int i = terms; i < indicatorValues.Count; i++)
+            {
+                var newVal = new IndicatorValue()
+                {
+                    Date = indicatorValues[i].Date,
+                    Value = prev.Value - (prev.Value/terms) + indicatorValues[i].Value
+                };
+                values.Add(newVal);
+                prev = newVal;
+            }
+            return values;
+        }
+
+        public static IList<IndicatorValue> SmoothedMovingAverage2(IList<IndicatorValue> indicatorValues, int terms)
+        {
+            var values = new List<IndicatorValue>();
+            var prev = new IndicatorValue()
+            {
+                Date = indicatorValues[terms - 1].Date,
+                Value = indicatorValues.Take(terms).Average(x => x.Value)
+            };
+            values.Add(prev);
+            for (int i = terms; i < indicatorValues.Count; i++)
+            {
+                var newVal = new IndicatorValue()
+                {
+                    Date = indicatorValues[i].Date,
+                    Value = (prev.Value * (terms-1) + indicatorValues[i].Value)/terms
+                };
+                values.Add(newVal);
+                prev = newVal;
+            }
+            return values;
+        } 
+
         private static IList<IndicatorValue> ExponentialMovingAverageInternal(IList<IndicatorValue> values, int terms, decimal alpha)
         {
             IList<IndicatorValue> averages = new List<IndicatorValue>();
