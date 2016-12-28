@@ -10,12 +10,18 @@ namespace StockExchange.Business.Indicators
     public class AdxIndicator : IIndicator
     {
         public const int DefaultTerm = 14;
+        public const decimal AdxStrongTrendValue = 20m;
 
         public IndicatorType Type => IndicatorType.Adx;
 
         public int Term { get; set; } = DefaultTerm;
 
-        public IList<IndicatorValue> Calculate(IList<Price> prices)
+        private void CalculateHelper(IList<Price> prices,
+            out IList<IndicatorValue> smaValues,
+            out IList<IndicatorValue> diplus,
+            out IList<IndicatorValue> diminus,
+            out IList<IndicatorValue> differences,
+            out IList<IndicatorValue> differences2)
         {
             var plusDms = new List<IndicatorValue>();
             var minusDms = new List<IndicatorValue>();
@@ -52,12 +58,46 @@ namespace StockExchange.Business.Indicators
             }
             var sma = MovingAverageHelper.SmoothedMovingAverage(diDifferences, Term);
             diDifferences2 = diDifferences2.Skip(Term - 1).ToList();
+            smaValues = sma;
+            diplus = plusDis;
+            diminus = minusDis;
+            differences = diDifferences;
+            differences2 = diDifferences2;
+        }
+
+        public IList<IndicatorValue> Calculate(IList<Price> prices)
+        {
+            IList<IndicatorValue> sma, diplus, diminus, diDifferences, diDifferences2;
+            CalculateHelper(prices, out sma, out diplus, out diminus, out diDifferences, out diDifferences2);
             return sma.Select((t, i) => new IndicatorValue { Date = t.Date, Value = 100 * t.Value / diDifferences2[i].Value }).ToList();
         }
 
         public IList<Signal> GenerateSignals(IList<Price> prices)
         {
+            IList<IndicatorValue> sma, diplus, diminus, diDifferences, diDifferences2;
+            CalculateHelper(prices, out sma, out diplus, out diminus, out diDifferences, out diDifferences2);
+            var adxValues = sma.Select((t, i) => new IndicatorValue { Date = t.Date, Value = 100 * t.Value / diDifferences2[i].Value }).ToList();
+            var intersections = IntersectionHelper.FindIntersections(diplus, diminus);
             var signals = new List<Signal>();
+            foreach (var intersectionInfo in intersections)
+            {
+                SignalAction action = SignalAction.NoSignal;
+                switch (intersectionInfo.IntersectionType)
+                {
+                    case IntersectionType.FirstAbove:
+                        action = SignalAction.Buy;
+                        break;
+                    case IntersectionType.SecondAbove:
+                        action = SignalAction.Sell;
+                        break;
+                    case IntersectionType.Same:
+                        action = SignalAction.NoSignal;
+                        break;
+                }
+                var adx = adxValues.FirstOrDefault(v => v.Date == intersectionInfo.Date);
+                if(adx != null && adx.Value > AdxStrongTrendValue)
+                    signals.Add(new Signal(action) {Date = adx.Date});
+            }
             return signals;
         }
     }

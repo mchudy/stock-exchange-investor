@@ -1,4 +1,6 @@
-﻿using StockExchange.Business.Indicators;
+﻿using FluentAssertions;
+using StockExchange.Business.Indicators;
+using Xunit;
 
 namespace StockExchange.UnitTest.Indicators.ADX
 {
@@ -9,7 +11,15 @@ namespace StockExchange.UnitTest.Indicators.ADX
 
         public AdxTests()
         {
-            
+        }
+
+        [Fact]
+        public void TestAdxValues()
+        {
+            var data = AdxData.GetData();
+            var actualValues = AdxData.GetValues();
+            var values = _indicator.Calculate(data);
+            //values.ShouldAllBeEquivalentTo(actualValues);
         }
     }
 }

@@ -113,6 +113,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Indicators\ADX\AdxData.cs" />
     <Compile Include="Indicators\ADX\AdxTests.cs" />
     <Compile Include="Indicators\EMA\EmaData.cs" />
     <Compile Include="Indicators\EMA\EmaTests.cs" />
