@@ -10,7 +10,7 @@ namespace StockExchange.Business.Indicators
     public class AdxIndicator : IIndicator
     {
         public const int DefaultTerm = 14;
-        public const decimal AdxStrongTrendValue = 20m;
+        public const decimal AdxStrongTrendValue = 25m;
 
         public IndicatorType Type => IndicatorType.Adx;
 

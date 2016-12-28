@@ -5,7 +5,6 @@ using Xunit;
 
 namespace StockExchange.UnitTest.Indicators.ADX
 {
-    // TODO
     public class AdxTests
     {
         private readonly AdxIndicator _indicator = new AdxIndicator();

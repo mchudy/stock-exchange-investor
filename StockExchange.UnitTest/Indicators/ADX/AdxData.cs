@@ -17,6 +17,7 @@ namespace StockExchange.UnitTest.Indicators.ADX
     public static class AdxData
     {
         public const int AdxPrecision = 4;
+
         public static IList<Price> GetData()
         {
             return DataHelper.ConvertToPrices(new decimal[,]
