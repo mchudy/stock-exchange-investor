@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using StockExchange.Business.Extensions;
+using StockExchange.Business.Models.Filters;
 using StockExchange.Business.Models.Transaction;
 using StockExchange.DataAccess.Models;
 
@@ -8,7 +10,7 @@ namespace StockExchange.Business.ServiceInterfaces
     {
         void AddUserTransaction(UserTransactionDto dto);
 
-        IList<UserTransactionDto> GetUserTransactions(int userId);
+        PagedList<UserTransactionDto> GetUserTransactions(int userId, PagedFilterDefinition<TransactionFilter> filter);
 
         int GetUserTransactionsCount(int userId);
 

@@ -7,6 +7,8 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using StockExchange.Business.Extensions;
+using StockExchange.Business.Models.Filters;
 using StockExchange.Business.Models.Transaction;
 
 namespace StockExchange.Business.Services
@@ -22,7 +24,7 @@ namespace StockExchange.Business.Services
             _transactionsRepository = transactionsRepository;
         }
 
-        public IList<UserTransactionDto> GetUserTransactions(int userId)
+        public PagedList<UserTransactionDto> GetUserTransactions(int userId, PagedFilterDefinition<TransactionFilter> filter)
         {
             return _transactionsRepository.GetQueryable()
                 .Include(t => t.Company)
@@ -35,7 +37,7 @@ namespace StockExchange.Business.Services
                     Date = t.Date,
                     Price = t.Price,
                     Quantity = t.Quantity
-                }).ToList();
+                }).ToPagedList(filter.Start, filter.Length);
         }
 
         public int GetUserTransactionsCount(int userId)

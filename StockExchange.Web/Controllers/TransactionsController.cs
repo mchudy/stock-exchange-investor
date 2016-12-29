@@ -4,7 +4,13 @@ using StockExchange.Web.Filters;
 using StockExchange.Web.Helpers.Json;
 using StockExchange.Web.Models.Transactions;
 using System;
+using System.Collections.Generic;
 using System.Web.Mvc;
+using StockExchange.Business.Extensions;
+using StockExchange.Business.Models.Filters;
+using StockExchange.Business.Models.Price;
+using StockExchange.Web.Helpers;
+using StockExchange.Web.Models.DataTables;
 
 namespace StockExchange.Web.Controllers
 {
@@ -27,14 +33,16 @@ namespace StockExchange.Web.Controllers
             {
                 Companies = _companyService.GetAllCompanies()
             };
-            return View(model);
+            return View(new TransactionViewModel { AddTransactionViewModel = model, Transactions = new List<UserTransactionDto>() });
         }
 
         [HttpGet]
-        public ActionResult TransactionsTable()
+        public ActionResult GetTransactionsTable(DataTableMessage<TransactionFilter> dataTableMessage)
         {
-            var transactions = _transactionsService.GetUserTransactions(CurrentUserId);
-            return PartialView("_TransactionsTable", transactions);
+            var searchMessage = DataTableMessageConverter.ToPagedFilterDefinition(dataTableMessage);
+            var pagedList = _transactionsService.GetUserTransactions(CurrentUserId, searchMessage);
+            var model = BuildDataTableResponse(dataTableMessage, pagedList);
+            return new JsonNetResult(model, false);
         }
 
         [HttpPost]
@@ -46,7 +54,20 @@ namespace StockExchange.Web.Controllers
 
             var dto = BuildUserTransactionDto(model);
             _transactionsService.AddUserTransaction(dto);
-            return new JsonNetResult(new { dto.Id } );
+            return new JsonNetResult(new { dto.Id });
+        }
+
+        // ReSharper disable once SuggestBaseTypeForParameter
+        private static DataTableResponse<UserTransactionDto> BuildDataTableResponse(DataTableMessage<TransactionFilter> dataTableMessage, PagedList<UserTransactionDto> pagedList)
+        {
+            var model = new DataTableResponse<UserTransactionDto>
+            {
+                RecordsFiltered = pagedList.TotalCount,
+                RecordsTotal = pagedList.TotalCount,
+                Data = pagedList,
+                Draw = dataTableMessage.Draw
+            };
+            return model;
         }
 
         private UserTransactionDto BuildUserTransactionDto(AddTransactionViewModel model)

@@ -90,6 +90,7 @@
     <Compile Include="Indicators\VhfIndicator.cs" />
     <Compile Include="Indicators\VrocIndicator.cs" />
     <Compile Include="Indicators\SmaIndicator.cs" />
+    <Compile Include="Models\Filters\TransactionFilter.cs" />
     <Compile Include="Models\Indicators\CompanyIndicatorValues.cs" />
     <Compile Include="Models\Indicators\IndicatorDto.cs" />
     <Compile Include="Models\Indicators\IndicatorProperty.cs" />

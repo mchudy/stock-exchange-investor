@@ -2593,6 +2593,7 @@
     <Compile Include="Models\Simulation\SimulationViewModel.cs" />
     <Compile Include="Models\Strategy\EditStrategyViewModel.cs" />
     <Compile Include="Models\Transactions\AddTransactionViewModel.cs" />
+    <Compile Include="Models\Transactions\TransactionViewModel.cs" />
     <Compile Include="Models\Wallet\CreateWalletViewModel.cs" />
     <Compile Include="Models\Wallet\UpdateBudgetViewModel.cs" />
     <Compile Include="Models\Wallet\WalletViewModel.cs" />
