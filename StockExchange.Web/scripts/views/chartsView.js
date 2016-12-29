@@ -31,12 +31,15 @@
         var type = $(this).val();
 
         $('.indicator-properties').addClass('hidden');
+        $refreshBtn.addClass('hidden');
+
         if (type) {
-            $('.indicator-properties[data-type="' + type + '"]').removeClass('hidden');
-            $refreshBtn.removeClass('hidden');
-        } else {
-            $refreshBtn.addClass('hidden');
-        }
+            var props = $('.indicator-properties[data-type="' + type + '"]');
+            props.removeClass('hidden');
+            if (props.length > 0) {
+                $refreshBtn.removeClass('hidden');
+            }
+        } 
 
         loadIndicatorValues(type);
     });
