@@ -1,17 +1,17 @@
-﻿using StockExchange.Business.Models.Indicators;
+﻿using StockExchange.Business.Indicators.Common;
+using StockExchange.Business.Models.Company;
+using StockExchange.Business.Models.Indicators;
+using StockExchange.Business.Models.Price;
 using StockExchange.Business.ServiceInterfaces;
 using StockExchange.Common.Extensions;
 using StockExchange.Web.Helpers;
+using StockExchange.Web.Helpers.Json;
 using StockExchange.Web.Models.Charts;
+using StockExchange.Web.Models.Indicator;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
-using StockExchange.Business.Indicators.Common;
-using StockExchange.Business.Models.Company;
-using StockExchange.Business.Models.Price;
-using StockExchange.Web.Helpers.Json;
-using StockExchange.Web.Models.Indicator;
 
 namespace StockExchange.Web.Controllers
 {
@@ -58,7 +58,7 @@ namespace StockExchange.Web.Controllers
         }
 
         [HttpGet]
-        public ActionResult GetIndicatorValues(IList<int> companyIds, IndicatorType type)
+        public ActionResult GetIndicatorValues(IList<int> companyIds, IndicatorType type, IList<IndicatorProperty> properties)
         {
             var values = _indicatorsService.GetIndicatorValues(type, companyIds);
             var model = BuildIndicatorChartModel(values);
@@ -74,7 +74,7 @@ namespace StockExchange.Web.Controllers
                     .Select(i => new IndicatorViewModel
                     {
                         Name = i.GetEnumDescription(),
-                        Type = i
+                        Type = i,
                     }).ToList()
             };
         }

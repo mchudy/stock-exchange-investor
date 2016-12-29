@@ -14,13 +14,13 @@ namespace StockExchange.Business.ServiceInterfaces
 
         IList<CompanyIndicatorValues> GetIndicatorValues(IndicatorType type, IList<int> companyIds);
 
-        IList<IndicatorType> GetAvailableIndicators();
+        IList<IndicatorType> GetAllIndicatorTypes();
 
-        IList<IndicatorDto> GetIndicatorsForStrategy();
+        IList<IndicatorDto> GetAllIndicators();
 
         IndicatorType? GetTypeFromName(string indicatorName);
 
-        IList<ParameterizedIndicator> ConvertIndicators(IEnumerable<StrategyIndicator> i);
+        IList<ParameterizedIndicator> ConvertIndicators(IEnumerable<StrategyIndicator> indicators);
 
         IList<SignalEvent> GetSignals(DateTime startDate, DateTime endDate, IList<int> companiesIds, IList<ParameterizedIndicator> indicators);
     }

@@ -2591,7 +2591,9 @@
     <Compile Include="Models\Simulation\SimulationResultViewModel.cs" />
     <Compile Include="Models\Simulation\SimulationTransaction.cs" />
     <Compile Include="Models\Simulation\SimulationViewModel.cs" />
+    <Compile Include="Models\Indicator\EditIndicatorViewModel.cs" />
     <Compile Include="Models\Strategy\EditStrategyViewModel.cs" />
+    <Compile Include="Models\Indicator\IndicatorPropertyViewModel.cs" />
     <Compile Include="Models\Transactions\AddTransactionViewModel.cs" />
     <Compile Include="Models\Transactions\TransactionViewModel.cs" />
     <Compile Include="Models\Wallet\CreateWalletViewModel.cs" />

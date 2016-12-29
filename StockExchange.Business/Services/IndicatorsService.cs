@@ -25,14 +25,14 @@ namespace StockExchange.Business.Services
             _priceService = priceService;
         }
 
-        public IList<IndicatorType> GetAvailableIndicators()
+        public IList<IndicatorType> GetAllIndicatorTypes()
         {
             return typeof(IndicatorType).GetEnumValues()
                 .Cast<IndicatorType>()
                 .ToList();
         }
 
-        public IList<IndicatorDto> GetIndicatorsForStrategy()
+        public IList<IndicatorDto> GetAllIndicators()
         {
             return typeof(IndicatorType).GetEnumValues().Cast<IndicatorType>().Select(i => new IndicatorDto()
             {
@@ -72,9 +72,9 @@ namespace StockExchange.Business.Services
             return GetIndicatorValues(indicator, companyIds);
         }
 
-        public IList<ParameterizedIndicator> ConvertIndicators(IEnumerable<StrategyIndicator> i)
+        public IList<ParameterizedIndicator> ConvertIndicators(IEnumerable<StrategyIndicator> indicators)
         {
-            return i.Select(item => new ParameterizedIndicator
+            return indicators.Select(item => new ParameterizedIndicator
             {
                 IndicatorType = (IndicatorType)item.IndicatorType,
                 Properties = ConvertIndicatorProperties(item.Properties)

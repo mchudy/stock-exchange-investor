@@ -47,7 +47,7 @@ namespace StockExchange.UnitTest.Services
         [Fact]
         public void Getting_available_indicators_returns_correct_values()
         {
-            var availableIndicators = _service.GetAvailableIndicators();
+            var availableIndicators = _service.GetAllIndicatorTypes();
             availableIndicators.Should().NotBeNull();
             availableIndicators.Should().Contain(IndicatorType.Macd);
             availableIndicators.Should().Contain(IndicatorType.Rsi);

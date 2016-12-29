@@ -4,6 +4,7 @@ using StockExchange.Business.ServiceInterfaces;
 using StockExchange.Web.Filters;
 using StockExchange.Web.Helpers.Json;
 using StockExchange.Web.Helpers.ToastNotifications;
+using StockExchange.Web.Models.Indicator;
 using StockExchange.Web.Models.Strategy;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -93,7 +94,7 @@ namespace StockExchange.Web.Controllers
         {
             var model = new EditStrategyViewModel()
             {
-                Indicators = _indicatorsService.GetIndicatorsForStrategy().Select(dto=>new EditIndicatorViewModel()
+                Indicators = _indicatorsService.GetAllIndicators().Select(dto=>new EditIndicatorViewModel()
                 {
                     Name = dto.IndicatorName,
                     Type = dto.IndicatorType
