@@ -10,19 +10,22 @@ using StockExchange.Web.Models.Transactions;
 using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
+using StockExchange.Business.Models.Wallet;
 
 namespace StockExchange.Web.Controllers
 {
     [Authorize]
     public class TransactionsController : BaseController
     {
+        private readonly IWalletService _walletService;
         private readonly ITransactionsService _transactionsService;
         private readonly ICompanyService _companyService;
 
-        public TransactionsController(ITransactionsService transactionsService, ICompanyService companyService)
+        public TransactionsController(ITransactionsService transactionsService, ICompanyService companyService, IWalletService walletService)
         {
             _transactionsService = transactionsService;
             _companyService = companyService;
+            _walletService = walletService;
         }
 
         [HttpGet]
@@ -45,6 +48,15 @@ namespace StockExchange.Web.Controllers
         }
 
         [HttpPost]
+        public ActionResult GetCurrentTransactionsTable(DataTableMessage<TransactionFilter> dataTableMessage)
+        {
+            var searchMessage = DataTableMessageConverter.ToPagedFilterDefinition(dataTableMessage);
+            var pagedList = _walletService.GetOwnedStocks(CurrentUserId, searchMessage);
+            var model = BuildCurrentDataTableResponse(dataTableMessage, pagedList);
+            return new JsonNetResult(model, false);
+        }
+
+        [HttpPost]
         [HandleJsonError]
         public ActionResult AddTransaction(TransactionViewModel model)
         {
@@ -60,6 +72,19 @@ namespace StockExchange.Web.Controllers
         private static DataTableResponse<UserTransactionDto> BuildDataTableResponse(DataTableMessage<TransactionFilter> dataTableMessage, PagedList<UserTransactionDto> pagedList)
         {
             var model = new DataTableResponse<UserTransactionDto>
+            {
+                RecordsFiltered = pagedList.TotalCount,
+                RecordsTotal = pagedList.TotalCount,
+                Data = pagedList,
+                Draw = dataTableMessage.Draw
+            };
+            return model;
+        }
+
+        // ReSharper disable once SuggestBaseTypeForParameter
+        private static DataTableResponse<OwnedCompanyStocksDto> BuildCurrentDataTableResponse(DataTableMessage<TransactionFilter> dataTableMessage, PagedList<OwnedCompanyStocksDto> pagedList)
+        {
+            var model = new DataTableResponse<OwnedCompanyStocksDto>
             {
                 RecordsFiltered = pagedList.TotalCount,
                 RecordsTotal = pagedList.TotalCount,

@@ -2624,6 +2624,7 @@
     <Content Include="Views\Shared\EditorTemplates\EnumTemplate.cshtml" />
     <Content Include="Views\Wallet\_EditBudgetDialog.cshtml" />
     <Content Include="Views\Strategies\Index.cshtml" />
+    <Content Include="Views\Transactions\_CurrentTransactionsTable.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

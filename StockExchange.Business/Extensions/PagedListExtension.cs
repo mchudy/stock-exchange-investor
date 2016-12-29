@@ -10,6 +10,11 @@ namespace StockExchange.Business.Extensions
         {
             return new PagedList<T>(queryable, skip, take);
         }
+
+        public static PagedList<T> ToPagedList<T>(this IEnumerable<T> queryable, int skip, int take)
+        {
+            return new PagedList<T>(queryable, skip, take);
+        }
     }
 
     public sealed class PagedList<T> : IReadOnlyList<T>
@@ -29,6 +34,12 @@ namespace StockExchange.Business.Extensions
         }
 
         public PagedList(IQueryable<T> enumerable, int skip, int take) : this(skip, take)
+        {
+            TotalCount = enumerable.Count();
+            _list = enumerable.Skip(skip).Take(take).ToList();
+        }
+
+        public PagedList(IEnumerable<T> enumerable, int skip, int take) : this(skip, take)
         {
             TotalCount = enumerable.Count();
             _list = enumerable.Skip(skip).Take(take).ToList();

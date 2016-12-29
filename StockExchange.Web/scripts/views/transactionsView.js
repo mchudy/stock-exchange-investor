@@ -25,6 +25,25 @@
         }
     });
 
+    var ajaxUrlCurrent = $('#current-grid').data('ajax-url');
+    var columnsCurrent = $('#current-grid th').DataTableColumns();
+    var columnDefsCurrent = $('#currentgrid th').DataTableColumnDefs();
+
+    var dataTableCurrent = $('#current-grid').DataTable(
+    {
+        columns: columnsCurrent,
+        columnDefs: columnDefsCurrent,
+        responsive: true,
+        ajax: {
+            url: ajaxUrlCurrent,
+            contentType: 'application/json',
+            type: 'POST',
+            data: function (d) {
+                return JSON.stringify(d);
+            }
+        }
+    });
+
     $('#add-transaction-form').on('submit', function (event) {
         event.preventDefault();
 
@@ -36,6 +55,7 @@
         }).done(function () {
             toastr.success('Transaction has been added');
             dataTable.draw();
+            dataTableCurrent.draw();
         });
     });
 })();
