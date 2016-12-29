@@ -6,33 +6,29 @@
     </div>
     <div class="box-body">
         <div class="table-responsive">
-            <div id="grid-container" class="grid-container ">
-                <table id="grid" class="table table-hover table-striped table-bordered"
-                      
-                       data-searching="false"
-                      
-                       data-auto-width="true"
-                       data-scroll-collapse="true"
-                       data-processing="true"
-                       data-server-side="true"
-                       data-ajax-url="@Url.Action("GetTransactionsTable")">
-                    <thead>
-                        <tr>
-                            <th class="width-big" data-column="Date">@Html.DisplayNameFor(i => Model.Transactions.FirstOrDefault().Date)</th>
-                            <th class="width-small" data-column="CompanyId">@Html.DisplayNameFor(i => Model.Transactions.FirstOrDefault().CompanyId)</th>
-                            <th class="width-small" data-column="Price">@Html.DisplayNameFor(i => Model.Transactions.FirstOrDefault().Price)</th>
-                            <th class="width-small" data-column="Quantity">@Html.DisplayNameFor(i => Model.Transactions.FirstOrDefault().Quantity)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td colspan="4">
-                                <span>Loading Data...</span>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+            <table id="grid" class="table table-hover"
+                   data-searching="false"
+                   data-auto-width="true"
+                   data-scroll-collapse="true"
+                   data-processing="true"
+                   data-server-side="true"
+                   data-ajax-url="@Url.Action("GetTransactionsTable")">
+                <thead>
+                    <tr>
+                        <th data-column="Date">@Html.DisplayNameFor(i => Model.Transactions.FirstOrDefault().Date)</th>
+                        <th data-column="CompanyId">@Html.DisplayNameFor(i => Model.Transactions.FirstOrDefault().CompanyId)</th>
+                        <th data-column="Price">@Html.DisplayNameFor(i => Model.Transactions.FirstOrDefault().Price)</th>
+                        <th data-column="Quantity">@Html.DisplayNameFor(i => Model.Transactions.FirstOrDefault().Quantity)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="4">
+                            <span>Loading Data...</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>

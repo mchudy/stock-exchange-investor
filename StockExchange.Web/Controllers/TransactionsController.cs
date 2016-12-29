@@ -1,16 +1,15 @@
-﻿using StockExchange.Business.Models.Transaction;
+﻿using StockExchange.Business.Extensions;
+using StockExchange.Business.Models.Filters;
+using StockExchange.Business.Models.Transaction;
 using StockExchange.Business.ServiceInterfaces;
 using StockExchange.Web.Filters;
+using StockExchange.Web.Helpers;
 using StockExchange.Web.Helpers.Json;
+using StockExchange.Web.Models.DataTables;
 using StockExchange.Web.Models.Transactions;
 using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
-using StockExchange.Business.Extensions;
-using StockExchange.Business.Models.Filters;
-using StockExchange.Business.Models.Price;
-using StockExchange.Web.Helpers;
-using StockExchange.Web.Models.DataTables;
 
 namespace StockExchange.Web.Controllers
 {
@@ -36,7 +35,7 @@ namespace StockExchange.Web.Controllers
             return View(new TransactionViewModel { AddTransactionViewModel = model, Transactions = new List<UserTransactionDto>() });
         }
 
-        [HttpGet]
+        [HttpPost]
         public ActionResult GetTransactionsTable(DataTableMessage<TransactionFilter> dataTableMessage)
         {
             var searchMessage = DataTableMessageConverter.ToPagedFilterDefinition(dataTableMessage);

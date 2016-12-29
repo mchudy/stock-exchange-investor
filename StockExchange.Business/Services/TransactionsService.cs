@@ -1,5 +1,9 @@
 ﻿using StockExchange.Business.ErrorHandling;
 using StockExchange.Business.Exceptions;
+using StockExchange.Business.Extensions;
+using StockExchange.Business.Models.Company;
+using StockExchange.Business.Models.Filters;
+using StockExchange.Business.Models.Transaction;
 using StockExchange.Business.ServiceInterfaces;
 using StockExchange.DataAccess.IRepositories;
 using StockExchange.DataAccess.Models;
@@ -7,9 +11,6 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using StockExchange.Business.Extensions;
-using StockExchange.Business.Models.Filters;
-using StockExchange.Business.Models.Transaction;
 
 namespace StockExchange.Business.Services
 {
@@ -32,7 +33,12 @@ namespace StockExchange.Business.Services
                 .OrderByDescending(t => t.Date)
                 .Select(t => new UserTransactionDto
                 {
-                    Company = t.Company,
+                    Company = new CompanyDto
+                    {
+                        Code = t.Company.Code,
+                        Name = t.Company.Code,
+                        Id = t.CompanyId
+                    },
                     UserId = t.UserId,
                     Date = t.Date,
                     Price = t.Price,

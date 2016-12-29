@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using StockExchange.Business.Models.Company;
 
 namespace StockExchange.Business.Models.Transaction
 {
@@ -18,7 +19,7 @@ namespace StockExchange.Business.Models.Transaction
 
         public int UserId { get; set; }
 
-        public DataAccess.Models.Company Company { get; set; }
+        public CompanyDto Company { get; set; }
 
         [Display(Name = "CompanyId")]
         public int CompanyId { get; set; }
