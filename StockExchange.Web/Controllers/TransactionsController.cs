@@ -9,8 +9,10 @@ using StockExchange.Web.Models.DataTables;
 using StockExchange.Web.Models.Transactions;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 using StockExchange.Business.Models.Wallet;
+using StockExchange.Web.Models.Wallet;
 
 namespace StockExchange.Web.Controllers
 {
@@ -20,12 +22,14 @@ namespace StockExchange.Web.Controllers
         private readonly IWalletService _walletService;
         private readonly ITransactionsService _transactionsService;
         private readonly ICompanyService _companyService;
+        private readonly IUserService _userService;
 
-        public TransactionsController(ITransactionsService transactionsService, ICompanyService companyService, IWalletService walletService)
+        public TransactionsController(ITransactionsService transactionsService, ICompanyService companyService, IWalletService walletService, IUserService userService)
         {
             _transactionsService = transactionsService;
             _companyService = companyService;
             _walletService = walletService;
+            _userService = userService;
         }
 
         [HttpGet]
@@ -35,7 +39,11 @@ namespace StockExchange.Web.Controllers
             {
                 Companies = _companyService.GetAllCompanies()
             };
-            return View(new TransactionViewModel { AddTransactionViewModel = model, Transactions = new List<UserTransactionDto>() });
+            var ownedStocks = _walletService.GetOwnedStocks(CurrentUserId);
+            return View(new TransactionViewModel { AddTransactionViewModel = model, Transactions = new List<UserTransactionDto>(),
+                FreeBudget = CurrentUser.Budget,
+                AllStocksValue = ownedStocks.Sum(s => s.CurrentValue), CurrentTransactions = new List<OwnedCompanyStocksDto>()
+            });
         }
 
         [HttpPost]
@@ -66,6 +74,24 @@ namespace StockExchange.Web.Controllers
             var dto = BuildUserTransactionDto(model.AddTransactionViewModel);
             _transactionsService.AddUserTransaction(dto);
             return new JsonNetResult(new { dto.Id });
+        }
+
+        [HttpGet]
+        public ActionResult EditBudgetDialog()
+        {
+            var model = new UpdateBudgetViewModel { NewBudget = CurrentUser.Budget };
+            return PartialView("_EditBudgetDialog", model);
+        }
+
+        [HttpPost]
+        public ActionResult EditBudget(UpdateBudgetViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return PartialView("_EditBudgetDialog");
+            }
+            _userService.EditBudget(CurrentUserId, model.NewBudget);
+            return RedirectToAction("Index");
         }
 
         // ReSharper disable once SuggestBaseTypeForParameter

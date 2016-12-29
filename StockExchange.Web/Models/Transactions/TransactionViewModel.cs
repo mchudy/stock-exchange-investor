@@ -11,5 +11,11 @@ namespace StockExchange.Web.Models.Transactions
         public IList<UserTransactionDto> Transactions { get; set; }
 
         public IList<OwnedCompanyStocksDto> CurrentTransactions { get; set; }
+
+        public decimal FreeBudget { get; set; }
+
+        public decimal AllStocksValue { get; set; }
+
+        public decimal TotalBudget => FreeBudget + AllStocksValue;
     }
 }

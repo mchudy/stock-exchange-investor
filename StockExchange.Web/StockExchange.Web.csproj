@@ -2625,6 +2625,7 @@
     <Content Include="Views\Wallet\_EditBudgetDialog.cshtml" />
     <Content Include="Views\Strategies\Index.cshtml" />
     <Content Include="Views\Transactions\_CurrentTransactionsTable.cshtml" />
+    <Content Include="Views\Transactions\_EditBudgetDialog.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

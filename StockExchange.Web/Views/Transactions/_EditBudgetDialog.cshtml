@@ -1,0 +1,32 @@
+﻿@model StockExchange.Web.Models.Wallet.UpdateBudgetViewModel
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title">Edit your free budget</h4>
+</div>
+
+@using (Html.BeginForm("EditBudget", "Wallet", FormMethod.Post, new { id = "edit-budget-form", @class = "form-horizontal" }))
+{
+    <div class="modal-body">
+        <div class="form-group has-feedback">
+            @Html.LabelFor(m => m.NewBudget, new { @class = "col-sm-4 control-label" })
+            <div class="col-sm-8">
+                @Html.EditorFor(m => m.NewBudget, new { htmlAttributes = new { @class = "form-control", autofocus = "" } })
+                <span class="glyphicon form-control-feedback"></span>
+                @Html.ValidationMessageFor(m => m.NewBudget, null, new { @class = "help-block" })
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">
+            Cancel
+        </button>
+        <button type="submit" id="approve-btn" class="btn btn-danger">
+            Save
+        </button>
+    </div>
+}
+
+<script>
+    $.validator.unobtrusive.parse("#edit-budget-form");
+</script>

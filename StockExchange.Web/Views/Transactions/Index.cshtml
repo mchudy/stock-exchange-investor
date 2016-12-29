@@ -1,5 +1,6 @@
 ﻿@model StockExchange.Web.Models.Transactions.TransactionViewModel
 @using System.Web.Optimization
+@using StockExchange.Common.Extensions
 
 @{
     ViewBag.Title = "Transactions";
@@ -14,13 +15,31 @@
             @Html.Partial("_CurrentTransactionsTable")
         </div>
     </div>
-    <div class="col-sm-3">
+    <div class="col-md-4">
+        <div class="info-box bg-yellow">
+            <span class="info-box-icon"><i class="fa fa-money"></i></span>
+
+            <div class="info-box-content">
+                @* ReSharper disable once UnknownCssClass *@
+                @Html.ActionLink("Edit ", "EditBudgetDialog", "Transactions", null, new { @class = "modal-link btn btn-success pull-right" })
+                <div class="col-sm-4">
+                    <span class="info-box-text">Free budget</span>
+                    <span class="info-box-number">@Model.FreeBudget.FormatCurrency()</span>
+                    <span class="info-box-text">Stocks value</span>
+                    <span class="info-box-number">@Model.AllStocksValue.FormatCurrency()</span>
+                </div>
+                <div class="col-sm-4">
+                    <span class="info-box-text">Total budget</span>
+                    <span class="info-box-number">@Model.TotalBudget.FormatCurrency()</span>
+                </div>
+            </div>
+        </div>
         <div class="box box-success">
             <div class="box-header with-border">
                 <h3 class="box-title">Add transaction</h3>
             </div>
             <div class="box-body col-sm-11 col-centered">
-                @using (Html.BeginForm("AddTransaction", "Transactions", new { }, FormMethod.Post, new { @class = "form-horizontal", role = "form", id = "add-transaction-form" }))
+                @using (Html.BeginForm("AddTransaction", "Transactions", new {}, FormMethod.Post, new {@class = "form-horizontal", role = "form", id = "add-transaction-form"}))
                 {
                     <div class="form-group">
                         <div class="col-sm-offset-1 col-sm-8">
@@ -29,30 +48,30 @@
                     </div>
 
                     <div class="form-group has-feedback">
-                        @Html.LabelFor(m => m.AddTransactionViewModel.Companies, new { @class = "col-sm-4 control-label" })
+                        @Html.LabelFor(m => m.AddTransactionViewModel.Companies, new {@class = "col-sm-4 control-label"})
                         <div class="col-sm-8 input-group">
-                            @Html.DropDownListFor(m => m.AddTransactionViewModel.SelectedCompanyId, new SelectList(Model.AddTransactionViewModel.Companies, "Id", "Name"), new { @class = "form-control", style = "width: 100%;" })
+                            @Html.DropDownListFor(m => m.AddTransactionViewModel.SelectedCompanyId, new SelectList(Model.AddTransactionViewModel.Companies, "Id", "Name"), new {@class = "form-control", style = "width: 100%;"})
                             <span class="glyphicon form-control-feedback"></span>
-                            @Html.ValidationMessageFor(m => m.AddTransactionViewModel.SelectedCompanyId, null, new { @class = "help-block" })
+                            @Html.ValidationMessageFor(m => m.AddTransactionViewModel.SelectedCompanyId, null, new {@class = "help-block"})
                         </div>
                     </div>
 
                     <div class="form-group has-feedback">
-                        @Html.LabelFor(m => m.AddTransactionViewModel.Price, new { @class = "col-sm-4 control-label" })
+                        @Html.LabelFor(m => m.AddTransactionViewModel.Price, new {@class = "col-sm-4 control-label"})
                         <div class="col-sm-8 input-group">
-                            @Html.EditorFor(m => m.AddTransactionViewModel.Price, null, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.EditorFor(m => m.AddTransactionViewModel.Price, null, new {htmlAttributes = new {@class = "form-control"}})
                             <span class="glyphicon form-control-feedback"></span>
-                            @Html.ValidationMessageFor(m => m.AddTransactionViewModel.Price, null, new { @class = "help-block" })
+                            @Html.ValidationMessageFor(m => m.AddTransactionViewModel.Price, null, new {@class = "help-block"})
                         </div>
                     </div>
 
                     <div class="form-group has-feedback">
-                        @Html.LabelFor(m => m.AddTransactionViewModel.Quantity, new { @class = "col-sm-4 control-label" })
+                        @Html.LabelFor(m => m.AddTransactionViewModel.Quantity, new {@class = "col-sm-4 control-label"})
                         <div class="col-sm-8 input-group">
                             <div class="col-sm-8 input-group">
-                                @Html.EditorFor(m => m.AddTransactionViewModel.Quantity, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.EditorFor(m => m.AddTransactionViewModel.Quantity, new {htmlAttributes = new {@class = "form-control"}})
                                 <span class="glyphicon form-control-feedback"></span>
-                                @Html.ValidationMessageFor(m => m.AddTransactionViewModel.Quantity, null, new { @class = "help-block" })
+                                @Html.ValidationMessageFor(m => m.AddTransactionViewModel.Quantity, null, new {@class = "help-block"})
                             </div>
                         </div>
                     </div>
