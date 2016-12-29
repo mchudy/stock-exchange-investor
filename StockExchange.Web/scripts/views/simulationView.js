@@ -1,7 +1,9 @@
 ﻿(function($) {
     'use strict';
 
-    $('.company-select').select2({
+    var $companySelect = $('.company-select');
+
+    $companySelect.select2({
         placeholder: 'Choose companies'
     });
 
@@ -11,5 +13,13 @@
 
     $('#StartDate').datepicker();
     $('#EndDate').datepicker();
+
+    $('#AllCompanies')
+        .on('ifChecked ', function() {
+            $companySelect.prop('disabled', true);
+        })
+        .on('ifUnchecked', function() {
+            $companySelect.prop('disabled', false);
+        });
 
 })(jQuery);
