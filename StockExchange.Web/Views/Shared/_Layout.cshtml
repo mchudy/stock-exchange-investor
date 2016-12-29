@@ -55,7 +55,7 @@
                 <ul class="nav sidebar-menu">
                     @if (Request.IsAuthenticated)
                     {
-                        <li class="list-header"></li>
+                        <li class="list-header">Dashboard</li>
                         <li class="@Html.IsSelected("Wallet")">
                             <a href="@Url.Action("Index", "Wallet")">
                                 <i class="fa fa-dashboard fa-lg"></i>
@@ -63,13 +63,7 @@
                             </a>
                         </li>
                     }
-                    <li class="list-header">Data</li>
-                    <li class="@Html.IsSelected("Price")">
-                        <a href="@Url.Action("Price", "Price")">
-                            <i class="fa fa-table fa-lg"></i>
-                            <span>Prices</span>
-                        </a>
-                    </li>
+                    <li class="list-header">Charts</li>
                     <li class="@Html.IsSelected("Charts")">
                         <a href="@Url.Action("Index", "Charts")">
                             <i class="fa fa-line-chart fa-lg"></i>
@@ -82,7 +76,7 @@
                         <li class="@Html.IsSelected("Transactions")">
                             <a href="@Url.Action("Index", "Transactions")">
                                 <i class="fa fa-usd fa-lg"></i>
-                                <span>Transactions</span>
+                                <span>Wallet</span>
                             </a>
                         </li>
                         <li class="@Html.IsSelected("Strategies")">
@@ -98,6 +92,13 @@
                             </a>
                         </li>
                     }
+                    <li class="list-header">Data</li>
+                    <li class="@Html.IsSelected("Price")">
+                        <a href="@Url.Action("Price", "Price")">
+                            <i class="fa fa-table fa-lg"></i>
+                            <span>Historical Data</span>
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -112,21 +113,16 @@
         </div>
 
     </div>
-
     <div id="modal-container" class="modal fade" tabindex="-1" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content"></div>
         </div>
     </div>
-
     @Scripts.Render("~/bundles/scripts/jquery")
     @Scripts.Render("~/bundles/scripts/jquery-ui")
     @Scripts.Render("~/bundles/scripts/bootstrap")
-
     @Scripts.Render("~/Scripts/site.js")
-    
     @NotificationsBuilder.ShowToastMessages(TempData?["Notifications"] as NotificationsWrapper)
-
     @RenderSection("scripts", false)
 </body>
 </html>

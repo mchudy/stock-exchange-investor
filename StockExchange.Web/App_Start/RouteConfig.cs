@@ -12,7 +12,7 @@ namespace StockExchange.Web
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Price", action = "Price", id = UrlParameter.Optional }
+                defaults: new { controller = "Charts", action = "Index", id = UrlParameter.Optional }
             );
         }
     }
