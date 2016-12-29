@@ -46,12 +46,12 @@ namespace StockExchange.Web.Controllers
 
         [HttpPost]
         [HandleJsonError]
-        public ActionResult AddTransaction(AddTransactionViewModel model)
+        public ActionResult AddTransaction(TransactionViewModel model)
         {
             if (!ModelState.IsValid)
                 return JsonErrorResult(ModelState);
 
-            var dto = BuildUserTransactionDto(model);
+            var dto = BuildUserTransactionDto(model.AddTransactionViewModel);
             _transactionsService.AddUserTransaction(dto);
             return new JsonNetResult(new { dto.Id });
         }
