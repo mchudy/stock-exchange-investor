@@ -66,9 +66,10 @@ namespace StockExchange.Business.Services
             return ComputeIndicatorValues(indicator, companyPrices);
         }
 
-        public IList<CompanyIndicatorValues> GetIndicatorValues(IndicatorType type, IList<int> companyIds)
+        public IList<CompanyIndicatorValues> GetIndicatorValues(IndicatorType type, IList<int> companyIds, IList<IndicatorProperty> properties)
         {
-            var indicator = _indicatorFactory.CreateIndicator(type);
+            var propertiesDict = properties?.ToDictionary(t => t.Name, t => t.Value) ?? new Dictionary<string, int>();
+            var indicator = _indicatorFactory.CreateIndicator(type, propertiesDict);
             return GetIndicatorValues(indicator, companyIds);
         }
 
@@ -99,7 +100,7 @@ namespace StockExchange.Business.Services
                 foreach (var indicator in indicators)
                 {
                     if (indicator.IndicatorType == null) continue;
-                    var ind = _indicatorFactory.CreateIndicator(indicator);
+                    var ind = _indicatorFactory.CreateIndicator(indicator.IndicatorType.Value, indicator.Properties.ToDictionary(t =>t.Name, t => t.Value));
                     IList<Signal> signals = new List<Signal>();
                     try
                     {

@@ -22,6 +22,7 @@
                 <span class="chart-option">Candlestick</span>
             </span>
         </div>
+        <br>
         <div class="form-group">
             <label>Companies</label>
             @* ReSharper disable once UnknownCssClass *@
@@ -35,13 +36,28 @@
             @Html.DropDownList("Indicators", new SelectList(Model.Indicators, nameof(IndicatorViewModel.Type), nameof(IndicatorViewModel.Name)), "Select indicator",
                 new { @class = "form-control indicator-select" })
         </div>
+        @foreach (var indicator in Model.Indicators)
+            {
+            <div class="indicator-properties hidden" data-type="@indicator.Type">
+                @foreach (var property in indicator.Properties)
+                {
+                    <div class="indicator-property form-group" data-name="@property.Name">
+                        <label class="col-sm-6 control-label">@property.Name</label>
+                        <div class="input-group col-sm-6">
+                            @Html.TextBox(property.Value.ToString(), property.Value.ToString(), new { @class = "property-value form-control", type="number" })
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+        <div class="form-group">
+            <button class="btn btn-primary refresh-chart">Refresh</button>
+        </div>
     </div>
-
     <div class="col-sm-10">
         <div id="chart-container"></div>
     </div>
 </div>
-
 
 
 @section scripts

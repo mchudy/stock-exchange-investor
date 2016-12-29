@@ -2,6 +2,5 @@
 {
     public sealed class TransactionFilter : IFilter
     {
-        public string Aa { get; set; }
     }
 }

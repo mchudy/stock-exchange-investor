@@ -74,12 +74,13 @@ namespace StockExchange.UnitTest.Services
                     new IndicatorProperty {Name = nameof(EmaIndicator.Term), Value = 10}
                 }
             };
-            _factory.Setup(f => f.CreateIndicator(indicator)).Returns(new EmaIndicator {Term = 10});
+            _factory.Setup(f => f.CreateIndicator(IndicatorType.Ema, new Dictionary<string, int> { { nameof(EmaIndicator.Term), 10 } } ))
+                .Returns(new EmaIndicator {Term = 10});
 
             _service.GetSignals(new DateTime(2016, 1, 1), new DateTime(2016, 1, 30), new List<int> {1},
                 new List<ParameterizedIndicator> {indicator});
 
-            _factory.Verify(f => f.CreateIndicator(indicator));
+            _factory.Verify(f => f.CreateIndicator(IndicatorType.Ema, new Dictionary<string, int> { { nameof(EmaIndicator.Term), 10 } }));
         }
     }
 }

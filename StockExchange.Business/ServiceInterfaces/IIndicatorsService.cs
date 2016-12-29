@@ -12,7 +12,7 @@ namespace StockExchange.Business.ServiceInterfaces
 
         IList<CompanyIndicatorValues> GetIndicatorValues(IIndicator indicator, IList<int> companyIds);
 
-        IList<CompanyIndicatorValues> GetIndicatorValues(IndicatorType type, IList<int> companyIds);
+        IList<CompanyIndicatorValues> GetIndicatorValues(IndicatorType type, IList<int> companyIds, IList<IndicatorProperty> properties);
 
         IList<IndicatorType> GetAllIndicatorTypes();
 

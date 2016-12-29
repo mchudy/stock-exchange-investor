@@ -20,9 +20,6 @@
             contentType: 'application/json',
             type: 'POST',
             data: function (d) {
-                d.filter = {
-                    Aa: 'dd'
-                };
                 return JSON.stringify(d);
             }
         }

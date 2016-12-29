@@ -60,21 +60,23 @@ namespace StockExchange.Web.Controllers
         [HttpGet]
         public ActionResult GetIndicatorValues(IList<int> companyIds, IndicatorType type, IList<IndicatorProperty> properties)
         {
-            var values = _indicatorsService.GetIndicatorValues(type, companyIds);
+            var values = _indicatorsService.GetIndicatorValues(type, companyIds, properties);
             var model = BuildIndicatorChartModel(values);
             return new JsonNetResult(model);
         }
 
-        private static ChartsIndexModel BuildChartIndexModel(IList<CompanyDto> companies)
+        private ChartsIndexModel BuildChartIndexModel(IList<CompanyDto> companies)
         {
             return new ChartsIndexModel
             {
                 Companies = companies,
                 Indicators = Enum.GetValues(typeof(IndicatorType)).Cast<IndicatorType>()
-                    .Select(i => new IndicatorViewModel
+                    .Select(i => new EditIndicatorViewModel()
                     {
                         Name = i.GetEnumDescription(),
                         Type = i,
+                        Properties = _indicatorsService.GetPropertiesForIndicator(i)
+                            .Select(p => new IndicatorPropertyViewModel {Name = p.Name, Value = p.Value}).ToList()
                     }).ToList()
             };
         }

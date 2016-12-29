@@ -6,6 +6,7 @@
     var $companySelect = $('.company-select');
     var $indicatorSelect = $('.indicator-select');
     var $isCandleStickCheckbox = $('#is-candlestick-chart');
+    var $refreshBtn = $('.refresh-chart');
     var chosenCompanies = $companySelect.val();
 
     $companySelect.select2({
@@ -27,7 +28,21 @@
     });
 
     $indicatorSelect.on('change', function () {
-        loadIndicatorValues($(this).val());
+        var type = $(this).val();
+
+        $('.indicator-properties').addClass('hidden');
+        if (type) {
+            $('.indicator-properties[data-type="' + type + '"]').removeClass('hidden');
+            $refreshBtn.removeClass('hidden');
+        } else {
+            $refreshBtn.addClass('hidden');
+        }
+
+        loadIndicatorValues(type);
+    });
+
+    $refreshBtn.on('click', function () {
+        loadChart();
     });
 
     function initChart() {
@@ -95,13 +110,39 @@
             chart.redraw();
             return;
         }
-        $.get(config.getIndicatorValuesUrl,
-            $.param({
+        var properties = getIndicatorProperties();
+    
+        var params = $.param({
                 type: type,
-            companyIds: chosenCompanies
-        }, true), function(data) {
-            drawIndicatorValues(type, data);
+                companyIds: chosenCompanies
+            }, true); // ASP.NET requires traditional param for lists
+        params += '&' + convertPropertiesToUrl(properties);
+
+        $.get(config.getIndicatorValuesUrl, params)
+            .done(function (data) {
+                drawIndicatorValues(type, data);
+            });
+    }
+
+    function getIndicatorProperties() {
+        var properties = [];
+        $('.indicator-property:visible').each(function () {
+            properties.push({
+                name: $(this).data('name'),
+                value: $(this).find('.property-value').val()
+            });
         });
+        return properties;
+    }
+
+    function convertPropertiesToUrl(properties) {
+        var url = '';
+        for (var i = 0; i < properties.length; i++) {
+            var property = properties[i];
+            url += 'properties[' + i + '].name=' + property.name +
+                '&properties[' + i + '].value=' + property.value + '&';
+        }
+        return url;
     }
 
     function drawIndicatorValues(type, data) {
