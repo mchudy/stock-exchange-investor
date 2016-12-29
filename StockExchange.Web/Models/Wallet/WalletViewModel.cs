@@ -1,6 +1,6 @@
-﻿using StockExchange.Web.Models.Charts;
+﻿using StockExchange.Business.Models.Wallet;
+using StockExchange.Web.Models.Charts;
 using System.Collections.Generic;
-using StockExchange.Business.Models.Wallet;
 
 namespace StockExchange.Web.Models.Wallet
 {
@@ -21,7 +21,5 @@ namespace StockExchange.Web.Models.Wallet
         public IList<OwnedCompanyStocksDto> OwnedCompanyStocks { get; set; } = new List<OwnedCompanyStocksDto>();
 
         public PieChartModel StocksByValue { get; set; }
-
-        public PieChartModel StocksByQuantity { get; set; }
     }
 }

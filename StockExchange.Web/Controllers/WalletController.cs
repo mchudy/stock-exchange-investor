@@ -1,10 +1,10 @@
-﻿using StockExchange.Business.ServiceInterfaces;
+﻿using StockExchange.Business.Models.Wallet;
+using StockExchange.Business.ServiceInterfaces;
 using StockExchange.Web.Models.Charts;
 using StockExchange.Web.Models.Wallet;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
-using StockExchange.Business.Models.Wallet;
 
 namespace StockExchange.Web.Controllers
 {
@@ -56,11 +56,6 @@ namespace StockExchange.Web.Controllers
                 AllStocksValue = ownedStocks.Sum(s => s.CurrentValue),
                 AllTransactionsCount = _transactionsService.GetUserTransactionsCount(CurrentUserId),
                 OwnedCompanyStocks = ownedStocks,
-                StocksByQuantity = new PieChartModel
-                {
-                    Title = "Owned stocks by quantity",
-                    Data = ownedStocks.Select(g => new PieChartEntry {Name = g.CompanyName, Value = g.OwnedStocksCount}).ToList()
-                },
                 StocksByValue = new PieChartModel
                 {
                     Title = "Owned stocks by value (PLN)",

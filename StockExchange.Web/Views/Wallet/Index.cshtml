@@ -116,8 +116,6 @@
             <div class="box-body">
                 <div id="stocks-by-value-chart">
                 </div>
-                <div id="stocks-by-quantity-chart">
-                </div>
             </div>
         </div>
     </div>
@@ -128,7 +126,6 @@
 
     <script>
         var config = {
-            stocksByQuantityData: @Html.ToJsonString(Model.StocksByQuantity),
             stocksByValueData: @Html.ToJsonString(Model.StocksByValue)
         };
     </script>

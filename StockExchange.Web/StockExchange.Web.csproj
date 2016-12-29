@@ -2161,8 +2161,8 @@
     <Content Include="Global.asax" />
     <Content Include="Scripts\views\simulationView.js" />
     <Content Include="Scripts\views\chartsView.js" />
-    <Content Include="Scripts\dataTablesExtensions.js" />
-    <Content Include="Scripts\dateFilter.js" />
+    <Content Include="Scripts\plugins\dataTablesFilters.js" />
+    <Content Include="Scripts\plugins\dateFilter.js" />
     <Content Include="bower.json" />
     <Content Include="bower_components\bootstrap-datepicker\.bower.json" />
     <Content Include="bower_components\bootstrap-datepicker\.editorconfig" />

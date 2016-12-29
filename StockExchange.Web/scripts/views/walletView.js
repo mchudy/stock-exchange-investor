@@ -3,8 +3,6 @@
 
     drawPieChart('stocks-by-value-chart', config.stocksByValueData.title,
         mapData(config.stocksByValueData.data));
-    drawPieChart('stocks-by-quantity-chart', config.stocksByQuantityData.title,
-        mapData(config.stocksByQuantityData.data));
 
     function mapData(data) {
         return data.map(function(item) {

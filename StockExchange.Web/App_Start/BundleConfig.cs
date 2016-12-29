@@ -28,7 +28,8 @@ namespace StockExchange.Web
                 "~/bower_components/datatables.net/js/jquery.dataTables.js",
                 "~/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js",
                 "~/bower_components/datatables.net-responsive/js/dataTables.responsive.min.js",
-                "~/Scripts/dataTablesExtensions.js"));
+                "~/Scripts/plugins/dataTablesFilters.js",
+                "~/Scripts/plugins/dateFilter.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/scripts/highcharts").Include(
                 "~/bower_components/highcharts/highstock.js",

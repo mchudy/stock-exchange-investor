@@ -1,25 +1,11 @@
 ﻿(function ($) {
     'use strict';
 
-    $.AppendUrlParam = function (base, key, value) {
-        var sep = (base.indexOf('?') > -1) ? '&' : '?';
-        return base + sep + encodeURIComponent(key) + '=' + encodeURIComponent(value);
-    }
     var ajaxUrl = $('#grid').data('ajax-url');
     var companyName = '';
     var ajaxFilterUrl = $('#grid').data('filter-ajax-url');
     var ajaxFilterParamName = $('#grid').data('filter-ajax-paramname');
     var dateFilter = $.DateFilter();
-    function getFilterValuesUrl(filterParamValue) {
-        var search = $('#grid-container [type=search]').val();
-        var url = $.AppendUrlParam(ajaxFilterUrl, ajaxFilterParamName, filterParamValue);
-        var params = dateFilter.getPeriod();
-        url = $.AppendUrlParam(url, 'Filter.StartDate', params.startDate.toISOString());
-        url = $.AppendUrlParam(url, 'Filter.EndDate', params.endDate.toISOString());
-        url = $.AppendUrlParam(url, 'Filter.CompanyName', companyName);
-        url = $.AppendUrlParam(url, 'Search.Value', search);
-        return url;
-    }
     var columns = $('#grid th').DataTableColumns();
     var columnDefs = $('#grid th').DataTableColumnDefs();
     var columnFilters = $('#grid-container').DataTableColumnFilters({
@@ -67,4 +53,21 @@
         companyName = $(this).val();
         dataTable.draw();
     });
+
+    function getFilterValuesUrl(filterParamValue) {
+        var search = $('#grid-container [type=search]').val();
+        var url = $.AppendUrlParam(ajaxFilterUrl, ajaxFilterParamName, filterParamValue);
+        var params = dateFilter.getPeriod();
+        url = $.AppendUrlParam(url, 'Filter.StartDate', params.startDate.toISOString());
+        url = $.AppendUrlParam(url, 'Filter.EndDate', params.endDate.toISOString());
+        url = $.AppendUrlParam(url, 'Filter.CompanyName', companyName);
+        url = $.AppendUrlParam(url, 'Search.Value', search);
+        return url;
+    }
+
+    $.AppendUrlParam = function (base, key, value) {
+        var sep = (base.indexOf('?') > -1) ? '&' : '?';
+        return base + sep + encodeURIComponent(key) + '=' + encodeURIComponent(value);
+    }
+
 })(jQuery);
