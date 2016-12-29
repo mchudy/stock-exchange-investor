@@ -6,24 +6,28 @@
     </div>
     <div class="box-body">
         <div class="table-responsive">
-            <table id="grid" class="table table-hover"
+            <table id="grid" class="table table-hover table-stripe"
                    data-searching="false"
-                   data-auto-width="true"
+                   data-auto-width="false"
                    data-scroll-collapse="true"
                    data-processing="true"
                    data-server-side="true"
+                   data-length-change="false"
                    data-ajax-url="@Url.Action("GetTransactionsTable")">
                 <thead>
                     <tr>
                         <th data-column="Date">@Html.DisplayNameFor(i => Model.Transactions.FirstOrDefault().Date)</th>
-                        <th data-column="CompanyId">@Html.DisplayNameFor(i => Model.Transactions.FirstOrDefault().CompanyId)</th>
+                        <th data-column="CompanyName">@Html.DisplayNameFor(i => Model.Transactions.FirstOrDefault().CompanyName)</th>
                         <th data-column="Price">@Html.DisplayNameFor(i => Model.Transactions.FirstOrDefault().Price)</th>
                         <th data-column="Quantity">@Html.DisplayNameFor(i => Model.Transactions.FirstOrDefault().Quantity)</th>
+                        <th data-column="Total">@Html.DisplayNameFor(i => Model.Transactions.FirstOrDefault().Total)</th>
+                        <th data-column="Action">@Html.DisplayNameFor(i => Model.Transactions.FirstOrDefault().Action)</th>
+                        <th data-column="Profit">@Html.DisplayNameFor(i => Model.Transactions.FirstOrDefault().Profit)</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td colspan="4">
+                        <td colspan="7">
                             <span>Loading Data...</span>
                         </td>
                     </tr>

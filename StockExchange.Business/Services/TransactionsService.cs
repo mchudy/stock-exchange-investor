@@ -1,7 +1,6 @@
 ﻿using StockExchange.Business.ErrorHandling;
 using StockExchange.Business.Exceptions;
 using StockExchange.Business.Extensions;
-using StockExchange.Business.Models.Company;
 using StockExchange.Business.Models.Filters;
 using StockExchange.Business.Models.Transaction;
 using StockExchange.Business.ServiceInterfaces;
@@ -33,16 +32,14 @@ namespace StockExchange.Business.Services
                 .OrderByDescending(t => t.Date)
                 .Select(t => new UserTransactionDto
                 {
-                    Company = new CompanyDto
-                    {
-                        Code = t.Company.Code,
-                        Name = t.Company.Code,
-                        Id = t.CompanyId
-                    },
-                    UserId = t.UserId,
                     Date = t.Date,
                     Price = t.Price,
-                    Quantity = t.Quantity
+                    Quantity = t.Quantity < 0 ? -t.Quantity : t.Quantity,
+                    Action = t.Quantity < 0 ? "Sell" : "Buy",
+                    Id = t.Id,
+                    CompanyName = t.Company.Code,
+                    Total = t.Quantity < 0 ? -t.Quantity * t.Price : t.Quantity * t.Price,
+                    Profit = 0
                 }).ToPagedList(filter.Start, filter.Length);
         }
 
