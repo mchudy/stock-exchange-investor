@@ -25,6 +25,27 @@ namespace StockExchange.Business.Indicators
         public IList<Signal> GenerateSignals(IList<Price> prices)
         {
             var signals = new List<Signal>();
+            var values = Calculate(prices);
+            var lastAction = SignalAction.NoSignal;
+            for (int i = Term; i < prices.Count; i++)
+            {
+                if (values[i - Term].Value < values[i - Term + 1].Value && prices[i].ClosePrice > values[i - Term + 1].Value)
+                {
+                    if (lastAction != SignalAction.Buy)
+                    {
+                        signals.Add(new Signal(SignalAction.Buy) { Date = prices[i].Date });
+                        lastAction = SignalAction.Buy; ;
+                    }
+                }
+                else if (values[i - Term].Value > values[i - Term + 1].Value && prices[i].ClosePrice < values[i - Term + 1].Value)
+                {
+                    if (lastAction != SignalAction.Sell)
+                    {
+                        signals.Add(new Signal(SignalAction.Sell) { Date = prices[i].Date });
+                        lastAction = SignalAction.Sell;
+                    }
+                }
+            }
             return signals;
         }
     }
