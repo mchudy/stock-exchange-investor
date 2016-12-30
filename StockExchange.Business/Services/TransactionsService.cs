@@ -88,7 +88,7 @@ namespace StockExchange.Business.Services
             {
                 UserId = dto.UserId,
                 CompanyId = dto.CompanyId,
-                Date = DateTime.Now,
+                Date = dto.Date,
                 Price = dto.Price,
                 Quantity = dto.Quantity
             });

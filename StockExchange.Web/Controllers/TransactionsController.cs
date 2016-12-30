@@ -130,7 +130,7 @@ namespace StockExchange.Web.Controllers
         {
             return new UserTransactionDto
             {
-                Date = DateTime.Now,
+                Date = model.Date,
                 CompanyId = model.SelectedCompanyId,
                 Price = model.Price,
                 Quantity = model.TransactionType == TransactionActionType.Buy ? model.Quantity : -model.Quantity,

@@ -6,6 +6,13 @@
     });
     $('#SelectedCompanyId').select2();
 
+    $('#AddTransactionViewModel_Date').datepicker({
+        format: 'mm/dd/yyyy',
+        autoclose: true,
+        enddate: new Date(),
+        defaultDate: new Date()
+    });
+
     $.post('/Transactions/GetBudget/', function (result) {
         var options = $('#companieslist');
         $.each(result.Companies, function () {

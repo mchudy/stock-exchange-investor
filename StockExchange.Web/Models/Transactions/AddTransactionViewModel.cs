@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using StockExchange.Business.Models.Company;
 
@@ -19,6 +20,8 @@ namespace StockExchange.Web.Models.Transactions
         public int Quantity { get; set; }
 
         public TransactionActionType TransactionType { get; set; } = TransactionActionType.Buy;
+
+        public DateTime Date { get; set; }
     }
 
     public enum TransactionActionType

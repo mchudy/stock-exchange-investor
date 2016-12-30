@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using StockExchange.Business.Models.Transaction;
 using StockExchange.Business.Models.Wallet;
 
@@ -17,5 +18,7 @@ namespace StockExchange.Web.Models.Transactions
         public decimal AllStocksValue { get; set; }
 
         public decimal TotalBudget => FreeBudget + AllStocksValue;
+
+
     }
 }
