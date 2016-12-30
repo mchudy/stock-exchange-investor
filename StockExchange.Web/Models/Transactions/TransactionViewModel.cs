@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using StockExchange.Business.Models.Transaction;
 using StockExchange.Business.Models.Wallet;
+using StockExchange.Web.Models.Wallet;
 
 namespace StockExchange.Web.Models.Transactions
 {
@@ -13,12 +14,6 @@ namespace StockExchange.Web.Models.Transactions
 
         public IList<OwnedCompanyStocksDto> CurrentTransactions { get; set; }
 
-        public decimal FreeBudget { get; set; }
-
-        public decimal AllStocksValue { get; set; }
-
-        public decimal TotalBudget => FreeBudget + AllStocksValue;
-
-
+        public BudgetInfoViewModel BudgetInfo { get; set; }
     }
 }

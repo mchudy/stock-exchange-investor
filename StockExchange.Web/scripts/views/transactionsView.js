@@ -12,16 +12,7 @@
         enddate: new Date(),
         defaultDate: new Date()
     });
-
-    $.post('/Transactions/GetBudget/', function (result) {
-        var options = $('#companieslist');
-        $.each(result.Companies, function () {
-            options.append('<option value="' + this.Id + '">' + this.Code + '</option>');
-        });
-        $('#totalbudget').text(result.TotalBudget.toFixed(2));
-        $('#freebudget').text(result.FreeBudget.toFixed(2));
-        $('#allstocks').text(result.AllStocksValue.toFixed(2));
-    });
+    refreshBudget();
 
     var ajaxUrl = $('#grid').data('ajax-url');
     var columns = $('#grid th').DataTableColumns();
@@ -70,41 +61,41 @@
             type: $this.attr('method'),
             data: $this.serialize()
         }).done(function () {
+            refreshBudget();
             toastr.success('Transaction has been added');
             dataTable.draw();
             dataTableCurrent.draw();
-            $.post('/Transactions/GetBudget/', function (result) {
-                var options = $('#companieslist');
-                $.each(result.Companies, function () {
-                    options.append('<option value="' + this.Id + '">' + this.Code + '</option>');
-                });
-                $('#totalbudget').text(result.TotalBudget.toFixed(2));
-                $('#freebudget').text(result.FreeBudget.toFixed(2));
-                $('#allstocks').text(result.AllStocksValue.toFixed(2));
+        });
+    });
+
+    //TODO: extract to a component
+    $('#modal-container').on('loaded.bs.modal', function (e) {
+        $('#edit-budget-form').on('submit', function (event) {
+            event.preventDefault();
+
+            var $this = $(this);
+            $.ajax({
+                url: $this.attr('action'),
+                type: $this.attr('method'),
+                data: $this.serialize()
+            }).done(function () {
+                toastr.success('Budget has been edited');
+                $('#modal-container').modal('hide');
+                refreshBudget();
             });
         });
     });
 
-    $('#edit-budget-form').on('submit', function (event) {
-        event.preventDefault();
-
-        var $this = $(this);
-        $.ajax({
-            url: $this.attr('action'),
-            type: $this.attr('method'),
-            data: $this.serialize()
-        }).done(function () {
-            toastr.success('Budget has been edited');
-            $.post('/Transactions/GetBudget/', function (result) {
-                var options = $('#companieslist');
-                $.each(result.Companies, function () {
-                    options.append('<option value="' + this.Id + '">' + this.Code + '</option>');
-                });
-                $('#totalbudget').text(result.TotalBudget.toFixed(2));
-                $('#freebudget').text(result.FreeBudget.toFixed(2));
-                $('#allstocks').text(result.AllStocksValue.toFixed(2));
+    function refreshBudget() {
+        $.getJSON('/Transactions/GetBudget/').done(function (result) {
+            var options = $('#companieslist');
+            $.each(result.companies, function () {
+                options.append('<option value="' + this.id + '">' + this.code + '</option>');
             });
+            $('#total-budget').text(result.totalBudget.toFixed(2));
+            $('#free-budget').text(result.freeBudget.toFixed(2));
+            $('#all-stocks').text(result.allStocksValue.toFixed(2));
         });
-    });
+    }
 
 })();

@@ -1,5 +1,6 @@
 ﻿using StockExchange.Business.Models.Wallet;
 using StockExchange.Business.ServiceInterfaces;
+using StockExchange.Web.Helpers.Json;
 using StockExchange.Web.Models.Charts;
 using StockExchange.Web.Models.Wallet;
 using System.Collections.Generic;
@@ -42,18 +43,21 @@ namespace StockExchange.Web.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return PartialView("_EditBudgetDialog");
+                return JsonErrorResult(ModelState);
             }
             _userService.EditBudget(CurrentUserId, model.NewBudget);
-            return RedirectToAction("Index");
+            return new JsonNetResult(new { UserId = CurrentUserId, model.NewBudget });
         }
 
         private WalletViewModel BuildWalletViewModel(IList<OwnedCompanyStocksDto> ownedStocks)
         {
             var walletModel = new WalletViewModel
             {
-                FreeBudget = CurrentUser.Budget,
-                AllStocksValue = ownedStocks.Sum(s => s.CurrentValue),
+                BudgetInfo = new BudgetInfoViewModel
+                {
+                    AllStocksValue = ownedStocks.Sum(s => s.CurrentValue),
+                    FreeBudget = CurrentUser.Budget
+                },
                 AllTransactionsCount = _transactionsService.GetUserTransactionsCount(CurrentUserId),
                 OwnedCompanyStocks = ownedStocks,
                 StocksByValue = new PieChartModel

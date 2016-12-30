@@ -1,19 +1,19 @@
 ﻿using StockExchange.Business.Extensions;
+using StockExchange.Business.Models.Company;
 using StockExchange.Business.Models.Filters;
 using StockExchange.Business.Models.Transaction;
+using StockExchange.Business.Models.Wallet;
 using StockExchange.Business.ServiceInterfaces;
 using StockExchange.Web.Filters;
 using StockExchange.Web.Helpers;
 using StockExchange.Web.Helpers.Json;
 using StockExchange.Web.Models.DataTables;
 using StockExchange.Web.Models.Transactions;
+using StockExchange.Web.Models.Wallet;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
-using StockExchange.Business.Models.Company;
-using StockExchange.Business.Models.Wallet;
-using StockExchange.Web.Models.Wallet;
 
 namespace StockExchange.Web.Controllers
 {
@@ -23,14 +23,12 @@ namespace StockExchange.Web.Controllers
         private readonly IWalletService _walletService;
         private readonly ITransactionsService _transactionsService;
         private readonly ICompanyService _companyService;
-        private readonly IUserService _userService;
 
-        public TransactionsController(ITransactionsService transactionsService, ICompanyService companyService, IWalletService walletService, IUserService userService)
+        public TransactionsController(ITransactionsService transactionsService, ICompanyService companyService, IWalletService walletService)
         {
             _transactionsService = transactionsService;
             _companyService = companyService;
             _walletService = walletService;
-            _userService = userService;
         }
 
         [HttpGet]
@@ -40,16 +38,22 @@ namespace StockExchange.Web.Controllers
             {
                 AddTransactionViewModel = new AddTransactionViewModel { Companies = new List<CompanyDto>() },
                 Transactions = new List<UserTransactionDto>(),
-                FreeBudget = 0,
-                AllStocksValue = 0,
-                CurrentTransactions = new List<OwnedCompanyStocksDto>()
+                CurrentTransactions = new List<OwnedCompanyStocksDto>(),
+                BudgetInfo = new BudgetInfoViewModel()
             });
         }
 
-        [HttpPost]
+        [HttpGet]
         public ActionResult GetBudget()
         {
-            return Json(new { Companies = _companyService.GetAllCompanies(), FreeBudget = CurrentUser.Budget, AllStocksValue = _walletService.GetOwnedStocks(CurrentUserId).Sum(s => s.CurrentValue), TotalBudget = CurrentUser.Budget + _walletService.GetOwnedStocks(CurrentUserId).Sum(s => s.CurrentValue) });
+            //TODO: add view model
+            return new JsonNetResult(new
+            {
+                Companies = _companyService.GetAllCompanies(),
+                FreeBudget = CurrentUser.Budget,
+                AllStocksValue = _walletService.GetOwnedStocks(CurrentUserId).Sum(s => s.CurrentValue),
+                TotalBudget = CurrentUser.Budget + _walletService.GetOwnedStocks(CurrentUserId).Sum(s => s.CurrentValue)
+            });
         }
 
         [HttpPost]
@@ -80,24 +84,6 @@ namespace StockExchange.Web.Controllers
             var dto = BuildUserTransactionDto(model.AddTransactionViewModel);
             _transactionsService.AddUserTransaction(dto);
             return new JsonNetResult(new { dto.Id });
-        }
-
-        [HttpGet]
-        public ActionResult EditBudgetDialog()
-        {
-            var model = new UpdateBudgetViewModel { NewBudget = CurrentUser.Budget };
-            return PartialView("_EditBudgetDialog", model);
-        }
-
-        [HttpPost]
-        public ActionResult EditBudget(UpdateBudgetViewModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return JsonErrorResult(ModelState);
-            }
-            _userService.EditBudget(CurrentUserId, model.NewBudget);
-            return new JsonNetResult(new { CurrentUserId });
         }
 
         // ReSharper disable once SuggestBaseTypeForParameter

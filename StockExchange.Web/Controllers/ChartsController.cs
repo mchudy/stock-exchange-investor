@@ -3,12 +3,10 @@ using StockExchange.Business.Models.Company;
 using StockExchange.Business.Models.Indicators;
 using StockExchange.Business.Models.Price;
 using StockExchange.Business.ServiceInterfaces;
-using StockExchange.Common.Extensions;
 using StockExchange.Web.Helpers;
 using StockExchange.Web.Helpers.Json;
 using StockExchange.Web.Models.Charts;
 using StockExchange.Web.Models.Indicator;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
@@ -70,12 +68,12 @@ namespace StockExchange.Web.Controllers
             return new ChartsIndexModel
             {
                 Companies = companies,
-                Indicators = Enum.GetValues(typeof(IndicatorType)).Cast<IndicatorType>()
+                Indicators = _indicatorsService.GetAllIndicators()
                     .Select(i => new EditIndicatorViewModel()
                     {
-                        Name = i.GetEnumDescription(),
-                        Type = i,
-                        Properties = _indicatorsService.GetPropertiesForIndicator(i)
+                        Name = i.IndicatorName,
+                        Type = i.IndicatorType,
+                        Properties = _indicatorsService.GetPropertiesForIndicator(i.IndicatorType)
                             .Select(p => new IndicatorPropertyViewModel {Name = p.Name, Value = p.Value}).ToList()
                     }).ToList()
             };

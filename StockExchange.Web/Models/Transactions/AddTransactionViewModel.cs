@@ -1,7 +1,7 @@
 ﻿using System;
+using StockExchange.Business.Models.Company;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using StockExchange.Business.Models.Company;
 
 namespace StockExchange.Web.Models.Transactions
 {

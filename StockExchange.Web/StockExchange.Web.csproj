@@ -2596,6 +2596,7 @@
     <Compile Include="Models\Indicator\IndicatorPropertyViewModel.cs" />
     <Compile Include="Models\Transactions\AddTransactionViewModel.cs" />
     <Compile Include="Models\Transactions\TransactionViewModel.cs" />
+    <Compile Include="Models\Wallet\BudgetInfoViewModel.cs" />
     <Compile Include="Models\Wallet\CreateWalletViewModel.cs" />
     <Compile Include="Models\Wallet\UpdateBudgetViewModel.cs" />
     <Compile Include="Models\Wallet\WalletViewModel.cs" />
@@ -2625,7 +2626,7 @@
     <Content Include="Views\Wallet\_EditBudgetDialog.cshtml" />
     <Content Include="Views\Strategies\Index.cshtml" />
     <Content Include="Views\Transactions\_CurrentTransactionsTable.cshtml" />
-    <Content Include="Views\Transactions\_EditBudgetDialog.cshtml" />
+    <Content Include="Views\Wallet\_BudgetInfo.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -2691,7 +2692,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>39051</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

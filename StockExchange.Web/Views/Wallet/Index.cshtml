@@ -8,24 +8,7 @@
 
 <div class="row">
     <div class="col-md-4">
-        <div class="info-box bg-yellow">
-            <span class="info-box-icon"><i class="fa fa-money"></i></span>
-
-            <div class="info-box-content">
-                @* ReSharper disable once UnknownCssClass *@
-                @Html.ActionLink("Edit ", "EditBudgetDialog", "Wallet", null, new { @class = "modal-link btn btn-success pull-right" })
-                <div class="col-sm-4">
-                    <span class="info-box-text">Free budget</span>
-                    <span class="info-box-number">@Model.FreeBudget.FormatCurrency()</span>
-                    <span class="info-box-text">Stocks value</span>
-                    <span class="info-box-number">@Model.AllStocksValue.FormatCurrency()</span>
-                </div>
-                <div class="col-sm-4">
-                    <span class="info-box-text">Total budget</span>
-                    <span class="info-box-number">@Model.TotalBudget.FormatCurrency()</span>
-                </div>
-            </div>
-        </div>
+        @Html.Partial("_BudgetInfo", Model.BudgetInfo)
     </div>
     <div class="col-md-4">
         <div class="info-box">
