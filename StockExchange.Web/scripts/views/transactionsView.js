@@ -9,8 +9,8 @@
     $('#AddTransactionViewModel_Date').datepicker({
         format: 'mm/dd/yyyy',
         autoclose: true,
-        enddate: new Date(),
-        defaultDate: new Date()
+        endDate: '+0d',
+        defaultDate: new Date().toISOString()
     });
     refreshBudget();
 

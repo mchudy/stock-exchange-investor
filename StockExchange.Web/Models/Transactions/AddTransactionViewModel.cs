@@ -21,6 +21,7 @@ namespace StockExchange.Web.Models.Transactions
 
         public TransactionActionType TransactionType { get; set; } = TransactionActionType.Buy;
 
+        [DataType(DataType.Date)]
         public DateTime Date { get; set; }
     }
 

@@ -36,7 +36,7 @@ namespace StockExchange.Web.Controllers
         {
             return View(new TransactionViewModel
             {
-                AddTransactionViewModel = new AddTransactionViewModel { Companies = new List<CompanyDto>() },
+                AddTransactionViewModel = new AddTransactionViewModel { Companies = new List<CompanyDto>(), Date = DateTime.Today },
                 Transactions = new List<UserTransactionDto>(),
                 CurrentTransactions = new List<OwnedCompanyStocksDto>(),
                 BudgetInfo = new BudgetInfoViewModel()
