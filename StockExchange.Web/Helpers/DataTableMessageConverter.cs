@@ -15,7 +15,7 @@ namespace StockExchange.Web.Helpers
             {
                 Start = dataTableMessage.Start,
                 Length = dataTableMessage.Length,
-                OrderBys = dataTableMessage.Order.Select(o => new OrderBy(dataTableMessage.Columns[o.Column].Data, o.Desc)).ToList(),
+                OrderBys = dataTableMessage.Order?.Select(o => new OrderBy(dataTableMessage.Columns[o.Column].Data, o.Desc)).ToList(),
                 Searches = dataTableMessage.Columns.Where(c => !string.IsNullOrWhiteSpace(c.Search.Value)).Select(c => new { Field = c.Data, Value = JsonConvert.DeserializeObject<string[]>(c.Search.Value) }).Where(c => c != null)
                     .Select(c =>
                     {
