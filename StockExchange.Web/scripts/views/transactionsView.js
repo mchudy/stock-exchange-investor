@@ -44,6 +44,16 @@
         }
     });
 
+    $.post('/Transactions/GetBudget/', function (result) {
+        var options = $('#companieslist');
+        $.each(result.Companies, function () {
+            options.append('<option value="'+ this.Id + '">' + this.Code + '</option>');
+        });
+        $('#totalbudget').text(result.TotalBudget.toFixed(2));
+        $('#freebudget').text(result.FreeBudget.toFixed(2));
+        $('#allstocks').text(result.AllStocksValue.toFixed(2));
+    });
+
     $('#add-transaction-form').on('submit', function (event) {
         event.preventDefault();
 
@@ -56,16 +66,16 @@
             toastr.success('Transaction has been added');
             dataTable.draw();
             dataTableCurrent.draw();
+            $.post('/Transactions/GetBudget/', function (result) {
+                var options = $('#companieslist');
+                $.each(result.Companies, function () {
+                    options.append('<option value="' + this.Id + '">' + this.Code + '</option>');
+                });
+                $('#totalbudget').text(result.TotalBudget.toFixed(2));
+                $('#freebudget').text(result.FreeBudget.toFixed(2));
+                $('#allstocks').text(result.AllStocksValue.toFixed(2));
+            });
         });
     });
 
-    $.post('/Transactions/GetBudget/', function (result) {
-        var options = $('#companieslist');
-        $.each(result.Companies, function () {
-            options.append('<option value="'+ this.Id + '">' + this.Code + '</option>');
-        });
-        $('#totalbudget').text(result.TotalBudget.toFixed(2));
-        $('#freebudget').text(result.FreeBudget.toFixed(2));
-        $('#allstocks').text(result.AllStocksValue.toFixed(2));
-    });
 })();
