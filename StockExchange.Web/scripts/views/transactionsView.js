@@ -20,6 +20,20 @@
     var columns = $('#grid th').DataTableColumns();
     var columnDefs = $('#grid th').DataTableColumnDefs();
 
+    columnDefs.push({
+        targets: $('#grid th[data-column=Total]').index(),
+        data: 'Total',
+        render: function (data, type, full, meta) {
+            if (full.Action === 'Buy') {
+                return '<i class="fa fa-arrow-down icon-stock-down"></i>' +
+                    ' <span class="text-danger">' + data + '</span>';
+            } else {
+                return '<i class="fa fa-arrow-up icon-stock-up"></i>' +
+                    ' <span class="text-success">' + data + '</span>';
+            }
+        }
+    });
+
     var dataTable = $('#grid').DataTable(
     {
         columns: columns,
