@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using StockExchange.Business.Models.Company;
 using StockExchange.Business.Models.Wallet;
 using StockExchange.Web.Models.Wallet;
 
@@ -35,15 +36,20 @@ namespace StockExchange.Web.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            var model = new AddTransactionViewModel
+            return View(new TransactionViewModel
             {
-                Companies = _companyService.GetAllCompanies()
-            };
-            var ownedStocks = _walletService.GetOwnedStocks(CurrentUserId);
-            return View(new TransactionViewModel { AddTransactionViewModel = model, Transactions = new List<UserTransactionDto>(),
-                FreeBudget = CurrentUser.Budget,
-                AllStocksValue = ownedStocks.Sum(s => s.CurrentValue), CurrentTransactions = new List<OwnedCompanyStocksDto>()
+                AddTransactionViewModel = new AddTransactionViewModel { Companies = new List<CompanyDto>() },
+                Transactions = new List<UserTransactionDto>(),
+                FreeBudget = 0,
+                AllStocksValue = 0,
+                CurrentTransactions = new List<OwnedCompanyStocksDto>()
             });
+        }
+
+        [HttpPost]
+        public ActionResult GetBudget()
+        {
+            return Json(new { Companies = _companyService.GetAllCompanies(), FreeBudget = CurrentUser.Budget, AllStocksValue = _walletService.GetOwnedStocks(CurrentUserId).Sum(s => s.CurrentValue), TotalBudget = CurrentUser.Budget + _walletService.GetOwnedStocks(CurrentUserId).Sum(s => s.CurrentValue) });
         }
 
         [HttpPost]
