@@ -50,7 +50,8 @@ namespace StockExchange.Business.Services
                 OwnedStocksCount = ownedStocksCount,
                 CurrentValue = currentPrice * ownedStocksCount,
                 UserId = userId,
-                TotalBuyPrice = transactions.Sum(t => t.Quantity * t.Price)
+                TotalBuyPrice = transactions.Sum(t => t.Quantity * t.Price),
+                AverageBuyPrice = transactions.Sum(t => t.Quantity * t.Price) / ownedStocksCount
             };
         }
     }

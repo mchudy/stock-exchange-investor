@@ -18,9 +18,11 @@
                 <thead>
                     <tr>
                         <th data-column="CompanyName">@Html.DisplayNameFor(i => Model.CurrentTransactions.FirstOrDefault().CompanyName)</th>
-                        <th data-column="CurrentPrice">@Html.DisplayNameFor(i => Model.CurrentTransactions.FirstOrDefault().CurrentPrice)</th>
                         <th data-column="OwnedStocksCount">@Html.DisplayNameFor(i => Model.CurrentTransactions.FirstOrDefault().OwnedStocksCount)</th>
+                        <th data-column="AverageBuyPrice">@Html.DisplayNameFor(i => Model.CurrentTransactions.FirstOrDefault().AverageBuyPrice)</th>
                         <th data-column="TotalBuyPrice">@Html.DisplayNameFor(i => Model.CurrentTransactions.FirstOrDefault().TotalBuyPrice)</th>
+                        <th data-column="CurrentPrice">@Html.DisplayNameFor(i => Model.CurrentTransactions.FirstOrDefault().CurrentPrice)</th>
+                        <th data-column="CurrentValue">@Html.DisplayNameFor(i => Model.CurrentTransactions.FirstOrDefault().CurrentValue)</th>
                         <th data-column="Profit">@Html.DisplayNameFor(i => Model.CurrentTransactions.FirstOrDefault().Profit)</th>
                     </tr>
                 </thead>
