@@ -6,11 +6,14 @@
     });
     $('#SelectedCompanyId').select2();
 
-    $('#AddTransactionViewModel_Date').datepicker({
-        format: 'mm/dd/yyyy',
-        endDate: '+0d',
-        defaultDate: new Date()
-    });
+    var now = new Date();
+    $('#AddTransactionViewModel_Date')
+        .datepicker({
+            endDate: '+0d'
+        })
+        // datepicker doesn't want to apply formatting for initial value
+        .datepicker('update', now.getDate() + '/' + (now.getMonth() + 1) + '/' + now.getFullYear());
+
     refreshBudget();
 
     var ajaxUrl = $('#grid').data('ajax-url');

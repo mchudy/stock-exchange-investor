@@ -1,5 +1,5 @@
-﻿using System;
-using StockExchange.Business.Models.Company;
+﻿using StockExchange.Business.Models.Company;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -9,6 +9,7 @@ namespace StockExchange.Web.Models.Transactions
     {
         public IList<CompanyDto> Companies { get; set; } = new List<CompanyDto>();
 
+        [Required]
         public int SelectedCompanyId { get; set; }
 
         [DataType(DataType.Currency)]
@@ -22,6 +23,7 @@ namespace StockExchange.Web.Models.Transactions
         public TransactionActionType TransactionType { get; set; } = TransactionActionType.Buy;
 
         [DataType(DataType.Date)]
+        [Required]
         public DateTime Date { get; set; }
     }
 
