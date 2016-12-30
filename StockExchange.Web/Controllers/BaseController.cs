@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNet.Identity;
+using StockExchange.Business.ErrorHandling;
 using StockExchange.DataAccess.Models;
 using StockExchange.Web.Helpers.Json;
 using StockExchange.Web.Helpers.ToastNotifications;
+using System.Linq;
 using System.Net;
 using System.Web.Mvc;
 
@@ -49,7 +51,9 @@ namespace StockExchange.Web.Controllers
 
         protected ActionResult JsonErrorResult(ModelStateDictionary message, HttpStatusCode statusCode = HttpStatusCode.BadRequest)
         {
-            return new JsonNetResult(message);
+            Response.StatusCode = (int)statusCode;
+            return new JsonNetResult(message.Values.SelectMany(e => e.Errors)
+                .Select(e => new ValidationError("", e.ErrorMessage)));
         }
 
         private void InjectViewBagProperties()
