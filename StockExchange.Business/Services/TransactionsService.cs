@@ -26,7 +26,7 @@ namespace StockExchange.Business.Services
 
         public PagedList<UserTransactionDto> GetUserTransactions(int userId, PagedFilterDefinition<TransactionFilter> filter)
         {
-            return _transactionsRepository.GetQueryable()
+            var transactions = _transactionsRepository.GetQueryable()
                 .Include(t => t.Company)
                 .Where(t => t.UserId == userId)
                 .OrderByDescending(t => t.Date)
@@ -40,7 +40,33 @@ namespace StockExchange.Business.Services
                     CompanyName = t.Company.Code,
                     Total = t.Quantity < 0 ? -t.Quantity * t.Price : t.Quantity * t.Price,
                     Profit = 0
-                }).ToPagedList(filter.Start, filter.Length);
+                }).ToList();
+
+            var pagedTransactions = transactions.ToPagedList(filter.Start, filter.Length);
+            foreach (var pagedTransaction in pagedTransactions)
+            {
+                if (pagedTransaction.Action == "Buy") continue;
+                var pastTransactions =
+                    transactions.Where(
+                        item => item.CompanyName == pagedTransaction.CompanyName && item.Date < pagedTransaction.Date).OrderBy(item => item.Date).ToList();
+                var quantity = 0m;
+                var price = 0m;
+                foreach (var pastTransaction in pastTransactions)
+                {
+                    if (pastTransaction.Action == "Buy")
+                    {
+                        price = (price * quantity + pastTransaction.Price * pastTransaction.Quantity) /
+                                (quantity + pastTransaction.Quantity);
+                        quantity += pastTransaction.Quantity;
+                    }
+                    else
+                    {
+                        quantity -= pastTransaction.Quantity;
+                    }
+                }
+                pagedTransaction.Profit = pagedTransaction.Quantity * (pagedTransaction.Price - price);
+            }
+            return pagedTransactions;
         }
 
         public int GetUserTransactionsCount(int userId)
@@ -83,7 +109,7 @@ namespace StockExchange.Business.Services
         {
             if (dto.Quantity < 0)
             {
-                int currentlyOwnedStocksCount =user.Transactions.Where(t => t.CompanyId == dto.CompanyId)
+                int currentlyOwnedStocksCount = user.Transactions.Where(t => t.CompanyId == dto.CompanyId)
                     .Sum(t => t.Quantity);
                 if (currentlyOwnedStocksCount < -dto.Quantity)
                 {
