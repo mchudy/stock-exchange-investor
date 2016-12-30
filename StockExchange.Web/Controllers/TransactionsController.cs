@@ -94,10 +94,10 @@ namespace StockExchange.Web.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return PartialView("_EditBudgetDialog");
+                return JsonErrorResult(ModelState);
             }
             _userService.EditBudget(CurrentUserId, model.NewBudget);
-            return RedirectToAction("Index");
+            return new JsonNetResult(new { CurrentUserId });
         }
 
         // ReSharper disable once SuggestBaseTypeForParameter
