@@ -1,4 +1,6 @@
-﻿using StockExchange.Business.Models.Company;
+﻿using Newtonsoft.Json;
+using StockExchange.Business.Models.Company;
+using StockExchange.Common;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -24,7 +26,7 @@ namespace StockExchange.Web.Models.Transactions
 
         [DataType(DataType.Date)]
         [Required]
-        public DateTime Date { get; set; }
+        public DateTime Date { get; set; } = DateTime.Now;
     }
 
     public enum TransactionActionType

@@ -15,7 +15,7 @@ namespace StockExchange.Business.Models.Price
         [Display(Name = "Company Id")]
         public int CompanyId { get; set; }
 
-        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
+        [DisplayFormat(DataFormatString = Consts.Formats.DisplayDate)]
         [Display(Name = "Date")]
         public DateTime Date { get; set; }
 

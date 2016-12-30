@@ -6,13 +6,9 @@
     });
     $('#SelectedCompanyId').select2();
 
-    var now = new Date();
-    $('#AddTransactionViewModel_Date')
-        .datepicker({
-            endDate: '+0d'
-        })
-        // datepicker doesn't want to apply formatting for initial value
-        .datepicker('update', now.getDate() + '/' + (now.getMonth() + 1) + '/' + now.getFullYear());
+    $('#AddTransactionViewModel_Date').datepicker({
+        endDate: new Date()
+    });
 
     refreshBudget();
 

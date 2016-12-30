@@ -43,7 +43,7 @@
                     <div class="form-group has-feedback">
                         @Html.LabelFor(m => m.AddTransactionViewModel.Date, new { @class = "col-sm-4 control-label" })
                         <div class="col-sm-8 input-group">
-                            @Html.TextBoxFor(m => m.AddTransactionViewModel.Date, new { @class = "form-control" } )
+                            @Html.TextBoxFor(m => m.AddTransactionViewModel.Date, new { @class = "form-control", Value = Model.AddTransactionViewModel.Date.ToShortDateString() } )
                             <span class="glyphicon form-control-feedback"></span>
                             @Html.ValidationMessageFor(m => m.AddTransactionViewModel.Date, null, new { @class = "help-block" })
                         </div>
