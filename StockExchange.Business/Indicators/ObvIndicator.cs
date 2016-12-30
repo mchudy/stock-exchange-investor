@@ -38,6 +38,29 @@ namespace StockExchange.Business.Indicators
         public IList<Signal> GenerateSignals(IList<Price> prices)
         {
             var signals = new List<Signal>();
+            var values = Calculate(prices);
+            const int trendTerm = 20;
+            var trend = MovingAverageHelper.ExpotentialMovingAverage(values, trendTerm);
+            SignalAction lastAction = SignalAction.NoSignal;
+            for (int i = trendTerm; i < prices.Count; i++)
+            {
+                if (trend[i - trendTerm].Value < trend[i - trendTerm + 1].Value && values[i].Value > prices[i].Volume)
+                {
+                    if (lastAction != SignalAction.Sell)
+                    {
+                        signals.Add(new Signal(SignalAction.Sell) {Date = prices[i].Date});
+                        lastAction = SignalAction.Sell;
+                    }
+                }
+                else if(trend[i-trendTerm].Value > trend[i-trendTerm+1].Value && values[i].Value < prices[i].Volume)
+                {
+                    if (lastAction != SignalAction.Buy)
+                    {
+                        signals.Add(new Signal(SignalAction.Buy) {Date = prices[i].Date});
+                        lastAction = SignalAction.Buy;
+                    }
+                }
+            } 
             return signals;
         }
     }
