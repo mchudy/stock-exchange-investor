@@ -36,19 +36,19 @@ namespace StockExchange.Business.Indicators
             SignalAction lastAction = SignalAction.NoSignal;
             for (int i = Term; i < prices.Count; i++)
             {
-                if (trend[i-1].Value < trend[i].Value && prices[i].ClosePrice > trend[i].Value && values[i].Value<0)
+                if (prices[i].ClosePrice > trend[i-Term+1].Value && values[i-Term].Value<0)
                 {
                     if (lastAction != SignalAction.Buy)
                     {
-                        signals.Add(new Signal(SignalAction.Buy) {Date = values[i].Date});
+                        signals.Add(new Signal(SignalAction.Buy) {Date = prices[i].Date});
                         lastAction = SignalAction.Buy;
                     }
                 }
-                else if (trend[i - 1].Value > trend[i].Value && prices[i].ClosePrice < trend[i].Value && values[i].Value > 0)
+                else if (prices[i].ClosePrice < trend[i-Term+1].Value && values[i-Term].Value > 0)
                 {
                     if (lastAction != SignalAction.Sell)
                     {
-                        signals.Add(new Signal(SignalAction.Sell) {Date = values[i].Date});
+                        signals.Add(new Signal(SignalAction.Sell) {Date = prices[i].Date});
                         lastAction = SignalAction.Sell;
                     }
                 }
