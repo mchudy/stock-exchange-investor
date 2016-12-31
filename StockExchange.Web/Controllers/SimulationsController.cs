@@ -53,7 +53,10 @@ namespace StockExchange.Web.Controllers
                     BudgetAfter = item.BudgetAfter,
                     Quantity = item.Quantity,
                     Company = companies.FirstOrDefault(x => x.Id == item.CompanyId)
-                }).ToList()
+                }).ToList(),
+                StartBudget = model.Budget,
+                TotalSimulationValue = ret.SimulationTotalValue,
+                PercentageProfit = ret.PercentageProfit
             });
         }
 

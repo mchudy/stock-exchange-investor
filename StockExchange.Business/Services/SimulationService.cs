@@ -25,7 +25,7 @@ namespace StockExchange.Business.Services
 
         public SimulationResultDto RunSimulation(SimulationDto simulationDto)
         {
-            var simulationResult = new SimulationResultDto { TransactionsLog = new List<SimulationTransactionDto>(), CurrentCompanyQuantity = new Dictionary<int, int>() };
+            var simulationResult = new SimulationResultDto { TransactionsLog = new List<SimulationTransactionDto>(), CurrentCompanyQuantity = new Dictionary<int, int>(), StartBudget = simulationDto.Budget};
             var strategy = _strategyService.GetUserStrategy(simulationDto.UserId, simulationDto.SelectedStrategyId);
             if (simulationDto.SelectedCompanyIds == null)
                 simulationDto.SelectedCompanyIds = _companyService.GetAllCompanies().Select(item => item.Id).ToList();
@@ -89,6 +89,9 @@ namespace StockExchange.Business.Services
                     }
                 }
             }
+            var currentPrices = _priceService.GetCurrentPrices(simulationResult.CurrentCompanyQuantity.Keys.ToList()).ToDictionary(x=>x.CompanyId);
+            simulationResult.SimulationTotalValue = simulationResult.CurrentCompanyQuantity.Sum(x=>x.Value*currentPrices[x.Key].ClosePrice) + simulationDto.Budget;
+            simulationResult.PercentageProfit = Math.Round((double)((simulationResult.SimulationTotalValue - simulationResult.StartBudget)/simulationResult.StartBudget) *100, 2);
             return simulationResult;
         }
 
