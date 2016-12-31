@@ -5,6 +5,9 @@
         radioClass: 'iradio_flat'
     });
     $('#SelectedCompanyId').select2();
+    $('.company-select').select2({
+        height: '100%'
+    });
 
     $('#AddTransactionViewModel_Date').datepicker({
         endDate: new Date()
@@ -90,10 +93,6 @@
 
     function refreshBudget() {
         $.getJSON('/Transactions/GetBudget/').done(function (result) {
-            var options = $('#companieslist');
-            $.each(result.companies, function () {
-                options.append('<option value="' + this.id + '">' + this.code + '</option>');
-            });
             $('#total-budget').text(result.totalBudget.toFixed(2));
             $('#free-budget').text(result.freeBudget.toFixed(2));
             $('#all-stocks').text(result.allStocksValue.toFixed(2));

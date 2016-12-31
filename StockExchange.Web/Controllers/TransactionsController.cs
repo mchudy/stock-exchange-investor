@@ -34,25 +34,19 @@ namespace StockExchange.Web.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            return View(new TransactionViewModel
-            {
-                AddTransactionViewModel = new AddTransactionViewModel { Companies = new List<CompanyDto>(), Date = DateTime.Today },
-                Transactions = new List<UserTransactionDto>(),
-                CurrentTransactions = new List<OwnedCompanyStocksDto>(),
-                BudgetInfo = new BudgetInfoViewModel()
-            });
+            var companies = _companyService.GetAllCompanies();
+            var model = GetTransactionViewModel(companies);
+            return View(model);
         }
 
         [HttpGet]
         public ActionResult GetBudget()
         {
-            //TODO: add view model
-            return new JsonNetResult(new
+            var ownedStocks = _walletService.GetOwnedStocks(CurrentUserId);
+            return new JsonNetResult(new BudgetInfoViewModel
             {
-                Companies = _companyService.GetAllCompanies(),
                 FreeBudget = CurrentUser.Budget,
-                AllStocksValue = _walletService.GetOwnedStocks(CurrentUserId).Sum(s => s.CurrentValue),
-                TotalBudget = CurrentUser.Budget + _walletService.GetOwnedStocks(CurrentUserId).Sum(s => s.CurrentValue)
+                AllStocksValue = ownedStocks.Sum(s => s.CurrentValue)
             });
         }
 
@@ -97,6 +91,16 @@ namespace StockExchange.Web.Controllers
                 Draw = dataTableMessage.Draw
             };
             return model;
+        }
+
+        private TransactionViewModel GetTransactionViewModel(IList<CompanyDto> companies)
+        {
+            return new TransactionViewModel
+            {
+                AddTransactionViewModel =
+                    new AddTransactionViewModel { Companies = companies, Date = DateTime.Today },
+                BudgetInfo = new BudgetInfoViewModel()
+            };
         }
 
         // ReSharper disable once SuggestBaseTypeForParameter

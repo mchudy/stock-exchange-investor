@@ -472,12 +472,18 @@
 .select2-container--default .select2-selection--multiple {
   border-radius: 0;
 }
-.radio-label {
-  margin-right: 8px;
-}
 .select2-container--default .select2-selection--single {
   border-radius: 0;
   border: 1px solid #d2d6de;
+}
+.select2-selection__rendered {
+  line-height: 32px !important;
+}
+.select2-selection {
+  height: 34px !important;
+}
+.radio-label {
+  margin-right: 8px;
 }
 body {
   background-color: #f1f4f7;
