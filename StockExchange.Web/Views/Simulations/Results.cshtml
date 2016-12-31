@@ -6,51 +6,62 @@
 }
 
 <div class="row">
-    <div class="col-sm-3">
+    <div class="col-sm-4">
         <div id="simulationresult-table-container">
             <div class="box box-info">
                 <div class="box-header with-border">
                     <h3 class="box-title">Results</h3>
                 </div>
-                <div class="box-body">
-                    <div class="table-responsive">
-                        <table class="table no-margin">
-                            <thead>
-                                <tr>
-                                    <th>Start budget</th>
-                                    <th>Total simulation value</th>
-                                    <th>Percentage profit</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <th>@Model.StartBudget</th>
-                                <th>@Model.TotalSimulationValue</th>
-                                <th>@Model.PercentageProfit</th>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="table-responsive">
-                        <table class="table no-margin">
-                            <thead>
-                                <tr>
-                                    <th>Company Name</th>
-                                    <th>Quantity</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var transaction in Model.CurrentCompanyQuantity)
-                                {
+                    <div class="box-body">
+                        <div class="table-responsive">
+                            <table class="table no-margin">
+                                <thead>
                                     <tr>
-                                        <td>@transaction.Key.Code</td>
-                                        <td>@transaction.Value</td>
+                                        <th>Start budget</th>
+                                        <th>Total simulation value</th>
+                                        <th>Percentage profit</th>
                                     </tr>
-                                }
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>@Model.StartBudget</td>
+                                        <td>@Model.TotalSimulationValue</td>
+                                        <td>
+                                            @if (@Model.PercentageProfit > 0)
+                                            {
+                                                <i class="fa fa-arrow-up icon-stock-up"></i>
+                                                <span class="text-success">@Model.PercentageProfit%</span>
+                                            }
+                                            else
+                                            {
+                                                <i class="fa fa-arrow-down icon-stock-down"></i>
+                                                <span class="text-danger">@Model.PercentageProfit%</span>
+                                            }
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table no-margin">
+                                <thead>
+                                    <tr>
+                                        <th>Company Name</th>
+                                        <th>Quantity</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var transaction in Model.CurrentCompanyQuantity)
+                                    {
+                                        <tr>
+                                            <td>@transaction.Key.Code</td>
+                                            <td>@transaction.Value</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                </div>
             </div>
         </div>
     </div>
