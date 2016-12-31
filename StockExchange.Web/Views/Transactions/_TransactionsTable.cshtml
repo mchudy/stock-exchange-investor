@@ -24,7 +24,7 @@
                     <th data-column="Quantity">@Html.DisplayNameFor(i => Model.Transactions.FirstOrDefault().Quantity)</th>
                     <th data-column="Total">@Html.DisplayNameFor(i => Model.Transactions.FirstOrDefault().Total)</th>
                     <th data-column="Action">@Html.DisplayNameFor(i => Model.Transactions.FirstOrDefault().Action)</th>
-                    <th data-column="Profit" class="width-smaller">@Html.DisplayNameFor(i => Model.Transactions.FirstOrDefault().Profit)</th>
+                    <th data-column="Profit">@Html.DisplayNameFor(i => Model.Transactions.FirstOrDefault().Profit)</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -38,8 +38,3 @@
         </div>
     </div>
 </div>
-
-@section css
-{
-    @Styles.Render("~/Content/css/dataTableFix.css")
-}
