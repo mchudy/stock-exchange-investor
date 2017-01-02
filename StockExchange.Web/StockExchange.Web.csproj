@@ -2596,7 +2596,7 @@
     <Compile Include="Models\Strategy\EditStrategyViewModel.cs" />
     <Compile Include="Models\Indicator\IndicatorPropertyViewModel.cs" />
     <Compile Include="Models\Transactions\AddTransactionViewModel.cs" />
-    <Compile Include="Models\Transactions\TransactionViewModel.cs" />
+    <Compile Include="Models\Transactions\WalletViewModel.cs" />
     <Compile Include="Models\Wallet\BudgetInfoViewModel.cs" />
     <Compile Include="Models\Wallet\CreateWalletViewModel.cs" />
     <Compile Include="Models\Wallet\UpdateBudgetViewModel.cs" />
@@ -2627,10 +2627,10 @@
     <Content Include="Views\Dashboard\_EditBudgetDialog.cshtml" />
     <Content Include="Views\Strategies\Index.cshtml" />
     <Content Include="Views\Wallet\_CurrentTransactionsTable.cshtml" />
-    <Content Include="Views\Dashboard\_BudgetInfo.cshtml" />
     <Content Include="Views\Wallet\_BudgetInfo.cshtml" />
     <Content Include="Views\Wallet\_EditBudgetDialog.cshtml" />
     <Content Include="Views\Wallet\_AddTransaction.cshtml" />
+    <Content Include="Scripts\components\budgetInfoBox.js" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -1,4 +1,4 @@
-﻿(function () {
+﻿(function ($) {
     'use strict';
     
     $("input[type='radio']").iCheck({
@@ -13,7 +13,7 @@
         endDate: new Date()
     });
 
-    refreshBudget();
+    $('.budget-infobox').trigger('refresh');
 
     var dataTable = initTransactionsTable();
     var dataTableCurrent = initCurrentStocksTable();
@@ -33,8 +33,8 @@
             type: $this.attr('method'),
             data: $this.serialize()
         }).done(function () {
-            refreshBudget();
             toastr.success('Transaction has been added');
+            $('.budget-infobox').trigger('box.refresh');
             dataTable.draw();
             dataTableCurrent.draw();
         }).always(function() {
@@ -81,33 +81,6 @@
         });
     }
 
-    //TODO: extract to a component
-    $('#modal-container').on('loaded.bs.modal', function (e) {
-        $('#edit-budget-form').on('submit', function (event) {
-            event.preventDefault();
-
-            var $this = $(this);
-            $.ajax({
-                url: $this.attr('action'),
-                type: $this.attr('method'),
-                data: $this.serialize()
-            }).done(function () {
-                toastr.success('Budget has been edited');
-                $('#modal-container').modal('hide');
-                refreshBudget();
-            });
-        });
-    });
-
-    function refreshBudget() {
-        $.getJSON('/Wallet/GetBudget/').done(function (result) {
-            $('#total-budget').text(result.totalBudget.toFixed(2));
-            $('#free-budget').text(result.freeBudget.toFixed(2));
-            $('#all-stocks').text(result.allStocksValue.toFixed(2));
-        });
-    }
-    //END TODO
-
     function getPriceWithIconHtml(value, down) {
         if (down || value < 0) {
             return '<i class="fa fa-arrow-down icon-stock-down"></i>' +
@@ -118,4 +91,4 @@
         }
     }
 
-})();
+})(jQuery);

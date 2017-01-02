@@ -14,6 +14,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using WalletViewModel = StockExchange.Web.Models.Transactions.WalletViewModel;
 
 namespace StockExchange.Web.Controllers
 {
@@ -72,7 +73,7 @@ namespace StockExchange.Web.Controllers
 
         [HttpPost]
         [HandleJsonError]
-        public ActionResult AddTransaction(TransactionViewModel model)
+        public ActionResult AddTransaction(WalletViewModel model)
         {
             if (!ModelState.IsValid)
                 return JsonErrorResult(ModelState);
@@ -113,13 +114,18 @@ namespace StockExchange.Web.Controllers
             return model;
         }
 
-        private TransactionViewModel GetTransactionViewModel(IList<CompanyDto> companies)
+        private WalletViewModel GetTransactionViewModel(IList<CompanyDto> companies)
         {
-            return new TransactionViewModel
+            var ownedStocks = _walletService.GetOwnedStocks(CurrentUserId);
+            return new WalletViewModel
             {
                 AddTransactionViewModel =
                     new AddTransactionViewModel { Companies = companies, Date = DateTime.Today },
-                BudgetInfo = new BudgetInfoViewModel()
+                BudgetInfo = new BudgetInfoViewModel
+                {
+                    AllStocksValue = ownedStocks.Sum(s => s.CurrentValue),
+                    FreeBudget = CurrentUser.Budget
+                }
             };
         }
 

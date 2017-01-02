@@ -56,7 +56,7 @@
                     @if (Request.IsAuthenticated)
                     {
                         <li class="list-header">Dashboard</li>
-                        <li class="@Html.IsSelected("Wallet")">
+                        <li class="@Html.IsSelected("Dashboard")">
                             <a href="@Url.Action("Index", "Dashboard")">
                                 <i class="fa fa-dashboard fa-lg"></i>
                                 <span>Dashboard</span>
@@ -73,7 +73,7 @@
                     @if (Request.IsAuthenticated)
                     {
                         <li class="list-header">Your investments</li>
-                        <li class="@Html.IsSelected("Transactions")">
+                        <li class="@Html.IsSelected("Wallet")">
                             <a href="@Url.Action("Index", "Wallet")">
                                 <i class="fa fa-usd fa-lg"></i>
                                 <span>Wallet</span>
@@ -112,7 +112,7 @@
             <footer>
                 &copy; Bartosz Woźniak, Marcin Chudy, Mateusz Bąkała @DateTime.Now.Year - Stock Exchange Investor
             </footer>
-            <div class="page-spinner spinner-big hidden"></div>
+            <div class="page-spinner spinner spinner-big hidden"></div>
         </div>
     </div>
     <div id="modal-container" class="modal fade" tabindex="-1" role="dialog">

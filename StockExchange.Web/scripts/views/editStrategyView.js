@@ -1,4 +1,5 @@
 ﻿(function ($) {
+    'use strict';
 
     $('.indicator-select').change(function () {
         var str = '';

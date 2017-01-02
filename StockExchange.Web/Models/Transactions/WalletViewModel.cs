@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace StockExchange.Web.Models.Transactions
 {
-    public class TransactionViewModel
+    public class WalletViewModel
     {
         public AddTransactionViewModel AddTransactionViewModel { get; set; }
 

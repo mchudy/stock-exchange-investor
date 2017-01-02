@@ -126,11 +126,15 @@ body {
         a {
             color: #dadada;
             font-size: 12px;
-        }
 
-        a:hover {
-            background-color: #2e2e2e;
-            color: #eeeeee;
+            &:hover {
+                background-color: #2e2e2e;
+                color: #eeeeee;
+            }
+
+            &:focus {
+                background-color: transparent;
+            }
         }
 
         i {
@@ -171,10 +175,6 @@ footer {
 
 .icon-stock-down, .text-danger {
     color: @red;
-}
-
-.datepicker {
-    background-color: white;
 }
 
 .alert {

@@ -1,34 +1,8 @@
-﻿(function () {
+﻿(function ($) {
     'use strict';
 
     drawPieChart('stocks-by-value-chart', config.stocksByValueData.title,
         mapData(config.stocksByValueData.data));
-
-    //TODO: extract to a component
-    $('#modal-container').on('loaded.bs.modal', function () {
-        $('#edit-budget-form').on('submit', function (event) {
-            event.preventDefault();
-
-            var $this = $(this);
-            $.ajax({
-                url: $this.attr('action'),
-                type: $this.attr('method'),
-                data: $this.serialize()
-            }).done(function () {
-                refreshBudget();
-                toastr.success('Budget has been edited');
-                $('#modal-container').modal('hide');
-            });
-        });
-    });
-
-    function refreshBudget() {
-        $.getJSON('/Wallet/GetBudget/').done(function (result) {
-            $('#total-budget').text(result.totalBudget.toFixed(2));
-            $('#free-budget').text(result.freeBudget.toFixed(2));
-            $('#all-stocks').text(result.allStocksValue.toFixed(2));
-        });
-    }
 
     function mapData(data) {
         return data.map(function(item) {
@@ -74,4 +48,5 @@
             }]
         });
     }
-})();
+
+})(jQuery);

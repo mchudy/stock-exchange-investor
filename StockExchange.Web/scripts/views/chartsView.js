@@ -1,4 +1,4 @@
-﻿(function() {
+﻿(function($) {
     'use strict';
 
     var chart;
@@ -255,4 +255,4 @@
             });
     }
 
-})();
+})(jQuery);

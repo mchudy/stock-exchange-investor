@@ -1,8 +1,8 @@
-﻿@model StockExchange.Web.Models.Transactions.TransactionViewModel
+﻿@model StockExchange.Web.Models.Transactions.WalletViewModel
 @using System.Web.Optimization
 
 @{
-    ViewBag.Title = "Transactions";
+    ViewBag.Title = "Wallet";
 }
 
 <div class="row">
@@ -28,5 +28,6 @@
 @section scripts
 {
     @Scripts.Render("~/bundles/scripts/datatables")
+    @Scripts.Render("~/Scripts/components/budgetInfoBox.js")
     @Scripts.Render("~/Scripts/views/walletView.js")
 }

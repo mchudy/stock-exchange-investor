@@ -489,8 +489,10 @@
 .radio-label {
   margin-right: 8px;
 }
-.spinner,
-.spinner-big {
+.datepicker {
+  background-color: white;
+}
+.spinner {
   margin: 50px auto;
   font-size: 10px;
   width: 1em;
@@ -507,6 +509,117 @@
 .spinner-big {
   margin: 100px auto;
   font-size: 15px;
+}
+.spinner-inline {
+  margin: 35px auto 0 auto;
+}
+@-webkit-keyframes load5 {
+  0%,
+  100% {
+    box-shadow: 0em -2.6em 0em 0em #3c8dbc, 1.8em -1.8em 0 0em rgba(60, 141, 188, 0.2), 2.5em 0em 0 0em rgba(60, 141, 188, 0.2), 1.75em 1.75em 0 0em rgba(60, 141, 188, 0.2), 0em 2.5em 0 0em rgba(60, 141, 188, 0.2), -1.8em 1.8em 0 0em rgba(60, 141, 188, 0.2), -2.6em 0em 0 0em rgba(60, 141, 188, 0.5), -1.8em -1.8em 0 0em rgba(60, 141, 188, 0.7);
+  }
+  12.5% {
+    box-shadow: 0em -2.6em 0em 0em rgba(60, 141, 188, 0.7), 1.8em -1.8em 0 0em #3c8dbc, 2.5em 0em 0 0em rgba(60, 141, 188, 0.2), 1.75em 1.75em 0 0em rgba(60, 141, 188, 0.2), 0em 2.5em 0 0em rgba(60, 141, 188, 0.2), -1.8em 1.8em 0 0em rgba(60, 141, 188, 0.2), -2.6em 0em 0 0em rgba(60, 141, 188, 0.2), -1.8em -1.8em 0 0em rgba(60, 141, 188, 0.5);
+  }
+  25% {
+    box-shadow: 0em -2.6em 0em 0em rgba(60, 141, 188, 0.5), 1.8em -1.8em 0 0em rgba(60, 141, 188, 0.7), 2.5em 0em 0 0em #3c8dbc, 1.75em 1.75em 0 0em rgba(60, 141, 188, 0.2), 0em 2.5em 0 0em rgba(60, 141, 188, 0.2), -1.8em 1.8em 0 0em rgba(60, 141, 188, 0.2), -2.6em 0em 0 0em rgba(60, 141, 188, 0.2), -1.8em -1.8em 0 0em rgba(60, 141, 188, 0.2);
+  }
+  37.5% {
+    box-shadow: 0em -2.6em 0em 0em rgba(60, 141, 188, 0.2), 1.8em -1.8em 0 0em rgba(60, 141, 188, 0.5), 2.5em 0em 0 0em rgba(60, 141, 188, 0.7), 1.75em 1.75em 0 0em #3c8dbc, 0em 2.5em 0 0em rgba(60, 141, 188, 0.2), -1.8em 1.8em 0 0em rgba(60, 141, 188, 0.2), -2.6em 0em 0 0em rgba(60, 141, 188, 0.2), -1.8em -1.8em 0 0em rgba(60, 141, 188, 0.2);
+  }
+  50% {
+    box-shadow: 0em -2.6em 0em 0em rgba(60, 141, 188, 0.2), 1.8em -1.8em 0 0em rgba(60, 141, 188, 0.2), 2.5em 0em 0 0em rgba(60, 141, 188, 0.5), 1.75em 1.75em 0 0em rgba(60, 141, 188, 0.7), 0em 2.5em 0 0em #3c8dbc, -1.8em 1.8em 0 0em rgba(60, 141, 188, 0.2), -2.6em 0em 0 0em rgba(60, 141, 188, 0.2), -1.8em -1.8em 0 0em rgba(60, 141, 188, 0.2);
+  }
+  62.5% {
+    box-shadow: 0em -2.6em 0em 0em rgba(60, 141, 188, 0.2), 1.8em -1.8em 0 0em rgba(60, 141, 188, 0.2), 2.5em 0em 0 0em rgba(60, 141, 188, 0.2), 1.75em 1.75em 0 0em rgba(60, 141, 188, 0.5), 0em 2.5em 0 0em rgba(60, 141, 188, 0.7), -1.8em 1.8em 0 0em #3c8dbc, -2.6em 0em 0 0em rgba(60, 141, 188, 0.2), -1.8em -1.8em 0 0em rgba(60, 141, 188, 0.2);
+  }
+  75% {
+    box-shadow: 0em -2.6em 0em 0em rgba(60, 141, 188, 0.2), 1.8em -1.8em 0 0em rgba(60, 141, 188, 0.2), 2.5em 0em 0 0em rgba(60, 141, 188, 0.2), 1.75em 1.75em 0 0em rgba(60, 141, 188, 0.2), 0em 2.5em 0 0em rgba(60, 141, 188, 0.5), -1.8em 1.8em 0 0em rgba(60, 141, 188, 0.7), -2.6em 0em 0 0em #3c8dbc, -1.8em -1.8em 0 0em rgba(60, 141, 188, 0.2);
+  }
+  87.5% {
+    box-shadow: 0em -2.6em 0em 0em rgba(60, 141, 188, 0.2), 1.8em -1.8em 0 0em rgba(60, 141, 188, 0.2), 2.5em 0em 0 0em rgba(60, 141, 188, 0.2), 1.75em 1.75em 0 0em rgba(60, 141, 188, 0.2), 0em 2.5em 0 0em rgba(60, 141, 188, 0.2), -1.8em 1.8em 0 0em rgba(60, 141, 188, 0.5), -2.6em 0em 0 0em rgba(60, 141, 188, 0.7), -1.8em -1.8em 0 0em #3c8dbc;
+  }
+}
+@-moz-keyframes load5 {
+  0%,
+  100% {
+    box-shadow: 0em -2.6em 0em 0em #3c8dbc, 1.8em -1.8em 0 0em rgba(60, 141, 188, 0.2), 2.5em 0em 0 0em rgba(60, 141, 188, 0.2), 1.75em 1.75em 0 0em rgba(60, 141, 188, 0.2), 0em 2.5em 0 0em rgba(60, 141, 188, 0.2), -1.8em 1.8em 0 0em rgba(60, 141, 188, 0.2), -2.6em 0em 0 0em rgba(60, 141, 188, 0.5), -1.8em -1.8em 0 0em rgba(60, 141, 188, 0.7);
+  }
+  12.5% {
+    box-shadow: 0em -2.6em 0em 0em rgba(60, 141, 188, 0.7), 1.8em -1.8em 0 0em #3c8dbc, 2.5em 0em 0 0em rgba(60, 141, 188, 0.2), 1.75em 1.75em 0 0em rgba(60, 141, 188, 0.2), 0em 2.5em 0 0em rgba(60, 141, 188, 0.2), -1.8em 1.8em 0 0em rgba(60, 141, 188, 0.2), -2.6em 0em 0 0em rgba(60, 141, 188, 0.2), -1.8em -1.8em 0 0em rgba(60, 141, 188, 0.5);
+  }
+  25% {
+    box-shadow: 0em -2.6em 0em 0em rgba(60, 141, 188, 0.5), 1.8em -1.8em 0 0em rgba(60, 141, 188, 0.7), 2.5em 0em 0 0em #3c8dbc, 1.75em 1.75em 0 0em rgba(60, 141, 188, 0.2), 0em 2.5em 0 0em rgba(60, 141, 188, 0.2), -1.8em 1.8em 0 0em rgba(60, 141, 188, 0.2), -2.6em 0em 0 0em rgba(60, 141, 188, 0.2), -1.8em -1.8em 0 0em rgba(60, 141, 188, 0.2);
+  }
+  37.5% {
+    box-shadow: 0em -2.6em 0em 0em rgba(60, 141, 188, 0.2), 1.8em -1.8em 0 0em rgba(60, 141, 188, 0.5), 2.5em 0em 0 0em rgba(60, 141, 188, 0.7), 1.75em 1.75em 0 0em #3c8dbc, 0em 2.5em 0 0em rgba(60, 141, 188, 0.2), -1.8em 1.8em 0 0em rgba(60, 141, 188, 0.2), -2.6em 0em 0 0em rgba(60, 141, 188, 0.2), -1.8em -1.8em 0 0em rgba(60, 141, 188, 0.2);
+  }
+  50% {
+    box-shadow: 0em -2.6em 0em 0em rgba(60, 141, 188, 0.2), 1.8em -1.8em 0 0em rgba(60, 141, 188, 0.2), 2.5em 0em 0 0em rgba(60, 141, 188, 0.5), 1.75em 1.75em 0 0em rgba(60, 141, 188, 0.7), 0em 2.5em 0 0em #3c8dbc, -1.8em 1.8em 0 0em rgba(60, 141, 188, 0.2), -2.6em 0em 0 0em rgba(60, 141, 188, 0.2), -1.8em -1.8em 0 0em rgba(60, 141, 188, 0.2);
+  }
+  62.5% {
+    box-shadow: 0em -2.6em 0em 0em rgba(60, 141, 188, 0.2), 1.8em -1.8em 0 0em rgba(60, 141, 188, 0.2), 2.5em 0em 0 0em rgba(60, 141, 188, 0.2), 1.75em 1.75em 0 0em rgba(60, 141, 188, 0.5), 0em 2.5em 0 0em rgba(60, 141, 188, 0.7), -1.8em 1.8em 0 0em #3c8dbc, -2.6em 0em 0 0em rgba(60, 141, 188, 0.2), -1.8em -1.8em 0 0em rgba(60, 141, 188, 0.2);
+  }
+  75% {
+    box-shadow: 0em -2.6em 0em 0em rgba(60, 141, 188, 0.2), 1.8em -1.8em 0 0em rgba(60, 141, 188, 0.2), 2.5em 0em 0 0em rgba(60, 141, 188, 0.2), 1.75em 1.75em 0 0em rgba(60, 141, 188, 0.2), 0em 2.5em 0 0em rgba(60, 141, 188, 0.5), -1.8em 1.8em 0 0em rgba(60, 141, 188, 0.7), -2.6em 0em 0 0em #3c8dbc, -1.8em -1.8em 0 0em rgba(60, 141, 188, 0.2);
+  }
+  87.5% {
+    box-shadow: 0em -2.6em 0em 0em rgba(60, 141, 188, 0.2), 1.8em -1.8em 0 0em rgba(60, 141, 188, 0.2), 2.5em 0em 0 0em rgba(60, 141, 188, 0.2), 1.75em 1.75em 0 0em rgba(60, 141, 188, 0.2), 0em 2.5em 0 0em rgba(60, 141, 188, 0.2), -1.8em 1.8em 0 0em rgba(60, 141, 188, 0.5), -2.6em 0em 0 0em rgba(60, 141, 188, 0.7), -1.8em -1.8em 0 0em #3c8dbc;
+  }
+}
+@-ms-keyframes load5 {
+  0%,
+  100% {
+    box-shadow: 0em -2.6em 0em 0em #3c8dbc, 1.8em -1.8em 0 0em rgba(60, 141, 188, 0.2), 2.5em 0em 0 0em rgba(60, 141, 188, 0.2), 1.75em 1.75em 0 0em rgba(60, 141, 188, 0.2), 0em 2.5em 0 0em rgba(60, 141, 188, 0.2), -1.8em 1.8em 0 0em rgba(60, 141, 188, 0.2), -2.6em 0em 0 0em rgba(60, 141, 188, 0.5), -1.8em -1.8em 0 0em rgba(60, 141, 188, 0.7);
+  }
+  12.5% {
+    box-shadow: 0em -2.6em 0em 0em rgba(60, 141, 188, 0.7), 1.8em -1.8em 0 0em #3c8dbc, 2.5em 0em 0 0em rgba(60, 141, 188, 0.2), 1.75em 1.75em 0 0em rgba(60, 141, 188, 0.2), 0em 2.5em 0 0em rgba(60, 141, 188, 0.2), -1.8em 1.8em 0 0em rgba(60, 141, 188, 0.2), -2.6em 0em 0 0em rgba(60, 141, 188, 0.2), -1.8em -1.8em 0 0em rgba(60, 141, 188, 0.5);
+  }
+  25% {
+    box-shadow: 0em -2.6em 0em 0em rgba(60, 141, 188, 0.5), 1.8em -1.8em 0 0em rgba(60, 141, 188, 0.7), 2.5em 0em 0 0em #3c8dbc, 1.75em 1.75em 0 0em rgba(60, 141, 188, 0.2), 0em 2.5em 0 0em rgba(60, 141, 188, 0.2), -1.8em 1.8em 0 0em rgba(60, 141, 188, 0.2), -2.6em 0em 0 0em rgba(60, 141, 188, 0.2), -1.8em -1.8em 0 0em rgba(60, 141, 188, 0.2);
+  }
+  37.5% {
+    box-shadow: 0em -2.6em 0em 0em rgba(60, 141, 188, 0.2), 1.8em -1.8em 0 0em rgba(60, 141, 188, 0.5), 2.5em 0em 0 0em rgba(60, 141, 188, 0.7), 1.75em 1.75em 0 0em #3c8dbc, 0em 2.5em 0 0em rgba(60, 141, 188, 0.2), -1.8em 1.8em 0 0em rgba(60, 141, 188, 0.2), -2.6em 0em 0 0em rgba(60, 141, 188, 0.2), -1.8em -1.8em 0 0em rgba(60, 141, 188, 0.2);
+  }
+  50% {
+    box-shadow: 0em -2.6em 0em 0em rgba(60, 141, 188, 0.2), 1.8em -1.8em 0 0em rgba(60, 141, 188, 0.2), 2.5em 0em 0 0em rgba(60, 141, 188, 0.5), 1.75em 1.75em 0 0em rgba(60, 141, 188, 0.7), 0em 2.5em 0 0em #3c8dbc, -1.8em 1.8em 0 0em rgba(60, 141, 188, 0.2), -2.6em 0em 0 0em rgba(60, 141, 188, 0.2), -1.8em -1.8em 0 0em rgba(60, 141, 188, 0.2);
+  }
+  62.5% {
+    box-shadow: 0em -2.6em 0em 0em rgba(60, 141, 188, 0.2), 1.8em -1.8em 0 0em rgba(60, 141, 188, 0.2), 2.5em 0em 0 0em rgba(60, 141, 188, 0.2), 1.75em 1.75em 0 0em rgba(60, 141, 188, 0.5), 0em 2.5em 0 0em rgba(60, 141, 188, 0.7), -1.8em 1.8em 0 0em #3c8dbc, -2.6em 0em 0 0em rgba(60, 141, 188, 0.2), -1.8em -1.8em 0 0em rgba(60, 141, 188, 0.2);
+  }
+  75% {
+    box-shadow: 0em -2.6em 0em 0em rgba(60, 141, 188, 0.2), 1.8em -1.8em 0 0em rgba(60, 141, 188, 0.2), 2.5em 0em 0 0em rgba(60, 141, 188, 0.2), 1.75em 1.75em 0 0em rgba(60, 141, 188, 0.2), 0em 2.5em 0 0em rgba(60, 141, 188, 0.5), -1.8em 1.8em 0 0em rgba(60, 141, 188, 0.7), -2.6em 0em 0 0em #3c8dbc, -1.8em -1.8em 0 0em rgba(60, 141, 188, 0.2);
+  }
+  87.5% {
+    box-shadow: 0em -2.6em 0em 0em rgba(60, 141, 188, 0.2), 1.8em -1.8em 0 0em rgba(60, 141, 188, 0.2), 2.5em 0em 0 0em rgba(60, 141, 188, 0.2), 1.75em 1.75em 0 0em rgba(60, 141, 188, 0.2), 0em 2.5em 0 0em rgba(60, 141, 188, 0.2), -1.8em 1.8em 0 0em rgba(60, 141, 188, 0.5), -2.6em 0em 0 0em rgba(60, 141, 188, 0.7), -1.8em -1.8em 0 0em #3c8dbc;
+  }
+}
+@-o-keyframes load5 {
+  0%,
+  100% {
+    box-shadow: 0em -2.6em 0em 0em #3c8dbc, 1.8em -1.8em 0 0em rgba(60, 141, 188, 0.2), 2.5em 0em 0 0em rgba(60, 141, 188, 0.2), 1.75em 1.75em 0 0em rgba(60, 141, 188, 0.2), 0em 2.5em 0 0em rgba(60, 141, 188, 0.2), -1.8em 1.8em 0 0em rgba(60, 141, 188, 0.2), -2.6em 0em 0 0em rgba(60, 141, 188, 0.5), -1.8em -1.8em 0 0em rgba(60, 141, 188, 0.7);
+  }
+  12.5% {
+    box-shadow: 0em -2.6em 0em 0em rgba(60, 141, 188, 0.7), 1.8em -1.8em 0 0em #3c8dbc, 2.5em 0em 0 0em rgba(60, 141, 188, 0.2), 1.75em 1.75em 0 0em rgba(60, 141, 188, 0.2), 0em 2.5em 0 0em rgba(60, 141, 188, 0.2), -1.8em 1.8em 0 0em rgba(60, 141, 188, 0.2), -2.6em 0em 0 0em rgba(60, 141, 188, 0.2), -1.8em -1.8em 0 0em rgba(60, 141, 188, 0.5);
+  }
+  25% {
+    box-shadow: 0em -2.6em 0em 0em rgba(60, 141, 188, 0.5), 1.8em -1.8em 0 0em rgba(60, 141, 188, 0.7), 2.5em 0em 0 0em #3c8dbc, 1.75em 1.75em 0 0em rgba(60, 141, 188, 0.2), 0em 2.5em 0 0em rgba(60, 141, 188, 0.2), -1.8em 1.8em 0 0em rgba(60, 141, 188, 0.2), -2.6em 0em 0 0em rgba(60, 141, 188, 0.2), -1.8em -1.8em 0 0em rgba(60, 141, 188, 0.2);
+  }
+  37.5% {
+    box-shadow: 0em -2.6em 0em 0em rgba(60, 141, 188, 0.2), 1.8em -1.8em 0 0em rgba(60, 141, 188, 0.5), 2.5em 0em 0 0em rgba(60, 141, 188, 0.7), 1.75em 1.75em 0 0em #3c8dbc, 0em 2.5em 0 0em rgba(60, 141, 188, 0.2), -1.8em 1.8em 0 0em rgba(60, 141, 188, 0.2), -2.6em 0em 0 0em rgba(60, 141, 188, 0.2), -1.8em -1.8em 0 0em rgba(60, 141, 188, 0.2);
+  }
+  50% {
+    box-shadow: 0em -2.6em 0em 0em rgba(60, 141, 188, 0.2), 1.8em -1.8em 0 0em rgba(60, 141, 188, 0.2), 2.5em 0em 0 0em rgba(60, 141, 188, 0.5), 1.75em 1.75em 0 0em rgba(60, 141, 188, 0.7), 0em 2.5em 0 0em #3c8dbc, -1.8em 1.8em 0 0em rgba(60, 141, 188, 0.2), -2.6em 0em 0 0em rgba(60, 141, 188, 0.2), -1.8em -1.8em 0 0em rgba(60, 141, 188, 0.2);
+  }
+  62.5% {
+    box-shadow: 0em -2.6em 0em 0em rgba(60, 141, 188, 0.2), 1.8em -1.8em 0 0em rgba(60, 141, 188, 0.2), 2.5em 0em 0 0em rgba(60, 141, 188, 0.2), 1.75em 1.75em 0 0em rgba(60, 141, 188, 0.5), 0em 2.5em 0 0em rgba(60, 141, 188, 0.7), -1.8em 1.8em 0 0em #3c8dbc, -2.6em 0em 0 0em rgba(60, 141, 188, 0.2), -1.8em -1.8em 0 0em rgba(60, 141, 188, 0.2);
+  }
+  75% {
+    box-shadow: 0em -2.6em 0em 0em rgba(60, 141, 188, 0.2), 1.8em -1.8em 0 0em rgba(60, 141, 188, 0.2), 2.5em 0em 0 0em rgba(60, 141, 188, 0.2), 1.75em 1.75em 0 0em rgba(60, 141, 188, 0.2), 0em 2.5em 0 0em rgba(60, 141, 188, 0.5), -1.8em 1.8em 0 0em rgba(60, 141, 188, 0.7), -2.6em 0em 0 0em #3c8dbc, -1.8em -1.8em 0 0em rgba(60, 141, 188, 0.2);
+  }
+  87.5% {
+    box-shadow: 0em -2.6em 0em 0em rgba(60, 141, 188, 0.2), 1.8em -1.8em 0 0em rgba(60, 141, 188, 0.2), 2.5em 0em 0 0em rgba(60, 141, 188, 0.2), 1.75em 1.75em 0 0em rgba(60, 141, 188, 0.2), 0em 2.5em 0 0em rgba(60, 141, 188, 0.2), -1.8em 1.8em 0 0em rgba(60, 141, 188, 0.5), -2.6em 0em 0 0em rgba(60, 141, 188, 0.7), -1.8em -1.8em 0 0em #3c8dbc;
+  }
 }
 @keyframes load5 {
   0%,
@@ -641,6 +754,9 @@ body {
   background-color: #2e2e2e;
   color: #eeeeee;
 }
+.sidebar .sidebar-menu li a:focus {
+  background-color: transparent;
+}
 .sidebar .sidebar-menu li i {
   width: 20px;
 }
@@ -673,9 +789,6 @@ footer {
 .icon-stock-down,
 .text-danger {
   color: #dd4b39;
-}
-.datepicker {
-  background-color: white;
 }
 .alert {
   border-radius: 0;

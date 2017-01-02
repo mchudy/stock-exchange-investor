@@ -1,14 +1,13 @@
 ﻿@model StockExchange.Web.Models.Wallet.WalletViewModel
 @using System.Web.Optimization
-@using StockExchange.Common.Extensions
 @using StockExchange.Web.Helpers
 @{
-    ViewBag.Title = "Wallet";
+    ViewBag.Title = "Dashboard";
 }
 
 <div class="row">
     <div class="col-md-4">
-        @Html.Partial("_BudgetInfo", Model.BudgetInfo)
+        @Html.Partial("~/Views/Wallet/_BudgetInfo.cshtml", Model.BudgetInfo)
     </div>
     <div class="col-md-4">
         <div class="info-box">
@@ -112,6 +111,7 @@
             stocksByValueData: @Html.ToJsonString(Model.StocksByValue)
         };
     </script>
-
-    @Scripts.Render("/Scripts/Views/walletView.js")
+    
+    @Scripts.Render("~/Scripts/components/budgetInfoBox.js")
+    @Scripts.Render("/Scripts/Views/dashboardView.js")
 }
