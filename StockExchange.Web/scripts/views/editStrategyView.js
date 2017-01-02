@@ -5,7 +5,7 @@
         $('select option:selected').each(function () {
             str += $(this).val();
         });
-        $('.' + str).toggleClass('hidden');
+        $('.indicator[data-id=' + str +']').toggleClass('hidden');
     });
 
     $('.remove-indicator').on('click', function() {
@@ -19,10 +19,6 @@
         }
         var $this = $(this);
         $this.prop('disabled', true);
-
-        if (!$('#edit-strategy-form').validate()) {
-            return;
-        }
 
         var indicators = [];
         $('.indicator:not(.hidden)').each(function () {

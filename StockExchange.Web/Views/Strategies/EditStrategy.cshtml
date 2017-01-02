@@ -30,7 +30,7 @@
                     </div>
                     foreach (var indicator in Model.Indicators)
                     {
-                        <fieldset data-id="@indicator.Type" class="@indicator.Type @(indicator.IsSelected ? "" : "hidden") indicator form-group">
+                        <fieldset data-id="@indicator.Type" class="@(indicator.IsSelected ? "" : "hidden") indicator form-group">
                             <legend class="col-sm-12">@indicator.Name<i class="fa fa-trash fa-pull-right remove-indicator"></i></legend>
                             @foreach (var property in indicator.Properties)
                             {

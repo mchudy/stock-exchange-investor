@@ -23,15 +23,11 @@
         });
 
     $('#run-simulation-form').on('submit', function () {
-        var buttons = $(this).find('[type="submit"]');
+        var $button = $(this).find('[type="submit"]');
         if ($(this).valid()) {
-            buttons.each(function(btn) {
-                $(buttons[btn]).prop('disabled', true);
-            });
+            $button.prop('disabled', true);
         } else {
-            buttons.each(function (btn) {
-                $(buttons[btn]).prop('disabled', false);
-            });
+            $button.prop('disabled', true);
         }
     });
 
