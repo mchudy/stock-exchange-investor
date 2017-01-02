@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using StockExchange.Business.Models.Company;
+using StockExchange.Business.Models.Simulations;
 
 namespace StockExchange.Web.Models.Simulation
 {
@@ -12,5 +13,7 @@ namespace StockExchange.Web.Models.Simulation
         public decimal StartBudget { get; set; }
         public decimal TotalSimulationValue { get; set; }
         public double PercentageProfit { get; set; }
+        public ExtremeTransactionResult MaximalGainOnTransaction { get; set; }
+        public ExtremeTransactionResult MaximalLossOnTransaction { get; set; }
     }
 }

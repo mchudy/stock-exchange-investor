@@ -56,7 +56,9 @@ namespace StockExchange.Web.Controllers
                 }).ToList(),
                 StartBudget = model.Budget,
                 TotalSimulationValue = ret.SimulationTotalValue,
-                PercentageProfit = ret.PercentageProfit
+                PercentageProfit = ret.PercentageProfit,
+                MaximalLossOnTransaction = ret.MaximalLossOnTransaction,
+                MaximalGainOnTransaction = ret.MaximalGainOnTransaction
             });
         }
 

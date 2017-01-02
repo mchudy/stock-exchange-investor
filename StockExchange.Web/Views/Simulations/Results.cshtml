@@ -11,56 +11,91 @@
                 <div class="box-header with-border">
                     <h3 class="box-title">Results</h3>
                 </div>
-                    <div class="box-body">
-                        <div class="table-responsive">
-                            <table class="table no-margin">
-                                <thead>
+                <div class="box-body">
+                    <div class="table-responsive">
+                        <table class="table no-margin">
+                            <thead>
+                                <tr>
+                                    <th>Start budget</th>
+                                    <th>Total simulation value</th>
+                                    <th>Percentage profit</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>@Model.StartBudget</td>
+                                    <td>@Model.TotalSimulationValue</td>
+                                    <td>
+                                        @if (@Model.PercentageProfit > 0)
+                                        {
+                                            <i class="fa fa-arrow-up icon-stock-up"></i>
+                                            <span class="text-success">@Model.PercentageProfit%</span>
+                                        }
+                                        else
+                                        {
+                                            <i class="fa fa-arrow-down icon-stock-down"></i>
+                                            <span class="text-danger">@Model.PercentageProfit%</span>
+                                        }
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table no-margin">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Transaction date</th>
+                                    <th>Percentage gain/loss</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    string gainDate = Model.MaximalGainOnTransaction?.TransactionDate.ToShortDateString() ?? "-";
+                                    string gainPercentage = Model.MaximalGainOnTransaction?.PercentageIncome + "%";
                                     <tr>
-                                        <th>Start budget</th>
-                                        <th>Total simulation value</th>
-                                        <th>Percentage profit</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>@Model.StartBudget</td>
-                                        <td>@Model.TotalSimulationValue</td>
+                                        <th>Maximal gain on transaction</th>
+                                        <td>@gainDate</td>
                                         <td>
-                                            @if (@Model.PercentageProfit > 0)
-                                            {
-                                                <i class="fa fa-arrow-up icon-stock-up"></i>
-                                                <span class="text-success">@Model.PercentageProfit%</span>
-                                            }
-                                            else
-                                            {
-                                                <i class="fa fa-arrow-down icon-stock-down"></i>
-                                                <span class="text-danger">@Model.PercentageProfit%</span>
-                                            }
+                                            <i class="fa fa-arrow-up icon-stock-up"></i>
+                                            <span class="text-success">@gainPercentage</span>
                                         </td>
                                     </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="table-responsive">
-                            <table class="table no-margin">
-                                <thead>
+                                    string lossDate = Model.MaximalLossOnTransaction?.TransactionDate.ToShortDateString() ?? "-";
+                                    string lossPercentage = Model.MaximalLossOnTransaction?.PercentageIncome + "%";
                                     <tr>
-                                        <th>Company Name</th>
-                                        <th>Quantity</th>
+                                        <th>Maximal loss on transaction</th>
+                                        <td>@lossDate</td>
+                                        <td>
+                                            <i class="fa fa-arrow-down icon-stock-down"></i>
+                                            <span class="text-danger">@lossPercentage</span>
+                                        </td>
                                     </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var transaction in Model.CurrentCompanyQuantity)
-                                    {
-                                        <tr>
-                                            <td>@transaction.Key.Code</td>
-                                            <td>@transaction.Value</td>
-                                        </tr>
-                                    }
-                                </tbody>
-                            </table>
-                        </div>
+                                }
+                        </tbody>
+                    </table>
+                </div>
+                    <div class="table-responsive">
+                        <table class="table no-margin">
+                            <thead>
+                                <tr>
+                                    <th>Company Name</th>
+                                    <th>Quantity</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var transaction in Model.CurrentCompanyQuantity)
+                                {
+                                    <tr>
+                                        <td>@transaction.Key.Code</td>
+                                        <td>@transaction.Value</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
                     </div>
+                </div>
             </div>
         </div>
     </div>
