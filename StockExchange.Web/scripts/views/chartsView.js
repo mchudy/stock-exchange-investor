@@ -62,6 +62,9 @@
             legend: {
                 enabled: true
             },
+            credits: {
+                enabled: false
+            },
             yAxis: [{
                 id: 'price-axis'
             }],

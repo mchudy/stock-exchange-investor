@@ -51,6 +51,9 @@
             title: {
                 text: title
             },
+            credits: {
+                enabled: false
+            },
             tooltip: {
                 pointFormat: '{series.name}: <b>{point.y:.2f}</b> ({point.percentage:.2f}%)'
             },
