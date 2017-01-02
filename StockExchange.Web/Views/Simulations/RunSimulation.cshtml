@@ -21,7 +21,7 @@
                             Looks like you haven't defined any investment strategy yet. To create one, click <a href="@Url.Action("Index", "Strategies")">here</a>.
                         </div>
                     }
-                    @using (Html.BeginForm("RunSimulation", "Simulations", new { ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                    @using (Html.BeginForm("RunSimulation", "Simulations", new { ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form", id="run-simulation-form" }))
                     {
                         <div class="form-group has-feedback">
                             @Html.LabelFor(m => m.Strategies, new { @class = "col-sm-4 control-label" })

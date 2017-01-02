@@ -22,6 +22,12 @@
         event.preventDefault();
 
         var $this = $(this);
+        if (!($this.valid())) {
+            return;
+        }
+
+        $('#add-transaction-button').prop('disabled', true);
+
         $.ajax({
             url: $this.attr('action'),
             type: $this.attr('method'),
@@ -31,6 +37,8 @@
             toastr.success('Transaction has been added');
             dataTable.draw();
             dataTableCurrent.draw();
+        }).always(function() {
+            $('#add-transaction-button').prop('disabled', false);
         });
     });
 

@@ -2,7 +2,7 @@
     'use strict';
 
     var chart;
-    var loadingText = 'Loading...';
+    var loadingIndicator = '<div class="spinner"></div>';
     var $companySelect = $('.company-select');
     var $indicatorSelect = $('.indicator-select');
     var $isCandleStickCheckbox = $('#is-candlestick-chart');
@@ -76,7 +76,7 @@
                 }
             }
         });
-        chart.showLoading(loadingText);
+        chart.showLoading(loadingIndicator);
     }
 
     function loadChart() {
@@ -85,7 +85,7 @@
             return;
         }
 
-        chart.showLoading(loadingText);
+        chart.showLoading(loadingIndicator);
 
         if (!$isCandleStickCheckbox.is(':checked')) {
             $.get(config.getLineChartDataUrl, $.param({

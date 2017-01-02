@@ -92,7 +92,7 @@ namespace StockExchange.Web.Controllers
 
         private EditStrategyViewModel GetViewModel(int? id)
         {
-            var model = new EditStrategyViewModel()
+            var model = new EditStrategyViewModel
             {
                 Indicators = _indicatorsService.GetAllIndicators().Select(dto=>new EditIndicatorViewModel()
                 {

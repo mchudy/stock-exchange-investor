@@ -6,7 +6,6 @@ using StockExchange.Business.Models.Transaction;
 using StockExchange.Business.ServiceInterfaces;
 using StockExchange.DataAccess.IRepositories;
 using StockExchange.DataAccess.Models;
-using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -30,6 +29,7 @@ namespace StockExchange.Business.Services
                 .Include(t => t.Company)
                 .Where(t => t.UserId == userId)
                 .OrderByDescending(t => t.Date)
+                .ThenByDescending(t => t.Id)
                 .Select(t => new UserTransactionDto
                 {
                     Date = t.Date,

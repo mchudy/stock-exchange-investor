@@ -12,8 +12,13 @@
         $(this).parents('.indicator').addClass('hidden');
     });
 
-    $('.create-strategy').click(function (e) {
+    $('.edit-strategy').click(function (e) {
         e.preventDefault();
+        if (!$('#edit-strategy-form').valid()) {
+            return;
+        }
+        var $this = $(this);
+        $this.prop('disabled', true);
 
         if (!$('#edit-strategy-form').validate()) {
             return;
@@ -44,6 +49,9 @@
         })
         .done(function(response) {
             window.location = response.redirectUrl;
+        })
+        .always(function() {
+            $this.prop('disabled', false);
         });
     });
 

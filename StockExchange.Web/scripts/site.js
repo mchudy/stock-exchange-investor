@@ -7,6 +7,13 @@
     initModals();
     initAjaxErrorToasts();
 
+    $(window).on('beforeunload', function() {
+        setTimeout(function() {
+            $('.page-content').addClass('hidden');
+            $('.page-spinner').removeClass('hidden');
+        }, 100);
+    });
+
     function initSidebarToggle() {
         $('.sidebar-toggle').click(function () {
             $('.sidebar').toggleClass('hide-sidebar');

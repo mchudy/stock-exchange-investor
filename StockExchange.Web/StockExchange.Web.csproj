@@ -2525,6 +2525,7 @@
     <Content Include="Content\css\boxes.less" />
     <Content Include="Content\css\forms.less" />
     <Content Include="Content\css\variables.less" />
+    <Content Include="Content\css\spinner.less" />
     <None Include="Log4Net.Debug.config">
       <DependentUpon>Log4Net.config</DependentUpon>
       <IsTransformFile>True</IsTransformFile>
