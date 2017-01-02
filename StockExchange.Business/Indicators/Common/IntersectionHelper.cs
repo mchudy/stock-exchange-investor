@@ -41,20 +41,22 @@ namespace StockExchange.Business.Indicators.Common
             var previousValue = doubleLineValues[0];
             for (int i = 1; i < doubleLineValues.Count; i++)
             {
-                // we consider 2 lines - indicator and signal line
+                // we consider 2 lines - indicator (y=ax+b) and signal (y=cx+d) line
                 // with equations 
                 // y = (curr.* - prev.*)x + prev.* (y = Ax+B and y=Cx+D) - * may be Value or SecondLineValue
                 // intersection exists when their difference
-                // has value 0 somewhere, thus (C-A)x=B-D -> a=C-A, b=B-D
-                // intersection exists if a=b=0 (lines overlap -> NOSIGNAL) or (x=B/A and 0<x<1)
+                // has value 0 somewhere, thus (c-a)x=b-d. Let e=c-a, f=b-d
+                // intersection exists if e=f=0 (lines overlap -> NOSIGNAL) or (x=f/e and 0<x<1)
                 // if MACD intersects signal line upside -> BUY otherwise SELL
                 var currentValue = doubleLineValues[i];
-                decimal a = currentValue.SecondLineValue - previousValue.SecondLineValue - currentValue.Value +
-                            previousValue.Value;
-                decimal b = previousValue.Value - currentValue.Value;
-                if ((a == 0 && b == 0) || (a * b > 0 && b < a))   // intersection
+                var a = currentValue.Value - previousValue.Value;
+                var c = currentValue.SecondLineValue - previousValue.SecondLineValue;
+                var b = previousValue.Value;
+                var d = previousValue.SecondLineValue;
+                decimal e = a - c;
+                decimal f = b - d; //diff: y=ex+f
+                if ((e == 0 && f == 0) || (e*f < 0 && e*(e+f)>0))   // intersection
                 {
-                    decimal diff = previousValue.Value - previousValue.SecondLineValue;     // B - D
                     intersections.Add(new IntersectionInfo()
                     {
                         Date = currentValue.Date,
@@ -62,7 +64,7 @@ namespace StockExchange.Business.Indicators.Common
                         End1 = currentValue.Value,
                         Start2 = previousValue.SecondLineValue,
                         End2 = currentValue.SecondLineValue,
-                        IntersectionType = (diff == 0) ? IntersectionType.Same : (diff < 0 ? IntersectionType.FirstAbove : IntersectionType.SecondAbove)
+                        IntersectionType = (f == 0) ? IntersectionType.Same : (f < 0 ? IntersectionType.FirstAbove : IntersectionType.SecondAbove)
                     });
                 }
                 previousValue = currentValue;
