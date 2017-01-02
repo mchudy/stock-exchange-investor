@@ -13,8 +13,6 @@
         endDate: new Date()
     });
 
-    $('.budget-infobox').trigger('refresh');
-
     var dataTable = initTransactionsTable();
     var dataTableCurrent = initCurrentStocksTable();
 
