@@ -6,7 +6,7 @@
         $('select option:selected').each(function () {
             str += $(this).val();
         });
-        $('.indicator[data-id=' + str +']').toggleClass('hidden');
+        $('.indicator[data-id=' + str +']').removeClass('hidden');
     });
 
     $('.remove-indicator').on('click', function() {
