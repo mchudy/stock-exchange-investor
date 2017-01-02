@@ -37,36 +37,57 @@ namespace StockExchange.Business.Services
 
             foreach (var signalEvent in signalEvents.OrderBy(item => item.Date))
             {
-                var flag = false;
-                if (signalEvent.CompaniesToBuy.Count > 0)
-                {
-                    var prices = ConvertPrices(allPrices, signalEvent.CompaniesToBuy, signalEvent.Date)
-                        .OrderByDescending(item => item.Value);
-                    foreach (var price in prices)
-                    {
-                        if (simulationDto.Budget <= price.Value) continue;
-                        simulationResult.TransactionsLog.Add(new SimulationTransactionDto
-                        {
-                            Date = signalEvent.Date,
-                            CompanyId = price.Key,
-                            Price = price.Value,
-                            Action = SignalAction.Buy,
-                            Quantity = (int)Math.Floor(simulationDto.Budget / price.Value),
-                            BudgetAfter =
-                                simulationDto.Budget - (int)Math.Floor(simulationDto.Budget / price.Value) * price.Value
-                        });
-                        flag = true;
-                        if (simulationResult.CurrentCompanyQuantity.ContainsKey(price.Key))
-                            simulationResult.CurrentCompanyQuantity[price.Key] +=
-                                (int)Math.Floor(simulationDto.Budget / price.Value);
-                        else
-                            simulationResult.CurrentCompanyQuantity.Add(price.Key,
-                                (int)Math.Floor(simulationDto.Budget / price.Value));
-                        simulationDto.Budget = simulationResult.TransactionsLog.Last().BudgetAfter;
-                    }
-                }
-                if (flag) continue;
-                // ReSharper disable once InvertIf
+                //var flag = false;
+                //if (signalEvent.CompaniesToBuy.Count > 0)
+                //{
+                //    var prices = ConvertPrices(allPrices, signalEvent.CompaniesToBuy, signalEvent.Date)
+                //        .OrderByDescending(item => item.Value);
+                //    foreach (var price in prices)
+                //    {
+                //        if (simulationDto.Budget <= price.Value) continue;
+                //        simulationResult.TransactionsLog.Add(new SimulationTransactionDto
+                //        {
+                //            Date = signalEvent.Date,
+                //            CompanyId = price.Key,
+                //            Price = price.Value,
+                //            Action = SignalAction.Buy,
+                //            Quantity = (int)Math.Floor(simulationDto.Budget / price.Value),
+                //            BudgetAfter =
+                //                simulationDto.Budget - (int)Math.Floor(simulationDto.Budget / price.Value) * price.Value
+                //        });
+                //        flag = true;
+                //        if (simulationResult.CurrentCompanyQuantity.ContainsKey(price.Key))
+                //            simulationResult.CurrentCompanyQuantity[price.Key] +=
+                //                (int)Math.Floor(simulationDto.Budget / price.Value);
+                //        else
+                //            simulationResult.CurrentCompanyQuantity.Add(price.Key,
+                //                (int)Math.Floor(simulationDto.Budget / price.Value));
+                //        simulationDto.Budget = simulationResult.TransactionsLog.Last().BudgetAfter;
+                //    }
+                //}
+                //if (flag) continue;
+                //// ReSharper disable once InvertIf
+                //if (signalEvent.CompaniesToSell.Count > 0)
+                //{
+                //    var prices = ConvertPrices(allPrices, signalEvent.CompaniesToSell, signalEvent.Date)
+                //        .OrderByDescending(item => item.Value);
+                //    foreach (var price in prices)
+                //    {
+                //        if (!simulationResult.CurrentCompanyQuantity.ContainsKey(price.Key)) continue;
+                //        simulationResult.TransactionsLog.Add(new SimulationTransactionDto
+                //        {
+                //            Date = signalEvent.Date,
+                //            CompanyId = price.Key,
+                //            Price = price.Value,
+                //            Action = SignalAction.Sell,
+                //            Quantity = simulationResult.CurrentCompanyQuantity[price.Key],
+                //            BudgetAfter =
+                //                simulationDto.Budget + simulationResult.CurrentCompanyQuantity[price.Key] * price.Value
+                //        });
+                //        simulationDto.Budget = simulationResult.TransactionsLog.Last().BudgetAfter;
+                //        simulationResult.CurrentCompanyQuantity.Remove(price.Key);
+                //    }
+                //}
                 if (signalEvent.CompaniesToSell.Count > 0)
                 {
                     var prices = ConvertPrices(allPrices, signalEvent.CompaniesToSell, signalEvent.Date)
@@ -82,10 +103,36 @@ namespace StockExchange.Business.Services
                             Action = SignalAction.Sell,
                             Quantity = simulationResult.CurrentCompanyQuantity[price.Key],
                             BudgetAfter =
-                                simulationDto.Budget + simulationResult.CurrentCompanyQuantity[price.Key] * price.Value
+                                simulationDto.Budget + simulationResult.CurrentCompanyQuantity[price.Key]*price.Value
                         });
                         simulationDto.Budget = simulationResult.TransactionsLog.Last().BudgetAfter;
                         simulationResult.CurrentCompanyQuantity.Remove(price.Key);
+                    }
+                }
+                if (signalEvent.CompaniesToBuy.Count > 0)
+                {
+                    var prices = ConvertPrices(allPrices, signalEvent.CompaniesToBuy, signalEvent.Date)
+                        .OrderByDescending(item => item.Value); //think over that sort
+                    foreach (var price in prices)
+                    {
+                        if (simulationDto.Budget <= price.Value) continue;
+                        simulationResult.TransactionsLog.Add(new SimulationTransactionDto
+                        {
+                            Date = signalEvent.Date,
+                            CompanyId = price.Key,
+                            Price = price.Value,
+                            Action = SignalAction.Buy,
+                            Quantity = (int)Math.Floor(simulationDto.Budget / price.Value), //add company stocks budget limit
+                            BudgetAfter =
+                                simulationDto.Budget - (int)Math.Floor(simulationDto.Budget / price.Value) * price.Value
+                        });
+                        if (simulationResult.CurrentCompanyQuantity.ContainsKey(price.Key))
+                            simulationResult.CurrentCompanyQuantity[price.Key] +=
+                                (int)Math.Floor(simulationDto.Budget / price.Value);
+                        else
+                            simulationResult.CurrentCompanyQuantity.Add(price.Key,
+                                (int)Math.Floor(simulationDto.Budget / price.Value));
+                        simulationDto.Budget = simulationResult.TransactionsLog.Last().BudgetAfter;
                     }
                 }
             }
