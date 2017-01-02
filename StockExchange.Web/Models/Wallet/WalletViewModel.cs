@@ -1,21 +1,17 @@
-﻿using StockExchange.Business.Models.Wallet;
-using StockExchange.Web.Models.Charts;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using StockExchange.Business.Models.Transaction;
+using StockExchange.Business.Models.Wallet;
 
 namespace StockExchange.Web.Models.Wallet
 {
     public class WalletViewModel
     {
+        public AddTransactionViewModel AddTransactionViewModel { get; set; }
+
+        public IList<UserTransactionDto> Transactions { get; set; } = new List<UserTransactionDto>();
+
+        public IList<OwnedCompanyStocksDto> CurrentTransactions { get; set; } = new List<OwnedCompanyStocksDto>();
+
         public BudgetInfoViewModel BudgetInfo { get; set; }
-
-        public int AllTransactionsCount { get; set; }
-
-        public int CurrentSignalsCount { get; set; }
-
-        public string CurrentStrategyName { get; set; }
-
-        public IList<OwnedCompanyStocksDto> OwnedCompanyStocks { get; set; } = new List<OwnedCompanyStocksDto>();
-
-        public PieChartModel StocksByValue { get; set; }
     }
 }

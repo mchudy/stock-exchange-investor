@@ -1,11 +1,9 @@
-﻿using Newtonsoft.Json;
-using StockExchange.Business.Models.Company;
-using StockExchange.Common;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using StockExchange.Business.Models.Company;
 
-namespace StockExchange.Web.Models.Transactions
+namespace StockExchange.Web.Models.Wallet
 {
     public class AddTransactionViewModel
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace StockExchange.Web.Helpers
+namespace StockExchange.Web.Helpers.ValidationAttributes
 {
     public class DateCompareAttribute : ValidationAttribute
     {

@@ -6,6 +6,7 @@ using StockExchange.Web.Models.Wallet;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using StockExchange.Web.Models.Dashboard;
 
 namespace StockExchange.Web.Controllers
 {
@@ -49,9 +50,9 @@ namespace StockExchange.Web.Controllers
             return new JsonNetResult(new { UserId = CurrentUserId, model.NewBudget });
         }
 
-        private WalletViewModel BuildWalletViewModel(IList<OwnedCompanyStocksDto> ownedStocks)
+        private DashboardViewModel BuildWalletViewModel(IList<OwnedCompanyStocksDto> ownedStocks)
         {
-            var walletModel = new WalletViewModel
+            var walletModel = new DashboardViewModel
             {
                 BudgetInfo = new BudgetInfoViewModel
                 {

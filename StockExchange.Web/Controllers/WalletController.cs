@@ -8,13 +8,12 @@ using StockExchange.Web.Filters;
 using StockExchange.Web.Helpers;
 using StockExchange.Web.Helpers.Json;
 using StockExchange.Web.Models.DataTables;
-using StockExchange.Web.Models.Transactions;
 using StockExchange.Web.Models.Wallet;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
-using WalletViewModel = StockExchange.Web.Models.Transactions.WalletViewModel;
+using WalletViewModel = StockExchange.Web.Models.Wallet.WalletViewModel;
 
 namespace StockExchange.Web.Controllers
 {

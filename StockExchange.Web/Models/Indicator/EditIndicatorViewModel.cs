@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using StockExchange.Business.Indicators.Common;
-using StockExchange.Web.Models.Strategy;
 
 namespace StockExchange.Web.Models.Indicator
 {

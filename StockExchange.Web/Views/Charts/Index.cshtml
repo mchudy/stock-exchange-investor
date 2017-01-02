@@ -44,6 +44,7 @@
                     <div class="indicator-property form-group" data-name="@property.Name" style="margin-right: 0;">
                         <label class="col-sm-6 control-label">@property.Name</label>
                         <div class="input-group col-sm-6">
+                            @* ReSharper disable once UnknownCssClass *@
                             @Html.TextBox(property.Value.ToString(), property.Value.ToString(), new { @class = "property-value form-control", type="number" })
                         </div>
                     </div>
