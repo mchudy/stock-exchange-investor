@@ -2544,8 +2544,8 @@
     <Content Include="Scripts\site.js" />
     <Content Include="Scripts\views\editStrategyView.js" />
     <Content Include="Scripts\views\strategiesListView.js" />
-    <Content Include="Scripts\views\transactionsView.js" />
     <Content Include="Scripts\views\walletView.js" />
+    <Content Include="Scripts\views\dashboardView.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -2559,8 +2559,8 @@
     <Compile Include="Controllers\PriceController.cs" />
     <Compile Include="Controllers\SimulationsController.cs" />
     <Compile Include="Controllers\StrategiesController.cs" />
-    <Compile Include="Controllers\TransactionsController.cs" />
     <Compile Include="Controllers\WalletController.cs" />
+    <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Filters\HandleJsonErrorAttribute.cs" />
     <Compile Include="Helpers\ValidationAttributes\DateCompareAttribute.cs" />
     <Compile Include="Helpers\Json\CustomFormatResolver.cs" />
@@ -2616,18 +2616,20 @@
     <Content Include="Views\Charts\Index.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\Dashboard\Index.cshtml" />
     <Content Include="Views\Wallet\Index.cshtml" />
-    <Content Include="Views\Transactions\Index.cshtml" />
     <Content Include="Views\Simulations\RunSimulation.cshtml" />
     <Content Include="Views\Strategies\EditStrategy.cshtml" />
     <Content Include="Views\Account\Settings.cshtml" />
     <Content Include="Views\Simulations\Results.cshtml" />
-    <Content Include="Views\Transactions\_TransactionsTable.cshtml" />
+    <Content Include="Views\Wallet\_TransactionsTable.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\EnumTemplate.cshtml" />
-    <Content Include="Views\Wallet\_EditBudgetDialog.cshtml" />
+    <Content Include="Views\Dashboard\_EditBudgetDialog.cshtml" />
     <Content Include="Views\Strategies\Index.cshtml" />
-    <Content Include="Views\Transactions\_CurrentTransactionsTable.cshtml" />
+    <Content Include="Views\Wallet\_CurrentTransactionsTable.cshtml" />
+    <Content Include="Views\Dashboard\_BudgetInfo.cshtml" />
     <Content Include="Views\Wallet\_BudgetInfo.cshtml" />
+    <Content Include="Views\Wallet\_EditBudgetDialog.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

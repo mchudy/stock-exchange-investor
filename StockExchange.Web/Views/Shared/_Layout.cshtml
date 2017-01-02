@@ -57,7 +57,7 @@
                     {
                         <li class="list-header">Dashboard</li>
                         <li class="@Html.IsSelected("Wallet")">
-                            <a href="@Url.Action("Index", "Wallet")">
+                            <a href="@Url.Action("Index", "Dashboard")">
                                 <i class="fa fa-dashboard fa-lg"></i>
                                 <span>Dashboard</span>
                             </a>
@@ -74,7 +74,7 @@
                     {
                         <li class="list-header">Your investments</li>
                         <li class="@Html.IsSelected("Transactions")">
-                            <a href="@Url.Action("Index", "Transactions")">
+                            <a href="@Url.Action("Index", "Wallet")">
                                 <i class="fa fa-usd fa-lg"></i>
                                 <span>Wallet</span>
                             </a>
