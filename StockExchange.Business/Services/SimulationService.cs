@@ -98,8 +98,8 @@ namespace StockExchange.Business.Services
         private Dictionary<int, decimal> ConvertPrices(IList<CompanyPricesDto> allPrices, IList<int> companyIds, DateTime date)
         {
             return allPrices.Where(p => companyIds.Contains(p.Company.Id) && p.Prices.Any(pr => pr.Date == date))
-                .Select(p => new { Company = p.Company.Id, Price = p.Prices.FirstOrDefault(pr => pr.Date == date)})
-                .ToDictionary(p => p.Company, p => (p.Price.ClosePrice + p.Price.HighPrice + p.Price.LowPrice + p.Price.OpenPrice) / 4 );
+                // ReSharper disable once PossibleNullReferenceException
+                .ToDictionary(p => p.Company.Id, p => p.Prices.FirstOrDefault(pr => pr.Date == date).ClosePrice);
         }
     }
 }

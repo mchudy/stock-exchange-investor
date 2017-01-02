@@ -27,7 +27,7 @@
         if ($(this).valid()) {
             $button.prop('disabled', true);
         } else {
-            $button.prop('disabled', true);
+            $button.prop('disabled', false);
         }
     });
 
