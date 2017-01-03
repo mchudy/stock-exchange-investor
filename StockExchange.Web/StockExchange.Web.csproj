@@ -2159,7 +2159,6 @@
     </Content>
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
-    <Content Include="Scripts\components\budgetInfoBox.js" />
     <Content Include="Scripts\views\simulationView.js" />
     <Content Include="Scripts\views\chartsView.js" />
     <Content Include="Scripts\plugins\dataTablesFilters.js" />
@@ -2624,12 +2623,17 @@
     <Content Include="Views\Simulations\Results.cshtml" />
     <Content Include="Views\Wallet\_TransactionsTable.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\EnumTemplate.cshtml" />
-    <Content Include="Views\Dashboard\_EditBudgetDialog.cshtml" />
     <Content Include="Views\Strategies\Index.cshtml" />
     <Content Include="Views\Wallet\_CurrentTransactionsTable.cshtml" />
     <Content Include="Views\Wallet\_BudgetInfo.cshtml" />
     <Content Include="Views\Wallet\_EditBudgetDialog.cshtml" />
     <Content Include="Views\Wallet\_AddTransaction.cshtml" />
+    <Content Include="Views\Dashboard\_BudgetInfo.cshtml" />
+    <Content Include="Views\Dashboard\_SignalInfo.cshtml" />
+    <Content Include="Views\Dashboard\_TransactionInfo.cshtml" />
+    <Content Include="Views\Dashboard\_OwnedCompanyStats.cshtml" />
+    <Content Include="Views\Dashboard\_OwnedStocksTable.cshtml" />
+    <Content Include="Views\Dashboard\_SignalTable.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

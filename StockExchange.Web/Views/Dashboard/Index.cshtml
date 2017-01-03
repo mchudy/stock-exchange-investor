@@ -4,102 +4,26 @@
 @{
     ViewBag.Title = "Dashboard";
 }
-
 <div class="row">
     <div class="col-md-4">
-        @Html.Partial("~/Views/Wallet/_BudgetInfo.cshtml", Model.BudgetInfo)
+        @Html.Partial("_BudgetInfo", Model.BudgetInfo)
     </div>
     <div class="col-md-4">
-        <div class="info-box">
-            <span class="info-box-icon"><i class="fa fa-signal"></i></span>
-            <div class="info-box-content">
-                <span class="info-box-text">Signals</span>
-                <span class="info-box-number">@Model.CurrentSignalsCount</span>
-            </div>
-        </div>
+        @Html.Partial("_SignalInfo")
     </div>
     <div class="col-md-4">
-        <div class="info-box">
-            <span class="info-box-icon"><i class="fa fa-handshake-o"></i></span>
-            <div class="info-box-content">
-                <span class="info-box-text">All transactions</span>
-                <span class="info-box-number">@Model.AllTransactionsCount</span>
-            </div>
-        </div>
+        @Html.Partial("_TransactionInfo")
     </div>
 </div>
-
 <div class="row">
     <div class="col-md-4">
-        <div class="box box-default">
-            <div class="box-header with-border">
-                <h3 class="box-title">Your stocks</h3>
-            </div>
-            <div class="box-body">
-                <div class="table-responsive">
-                    <table class="table no-margin">
-                        <thead>
-                        <tr>
-                            <th>Company</th>
-                            <th>Current price</th>
-                            <th>Owned stocks</th>
-                            <th>Buy value</th>
-                            <th>Current value</th>
-                            <th>Change</th>
-                        </tr>
-                        @foreach (var ownedStock in Model.OwnedCompanyStocks)
-                        {
-                            <tr>
-                                <td>@ownedStock.CompanyName</td>
-                                <td>@ownedStock.CurrentPrice</td>
-                                <td>@ownedStock.OwnedStocksCount</td>
-                                <td>@ownedStock.TotalBuyPrice</td>
-                                <td>@ownedStock.CurrentValue</td>
-                                <td>
-                                    @if (ownedStock.Profit < 0)
-                                    {
-                                        <i class="fa fa-arrow-down icon-stock-down"></i>
-                                        <span class="text-danger">@ownedStock.Profit</span>
-                                    }
-                                    else
-                                    {
-                                        <i class="fa fa-arrow-up icon-stock-up"></i>
-                                        <span class="text-success">@ownedStock.Profit</span>
-                                    }
-                                </td>
-
-                            </tr>
-                        }
-                        </thead>
-                    </table>
-                </div>
-            </div>
-        </div>
-
+        @Html.Partial("_OwnedStocksTable")
     </div>
     <div class="col-md-4">
-        <div class="box box-danger">
-            <div class="box-header with-border">
-                <h3 class="box-title">Current signals</h3>
-            </div>
-            <div class="box-body">
-                
-            </div>
-            <div class="box-footer">
-                <span class="text-muted">Currently used strategy: <em>@Model.CurrentStrategyName</em></span>
-            </div>
-        </div>
+        @Html.Partial("_SignalTable")
     </div>
     <div class="col-md-4">
-        <div class="box box-warning">
-            <div class="box-header with-border">
-                <h3 class="box-title">Statistics</h3>
-            </div>
-            <div class="box-body">
-                <div id="stocks-by-value-chart">
-                </div>
-            </div>
-        </div>
+        @Html.Partial("_OwnedCompanyStats")
     </div>
 </div>
 
@@ -111,7 +35,7 @@
             stocksByValueData: @Html.ToJsonString(Model.StocksByValue)
         };
     </script>
-    
+    @Scripts.Render("~/bundles/scripts/datatables")
     @Scripts.Render("~/Scripts/components/budgetInfoBox.js")
     @Scripts.Render("/Scripts/Views/dashboardView.js")
 }

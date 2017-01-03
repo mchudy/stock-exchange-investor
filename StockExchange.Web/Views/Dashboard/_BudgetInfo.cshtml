@@ -1,0 +1,21 @@
+﻿@model StockExchange.Web.Models.Wallet.BudgetInfoViewModel
+@using StockExchange.Common.Extensions;
+
+<div class="info-box bg-yellow budget-infobox">
+    <span class="info-box-icon"><i class="fa fa-money"></i></span>
+    <div class="info-box-content">
+        <div class="info-box-inner-content">
+            <div class="col-sm-4">
+                <span class="info-box-text">Free budget</span>
+                <span id="free-budget" class="info-box-number">@Model.FreeBudget.FormatCurrency()</span>
+                <span class="info-box-text">Stocks value</span>
+                <span id="all-stocks" class="info-box-number">@Model.AllStocksValue.FormatCurrency()</span>
+            </div>
+            <div class="col-sm-4">
+                <span class="info-box-text">Total budget</span>
+                <span id="total-budget" class="info-box-number">@Model.TotalBudget.FormatCurrency()</span>
+            </div>
+        </div>
+        <div class="spinner spinner-inline hidden"></div>
+    </div>
+</div>

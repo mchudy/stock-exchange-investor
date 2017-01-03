@@ -13,10 +13,11 @@ namespace StockExchange.Web.Models.Dashboard
 
         public int CurrentSignalsCount { get; set; }
 
-        public string CurrentStrategyName { get; set; }
-
         public IList<OwnedCompanyStocksDto> OwnedCompanyStocks { get; set; } = new List<OwnedCompanyStocksDto>();
 
         public PieChartModel StocksByValue { get; set; }
+
+
+        public string CurrentStrategyName { get; set; }
     }
 }

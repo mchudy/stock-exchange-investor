@@ -6,20 +6,22 @@ using StockExchange.Web.Models.Wallet;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using StockExchange.Business.Extensions;
+using StockExchange.Business.Models.Filters;
+using StockExchange.Web.Helpers;
 using StockExchange.Web.Models.Dashboard;
+using StockExchange.Web.Models.DataTables;
 
 namespace StockExchange.Web.Controllers
 {
     [Authorize]
     public class DashboardController : BaseController
     {
-        private readonly IUserService _userService;
         private readonly ITransactionsService _transactionsService;
         private readonly IWalletService _walletService;
 
-        public DashboardController(IUserService userService, ITransactionsService transactionsService, IWalletService walletService)
+        public DashboardController(ITransactionsService transactionsService, IWalletService walletService)
         {
-            _userService = userService;
             _transactionsService = transactionsService;
             _walletService = walletService;
         }
@@ -32,26 +34,36 @@ namespace StockExchange.Web.Controllers
             return View(walletModel);
         }
 
-        [HttpGet]
-        public ActionResult EditBudgetDialog()
+        [HttpPost]
+        public ActionResult GetOwnedStocksTable(DataTableMessage<TransactionFilter> dataTableMessage)
         {
-            var model = new UpdateBudgetViewModel { NewBudget = CurrentUser.Budget };
-            return PartialView("_EditBudgetDialog", model);
+            var searchMessage = DataTableMessageConverter.ToPagedFilterDefinition(dataTableMessage);
+            var pagedList = _walletService.GetOwnedStocks(CurrentUserId, searchMessage);
+            var model = BuildCurrentDataTableResponse(dataTableMessage, pagedList);
+            return new JsonNetResult(model, false);
         }
 
-        [HttpPost]
-        public ActionResult EditBudget(UpdateBudgetViewModel model)
+        private static DataTableResponse<OwnedCompanyStocksDto> BuildCurrentDataTableResponse(DataTableMessage<TransactionFilter> dataTableMessage, PagedList<OwnedCompanyStocksDto> pagedList)
         {
-            if (!ModelState.IsValid)
+            var model = new DataTableResponse<OwnedCompanyStocksDto>
             {
-                return JsonErrorResult(ModelState);
-            }
-            _userService.EditBudget(CurrentUserId, model.NewBudget);
-            return new JsonNetResult(new { UserId = CurrentUserId, model.NewBudget });
+                RecordsFiltered = pagedList.TotalCount,
+                RecordsTotal = pagedList.TotalCount,
+                Data = pagedList,
+                Draw = dataTableMessage.Draw
+            };
+            return model;
         }
 
         private DashboardViewModel BuildWalletViewModel(IList<OwnedCompanyStocksDto> ownedStocks)
         {
+            var data =
+                ownedStocks.Select(g => new PieChartEntry {Name = g.CompanyName, Value = g.CurrentValue}).ToList();
+            data.Add(new PieChartEntry
+            {
+                Name = "Free Budget",
+                Value = CurrentUser.Budget
+            });
             var walletModel = new DashboardViewModel
             {
                 BudgetInfo = new BudgetInfoViewModel
@@ -64,7 +76,7 @@ namespace StockExchange.Web.Controllers
                 StocksByValue = new PieChartModel
                 {
                     Title = "Owned stocks by value (PLN)",
-                    Data = ownedStocks.Select(g => new PieChartEntry { Name = g.CompanyName, Value = g.CurrentValue }).ToList()
+                    Data = data
                 }
             };
             return walletModel;
