@@ -86,12 +86,12 @@ namespace StockExchange.Business.Services
             var date = GetMaxDate();
             return _priceRepository.GetQueryable().Include(p => p.Company).Where(item => item.Date == date).Select(item => new MostActivePriceDto
             {
-                Change = (item.ClosePrice - item.OpenPrice) / item.ClosePrice * 100,
+                Change = item.OpenPrice != 0 ? (item.ClosePrice - item.OpenPrice) / item.OpenPrice * 100 : -1,
                 ClosePrice = item.ClosePrice,
                 Volume = item.Volume,
                 CompanyName = item.Company.Code,
                 Turnover = item.Volume * item.ClosePrice
-            }).OrderByDescending(item => item.Change).ToPagedList(message.Start, message.Length);
+            }).OrderByDescending(item => item.Change).Where(item => item.Change > 0).ToPagedList(message.Start, message.Length);
         }
 
         public PagedList<MostActivePriceDto> GetDecliners(PagedFilterDefinition<TransactionFilter> message)
@@ -99,12 +99,12 @@ namespace StockExchange.Business.Services
             var date = GetMaxDate();
             return _priceRepository.GetQueryable().Include(p => p.Company).Where(item => item.Date == date).Select(item => new MostActivePriceDto
             {
-                Change = (item.ClosePrice - item.OpenPrice) / item.ClosePrice * 100,
+                Change = item.OpenPrice != 0 ? (item.ClosePrice - item.OpenPrice) / item.OpenPrice * 100 : 1,
                 ClosePrice = item.ClosePrice,
                 Volume = item.Volume,
                 CompanyName = item.Company.Code,
                 Turnover = item.Volume * item.ClosePrice
-            }).OrderBy(item => item.Change).ToPagedList(message.Start, message.Length);
+            }).OrderBy(item => item.Change).Where(item => item.Change < 0).ToPagedList(message.Start, message.Length);
         }
 
         public PagedList<MostActivePriceDto> GetMostAactive(PagedFilterDefinition<TransactionFilter> message)
@@ -112,7 +112,7 @@ namespace StockExchange.Business.Services
             var date = GetMaxDate();
             return _priceRepository.GetQueryable().Include(p => p.Company).Where(item => item.Date == date).Select(item => new MostActivePriceDto
             {
-                Change = (item.ClosePrice - item.OpenPrice) / item.ClosePrice * 100,
+                Change = item.OpenPrice != 0 ? (item.ClosePrice - item.OpenPrice) / item.OpenPrice * 100 : 0,
                 ClosePrice = item.ClosePrice,
                 Volume = item.Volume,
                 CompanyName = item.Company.Code,
