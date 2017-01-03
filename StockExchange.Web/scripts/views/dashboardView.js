@@ -4,6 +4,12 @@
     drawPieChart('stocks-by-value-chart', config.stocksByValueData.title,
         mapData(config.stocksByValueData.data));
 
+    createDataTable($('#signal-grid'));
+    createDataTable($('#advancers-grid'));
+    createDataTable($('#decliners-grid'));
+    createDataTable($('#most-grid'));
+    initCurrentStocksTable();
+
     function mapData(data) {
         return data.map(function (item) {
             return {
@@ -49,89 +55,6 @@
         });
     }
 
-    var ajaxUrlA = $('#advancers-grid').data('ajax-url');
-    var columnsA = $('#advancers-grid th').DataTableColumns();
-    var columnDefsA = $('#advancers-grid th').DataTableColumnDefs();
-    // ReSharper disable once UnusedLocals
-    var dataTableA = $('#advancers-grid').DataTable(
-    {
-        columns: columnsA,
-        columnDefs: columnDefsA,
-        ajax: {
-            url: ajaxUrlA,
-            contentType: 'application/json',
-            type: 'POST',
-            data: function (d) {
-                d.filter = {
-                };
-                return JSON.stringify(d);
-            }
-        }
-    });
-
-    var ajaxUrlD = $('#decliners-grid').data('ajax-url');
-    var columnsD = $('#decliners-grid th').DataTableColumns();
-    var columnDefsD = $('#decliners-grid th').DataTableColumnDefs();
-    // ReSharper disable once UnusedLocals
-    var dataTableD = $('#decliners-grid').DataTable(
-    {
-        columns: columnsD,
-        columnDefs: columnDefsD,
-        ajax: {
-            url: ajaxUrlD,
-            contentType: 'application/json',
-            type: 'POST',
-            data: function (d) {
-                d.filter = {
-                };
-                return JSON.stringify(d);
-            }
-        }
-    });
-
-    var ajaxUrlM = $('#most-grid').data('ajax-url');
-    var columnsM = $('#most-grid th').DataTableColumns();
-    var columnDefsM = $('#most-grid th').DataTableColumnDefs();
-    // ReSharper disable once UnusedLocals
-    var dataTableM = $('#most-grid').DataTable(
-    {
-        columns: columnsM,
-        columnDefs: columnDefsM,
-        ajax: {
-            url: ajaxUrlM,
-            contentType: 'application/json',
-            type: 'POST',
-            data: function (d) {
-                d.filter = {
-                };
-                return JSON.stringify(d);
-            }
-        }
-    });
-
-    var ajaxUrl = $('#signal-grid').data('ajax-url');
-    var columns = $('#signal-grid th').DataTableColumns();
-    var columnDefs = $('#signal-grid th').DataTableColumnDefs();
-    // ReSharper disable once UnusedLocals
-    var dataTableSignals = $('#signal-grid').DataTable(
-    {
-        columns: columns,
-        columnDefs: columnDefs,
-        ajax: {
-            url: ajaxUrl,
-            contentType: 'application/json',
-            type: 'POST',
-            data: function (d) {
-                d.filter = {
-                };
-                return JSON.stringify(d);
-            }
-        }
-    });
-
-    // ReSharper disable once UnusedLocals
-    var dataTable = initCurrentStocksTable();
-
     function initCurrentStocksTable() {
         var columnDefsCurrent = [{
             targets: $('#current-grid th[data-column=Profit]').index(),
@@ -142,6 +65,7 @@
         return createDataTable($('#current-grid'), columnDefsCurrent);
     }
 
+    //TODO: extract to common StockExchange namespace
     function getPriceWithIconHtml(value, down) {
         if (down || value < 0) {
             return '<i class="fa fa-arrow-down icon-stock-down"></i>' +
@@ -170,5 +94,6 @@
             }
         });
     }
+    //END TODO
 
 })(jQuery);

@@ -60,6 +60,7 @@
         return createDataTable($('#current-grid'), columnDefsCurrent);
     }
 
+    //TODO: extract to common StockExchange namespace
     function createDataTable($selector, columnDefs) {
         var ajaxUrl = $selector.data('ajax-url');
         var columns = $('th', $selector).DataTableColumns();
@@ -88,5 +89,6 @@
                 ' <span class="text-success">' + value + '</span>';
         }
     }
+    //END TODO
 
 })(jQuery);
