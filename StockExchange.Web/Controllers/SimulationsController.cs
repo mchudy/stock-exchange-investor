@@ -58,7 +58,9 @@ namespace StockExchange.Web.Controllers
                 TotalSimulationValue = ret.SimulationTotalValue,
                 PercentageProfit = ret.PercentageProfit,
                 MaximalLossOnTransaction = ret.MaximalLossOnTransaction,
-                MaximalGainOnTransaction = ret.MaximalGainOnTransaction
+                MaximalGainOnTransaction = ret.MaximalGainOnTransaction,
+                MaximalSimulationValue = ret.MaximalSimulationValue,
+                MinimalSimulationValue = ret.MinimalSimulationValue
             });
         }
 

@@ -110,7 +110,50 @@ namespace StockExchange.Business.Services
             var currentPrices = _priceService.GetCurrentPrices(simulationResult.CurrentCompanyQuantity.Keys.ToList()).ToDictionary(x => x.CompanyId);
             simulationResult.SimulationTotalValue = simulationResult.CurrentCompanyQuantity.Sum(x => x.Value * currentPrices[x.Key].ClosePrice) + simulationDto.Budget;
             simulationResult.PercentageProfit = Math.Round((double)((simulationResult.SimulationTotalValue - simulationResult.StartBudget) / simulationResult.StartBudget) * 100, 2);
+            CalculateMinimalAndMaximalSimulationValue(simulationDto.StartDate, simulationDto.EndDate, allPrices, simulationDto.SelectedCompanyIds, simulationResult);
             return simulationResult;
+        }
+
+        private static void CalculateMinimalAndMaximalSimulationValue(DateTime startDate, DateTime endDate,
+            IList<CompanyPricesDto> prices, IList<int> companyIds, SimulationResultDto resultDto)
+        {
+            Dictionary<int, int> quantities = companyIds.ToDictionary(companyId => companyId, companyId => 0);
+            decimal budget = resultDto.StartBudget;
+            decimal minVal = resultDto.StartBudget;
+            decimal maxVal = resultDto.StartBudget;
+            for (DateTime d = startDate; d <= endDate; d = d.AddDays(1))
+            {
+                foreach (var trans in resultDto.TransactionsLog.Where(trans => trans.Date == d))
+                {
+                    UpdateQuantities(quantities, trans);
+                    budget = trans.BudgetAfter;
+                }
+                var dailyPrices = ConvertPrices(prices, companyIds, d);
+                if(dailyPrices.Count == 0) continue;
+                decimal value = budget + dailyPrices.Sum(dailyPrice => dailyPrice.Value*quantities[dailyPrice.Key]);
+                if (value > maxVal)
+                {
+                    resultDto.MaximalSimulationValue = new ExtremeSimulationValue(d, value, resultDto.StartBudget);
+                    maxVal = value;
+                }
+                if (value < minVal)
+                {
+                    resultDto.MinimalSimulationValue = new ExtremeSimulationValue(d, value, resultDto.StartBudget);
+                    minVal = value;
+                }
+            }
+        }
+
+        private static void UpdateQuantities(Dictionary<int, int> quantities, SimulationTransactionDto transaction)
+        {
+            if (transaction.Action == SignalAction.Buy)
+            {
+                quantities[transaction.CompanyId] += transaction.Quantity;
+            }
+            else if (transaction.Action == SignalAction.Sell)
+            {
+                quantities[transaction.CompanyId] -= transaction.Quantity;
+            }
         }
 
         private static Dictionary<int, decimal> ConvertPrices(IEnumerable<CompanyPricesDto> allPrices, ICollection<int> companyIds, DateTime date)

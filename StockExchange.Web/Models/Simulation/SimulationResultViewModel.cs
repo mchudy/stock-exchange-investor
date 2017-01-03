@@ -15,5 +15,7 @@ namespace StockExchange.Web.Models.Simulation
         public double PercentageProfit { get; set; }
         public ExtremeTransactionResult MaximalGainOnTransaction { get; set; }
         public ExtremeTransactionResult MaximalLossOnTransaction { get; set; }
+        public ExtremeSimulationValue MaximalSimulationValue { get; set; }
+        public ExtremeSimulationValue MinimalSimulationValue { get; set; }
     }
 }

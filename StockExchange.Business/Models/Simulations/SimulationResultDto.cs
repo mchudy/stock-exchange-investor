@@ -19,6 +19,20 @@ namespace StockExchange.Business.Models.Simulations
         }
     }
 
+    public class ExtremeSimulationValue
+    {
+        public DateTime Date { get; set; }
+        public decimal Value { get; set; }
+        public double PercentageIncome { get; set; }
+
+        public ExtremeSimulationValue(DateTime date, decimal value, decimal startBudget)
+        {
+            Date = date;
+            Value = value;
+            PercentageIncome = Math.Round((double)((value-startBudget)/startBudget),2)*100;
+        }
+    }
+
     public class SimulationResultDto
     {
         public IList<SimulationTransactionDto> TransactionsLog { get; set; }
@@ -31,5 +45,7 @@ namespace StockExchange.Business.Models.Simulations
 
         public ExtremeTransactionResult MaximalGainOnTransaction { get; set; }
         public ExtremeTransactionResult MaximalLossOnTransaction { get; set; }
+        public ExtremeSimulationValue MinimalSimulationValue { get; set; }
+        public ExtremeSimulationValue MaximalSimulationValue { get; set; }
     }
 }

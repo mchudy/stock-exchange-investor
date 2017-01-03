@@ -46,7 +46,7 @@
                             <thead>
                                 <tr>
                                     <th></th>
-                                    <th>Transaction date</th>
+                                    <th>Date</th>
                                     <th>Percentage gain/loss</th>
                                 </tr>
                             </thead>
@@ -70,6 +70,26 @@
                                         <td>
                                             <i class="fa fa-arrow-down icon-stock-down"></i>
                                             <span class="text-danger">@lossPercentage</span>
+                                        </td>
+                                    </tr>
+                                    string maximalDate = Model.MaximalSimulationValue?.Date.ToShortDateString();
+                                    string minimalDate = Model.MinimalSimulationValue?.Date.ToShortDateString();
+                                    string maxValuePercentage = Model.MaximalSimulationValue?.PercentageIncome + "%";
+                                    string minValuePercentage = Model.MinimalSimulationValue?.PercentageIncome + "%";
+                                    <tr>
+                                        <th>Maximal simulation value</th>
+                                        <td>@maximalDate</td>
+                                        <td>
+                                            <i class="fa fa-arrow-up icon-stock-up"></i>
+                                            <span class="text-success">@maxValuePercentage</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Minimal simulation value</th>
+                                        <td>@minimalDate</td>
+                                        <td>
+                                            <i class="fa fa-arrow-down icon-stock-down"></i>
+                                            <span class="text-danger">@minValuePercentage</span>
                                         </td>
                                     </tr>
                                 }
