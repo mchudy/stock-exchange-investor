@@ -1,5 +1,7 @@
 ﻿using log4net;
+using StockExchange.Business.Extensions;
 using StockExchange.Business.Indicators.Common;
+using StockExchange.Business.Models.Filters;
 using StockExchange.Business.Models.Indicators;
 using StockExchange.Business.Models.Price;
 using StockExchange.Business.ServiceInterfaces;
@@ -9,8 +11,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using StockExchange.Business.Extensions;
-using StockExchange.Business.Models.Filters;
 
 namespace StockExchange.Business.Services
 {
@@ -148,10 +148,9 @@ namespace StockExchange.Business.Services
                     {
                         signals = indicator.GenerateSignals(companyPrices);
                     }
-                    // ReSharper disable once UnusedVariable
                     catch (Exception ex)
                     {
-                        // ignored
+                        logger.Warn($"Error when generating signals for company {company} and indicator {indicator.Type}", ex);
                     }
                     var todaySignal = signals.FirstOrDefault(item => item.Date == maxDate);
                     if (todaySignal != null)

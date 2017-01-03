@@ -138,7 +138,6 @@ namespace StockExchange.Business.Services
                 results = results.Where(item => item.CompanyName.Contains(search));
             return results;
         }
-
         private static Expression<Func<Price, PriceDto>> GetSelectDtoExpression()
         {
             return price => new PriceDto

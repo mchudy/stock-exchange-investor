@@ -2629,7 +2629,6 @@
     <Content Include="Views\Wallet\_BudgetInfo.cshtml" />
     <Content Include="Views\Wallet\_EditBudgetDialog.cshtml" />
     <Content Include="Views\Wallet\_AddTransaction.cshtml" />
-    <Content Include="Views\Dashboard\_BudgetInfo.cshtml" />
     <Content Include="Views\Dashboard\_SignalInfo.cshtml" />
     <Content Include="Views\Dashboard\_TransactionInfo.cshtml" />
     <Content Include="Views\Dashboard\_OwnedCompanyStats.cshtml" />
