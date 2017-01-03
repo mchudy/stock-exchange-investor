@@ -26,7 +26,7 @@ namespace StockExchange.Business.Indicators
         {
             var signals = new List<Signal>();
             var values = Calculate(prices);
-            int priceTerm = 14;
+            const int priceTerm = 14;
             var priceTrend = MovingAverageHelper.ExpotentialMovingAverage(prices, priceTerm);
             SignalAction lastAction = SignalAction.NoSignal;
             for (int i = priceTerm; i < prices.Count; i++)
@@ -39,14 +39,11 @@ namespace StockExchange.Business.Indicators
                         lastAction = SignalAction.Buy;
                     } 
                 }
-                if(values[i-1].Value > values[i].Value && priceTrend[i-priceTerm].Value > priceTrend[i - priceTerm + 1].Value)
-                {
-                    if (lastAction != SignalAction.Sell)
-                    {
-                        signals.Add(new Signal(SignalAction.Sell) {Date = values[i].Date});
-                        lastAction = SignalAction.Sell;
-                    }
-                }
+                if (values[i - 1].Value <= values[i].Value ||
+                    priceTrend[i - priceTerm].Value <= priceTrend[i - priceTerm + 1].Value) continue;
+                if (lastAction == SignalAction.Sell) continue;
+                signals.Add(new Signal(SignalAction.Sell) {Date = values[i].Date});
+                lastAction = SignalAction.Sell;
             }
             return signals;
         }

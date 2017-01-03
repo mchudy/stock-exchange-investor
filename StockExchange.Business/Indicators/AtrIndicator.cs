@@ -61,14 +61,11 @@ namespace StockExchange.Business.Indicators
                         lastAction = SignalAction.Buy;
                     }
                 }
-                if (values[i - Term].Value > values[i - Term + 1].Value && trend[i - Term].Value > trend[i - Term + 1].Value)
-                {
-                    if (lastAction != SignalAction.Sell)
-                    {
-                        signals.Add(new Signal(SignalAction.Sell) { Date = values[i - Term + 1].Date });
-                        lastAction = SignalAction.Sell;
-                    }
-                }
+                if (values[i - Term].Value <= values[i - Term + 1].Value ||
+                    trend[i - Term].Value <= trend[i - Term + 1].Value) continue;
+                if (lastAction == SignalAction.Sell) continue;
+                signals.Add(new Signal(SignalAction.Sell) { Date = values[i - Term + 1].Date });
+                lastAction = SignalAction.Sell;
             }
             return signals;
         }

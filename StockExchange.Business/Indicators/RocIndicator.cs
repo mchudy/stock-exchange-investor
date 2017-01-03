@@ -38,19 +38,15 @@ namespace StockExchange.Business.Indicators
             {
                 if (prices[i].ClosePrice > trend[i-Term+1].Value && trend[i-Term].Value < trend[i-Term+1].Value && values[i-Term].Value<0)
                 {
-                    if (lastAction != SignalAction.Buy)
-                    {
-                        signals.Add(new Signal(SignalAction.Buy) {Date = prices[i].Date});
-                        lastAction = SignalAction.Buy;
-                    }
+                    if (lastAction == SignalAction.Buy) continue;
+                    signals.Add(new Signal(SignalAction.Buy) {Date = prices[i].Date});
+                    lastAction = SignalAction.Buy;
                 }
                 else if (prices[i].ClosePrice < trend[i-Term+1].Value && trend[i-Term].Value > trend[i-Term+1].Value && values[i-Term].Value > 0)
                 {
-                    if (lastAction != SignalAction.Sell)
-                    {
-                        signals.Add(new Signal(SignalAction.Sell) {Date = prices[i].Date});
-                        lastAction = SignalAction.Sell;
-                    }
+                    if (lastAction == SignalAction.Sell) continue;
+                    signals.Add(new Signal(SignalAction.Sell) {Date = prices[i].Date});
+                    lastAction = SignalAction.Sell;
                 }
             }
             return signals;

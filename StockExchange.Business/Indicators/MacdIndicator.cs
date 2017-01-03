@@ -1,5 +1,4 @@
-﻿using System;
-using StockExchange.Business.Models.Indicators;
+﻿using StockExchange.Business.Models.Indicators;
 using StockExchange.DataAccess.Models;
 using System.Collections.Generic;
 using System.Linq;
@@ -74,6 +73,7 @@ namespace StockExchange.Business.Indicators
 
         private static SignalAction Convert(IntersectionType intersectionType)
         {
+            // ReSharper disable once SwitchStatementMissingSomeCases
             switch (intersectionType)
             {
                 case IntersectionType.FirstAbove:

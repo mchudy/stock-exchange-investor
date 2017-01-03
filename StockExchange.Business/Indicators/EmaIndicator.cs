@@ -27,19 +27,15 @@ namespace StockExchange.Business.Indicators
             {
                 if (values[i - Term].Value < values[i-Term+1].Value && prices[i].ClosePrice > values[i-Term+1].Value)
                 {
-                    if (lastAction != SignalAction.Buy)
-                    {
-                        signals.Add(new Signal(SignalAction.Buy) {Date = prices[i].Date});
-                        lastAction = SignalAction.Buy;;
-                    }
+                    if (lastAction == SignalAction.Buy) continue;
+                    signals.Add(new Signal(SignalAction.Buy) {Date = prices[i].Date});
+                    lastAction = SignalAction.Buy;
                 }
                 else if(values[i-Term].Value > values[i-Term+1].Value && prices[i].ClosePrice < values[i - Term + 1].Value)
                 {
-                    if (lastAction != SignalAction.Sell)
-                    {
-                        signals.Add(new Signal(SignalAction.Sell) {Date = prices[i].Date});
-                        lastAction = SignalAction.Sell;
-                    }
+                    if (lastAction == SignalAction.Sell) continue;
+                    signals.Add(new Signal(SignalAction.Sell) {Date = prices[i].Date});
+                    lastAction = SignalAction.Sell;
                 }
             }
             return signals;

@@ -46,11 +46,9 @@ namespace StockExchange.Business.Indicators
                 }
                 else if (prices[i].ClosePrice < priceTrend[i - Term + 1].Value && priceTrend[i - Term].Value > priceTrend[i - Term + 1].Value && values[i - Term].Value > 0)
                 {
-                    if (lastAction != SignalAction.Sell)
-                    {
-                        signals.Add(new Signal(SignalAction.Sell) { Date = prices[i].Date });
-                        lastAction = SignalAction.Sell;
-                    }
+                    if (lastAction == SignalAction.Sell) continue;
+                    signals.Add(new Signal(SignalAction.Sell) { Date = prices[i].Date });
+                    lastAction = SignalAction.Sell;
                 }
             }
             return signals;

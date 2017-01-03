@@ -3,7 +3,6 @@ using StockExchange.Business.Models.Indicators;
 using StockExchange.DataAccess.Models;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
 using StockExchange.Business.Indicators.Common;
 
 namespace StockExchange.Business.Indicators
@@ -25,7 +24,7 @@ namespace StockExchange.Business.Indicators
             List<Signal> signals = new List<Signal>();
             var values = CalculateSupportsAndResistances(prices);
             PivotPointSupportResistance lastpp = null;
-            SignalAction lastAction = SignalAction.NoSignal;
+            const SignalAction lastAction = SignalAction.NoSignal;
             foreach (var pp in values)
             {
                 if (lastpp == null)
@@ -33,8 +32,10 @@ namespace StockExchange.Business.Indicators
                     lastpp = pp;
                     continue;
                 }
+                // ReSharper disable once RedundantLogicalConditionalExpressionOperand
                 if(pp.ClosePrice > lastpp.Resistance2 && lastAction != SignalAction.Buy)
                     signals.Add(new Signal(SignalAction.Buy) {Date = pp.Date});
+                // ReSharper disable once RedundantLogicalConditionalExpressionOperand
                 if(pp.ClosePrice < lastpp.Support2 && lastAction != SignalAction.Sell)
                     signals.Add(new Signal(SignalAction.Sell) {Date = pp.Date});
                 lastpp = pp;
@@ -42,7 +43,7 @@ namespace StockExchange.Business.Indicators
             return signals;
         }
 
-        private IList<PivotPointSupportResistance> CalculateSupportsAndResistances(IList<Price> prices)
+        private static IEnumerable<PivotPointSupportResistance> CalculateSupportsAndResistances(IEnumerable<Price> prices)
         {
             return prices.Select(p => new PivotPointSupportResistance(p)).ToList();
         } 

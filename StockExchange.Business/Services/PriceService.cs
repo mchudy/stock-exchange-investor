@@ -70,6 +70,11 @@ namespace StockExchange.Business.Services
                 .ToList();
         }
 
+        public IList<Price> GetLastPricesForAllCompanies()
+        {
+            return _priceRepository.GetQueryable().Where(p => p.Date > DateTime.Today.AddDays(-100)).ToList();
+        }
+
         private static IQueryable<PriceDto> Filter(PriceFilter filter, IQueryable<PriceDto> results)
         {
             if (filter == null) return results;

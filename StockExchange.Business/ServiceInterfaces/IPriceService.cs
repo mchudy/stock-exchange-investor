@@ -18,5 +18,7 @@ namespace StockExchange.Business.ServiceInterfaces
         IList<Price> GetCurrentPrices(IList<int> companyIds);
 
         IList<Price> GetPrices(int companyId, DateTime endDate);
+
+        IList<Price> GetLastPricesForAllCompanies();
     }
 }

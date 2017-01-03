@@ -55,7 +55,7 @@ namespace StockExchange.Business.Indicators
                 minusDis.Add(new IndicatorValue { Date = atr[i].Date, Value = 100 * minusDisMovingAverage[i].Value / atr[i].Value });
                 diDifferences.Add(new IndicatorValue { Date = plusDis[i].Date, Value = Math.Abs(plusDis[i].Value - minusDis[i].Value) });
                 diDifferences2.Add(new IndicatorValue { Date = plusDis[i].Date, Value = plusDis[i].Value + minusDis[i].Value });
-                dxs.Add(new IndicatorValue() {Date = atr[i].Date, Value = 100 * diDifferences[i].Value/diDifferences2[i].Value});
+                dxs.Add(new IndicatorValue {Date = atr[i].Date, Value = 100 * diDifferences[i].Value/diDifferences2[i].Value});
             }
             var sma = MovingAverageHelper.SmoothedMovingAverage2(dxs, Term);
             diDifferences2 = diDifferences2.Skip(Term - 1).ToList();
@@ -108,6 +108,7 @@ namespace StockExchange.Business.Indicators
             foreach (var intersectionInfo in intersections)
             {
                 SignalAction action = SignalAction.NoSignal;
+                // ReSharper disable once SwitchStatementMissingSomeCases
                 switch (intersectionInfo.IntersectionType)
                 {
                     case IntersectionType.FirstAbove:

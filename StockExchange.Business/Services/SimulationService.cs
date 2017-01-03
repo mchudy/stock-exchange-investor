@@ -63,6 +63,7 @@ namespace StockExchange.Business.Services
                                                 
                     }
                 }
+                // ReSharper disable once InvertIf
                 if (signalEvent.CompaniesToBuy.Count > 0)
                 {
                     var prices = ConvertPrices(allPrices, signalEvent.CompaniesToBuy, signalEvent.Date)
@@ -97,13 +98,14 @@ namespace StockExchange.Business.Services
             return simulationResult;
         }
 
-        private void CalculateMaximalGainAndLossOnTransaction(SimulationResultDto dto)
+        private static void CalculateMaximalGainAndLossOnTransaction(SimulationResultDto dto)
         {
             decimal lastSellValue = dto.StartBudget;
             decimal mindiff = 0m;
             decimal maxdiff = 0m;
             foreach (var transaction in dto.TransactionsLog)
             {
+                // ReSharper disable once InvertIf
                 if (transaction.Action == SignalAction.Sell)
                 {
                     var sellValue = transaction.BudgetAfter;
@@ -123,7 +125,7 @@ namespace StockExchange.Business.Services
             }
         }
 
-        private Dictionary<int, decimal> ConvertPrices(IList<CompanyPricesDto> allPrices, IList<int> companyIds, DateTime date)
+        private static Dictionary<int, decimal> ConvertPrices(IEnumerable<CompanyPricesDto> allPrices, ICollection<int> companyIds, DateTime date)
         {
             return allPrices.Where(p => companyIds.Contains(p.Company.Id) && p.Prices.Any(pr => pr.Date == date))
                 // ReSharper disable once PossibleNullReferenceException

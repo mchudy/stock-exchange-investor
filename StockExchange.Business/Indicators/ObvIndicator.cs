@@ -46,19 +46,15 @@ namespace StockExchange.Business.Indicators
             {
                 if (trend[i - trendTerm].Value < trend[i - trendTerm + 1].Value && values[i].Value > prices[i].Volume)
                 {
-                    if (lastAction != SignalAction.Sell)
-                    {
-                        signals.Add(new Signal(SignalAction.Sell) {Date = prices[i].Date});
-                        lastAction = SignalAction.Sell;
-                    }
+                    if (lastAction == SignalAction.Sell) continue;
+                    signals.Add(new Signal(SignalAction.Sell) {Date = prices[i].Date});
+                    lastAction = SignalAction.Sell;
                 }
                 else if(trend[i-trendTerm].Value > trend[i-trendTerm+1].Value && values[i].Value < prices[i].Volume)
                 {
-                    if (lastAction != SignalAction.Buy)
-                    {
-                        signals.Add(new Signal(SignalAction.Buy) {Date = prices[i].Date});
-                        lastAction = SignalAction.Buy;
-                    }
+                    if (lastAction == SignalAction.Buy) continue;
+                    signals.Add(new Signal(SignalAction.Buy) {Date = prices[i].Date});
+                    lastAction = SignalAction.Buy;
                 }
             } 
             return signals;

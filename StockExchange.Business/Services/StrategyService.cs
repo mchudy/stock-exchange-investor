@@ -78,7 +78,7 @@ namespace StockExchange.Business.Services
                 throw new BusinessException("Strategy not found", ErrorStatus.DataNotFound);
 
             strategy.Name = dto.Name;
-            var toDelete = strategy.Indicators.Where(i => !dto.Indicators.Any(im => im.IndicatorType == (IndicatorType)i.IndicatorType)).ToList();
+            var toDelete = strategy.Indicators.Where(i => dto.Indicators.All(im => im.IndicatorType != (IndicatorType) i.IndicatorType)).ToList();
             foreach (var strategyIndicator in toDelete)
             {
                 _strategiesRepository.DeleteIndicator(strategyIndicator);

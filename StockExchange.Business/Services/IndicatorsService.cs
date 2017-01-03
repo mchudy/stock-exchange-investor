@@ -34,7 +34,7 @@ namespace StockExchange.Business.Services
 
         public IList<IndicatorDto> GetAllIndicators()
         {
-            return typeof(IndicatorType).GetEnumValues().Cast<IndicatorType>().Select(i => new IndicatorDto()
+            return typeof(IndicatorType).GetEnumValues().Cast<IndicatorType>().Select(i => new IndicatorDto
             {
                 IndicatorType = i,
                 IndicatorName = i.GetEnumDescription()
@@ -123,6 +123,17 @@ namespace StockExchange.Business.Services
             }
             signalEvents.RemoveAll(item => item.CompaniesToBuy.Count == 0 && item.CompaniesToSell.Count == 0);
             return signalEvents;
+        }
+
+        public IList<SignalEvent> GetSignals()
+        {
+            var indicators = GetAllIndicators();
+            var prices = _priceService.GetLastPricesForAllCompanies();
+            foreach (var indicator in indicators)
+            {
+                
+            }
+            return  new List<SignalEvent>();
         }
 
         private static IList<IndicatorProperty> ConvertIndicatorProperties(IEnumerable<StrategyIndicatorProperty> p)

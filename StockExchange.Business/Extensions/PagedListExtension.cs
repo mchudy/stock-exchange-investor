@@ -41,7 +41,9 @@ namespace StockExchange.Business.Extensions
 
         public PagedList(IEnumerable<T> enumerable, int skip, int take) : this(skip, take)
         {
+            // ReSharper disable once PossibleMultipleEnumeration
             TotalCount = enumerable.Count();
+            // ReSharper disable once PossibleMultipleEnumeration
             _list = enumerable.Skip(skip).Take(take).ToList();
         }
 
