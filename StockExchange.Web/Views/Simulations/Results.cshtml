@@ -1,11 +1,12 @@
-﻿@model StockExchange.Web.Models.Simulation.SimulationResultViewModel
+﻿@using System.Globalization
+@model StockExchange.Web.Models.Simulation.SimulationResultViewModel
 
 @{
     ViewBag.Title = "Simulation Results";
 }
 
 <div class="row">
-    <div class="col-sm-4">
+    <div class="col-sm-6">
         <div id="simulationresult-table-container">
             <div class="box box-info">
                 <div class="box-header with-border">
@@ -47,26 +48,31 @@
                                 <tr>
                                     <th></th>
                                     <th>Date</th>
+                                    <th>Value</th>
                                     <th>Percentage gain/loss</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @{
                                     string gainDate = Model.MaximalGainOnTransaction?.TransactionDate.ToShortDateString() ?? "-";
-                                    string gainPercentage = Model.MaximalGainOnTransaction?.PercentageIncome + "%";
+                                    string gainPercentage = (Model.MaximalGainOnTransaction?.PercentageIncome ?? 0.0) + "%";
+                                    string maxGainValue = ((Model.MaximalGainOnTransaction?.ValueAfter ?? 0m) - (Model.MaximalGainOnTransaction?.ValueBefore ?? 0m)).ToString(CultureInfo.InvariantCulture);
                                     <tr>
                                         <th>Maximal gain on transaction</th>
                                         <td>@gainDate</td>
+                                        <td>@maxGainValue</td>
                                         <td>
                                             <i class="fa fa-arrow-up icon-stock-up"></i>
                                             <span class="text-success">@gainPercentage</span>
                                         </td>
                                     </tr>
                                     string lossDate = Model.MaximalLossOnTransaction?.TransactionDate.ToShortDateString() ?? "-";
-                                    string lossPercentage = Model.MaximalLossOnTransaction?.PercentageIncome + "%";
+                                    string lossPercentage = (Model.MaximalLossOnTransaction?.PercentageIncome ?? 0.0) + "%";
+                                    string maxLossValue = ((Model.MaximalLossOnTransaction?.ValueAfter ?? 0m) - (Model.MaximalLossOnTransaction?.ValueBefore ?? 0m)).ToString(CultureInfo.InvariantCulture);
                                     <tr>
                                         <th>Maximal loss on transaction</th>
                                         <td>@lossDate</td>
+                                        <td>@maxLossValue</td>
                                         <td>
                                             <i class="fa fa-arrow-down icon-stock-down"></i>
                                             <span class="text-danger">@lossPercentage</span>
@@ -74,11 +80,14 @@
                                     </tr>
                                     string maximalDate = Model.MaximalSimulationValue?.Date.ToShortDateString();
                                     string minimalDate = Model.MinimalSimulationValue?.Date.ToShortDateString();
-                                    string maxValuePercentage = Model.MaximalSimulationValue?.PercentageIncome + "%";
-                                    string minValuePercentage = Model.MinimalSimulationValue?.PercentageIncome + "%";
+                                    string maxValuePercentage = (Model.MaximalSimulationValue?.PercentageIncome ?? 0.0) + "%";
+                                    string minValuePercentage = (Model.MinimalSimulationValue?.PercentageIncome ?? 0.0) + "%";
+                                    string maxValue = (Model.MaximalSimulationValue?.Value.ToString(CultureInfo.InvariantCulture) ?? "0");
+                                    string minValue = (Model.MinimalSimulationValue?.Value.ToString(CultureInfo.InvariantCulture) ?? "0");
                                     <tr>
                                         <th>Maximal simulation value</th>
                                         <td>@maximalDate</td>
+                                        <td>@maxValue</td>
                                         <td>
                                             <i class="fa fa-arrow-up icon-stock-up"></i>
                                             <span class="text-success">@maxValuePercentage</span>
@@ -87,6 +96,7 @@
                                     <tr>
                                         <th>Minimal simulation value</th>
                                         <td>@minimalDate</td>
+                                        <td>@minValue</td>
                                         <td>
                                             <i class="fa fa-arrow-down icon-stock-down"></i>
                                             <span class="text-danger">@minValuePercentage</span>
