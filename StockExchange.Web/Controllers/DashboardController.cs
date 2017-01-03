@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using StockExchange.Business.Extensions;
 using StockExchange.Business.Models.Filters;
 using StockExchange.Business.Models.Indicators;
+using StockExchange.Business.Models.Price;
 using StockExchange.Web.Helpers;
 using StockExchange.Web.Models.Dashboard;
 using StockExchange.Web.Models.DataTables;
@@ -21,12 +22,14 @@ namespace StockExchange.Web.Controllers
         private readonly ITransactionsService _transactionsService;
         private readonly IWalletService _walletService;
         private readonly IIndicatorsService _indicatorsService;
+        private readonly IPriceService _priceService;
 
-        public DashboardController(ITransactionsService transactionsService, IWalletService walletService, IIndicatorsService indicatorsService)
+        public DashboardController(ITransactionsService transactionsService, IWalletService walletService, IIndicatorsService indicatorsService, IPriceService priceService)
         {
             _transactionsService = transactionsService;
             _walletService = walletService;
             _indicatorsService = indicatorsService;
+            _priceService = priceService;
         }
 
         [HttpGet]
@@ -55,6 +58,33 @@ namespace StockExchange.Web.Controllers
             return new JsonNetResult(model, false);
         }
 
+        [HttpPost]
+        public ActionResult GetAdvancersTable(DataTableMessage<TransactionFilter> dataTableMessage)
+        {
+            var searchMessage = DataTableMessageConverter.ToPagedFilterDefinition(dataTableMessage);
+            var pagedList = _priceService.GetAdvancers(searchMessage);
+            var model = BuildAdvancersDataTableResponse(dataTableMessage, pagedList);
+            return new JsonNetResult(model, false);
+        }
+
+        [HttpPost]
+        public ActionResult GetDeclinersTable(DataTableMessage<TransactionFilter> dataTableMessage)
+        {
+            var searchMessage = DataTableMessageConverter.ToPagedFilterDefinition(dataTableMessage);
+            var pagedList = _priceService.GetDecliners(searchMessage);
+            var model = BuildAdvancersDataTableResponse(dataTableMessage, pagedList);
+            return new JsonNetResult(model, false);
+        }
+
+        [HttpPost]
+        public ActionResult GetMostActiveTable(DataTableMessage<TransactionFilter> dataTableMessage)
+        {
+            var searchMessage = DataTableMessageConverter.ToPagedFilterDefinition(dataTableMessage);
+            var pagedList = _priceService.GetMostAactive(searchMessage);
+            var model = BuildAdvancersDataTableResponse(dataTableMessage, pagedList);
+            return new JsonNetResult(model, false);
+        }
+
         // ReSharper disable once SuggestBaseTypeForParameter
         private static DataTableResponse<OwnedCompanyStocksDto> BuildCurrentDataTableResponse(DataTableMessage<TransactionFilter> dataTableMessage, PagedList<OwnedCompanyStocksDto> pagedList)
         {
@@ -72,6 +102,19 @@ namespace StockExchange.Web.Controllers
         private static DataTableResponse<TodaySignal> BuildSignalsDataTableResponse(DataTableMessage<TransactionFilter> dataTableMessage, PagedList<TodaySignal> pagedList)
         {
             var model = new DataTableResponse<TodaySignal>
+            {
+                RecordsFiltered = pagedList.TotalCount,
+                RecordsTotal = pagedList.TotalCount,
+                Data = pagedList,
+                Draw = dataTableMessage.Draw
+            };
+            return model;
+        }
+
+        // ReSharper disable once SuggestBaseTypeForParameter
+        private static DataTableResponse<MostActivePriceDto> BuildAdvancersDataTableResponse(DataTableMessage<TransactionFilter> dataTableMessage, PagedList<MostActivePriceDto> pagedList)
+        {
+            var model = new DataTableResponse<MostActivePriceDto>
             {
                 RecordsFiltered = pagedList.TotalCount,
                 RecordsTotal = pagedList.TotalCount,

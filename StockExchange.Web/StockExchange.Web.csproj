@@ -2635,6 +2635,9 @@
     <Content Include="Views\Dashboard\_OwnedCompanyStats.cshtml" />
     <Content Include="Views\Dashboard\_OwnedStocksTable.cshtml" />
     <Content Include="Views\Dashboard\_SignalTable.cshtml" />
+    <Content Include="Views\Dashboard\_AdvancersTable.cshtml" />
+    <Content Include="Views\Dashboard\_DeclinersTable.cshtml" />
+    <Content Include="Views\Dashboard\_MostActiveTable.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

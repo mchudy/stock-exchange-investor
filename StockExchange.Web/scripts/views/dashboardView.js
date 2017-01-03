@@ -49,6 +49,66 @@
         });
     }
 
+    var ajaxUrlA = $('#advancers-grid').data('ajax-url');
+    var columnsA = $('#advancers-grid th').DataTableColumns();
+    var columnDefsA = $('#advancers-grid th').DataTableColumnDefs();
+    // ReSharper disable once UnusedLocals
+    var dataTableA = $('#advancers-grid').DataTable(
+    {
+        columns: columnsA,
+        columnDefs: columnDefsA,
+        ajax: {
+            url: ajaxUrlA,
+            contentType: 'application/json',
+            type: 'POST',
+            data: function (d) {
+                d.filter = {
+                };
+                return JSON.stringify(d);
+            }
+        }
+    });
+
+    var ajaxUrlD = $('#decliners-grid').data('ajax-url');
+    var columnsD = $('#decliners-grid th').DataTableColumns();
+    var columnDefsD = $('#decliners-grid th').DataTableColumnDefs();
+    // ReSharper disable once UnusedLocals
+    var dataTableD = $('#decliners-grid').DataTable(
+    {
+        columns: columnsD,
+        columnDefs: columnDefsD,
+        ajax: {
+            url: ajaxUrlD,
+            contentType: 'application/json',
+            type: 'POST',
+            data: function (d) {
+                d.filter = {
+                };
+                return JSON.stringify(d);
+            }
+        }
+    });
+
+    var ajaxUrlM = $('#most-grid').data('ajax-url');
+    var columnsM = $('#most-grid th').DataTableColumns();
+    var columnDefsM = $('#most-grid th').DataTableColumnDefs();
+    // ReSharper disable once UnusedLocals
+    var dataTableM = $('#most-grid').DataTable(
+    {
+        columns: columnsM,
+        columnDefs: columnDefsM,
+        ajax: {
+            url: ajaxUrlM,
+            contentType: 'application/json',
+            type: 'POST',
+            data: function (d) {
+                d.filter = {
+                };
+                return JSON.stringify(d);
+            }
+        }
+    });
+
     var ajaxUrl = $('#signal-grid').data('ajax-url');
     var columns = $('#signal-grid th').DataTableColumns();
     var columnDefs = $('#signal-grid th').DataTableColumnDefs();

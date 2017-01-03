@@ -22,5 +22,11 @@ namespace StockExchange.Business.ServiceInterfaces
         IList<Price> GetLastPricesForAllCompanies();
 
         DateTime GetMaxDate();
+
+        PagedList<MostActivePriceDto> GetAdvancers(PagedFilterDefinition<TransactionFilter> message);
+
+        PagedList<MostActivePriceDto> GetDecliners(PagedFilterDefinition<TransactionFilter> message);
+
+        PagedList<MostActivePriceDto> GetMostAactive(PagedFilterDefinition<TransactionFilter> message);
     }
 }

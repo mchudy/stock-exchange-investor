@@ -81,6 +81,45 @@ namespace StockExchange.Business.Services
             return _priceRepository.GetQueryable().Max(item => item.Date);
         }
 
+        public PagedList<MostActivePriceDto> GetAdvancers(PagedFilterDefinition<TransactionFilter> message)
+        {
+            var date = GetMaxDate();
+            return _priceRepository.GetQueryable().Include(p => p.Company).Where(item => item.Date == date).Select(item => new MostActivePriceDto
+            {
+                Change = (item.ClosePrice - item.OpenPrice) / item.ClosePrice,
+                ClosePrice = item.ClosePrice,
+                Volume = item.Volume,
+                CompanyName = item.Company.Code,
+                Turnover = item.Volume * item.ClosePrice
+            }).OrderByDescending(item => item.Change).ToPagedList(message.Start, message.Length);
+        }
+
+        public PagedList<MostActivePriceDto> GetDecliners(PagedFilterDefinition<TransactionFilter> message)
+        {
+            var date = GetMaxDate();
+            return _priceRepository.GetQueryable().Include(p => p.Company).Where(item => item.Date == date).Select(item => new MostActivePriceDto
+            {
+                Change = (item.ClosePrice - item.OpenPrice) / item.ClosePrice,
+                ClosePrice = item.ClosePrice,
+                Volume = item.Volume,
+                CompanyName = item.Company.Code,
+                Turnover = item.Volume * item.ClosePrice
+            }).OrderBy(item => item.Change).ToPagedList(message.Start, message.Length);
+        }
+
+        public PagedList<MostActivePriceDto> GetMostAactive(PagedFilterDefinition<TransactionFilter> message)
+        {
+            var date = GetMaxDate();
+            return _priceRepository.GetQueryable().Include(p => p.Company).Where(item => item.Date == date).Select(item => new MostActivePriceDto
+            {
+                Change = (item.ClosePrice - item.OpenPrice) / item.ClosePrice,
+                ClosePrice = item.ClosePrice,
+                Volume = item.Volume,
+                CompanyName = item.Company.Code,
+                Turnover = item.Volume * item.ClosePrice
+            }).OrderByDescending(item => item.Turnover).ToPagedList(message.Start, message.Length);
+        }
+
         private static IQueryable<PriceDto> Filter(PriceFilter filter, IQueryable<PriceDto> results)
         {
             if (filter == null) return results;
