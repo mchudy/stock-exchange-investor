@@ -6,24 +6,18 @@
 }
 <div class="row">
     <div class="col-md-4">
-        @Html.Partial("_BudgetInfo", Model.BudgetInfo)
-    </div>
-    <div class="col-md-4">
-        @Html.Partial("_SignalInfo")
-    </div>
-    <div class="col-md-4">
-        @Html.Partial("_TransactionInfo")
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-4">
-        @Html.Partial("_OwnedStocksTable")
-    </div>
-    <div class="col-md-4">
         @Html.Partial("_SignalTable")
+     
     </div>
     <div class="col-md-4">
+        @Html.Partial("_BudgetInfo", Model.BudgetInfo)
+        @Html.Partial("_SignalInfo") 
+        @Html.Partial("_TransactionInfo")  
+        @Html.Partial("_OwnedStocksTable") 
         @Html.Partial("_OwnedCompanyStats")
+    </div>
+    <div class="col-md-4">
+      
     </div>
 </div>
 
