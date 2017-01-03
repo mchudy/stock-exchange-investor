@@ -86,7 +86,7 @@ namespace StockExchange.Business.Services
             var date = GetMaxDate();
             return _priceRepository.GetQueryable().Include(p => p.Company).Where(item => item.Date == date).Select(item => new MostActivePriceDto
             {
-                Change = (item.ClosePrice - item.OpenPrice) / item.ClosePrice,
+                Change = (item.ClosePrice - item.OpenPrice) / item.ClosePrice * 100,
                 ClosePrice = item.ClosePrice,
                 Volume = item.Volume,
                 CompanyName = item.Company.Code,
@@ -99,7 +99,7 @@ namespace StockExchange.Business.Services
             var date = GetMaxDate();
             return _priceRepository.GetQueryable().Include(p => p.Company).Where(item => item.Date == date).Select(item => new MostActivePriceDto
             {
-                Change = (item.ClosePrice - item.OpenPrice) / item.ClosePrice,
+                Change = (item.ClosePrice - item.OpenPrice) / item.ClosePrice * 100,
                 ClosePrice = item.ClosePrice,
                 Volume = item.Volume,
                 CompanyName = item.Company.Code,
@@ -112,7 +112,7 @@ namespace StockExchange.Business.Services
             var date = GetMaxDate();
             return _priceRepository.GetQueryable().Include(p => p.Company).Where(item => item.Date == date).Select(item => new MostActivePriceDto
             {
-                Change = (item.ClosePrice - item.OpenPrice) / item.ClosePrice,
+                Change = (item.ClosePrice - item.OpenPrice) / item.ClosePrice * 100,
                 ClosePrice = item.ClosePrice,
                 Volume = item.Volume,
                 CompanyName = item.Company.Code,
