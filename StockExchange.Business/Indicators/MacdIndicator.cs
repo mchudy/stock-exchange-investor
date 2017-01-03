@@ -68,7 +68,7 @@ namespace StockExchange.Business.Indicators
         {
             var doubleLineValues = Calculate(prices).Cast<DoubleLineIndicatorValue>().ToList();
             return IntersectionHelper.FindIntersections(doubleLineValues).
-                Select(i=>new Signal(Convert(i.IntersectionType)) { Date = i.Date}).ToList();
+                Select(i=>new Signal(Convert(i.IntersectionType)) { Date = i.Date.AddDays(-1)}).ToList();
         }
 
         private static SignalAction Convert(IntersectionType intersectionType)
