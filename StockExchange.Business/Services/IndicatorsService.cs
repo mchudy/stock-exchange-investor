@@ -136,7 +136,7 @@ namespace StockExchange.Business.Services
             var prices = _priceService.GetLastPricesForAllCompanies();
             var companies = _companyService.GetAllCompanies();
             var maxDate = _priceService.GetMaxDate();
-            var ret = new List<TodaySignal>();
+            var computed = new List<TodaySignal>();
             foreach (var company in companies)
             {
                 var companyPrices = prices.Where(item => item.CompanyId == company.Id).OrderBy(item => item.Date).ToList();
@@ -156,10 +156,12 @@ namespace StockExchange.Business.Services
                     var todaySignal = signals.FirstOrDefault(item => item.Date == maxDate);
                     if (todaySignal != null)
                     {
-                        ret.Add(new TodaySignal { Action = todaySignal.Action.ToString(), Company = company.Code, Indicator = indicator.Type.ToString() });
+                        computed.Add(new TodaySignal { Action = todaySignal.Action.ToString(), Company = company.Code, Indicator = indicator.Type.ToString() });
                     }
                 }
             }
+            var ret = new List<TodaySignal>();
+            ret.AddRange(computed.GroupBy(item => new { item.Company, item.Action }).Select(item => new TodaySignal { Company = item.Key.Company, Action = item.Key.Action, Indicator = string.Join(", ", (IEnumerable<string>)item.Select(it => it.Indicator).ToArray())}));
             return ret.OrderBy(item => item.Company).ThenBy(item => item.Action).ThenBy(item => item.Indicator).ToPagedList(message.Start, message.Length);
         }
 
