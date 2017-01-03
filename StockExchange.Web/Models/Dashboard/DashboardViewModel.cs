@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using StockExchange.Business.Models.Indicators;
 using StockExchange.Business.Models.Wallet;
 using StockExchange.Web.Models.Charts;
 using StockExchange.Web.Models.Wallet;
@@ -17,7 +18,8 @@ namespace StockExchange.Web.Models.Dashboard
 
         public PieChartModel StocksByValue { get; set; }
 
-
         public string CurrentStrategyName { get; set; }
+
+        public IList<TodaySignal> TodaySignals { get; set; }
     }
 }

@@ -5,7 +5,7 @@
         mapData(config.stocksByValueData.data));
 
     function mapData(data) {
-        return data.map(function(item) {
+        return data.map(function (item) {
             return {
                 name: item.name,
                 y: item.value
@@ -49,7 +49,27 @@
         });
     }
 
-// ReSharper disable once UnusedLocals
+    var ajaxUrl = $('#signal-grid').data('ajax-url');
+    var columns = $('#signal-grid th').DataTableColumns();
+    var columnDefs = $('#signal-grid th').DataTableColumnDefs();
+    // ReSharper disable once UnusedLocals
+    var dataTableSignals = $('#signal-grid').DataTable(
+    {
+        columns: columns,
+        columnDefs: columnDefs,
+        ajax: {
+            url: ajaxUrl,
+            contentType: 'application/json',
+            type: 'POST',
+            data: function (d) {
+                d.filter = {
+                };
+                return JSON.stringify(d);
+            }
+        }
+    });
+
+    // ReSharper disable once UnusedLocals
     var dataTable = initCurrentStocksTable();
 
     function initCurrentStocksTable() {

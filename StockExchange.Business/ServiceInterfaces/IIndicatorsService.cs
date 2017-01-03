@@ -1,7 +1,9 @@
 ﻿using System;
 using StockExchange.Business.Models.Indicators;
 using System.Collections.Generic;
+using StockExchange.Business.Extensions;
 using StockExchange.Business.Indicators.Common;
+using StockExchange.Business.Models.Filters;
 using StockExchange.DataAccess.Models;
 
 namespace StockExchange.Business.ServiceInterfaces
@@ -24,6 +26,6 @@ namespace StockExchange.Business.ServiceInterfaces
 
         IList<SignalEvent> GetSignals(DateTime startDate, DateTime endDate, IList<int> companiesIds, IList<ParameterizedIndicator> indicators);
 
-        IList<SignalEvent> GetSignals();
+        PagedList<TodaySignal> GetSignals(PagedFilterDefinition<TransactionFilter> message);
     }
 }

@@ -9,6 +9,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using StockExchange.Business.Extensions;
+using StockExchange.Business.Models.Filters;
 
 namespace StockExchange.Business.Services
 {
@@ -18,11 +20,13 @@ namespace StockExchange.Business.Services
 
         private readonly IIndicatorFactory _indicatorFactory;
         private readonly IPriceService _priceService;
+        private readonly ICompanyService _companyService;
 
-        public IndicatorsService(IIndicatorFactory indicatorFactory, IPriceService priceService)
+        public IndicatorsService(IIndicatorFactory indicatorFactory, IPriceService priceService, ICompanyService companyService)
         {
             _indicatorFactory = indicatorFactory;
             _priceService = priceService;
+            _companyService = companyService;
         }
 
         public IList<IndicatorType> GetAllIndicatorTypes()
@@ -100,7 +104,7 @@ namespace StockExchange.Business.Services
                 foreach (var indicator in indicators)
                 {
                     if (indicator.IndicatorType == null) continue;
-                    var ind = _indicatorFactory.CreateIndicator(indicator.IndicatorType.Value, indicator.Properties.ToDictionary(t =>t.Name, t => t.Value));
+                    var ind = _indicatorFactory.CreateIndicator(indicator.IndicatorType.Value, indicator.Properties.ToDictionary(t => t.Name, t => t.Value));
                     IList<Signal> signals = new List<Signal>();
                     try
                     {
@@ -125,15 +129,38 @@ namespace StockExchange.Business.Services
             return signalEvents;
         }
 
-        public IList<SignalEvent> GetSignals()
+        public PagedList<TodaySignal> GetSignals(PagedFilterDefinition<TransactionFilter> message)
         {
             var indicators = GetAllIndicators();
+            var indicatorObjects = indicators.Select(indicator => _indicatorFactory.CreateIndicator(indicator.IndicatorType)).ToList();
             var prices = _priceService.GetLastPricesForAllCompanies();
-            foreach (var indicator in indicators)
+            var companies = _companyService.GetAllCompanies();
+            var maxDate = _priceService.GetMaxDate();
+            var ret = new List<TodaySignal>();
+            foreach (var company in companies)
             {
-                
+                var companyPrices = prices.Where(item => item.CompanyId == company.Id).OrderBy(item => item.Date).ToList();
+                if (!companyPrices.Any()) continue;
+                foreach (var indicator in indicatorObjects)
+                {
+                    IList<Signal> signals = new List<Signal>();
+                    try
+                    {
+                        signals = indicator.GenerateSignals(companyPrices);
+                    }
+                    // ReSharper disable once UnusedVariable
+                    catch (Exception ex)
+                    {
+                        // ignored
+                    }
+                    var todaySignal = signals.FirstOrDefault(item => item.Date == maxDate);
+                    if (todaySignal != null)
+                    {
+                        ret.Add(new TodaySignal { Action = todaySignal.Action.ToString(), Company = company.Code, Indicator = indicator.Type.ToString() });
+                    }
+                }
             }
-            return  new List<SignalEvent>();
+            return ret.OrderBy(item => item.Company).ThenBy(item => item.Action).ThenBy(item => item.Indicator).ToPagedList(message.Start, message.Length);
         }
 
         private static IList<IndicatorProperty> ConvertIndicatorProperties(IEnumerable<StrategyIndicatorProperty> p)
