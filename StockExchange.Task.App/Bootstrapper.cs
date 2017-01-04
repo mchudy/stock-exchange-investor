@@ -1,5 +1,4 @@
-﻿using System.Reflection;
-using Autofac;
+﻿using Autofac;
 using StockExchange.Common;
 using StockExchange.DataAccess.IRepositories;
 using StockExchange.DataAccess.Models;
@@ -7,6 +6,7 @@ using StockExchange.DataAccess.Repositories;
 using StockExchange.Task.App.Commands;
 using StockExchange.Task.App.Helpers;
 using StockExchange.Task.Business;
+using System.Reflection;
 
 namespace StockExchange.Task.App
 {
@@ -21,6 +21,7 @@ namespace StockExchange.Task.App
             builder.RegisterType<GenericRepository<Price>>().As<IRepository<Price>>();
             builder.RegisterType<DataSynchronizer>().As<IDataSynchronizer>();
             builder.RegisterType<DataSynchronizerGpw>().As<IDataSynchronizerGpw>();
+            builder.RegisterType<DataFixer>().AsImplementedInterfaces();
             builder.RegisterAssemblyTypes(assembly).Where(CommandHelper.IsCommand).Named<ICommand>(a => CommandHelper.GetCommandName(a).Name);
             return builder.Build();
         }

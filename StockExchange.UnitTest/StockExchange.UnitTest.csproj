@@ -127,6 +127,7 @@
     <Compile Include="Services\PriceServiceTests.cs" />
     <Compile Include="Services\StrategyServiceTests.cs" />
     <Compile Include="Services\WalletServiceTests.cs" />
+    <Compile Include="Task\DataFixerTests.cs" />
     <Compile Include="TestHelpers\DataHelpers.cs" />
     <Compile Include="Indicators\ATR\AtrData.cs" />
     <Compile Include="Indicators\ATR\AtrTests.cs" />
@@ -157,6 +158,10 @@
     <ProjectReference Include="..\StockExchange.DataAccess\StockExchange.DataAccess.csproj">
       <Project>{C254649A-33DD-4EAA-BD0E-2AFB3AF7579E}</Project>
       <Name>StockExchange.DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\StockExchange.Task.Business\StockExchange.Task.Business.csproj">
+      <Project>{C5A583DA-A15F-45B2-A03F-FB20CB23BD1D}</Project>
+      <Name>StockExchange.Task.Business</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

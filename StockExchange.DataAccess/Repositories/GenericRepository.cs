@@ -10,7 +10,7 @@ namespace StockExchange.DataAccess.Repositories
     public class GenericRepository<TEntity> : IRepository<TEntity> where TEntity : class
     {
         protected readonly StockExchangeModel Context;
-        protected readonly IDbSet<TEntity> DbSet;
+        protected readonly DbSet<TEntity> DbSet;
 
         public GenericRepository()
         {
@@ -39,6 +39,11 @@ namespace StockExchange.DataAccess.Repositories
         public void Remove(TEntity entity)
         {
             DbSet.Remove(entity);
+        }
+
+        public void RemoveRange(IEnumerable<TEntity> entities)
+        {
+            DbSet.RemoveRange(entities);
         }
 
         public int Save()

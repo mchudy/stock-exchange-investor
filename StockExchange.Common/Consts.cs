@@ -9,6 +9,7 @@
             public const string SyncDataGpw = "sync-data-gpw";
             public const string SyncTodayData = "sync-today-data";
             public const string SyncTodayDataGpw = "sync-today-data-gpw";
+            public const string FixData = "fix-data";
         }
 
         public static class Formats

@@ -4,6 +4,7 @@ using NPOI.SS.UserModel;
 using StockExchange.Common;
 using StockExchange.DataAccess.IRepositories;
 using StockExchange.DataAccess.Models;
+using StockExchange.Task.Business.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -64,8 +65,9 @@ namespace StockExchange.Task.Business
                     companies = _companyRepository.GetQueryable().ToList();
                 }
                 var company = companies.First(item => item.Code == name);
-                if (prices.Any(item => item.CompanyId == company.Id)) continue;
-                pricesToInsert.Add(new Price
+                if (prices.Any(item => item.CompanyId == company.Id))
+                    continue;
+                var price = new Price
                 {
                     Date = day,
                     ClosePrice = close,
@@ -74,12 +76,22 @@ namespace StockExchange.Task.Business
                     LowPrice = min,
                     OpenPrice = open,
                     Volume = volumen
-                });
+                };
+                if (!PriceValidationHelper.IsInvalid(price))
+                {
+                    pricesToInsert.Add(price);
+                }
             }
             _priceRepository.BulkInsert(pricesToInsert);
             _priceRepository.Save();
 
             Logger.Debug("Syncing historical data ended.");
+        }
+
+        private static bool IsIncorrectPrice(decimal close, decimal min, decimal max, decimal open)
+        {
+            return (close > 0 && min == 0 && max == 0 && open == 0) ||
+                   (open < max && open < min && open == 0);
         }
 
         private static string[,] LoadData(string dateString)
