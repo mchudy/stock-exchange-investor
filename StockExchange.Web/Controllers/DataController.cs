@@ -10,19 +10,19 @@ using StockExchange.Web.Models.Price;
 
 namespace StockExchange.Web.Controllers
 {
-    public sealed class PriceController : BaseController
+    public sealed class DataController : BaseController
     {
         private readonly IPriceService _priceService;
         private readonly ICompanyService _companyService;
 
-        public PriceController(IPriceService priceService, ICompanyService companyService)
+        public DataController(IPriceService priceService, ICompanyService companyService)
         {
             _priceService = priceService;
             _companyService = companyService;
         }
 
         [HttpGet]
-        public ActionResult Price()
+        public ActionResult Index()
         {
             var model = GetPriceViewModel();
             return View(model);

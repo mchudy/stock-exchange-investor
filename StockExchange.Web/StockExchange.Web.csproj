@@ -2550,14 +2550,14 @@
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Views\Price\_PricesDataTable.cshtml" />
+    <Content Include="Views\Data\_PricesDataTable.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\ChartsController.cs" />
-    <Compile Include="Controllers\PriceController.cs" />
+    <Compile Include="Controllers\DataController.cs" />
     <Compile Include="Controllers\SimulationsController.cs" />
     <Compile Include="Controllers\StrategiesController.cs" />
     <Compile Include="Controllers\WalletController.cs" />
@@ -2611,7 +2611,7 @@
     </Content>
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Price\Price.cshtml" />
+    <Content Include="Views\Data\Index.cshtml" />
     <Content Include="Properties\SlowCheetah\SlowCheetah.Transforms.targets" />
     <Content Include="Views\Charts\Index.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
