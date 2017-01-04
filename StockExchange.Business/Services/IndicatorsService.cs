@@ -150,7 +150,7 @@ namespace StockExchange.Business.Services
                     }
                     catch (Exception ex)
                     {
-                        logger.Warn($"Error when generating signals for company {company} and indicator {indicator.Type}", ex);
+                        logger.Warn($"Error when generating signals for company {company.Code} and indicator {indicator.Type}", ex);
                     }
                     var todaySignal = signals.FirstOrDefault(item => item.Date == maxDate);
                     if (todaySignal != null)
