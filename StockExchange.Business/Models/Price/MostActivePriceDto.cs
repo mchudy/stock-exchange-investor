@@ -19,9 +19,5 @@ namespace StockExchange.Business.Models.Price
         [DisplayFormat(DataFormatString = Consts.Formats.Currency)]
         [Display(Name = "Change [%]")]
         public decimal Change { get; set; }
-
-        [DisplayFormat(DataFormatString = Consts.Formats.Currency)]
-        [Display(Name = "Turnover")]
-        public decimal Turnover { get; set; }
     }
 }

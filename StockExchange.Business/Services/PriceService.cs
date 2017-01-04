@@ -81,43 +81,99 @@ namespace StockExchange.Business.Services
             return _priceRepository.GetQueryable().Max(item => item.Date);
         }
 
+        private DateTime GetSecondMaxDate(DateTime date)
+        {
+            return _priceRepository.GetQueryable().Where(item => item.Date != date).Max(item => item.Date);
+        }
+
         public PagedList<MostActivePriceDto> GetAdvancers(PagedFilterDefinition<TransactionFilter> message)
         {
             var date = GetMaxDate();
-            return _priceRepository.GetQueryable().Include(p => p.Company).Where(item => item.Date == date).Select(item => new MostActivePriceDto
+            var previousDate = GetSecondMaxDate(date);
+            var prices =
+                _priceRepository.GetQueryable()
+                    .Include(p => p.Company)
+                    .Where(p => p.Date == date || p.Date == previousDate).ToList();
+            var ret = prices.Where(p => p.Date == date).Select(p => new MostActivePriceDto
             {
-                Change = item.OpenPrice != 0 ? (item.ClosePrice - item.OpenPrice) / item.OpenPrice * 100 : -1,
-                ClosePrice = item.ClosePrice,
-                Volume = item.Volume,
-                CompanyName = item.Company.Code,
-                Turnover = item.Volume * item.ClosePrice
-            }).OrderByDescending(item => item.Change).Where(item => item.Change > 0).ToPagedList(message.Start, message.Length);
+                ClosePrice = p.ClosePrice,
+                Volume = p.Volume,
+                CompanyName = p.Company.Code,
+            }).ToList();
+            foreach (var priceDto in ret)
+            {
+                var firstOrDefault = prices.FirstOrDefault(p => p.Date == previousDate && p.Company.Code == priceDto.CompanyName);
+                if (firstOrDefault != null)
+                {
+                    var previousPrice = firstOrDefault.ClosePrice;
+                    priceDto.Change = (priceDto.ClosePrice - previousPrice) / previousPrice * 100;
+                }
+                else
+                {
+                    priceDto.Change = -1;
+                }
+            }
+            return ret.OrderByDescending(item => item.Change).Where(item => item.Change > 0).ToPagedList(message.Start, message.Length);
         }
 
         public PagedList<MostActivePriceDto> GetDecliners(PagedFilterDefinition<TransactionFilter> message)
         {
             var date = GetMaxDate();
-            return _priceRepository.GetQueryable().Include(p => p.Company).Where(item => item.Date == date).Select(item => new MostActivePriceDto
+            var previousDate = GetSecondMaxDate(date);
+            var prices =
+                _priceRepository.GetQueryable()
+                    .Include(p => p.Company)
+                    .Where(p => p.Date == date || p.Date == previousDate).ToList();
+            var ret = prices.Where(p => p.Date == date).Select(p => new MostActivePriceDto
             {
-                Change = item.OpenPrice != 0 ? (item.ClosePrice - item.OpenPrice) / item.OpenPrice * 100 : 1,
-                ClosePrice = item.ClosePrice,
-                Volume = item.Volume,
-                CompanyName = item.Company.Code,
-                Turnover = item.Volume * item.ClosePrice
-            }).OrderBy(item => item.Change).Where(item => item.Change < 0).ToPagedList(message.Start, message.Length);
+                ClosePrice = p.ClosePrice,
+                Volume = p.Volume,
+                CompanyName = p.Company.Code,
+            }).ToList();
+            foreach (var priceDto in ret)
+            {
+                var firstOrDefault = prices.FirstOrDefault(p => p.Date == previousDate && p.Company.Code == priceDto.CompanyName);
+                if (firstOrDefault != null)
+                {
+                    var previousPrice = firstOrDefault.ClosePrice;
+                    priceDto.Change = (priceDto.ClosePrice - previousPrice) / previousPrice * 100;
+                }
+                else
+                {
+                    priceDto.Change = 1;
+                }
+            }
+            return ret.OrderBy(item => item.Change).Where(item => item.Change < 0).ToPagedList(message.Start, message.Length);
         }
 
         public PagedList<MostActivePriceDto> GetMostAactive(PagedFilterDefinition<TransactionFilter> message)
         {
             var date = GetMaxDate();
-            return _priceRepository.GetQueryable().Include(p => p.Company).Where(item => item.Date == date).Select(item => new MostActivePriceDto
+            var previousDate = GetSecondMaxDate(date);
+            var prices =
+                _priceRepository.GetQueryable()
+                    .Include(p => p.Company)
+                    .Where(p => p.Date == date || p.Date == previousDate).ToList();
+            var ret = prices.Where(p => p.Date == date).Select(p => new MostActivePriceDto
             {
-                Change = item.OpenPrice != 0 ? (item.ClosePrice - item.OpenPrice) / item.OpenPrice * 100 : 0,
-                ClosePrice = item.ClosePrice,
-                Volume = item.Volume,
-                CompanyName = item.Company.Code,
-                Turnover = item.Volume * item.ClosePrice
-            }).OrderByDescending(item => item.Turnover).ToPagedList(message.Start, message.Length);
+                ClosePrice = p.ClosePrice,
+                Volume = p.Volume,
+                CompanyName = p.Company.Code,
+            }).ToList();
+            foreach (var priceDto in ret)
+            {
+                var firstOrDefault = prices.FirstOrDefault(p => p.Date == previousDate && p.Company.Code == priceDto.CompanyName);
+                if (firstOrDefault != null)
+                {
+                    var previousPrice = firstOrDefault.ClosePrice;
+                    priceDto.Change = (priceDto.ClosePrice - previousPrice) / previousPrice * 100;
+                }
+                else
+                {
+                    priceDto.Change = 0;
+                }
+            }
+            return ret.OrderByDescending(item => item.Volume).ToPagedList(message.Start, message.Length);
         }
 
         private static IQueryable<PriceDto> Filter(PriceFilter filter, IQueryable<PriceDto> results)
