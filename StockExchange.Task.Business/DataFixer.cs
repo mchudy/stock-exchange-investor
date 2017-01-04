@@ -61,8 +61,7 @@ namespace StockExchange.Task.Business
             // delete entries for which companies weren't actually listed on GPW on the given date 
             // (caused by incorrect data loaded from GPW site, spooq doesn't return those dates)
             var toDelete = _priceRepository.GetQueryable()
-                .Where(PriceValidationHelper.IsInvalidExpression())
-                .Take(1000);
+                .Where(PriceValidationHelper.IsInvalidExpression());
             logger.Info($"Found {toDelete.Count()} records to delete");
             _priceRepository.RemoveRange(toDelete);
             logger.Info("Deleted successfully\n");
