@@ -1,4 +1,5 @@
 ﻿using EntityFramework.BulkInsert.Extensions;
+using EntityFramework.Extensions;
 using StockExchange.DataAccess.IRepositories;
 using System;
 using System.Collections.Generic;
@@ -41,9 +42,9 @@ namespace StockExchange.DataAccess.Repositories
             DbSet.Remove(entity);
         }
 
-        public void RemoveRange(IEnumerable<TEntity> entities)
+        public void RemoveRange(IQueryable<TEntity> entities)
         {
-            DbSet.RemoveRange(entities);
+            entities.Delete();
         }
 
         public int Save()

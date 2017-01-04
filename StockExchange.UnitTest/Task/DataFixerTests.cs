@@ -46,8 +46,8 @@ namespace StockExchange.UnitTest.Task
             _prices.Add(incorrectPrice);
 
             _dataFixer.FixData();
-
-            _priceRepository.Verify(r => r.RemoveRange(It.Is((IEnumerable<Price> p) => p.Contains(incorrectPrice))), Times.Once);
+            
+            _priceRepository.Verify(r => r.RemoveRange(It.Is((IQueryable<Price> p) => p.Contains(incorrectPrice))), Times.Once);
         }
 
         [Fact]
@@ -58,7 +58,7 @@ namespace StockExchange.UnitTest.Task
 
             _dataFixer.FixData();
 
-            _priceRepository.Verify(r => r.RemoveRange(It.Is((IEnumerable<Price> p) => p.Contains(incorrectPrice))), Times.Once);
+            _priceRepository.Verify(r => r.RemoveRange(It.Is((IQueryable<Price> p) => p.Contains(incorrectPrice))), Times.Once);
         }
 
         [Fact]
@@ -78,7 +78,7 @@ namespace StockExchange.UnitTest.Task
 
         private void VerifyNoEntriesRemoved()
         {
-            _priceRepository.Verify(r => r.RemoveRange(It.Is((IEnumerable<Price> p) => !p.Any())));
+            _priceRepository.Verify(r => r.RemoveRange(It.Is((IQueryable<Price> p) => !p.Any())));
             _priceRepository.Verify(r => r.Remove(It.IsAny<Price>()), Times.Never);
         }
     }

@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Reflection;
-using log4net;
+﻿using log4net;
 using StockExchange.Common;
 using StockExchange.Task.App.Helpers;
+using System.Collections.Generic;
+using System.Reflection;
 
 namespace StockExchange.Task.App.Commands
 {
