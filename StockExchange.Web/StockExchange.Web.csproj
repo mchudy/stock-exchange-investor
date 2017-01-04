@@ -2637,6 +2637,7 @@
     <Content Include="Views\Dashboard\_AdvancersTable.cshtml" />
     <Content Include="Views\Dashboard\_DeclinersTable.cshtml" />
     <Content Include="Views\Dashboard\_MostActiveTable.cshtml" />
+    <Content Include="Scripts\utils.js" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

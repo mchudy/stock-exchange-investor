@@ -1,4 +1,4 @@
-﻿(function ($) {
+﻿(function (StockExchange, $) {
     'use strict';
     
     $("input[type='radio']").iCheck({
@@ -44,51 +44,20 @@
         var columnDefs =[{
             targets: $('#grid th[data-column=Total]').index(),
             render: function (data, type, full) {
-                return getPriceWithIconHtml(data, full.Action === 'Sell');
+                return StockExchange.getPriceWithIconHtml(data, full.Action === 'Sell');
             }
         }];
-        return createDataTable($('#grid'), columnDefs);
+        return StockExchange.createDataTable($('#grid'), columnDefs);
     }
 
     function initCurrentStocksTable() {
         var columnDefsCurrent = [{
             targets: $('#current-grid th[data-column=Profit]').index(),
             render: function (data) {
-                return getPriceWithIconHtml(data);
+                return StockExchange.getPriceWithIconHtml(data);
             }
         }];
-        return createDataTable($('#current-grid'), columnDefsCurrent);
+        return StockExchange.createDataTable($('#current-grid'), columnDefsCurrent);
     }
 
-    //TODO: extract to common StockExchange namespace
-    function createDataTable($selector, columnDefs) {
-        var ajaxUrl = $selector.data('ajax-url');
-        var columns = $('th', $selector).DataTableColumns();
-
-        return $selector.DataTable({
-            columns: columns,
-            columnDefs: columnDefs,
-            responsive: true,
-            ajax: {
-                url: ajaxUrl,
-                contentType: 'application/json',
-                type: 'POST',
-                data: function (d) {
-                    return JSON.stringify(d);
-                }
-            }
-        });
-    }
-
-    function getPriceWithIconHtml(value, down) {
-        if (down || value < 0) {
-            return '<i class="fa fa-arrow-down icon-stock-down"></i>' +
-                ' <span class="text-danger">' + value + '</span>';
-        } else {
-            return '<i class="fa fa-arrow-up icon-stock-up"></i>' +
-                ' <span class="text-success">' + value + '</span>';
-        }
-    }
-    //END TODO
-
-})(jQuery);
+})(StockExchange, jQuery);
