@@ -146,7 +146,8 @@ namespace StockExchange.Web.Controllers
                 {
                     Title = "Owned stocks by value (PLN)",
                     Data = data
-                }
+                },
+                CurrentSignalsCount = _indicatorsService.GetSignalsCount()
             };
             return walletModel;
         }

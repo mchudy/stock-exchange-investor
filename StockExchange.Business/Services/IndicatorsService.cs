@@ -164,6 +164,39 @@ namespace StockExchange.Business.Services
             return ret.OrderBy(item => item.Company).ThenBy(item => item.Action).ThenBy(item => item.Indicator).ToPagedList(message.Start, message.Length);
         }
 
+        public int GetSignalsCount()
+        {
+            var indicators = GetAllIndicators();
+            var indicatorObjects = indicators.Select(indicator => _indicatorFactory.CreateIndicator(indicator.IndicatorType)).ToList();
+            var prices = _priceService.GetLastPricesForAllCompanies();
+            var companies = _companyService.GetAllCompanies();
+            var maxDate = _priceService.GetMaxDate();
+            var computed = 0;
+            foreach (var company in companies)
+            {
+                var companyPrices = prices.Where(item => item.CompanyId == company.Id).OrderBy(item => item.Date).ToList();
+                if (!companyPrices.Any()) continue;
+                foreach (var indicator in indicatorObjects)
+                {
+                    IList<Signal> signals = new List<Signal>();
+                    try
+                    {
+                        signals = indicator.GenerateSignals(companyPrices);
+                    }
+                    catch (Exception ex)
+                    {
+                        logger.Warn($"Error when generating signals for company {company.Code} and indicator {indicator.Type}", ex);
+                    }
+                    var todaySignal = signals.FirstOrDefault(item => item.Date == maxDate);
+                    if (todaySignal != null)
+                    {
+                        computed++;
+                    }
+                }
+            }
+            return computed;
+        }
+
         private static IList<IndicatorProperty> ConvertIndicatorProperties(IEnumerable<StrategyIndicatorProperty> p)
         {
             return p.Select(item => new IndicatorProperty

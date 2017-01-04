@@ -27,5 +27,7 @@ namespace StockExchange.Business.ServiceInterfaces
         IList<SignalEvent> GetSignals(DateTime startDate, DateTime endDate, IList<int> companiesIds, IList<ParameterizedIndicator> indicators);
 
         PagedList<TodaySignal> GetSignals(PagedFilterDefinition<TransactionFilter> message);
+
+        int GetSignalsCount();
     }
 }
