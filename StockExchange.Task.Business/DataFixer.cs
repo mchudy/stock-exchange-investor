@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Linq.Dynamic;
 using System.Reflection;
 
 namespace StockExchange.Task.Business
