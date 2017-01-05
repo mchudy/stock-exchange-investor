@@ -65,11 +65,11 @@ namespace StockExchange.Web.Controllers
             });
         }
 
-        [HttpGet]
-        public ActionResult Results()
-        {
-            return View();
-        }
+        //[HttpGet]
+        //public ActionResult Results()
+        //{
+        //    return View();
+        //}
 
         private async Task<SimulationDto> ConvertViewModelToDto(SimulationViewModel viewModel)
         {

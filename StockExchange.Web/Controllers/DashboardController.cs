@@ -42,46 +42,46 @@ namespace StockExchange.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> GetOwnedStocksTable(DataTableMessage<TransactionFilter> dataTableMessage)
+        public ActionResult GetOwnedStocksTable(DataTableMessage<TransactionFilter> dataTableMessage)
         {
             var searchMessage = DataTableMessageConverter.ToPagedFilterDefinition(dataTableMessage);
-            var pagedList = await _walletService.GetOwnedStocks(CurrentUserId, searchMessage);
+            var pagedList = _walletService.GetOwnedStocks(CurrentUserId, searchMessage).Result;
             var model = BuildCurrentDataTableResponse(dataTableMessage, pagedList);
             return new JsonNetResult(model, false);
         }
 
         [HttpPost]
-        public async Task<ActionResult> GetTodaySignalsTable(DataTableMessage<TransactionFilter> dataTableMessage)
+        public ActionResult GetTodaySignalsTable(DataTableMessage<TransactionFilter> dataTableMessage)
         {
             var searchMessage = DataTableMessageConverter.ToPagedFilterDefinition(dataTableMessage);
-            var pagedList = await _indicatorsService.GetSignals(searchMessage);
+            var pagedList = _indicatorsService.GetSignals(searchMessage).Result;
             var model = BuildSignalsDataTableResponse(dataTableMessage, pagedList);
             return new JsonNetResult(model, false);
         }
 
         [HttpPost]
-        public async Task<ActionResult> GetAdvancersTable(DataTableMessage<TransactionFilter> dataTableMessage)
+        public ActionResult GetAdvancersTable(DataTableMessage<TransactionFilter> dataTableMessage)
         {
             var searchMessage = DataTableMessageConverter.ToPagedFilterDefinition(dataTableMessage);
-            var pagedList = await _priceService.GetAdvancers(searchMessage);
+            var pagedList = _priceService.GetAdvancers(searchMessage).Result;
             var model = BuildAdvancersDataTableResponse(dataTableMessage, pagedList);
             return new JsonNetResult(model, false);
         }
 
         [HttpPost]
-        public async Task<ActionResult> GetDeclinersTable(DataTableMessage<TransactionFilter> dataTableMessage)
+        public ActionResult GetDeclinersTable(DataTableMessage<TransactionFilter> dataTableMessage)
         {
             var searchMessage = DataTableMessageConverter.ToPagedFilterDefinition(dataTableMessage);
-            var pagedList = await _priceService.GetDecliners(searchMessage);
+            var pagedList = _priceService.GetDecliners(searchMessage).Result;
             var model = BuildAdvancersDataTableResponse(dataTableMessage, pagedList);
             return new JsonNetResult(model, false);
         }
 
         [HttpPost]
-        public async Task<ActionResult> GetMostActiveTable(DataTableMessage<TransactionFilter> dataTableMessage)
+        public ActionResult GetMostActiveTable(DataTableMessage<TransactionFilter> dataTableMessage)
         {
             var searchMessage = DataTableMessageConverter.ToPagedFilterDefinition(dataTableMessage);
-            var pagedList = await _priceService.GetMostActive(searchMessage);
+            var pagedList = _priceService.GetMostActive(searchMessage).Result;
             var model = BuildAdvancersDataTableResponse(dataTableMessage, pagedList);
             return new JsonNetResult(model, false);
         }

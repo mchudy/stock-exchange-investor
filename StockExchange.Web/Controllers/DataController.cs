@@ -30,10 +30,10 @@ namespace StockExchange.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> GetPrices(DataTableMessage<PriceFilter> dataTableMessage)
+        public ActionResult GetPrices(DataTableMessage<PriceFilter> dataTableMessage)
         {
             var searchMessage = DataTableMessageConverter.ToPagedFilterDefinition(dataTableMessage);
-            var pagedList = await _priceService.GetPrices(searchMessage);
+            var pagedList = _priceService.GetPrices(searchMessage).Result;
             var model = BuildDataTableResponse(dataTableMessage, pagedList);
             return new JsonNetResult(model, false);
         }
@@ -41,7 +41,7 @@ namespace StockExchange.Web.Controllers
         [HttpGet]
         public ActionResult GetFilterValues(DataTableSimpleMessage<PriceFilter> message, string fieldName)
         {
-            var values = _priceService.GetFilterValues(DataTableMessageConverter.ToFilterDefinition(message), fieldName);
+            var values = _priceService.GetFilterValues(DataTableMessageConverter.ToFilterDefinition(message), fieldName).Result;
             return new JsonNetResult(values, typeof(PriceDto), fieldName);
         }
 
