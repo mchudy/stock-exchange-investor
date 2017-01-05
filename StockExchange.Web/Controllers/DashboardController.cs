@@ -1,7 +1,5 @@
 ﻿using StockExchange.Business.Extensions;
 using StockExchange.Business.Models.Filters;
-using StockExchange.Business.Models.Indicators;
-using StockExchange.Business.Models.Price;
 using StockExchange.Business.Models.Wallet;
 using StockExchange.Business.ServiceInterfaces;
 using StockExchange.Web.Helpers;
@@ -46,7 +44,7 @@ namespace StockExchange.Web.Controllers
         {
             var searchMessage = DataTableMessageConverter.ToPagedFilterDefinition(dataTableMessage);
             var pagedList = await _walletService.GetOwnedStocks(CurrentUserId, searchMessage);
-            var model = BuildCurrentDataTableResponse(dataTableMessage, pagedList);
+            var model = GetSimpleDataTableResponse(dataTableMessage, pagedList);
             return new JsonNetResult(model, false);
         }
 
@@ -55,7 +53,7 @@ namespace StockExchange.Web.Controllers
         {
             var searchMessage = DataTableMessageConverter.ToPagedFilterDefinition(dataTableMessage);
             var pagedList = await _indicatorsService.GetSignals(searchMessage);
-            var model = BuildSignalsDataTableResponse(dataTableMessage, pagedList);
+            var model = GetSimpleDataTableResponse(dataTableMessage, pagedList);
             return new JsonNetResult(model, false);
         }
         
@@ -64,7 +62,7 @@ namespace StockExchange.Web.Controllers
         {
             var searchMessage = DataTableMessageConverter.ToPagedFilterDefinition(dataTableMessage);
             var pagedList = await _priceService.GetAdvancers(searchMessage);
-            var model = BuildAdvancersDataTableResponse(dataTableMessage, pagedList);
+            var model = GetSimpleDataTableResponse(dataTableMessage, pagedList);
             return new JsonNetResult(model, false);
         }
 
@@ -73,7 +71,7 @@ namespace StockExchange.Web.Controllers
         {
             var searchMessage = DataTableMessageConverter.ToPagedFilterDefinition(dataTableMessage);
             var pagedList = await _priceService.GetDecliners(searchMessage);
-            var model = BuildAdvancersDataTableResponse(dataTableMessage, pagedList);
+            var model = GetSimpleDataTableResponse(dataTableMessage, pagedList);
             return new JsonNetResult(model, false);
         }
 
@@ -82,40 +80,13 @@ namespace StockExchange.Web.Controllers
         {
             var searchMessage = DataTableMessageConverter.ToPagedFilterDefinition(dataTableMessage);
             var pagedList = await _priceService.GetMostActive(searchMessage);
-            var model = BuildAdvancersDataTableResponse(dataTableMessage, pagedList);
+            var model = GetSimpleDataTableResponse(dataTableMessage, pagedList);
             return new JsonNetResult(model, false);
         }
 
-        // ReSharper disable once SuggestBaseTypeForParameter
-        private static DataTableResponse<OwnedCompanyStocksDto> BuildCurrentDataTableResponse(DataTableMessage<TransactionFilter> dataTableMessage, PagedList<OwnedCompanyStocksDto> pagedList)
+        private static DataTableResponse<T> GetSimpleDataTableResponse<T>(DataTableMessage<TransactionFilter> dataTableMessage, PagedList<T> pagedList)
         {
-            var model = new DataTableResponse<OwnedCompanyStocksDto>
-            {
-                RecordsFiltered = pagedList.TotalCount,
-                RecordsTotal = pagedList.TotalCount,
-                Data = pagedList,
-                Draw = dataTableMessage.Draw
-            };
-            return model;
-        }
-
-        // ReSharper disable once SuggestBaseTypeForParameter
-        private static DataTableResponse<TodaySignal> BuildSignalsDataTableResponse(DataTableMessage<TransactionFilter> dataTableMessage, PagedList<TodaySignal> pagedList)
-        {
-            var model = new DataTableResponse<TodaySignal>
-            {
-                RecordsFiltered = pagedList.TotalCount,
-                RecordsTotal = pagedList.TotalCount,
-                Data = pagedList,
-                Draw = dataTableMessage.Draw
-            };
-            return model;
-        }
-
-        // ReSharper disable once SuggestBaseTypeForParameter
-        private static DataTableResponse<MostActivePriceDto> BuildAdvancersDataTableResponse(DataTableMessage<TransactionFilter> dataTableMessage, PagedList<MostActivePriceDto> pagedList)
-        {
-            var model = new DataTableResponse<MostActivePriceDto>
+            var model = new DataTableResponse<T>
             {
                 RecordsFiltered = pagedList.TotalCount,
                 RecordsTotal = pagedList.TotalCount,

@@ -54,19 +54,19 @@ namespace StockExchange.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult GetTransactionsTable(DataTableMessage<TransactionFilter> dataTableMessage)
+        public async Task<ActionResult> GetTransactionsTable(DataTableMessage<TransactionFilter> dataTableMessage)
         {
             var searchMessage = DataTableMessageConverter.ToPagedFilterDefinition(dataTableMessage);
-            var pagedList = _transactionsService.GetTransactions(CurrentUserId, searchMessage).Result;
+            var pagedList = await _transactionsService.GetTransactions(CurrentUserId, searchMessage);
             var model = BuildDataTableResponse(dataTableMessage, pagedList);
             return new JsonNetResult(model, false);
         }
 
         [HttpPost]
-        public ActionResult GetCurrentTransactionsTable(DataTableMessage<TransactionFilter> dataTableMessage)
+        public async Task<ActionResult> GetCurrentTransactionsTable(DataTableMessage<TransactionFilter> dataTableMessage)
         {
             var searchMessage = DataTableMessageConverter.ToPagedFilterDefinition(dataTableMessage);
-            var pagedList = _walletService.GetOwnedStocks(CurrentUserId, searchMessage).Result;
+            var pagedList = await _walletService.GetOwnedStocks(CurrentUserId, searchMessage);
             var model = BuildCurrentDataTableResponse(dataTableMessage, pagedList);
             return new JsonNetResult(model, false);
         }
