@@ -9,6 +9,7 @@ using StockExchange.DataAccess.Models;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace StockExchange.Business.Services
 {
@@ -23,9 +24,9 @@ namespace StockExchange.Business.Services
             _indicatorsService = indicatorsService;
         }
 
-        public IList<StrategyDto> GetUserStrategies(int userId)
+        public async Task<IList<StrategyDto>> GetStrategies(int userId)
         {
-            return _strategiesRepository.GetQueryable()
+            return await _strategiesRepository.GetQueryable()
                 .Include(t => t.Indicators)
                 .Where(t => t.UserId == userId && !t.IsDeleted)
                 .OrderBy(t => t.Name)
@@ -38,13 +39,13 @@ namespace StockExchange.Business.Services
                     {
                         IndicatorType = (IndicatorType?)i.IndicatorType
                     }).ToList()
-                }).ToList();
+                }).ToListAsync();
         }
 
-        public StrategyDto GetUserStrategy(int userId, int strategyId)
+        public async Task<StrategyDto> GetStrategy(int userId, int strategyId)
         {
-            var ret =_strategiesRepository
-                .GetQueryable().FirstOrDefault(item => item.Id == strategyId && item.UserId == userId && !item.IsDeleted);
+            var ret = await _strategiesRepository
+                .GetQueryable().FirstOrDefaultAsync(item => item.Id == strategyId && item.UserId == userId && !item.IsDeleted);
             if (ret != null)
                 return new StrategyDto
                 {
@@ -56,34 +57,29 @@ namespace StockExchange.Business.Services
             return new StrategyDto();
         }
 
-        public void DeleteStrategy(int strategyId, int userId)
+        public async Task DeleteStrategy(int strategyId, int userId)
         {
-            var strategy = _strategiesRepository.GetQueryable().FirstOrDefault(item => item.Id == strategyId && !item.IsDeleted);
-
+            var strategy = await _strategiesRepository.GetQueryable().FirstOrDefaultAsync(item => item.Id == strategyId && !item.IsDeleted);
             if(strategy == null)
                 throw new BusinessException("Strategy not found", ErrorStatus.DataNotFound);
-
             if(strategy.UserId != userId)
                 throw new BusinessException("You do not have permissions to this action", ErrorStatus.AccessDenied);
-
             strategy.IsDeleted = true;
-            _strategiesRepository.Save();
+            await _strategiesRepository.Save();
         }
 
-        public void UpdateStrategy(StrategyDto dto)
+        public async Task UpdateStrategy(StrategyDto dto)
         {
-            var strategy = _strategiesRepository.GetQueryable()
-                .FirstOrDefault(item => item.Id == dto.Id && item.UserId == dto.UserId && !item.IsDeleted);
+            var strategy = await _strategiesRepository.GetQueryable()
+                .FirstOrDefaultAsync(item => item.Id == dto.Id && item.UserId == dto.UserId && !item.IsDeleted);
             if(strategy == null)
                 throw new BusinessException("Strategy not found", ErrorStatus.DataNotFound);
-
             strategy.Name = dto.Name;
             var toDelete = strategy.Indicators.Where(i => dto.Indicators.All(im => im.IndicatorType != (IndicatorType) i.IndicatorType)).ToList();
             foreach (var strategyIndicator in toDelete)
             {
                 _strategiesRepository.DeleteIndicator(strategyIndicator);
             }
-
             foreach (var indicatorDto in dto.Indicators)
             {
                 var indicator = strategy.Indicators.FirstOrDefault(i => (IndicatorType)i.IndicatorType == indicatorDto.IndicatorType);
@@ -100,16 +96,15 @@ namespace StockExchange.Business.Services
                     }
                 }
             }
-            _strategiesRepository.Save();
+            await _strategiesRepository.Save();
         }
 
-        public int CreateStrategy(StrategyDto strategy)
+        public async Task<int> CreateStrategy(StrategyDto strategy)
         {
-            if (_strategiesRepository.GetQueryable().Any(s => s.UserId == strategy.UserId && s.Name == strategy.Name))
+            if (await _strategiesRepository.GetQueryable().AnyAsync(s => s.UserId == strategy.UserId && s.Name == strategy.Name))
                 throw new BusinessException(nameof(strategy.Name), "Strategy with this name already exists");
             if (!strategy.Indicators.Any())
                 throw new BusinessException(nameof(strategy.Indicators), "At least one indicator has to be chosen");
-
             var investmentStrategy = new InvestmentStrategy
             {
                 UserId = strategy.UserId,
@@ -121,7 +116,7 @@ namespace StockExchange.Business.Services
                 AddIndicator(indicator, investmentStrategy);
             }
             _strategiesRepository.Insert(investmentStrategy);
-            _strategiesRepository.Save();
+            await _strategiesRepository.Save();
             return investmentStrategy.Id;
         }
 

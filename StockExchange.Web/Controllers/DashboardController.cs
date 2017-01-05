@@ -5,6 +5,7 @@ using StockExchange.Web.Models.Charts;
 using StockExchange.Web.Models.Wallet;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 using StockExchange.Business.Extensions;
 using StockExchange.Business.Models.Filters;
@@ -33,54 +34,54 @@ namespace StockExchange.Web.Controllers
         }
 
         [HttpGet]
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            var ownedStocks = _walletService.GetOwnedStocks(CurrentUserId);
-            var walletModel = BuildWalletViewModel(ownedStocks);
+            var ownedStocks = await _walletService.GetOwnedStocks(CurrentUserId);
+            var walletModel = await BuildWalletViewModel(ownedStocks);
             return View(walletModel);
         }
 
         [HttpPost]
-        public ActionResult GetOwnedStocksTable(DataTableMessage<TransactionFilter> dataTableMessage)
+        public async Task<ActionResult> GetOwnedStocksTable(DataTableMessage<TransactionFilter> dataTableMessage)
         {
             var searchMessage = DataTableMessageConverter.ToPagedFilterDefinition(dataTableMessage);
-            var pagedList = _walletService.GetOwnedStocks(CurrentUserId, searchMessage);
+            var pagedList = await _walletService.GetOwnedStocks(CurrentUserId, searchMessage);
             var model = BuildCurrentDataTableResponse(dataTableMessage, pagedList);
             return new JsonNetResult(model, false);
         }
 
         [HttpPost]
-        public ActionResult GetTodaySignalsTable(DataTableMessage<TransactionFilter> dataTableMessage)
+        public async Task<ActionResult> GetTodaySignalsTable(DataTableMessage<TransactionFilter> dataTableMessage)
         {
             var searchMessage = DataTableMessageConverter.ToPagedFilterDefinition(dataTableMessage);
-            var pagedList = _indicatorsService.GetSignals(searchMessage);
+            var pagedList = await _indicatorsService.GetSignals(searchMessage);
             var model = BuildSignalsDataTableResponse(dataTableMessage, pagedList);
             return new JsonNetResult(model, false);
         }
 
         [HttpPost]
-        public ActionResult GetAdvancersTable(DataTableMessage<TransactionFilter> dataTableMessage)
+        public async Task<ActionResult> GetAdvancersTable(DataTableMessage<TransactionFilter> dataTableMessage)
         {
             var searchMessage = DataTableMessageConverter.ToPagedFilterDefinition(dataTableMessage);
-            var pagedList = _priceService.GetAdvancers(searchMessage);
+            var pagedList = await _priceService.GetAdvancers(searchMessage);
             var model = BuildAdvancersDataTableResponse(dataTableMessage, pagedList);
             return new JsonNetResult(model, false);
         }
 
         [HttpPost]
-        public ActionResult GetDeclinersTable(DataTableMessage<TransactionFilter> dataTableMessage)
+        public async Task<ActionResult> GetDeclinersTable(DataTableMessage<TransactionFilter> dataTableMessage)
         {
             var searchMessage = DataTableMessageConverter.ToPagedFilterDefinition(dataTableMessage);
-            var pagedList = _priceService.GetDecliners(searchMessage);
+            var pagedList = await _priceService.GetDecliners(searchMessage);
             var model = BuildAdvancersDataTableResponse(dataTableMessage, pagedList);
             return new JsonNetResult(model, false);
         }
 
         [HttpPost]
-        public ActionResult GetMostActiveTable(DataTableMessage<TransactionFilter> dataTableMessage)
+        public async Task<ActionResult> GetMostActiveTable(DataTableMessage<TransactionFilter> dataTableMessage)
         {
             var searchMessage = DataTableMessageConverter.ToPagedFilterDefinition(dataTableMessage);
-            var pagedList = _priceService.GetMostAactive(searchMessage);
+            var pagedList = await _priceService.GetMostActive(searchMessage);
             var model = BuildAdvancersDataTableResponse(dataTableMessage, pagedList);
             return new JsonNetResult(model, false);
         }
@@ -124,7 +125,7 @@ namespace StockExchange.Web.Controllers
             return model;
         }
 
-        private DashboardViewModel BuildWalletViewModel(IList<OwnedCompanyStocksDto> ownedStocks)
+        private async Task<DashboardViewModel> BuildWalletViewModel(IList<OwnedCompanyStocksDto> ownedStocks)
         {
             var data =
                 ownedStocks.Select(g => new PieChartEntry {Name = g.CompanyName, Value = g.CurrentValue}).ToList();
@@ -140,14 +141,14 @@ namespace StockExchange.Web.Controllers
                     AllStocksValue = ownedStocks.Sum(s => s.CurrentValue),
                     FreeBudget = CurrentUser.Budget
                 },
-                AllTransactionsCount = _transactionsService.GetUserTransactionsCount(CurrentUserId),
+                AllTransactionsCount = await _transactionsService.GetTransactionsCount(CurrentUserId),
                 OwnedCompanyStocks = ownedStocks,
                 StocksByValue = new PieChartModel
                 {
                     Title = "Owned stocks by value (PLN)",
                     Data = data
                 },
-                CurrentSignalsCount = _indicatorsService.GetSignalsCount()
+                CurrentSignalsCount = await _indicatorsService.GetSignalsCount()
             };
             return walletModel;
         }

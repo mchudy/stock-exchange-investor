@@ -2,6 +2,7 @@
 using StockExchange.DataAccess.Models;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using StockExchange.Business.Extensions;
 using StockExchange.Business.Models.Filters;
 using StockExchange.Business.Models.Wallet;
@@ -19,20 +20,20 @@ namespace StockExchange.Business.Services
             _priceService = priceService;
         }
 
-        public IList<OwnedCompanyStocksDto> GetOwnedStocks(int userId)
+        public async Task<IList<OwnedCompanyStocksDto>> GetOwnedStocks(int userId)
         {
-            var transactionsByCompany = _transactionsService.GetTransactionsByCompany(userId);
-            var currentPrices = _priceService.GetCurrentPrices(transactionsByCompany.Keys.ToList());
+            var transactionsByCompany = await _transactionsService.GetTransactionsByCompany(userId);
+            var currentPrices = await _priceService.GetCurrentPrices(transactionsByCompany.Keys.ToList());
             return transactionsByCompany
                 .Select(entry => BuildCompanyOwnedStocksDto(userId, entry, currentPrices))
                 .ToList();
         }
 
-        public PagedList<OwnedCompanyStocksDto> GetOwnedStocks(int currentUserId, PagedFilterDefinition<TransactionFilter> searchMessage)
+        public async Task<PagedList<OwnedCompanyStocksDto>> GetOwnedStocks(int currentUserId, PagedFilterDefinition<TransactionFilter> searchMessage)
         {
-            var transactionsByCompany = _transactionsService.GetTransactionsByCompany(currentUserId);
-            var currentPrices = _priceService.GetCurrentPrices(transactionsByCompany.Keys.ToList());
-            return transactionsByCompany
+            var transactionsByCompany = await _transactionsService.GetTransactionsByCompany(currentUserId);
+            var currentPrices = await _priceService.GetCurrentPrices(transactionsByCompany.Keys.ToList());
+            return await transactionsByCompany
                 .Select(entry => BuildCompanyOwnedStocksDto(currentUserId, entry, currentPrices))
                 .ToPagedList(searchMessage.Start, searchMessage.Length);
         }

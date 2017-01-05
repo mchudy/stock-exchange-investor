@@ -12,6 +12,7 @@ using StockExchange.Web.Models.Wallet;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 using WalletViewModel = StockExchange.Web.Models.Wallet.WalletViewModel;
 
@@ -34,17 +35,17 @@ namespace StockExchange.Web.Controllers
         }
 
         [HttpGet]
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            var companies = _companyService.GetAllCompanies();
-            var model = GetTransactionViewModel(companies);
+            var companies = await _companyService.GetCompanies();
+            var model = await GetTransactionViewModel(companies);
             return View(model);
         }
 
         [HttpGet]
-        public ActionResult GetBudget()
+        public async Task<ActionResult> GetBudget()
         {
-            var ownedStocks = _walletService.GetOwnedStocks(CurrentUserId);
+            var ownedStocks = await _walletService.GetOwnedStocks(CurrentUserId);
             return new JsonNetResult(new BudgetInfoViewModel
             {
                 FreeBudget = CurrentUser.Budget,
@@ -53,32 +54,32 @@ namespace StockExchange.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult GetTransactionsTable(DataTableMessage<TransactionFilter> dataTableMessage)
+        public async Task<ActionResult> GetTransactionsTable(DataTableMessage<TransactionFilter> dataTableMessage)
         {
             var searchMessage = DataTableMessageConverter.ToPagedFilterDefinition(dataTableMessage);
-            var pagedList = _transactionsService.GetUserTransactions(CurrentUserId, searchMessage);
+            var pagedList = await _transactionsService.GetTransactions(CurrentUserId, searchMessage);
             var model = BuildDataTableResponse(dataTableMessage, pagedList);
             return new JsonNetResult(model, false);
         }
 
         [HttpPost]
-        public ActionResult GetCurrentTransactionsTable(DataTableMessage<TransactionFilter> dataTableMessage)
+        public async Task<ActionResult> GetCurrentTransactionsTable(DataTableMessage<TransactionFilter> dataTableMessage)
         {
             var searchMessage = DataTableMessageConverter.ToPagedFilterDefinition(dataTableMessage);
-            var pagedList = _walletService.GetOwnedStocks(CurrentUserId, searchMessage);
+            var pagedList = await _walletService.GetOwnedStocks(CurrentUserId, searchMessage);
             var model = BuildCurrentDataTableResponse(dataTableMessage, pagedList);
             return new JsonNetResult(model, false);
         }
 
         [HttpPost]
         [HandleJsonError]
-        public ActionResult AddTransaction(WalletViewModel model)
+        public async Task<ActionResult> AddTransaction(WalletViewModel model)
         {
             if (!ModelState.IsValid)
                 return JsonErrorResult(ModelState);
 
             var dto = BuildUserTransactionDto(model.AddTransactionViewModel);
-            _transactionsService.AddUserTransaction(dto);
+            await _transactionsService.AddTransaction(dto);
             return new JsonNetResult(new { dto.Id });
         }
 
@@ -113,9 +114,9 @@ namespace StockExchange.Web.Controllers
             return model;
         }
 
-        private WalletViewModel GetTransactionViewModel(IList<CompanyDto> companies)
+        private async Task<WalletViewModel> GetTransactionViewModel(IList<CompanyDto> companies)
         {
-            var ownedStocks = _walletService.GetOwnedStocks(CurrentUserId);
+            var ownedStocks = await _walletService.GetOwnedStocks(CurrentUserId);
             return new WalletViewModel
             {
                 AddTransactionViewModel =

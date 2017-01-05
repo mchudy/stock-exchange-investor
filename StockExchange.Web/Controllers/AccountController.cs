@@ -89,7 +89,7 @@ namespace StockExchange.Web.Controllers
         public ActionResult LogOut()
         {
             _authenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            return RedirectToAction("Price", "Price");
+            return RedirectToAction("Index", "Charts");
         }
 
         [HttpGet]

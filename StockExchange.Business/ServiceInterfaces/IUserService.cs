@@ -1,7 +1,9 @@
-﻿namespace StockExchange.Business.ServiceInterfaces
+﻿using System.Threading.Tasks;
+
+namespace StockExchange.Business.ServiceInterfaces
 {
     public interface IUserService
     {
-        void EditBudget(int userId, decimal newBudget);
+        Task EditBudget(int userId, decimal newBudget);
     }
 }

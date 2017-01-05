@@ -1,6 +1,7 @@
 ﻿using System;
 using StockExchange.Business.Models.Indicators;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using StockExchange.Business.Extensions;
 using StockExchange.Business.Indicators.Common;
 using StockExchange.Business.Models.Filters;
@@ -12,9 +13,9 @@ namespace StockExchange.Business.ServiceInterfaces
     {
         IList<IndicatorProperty> GetPropertiesForIndicator(IndicatorType type);
 
-        IList<CompanyIndicatorValues> GetIndicatorValues(IIndicator indicator, IList<int> companyIds);
+        Task<IList<CompanyIndicatorValues>> GetIndicatorValues(IIndicator indicator, IList<int> companyIds);
 
-        IList<CompanyIndicatorValues> GetIndicatorValues(IndicatorType type, IList<int> companyIds, IList<IndicatorProperty> properties);
+        Task<IList<CompanyIndicatorValues>> GetIndicatorValues(IndicatorType type, IList<int> companyIds, IList<IndicatorProperty> properties);
 
         IList<IndicatorType> GetAllIndicatorTypes();
 
@@ -24,10 +25,10 @@ namespace StockExchange.Business.ServiceInterfaces
 
         IList<ParameterizedIndicator> ConvertIndicators(IEnumerable<StrategyIndicator> indicators);
 
-        IList<SignalEvent> GetSignals(DateTime startDate, DateTime endDate, IList<int> companiesIds, IList<ParameterizedIndicator> indicators);
+        Task<IList<SignalEvent>> GetSignals(DateTime startDate, DateTime endDate, IList<int> companiesIds, IList<ParameterizedIndicator> indicators);
 
-        PagedList<TodaySignal> GetSignals(PagedFilterDefinition<TransactionFilter> message);
+        Task<PagedList<TodaySignal>> GetSignals(PagedFilterDefinition<TransactionFilter> message);
 
-        int GetSignalsCount();
+        Task<int> GetSignalsCount();
     }
 }

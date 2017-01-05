@@ -9,6 +9,7 @@ using StockExchange.Web.Models.Charts;
 using StockExchange.Web.Models.Indicator;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 
 namespace StockExchange.Web.Controllers
@@ -26,18 +27,18 @@ namespace StockExchange.Web.Controllers
             _companyService = companyService;
         }
 
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
             //TODO: load companies list from the view via AJAX
-            var companies = _companyService.GetAllCompanies();
+            var companies = await _companyService.GetCompanies();
             var model = BuildChartIndexModel(companies);
             return View(model);
         }
 
         [HttpGet]
-        public ActionResult GetLineChartData(IList<int> companyIds)
+        public async Task<ActionResult> GetLineChartData(IList<int> companyIds)
         {
-            var companyPrices = _priceService.GetPricesForCompanies(companyIds);
+            var companyPrices = await _priceService.GetPrices(companyIds);
             var model = companyPrices.Select(cp => new LineChartModel
             {
                 CompanyId = cp.Company.Id,
@@ -48,17 +49,17 @@ namespace StockExchange.Web.Controllers
         }
 
         [HttpGet]
-        public ActionResult GetCandlestickChartData(IList<int> companyIds)
+        public async Task<ActionResult> GetCandlestickChartData(IList<int> companyIds)
         {
-            var companyPrices = _priceService.GetPricesForCompanies(companyIds);
+            var companyPrices = await _priceService.GetPrices(companyIds);
             var model = BuildCandlestickChartModel(companyPrices);
             return new JsonNetResult(model);
         }
 
         [HttpGet]
-        public ActionResult GetIndicatorValues(IList<int> companyIds, IndicatorType type, IList<IndicatorProperty> properties)
+        public async Task<ActionResult> GetIndicatorValues(IList<int> companyIds, IndicatorType type, IList<IndicatorProperty> properties)
         {
-            var values = _indicatorsService.GetIndicatorValues(type, companyIds, properties);
+            var values = await _indicatorsService.GetIndicatorValues(type, companyIds, properties);
             var model = BuildIndicatorChartModel(values);
             return new JsonNetResult(model);
         }

@@ -1,17 +1,19 @@
 ﻿using StockExchange.Business.Models.Strategy;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace StockExchange.Business.ServiceInterfaces
 {
     public interface IStrategyService
     {
-        int CreateStrategy(StrategyDto strategy);
+        Task<int> CreateStrategy(StrategyDto strategy);
 
-        IList<StrategyDto> GetUserStrategies(int userId);
+        Task<IList<StrategyDto>> GetStrategies(int userId);
 
-        StrategyDto GetUserStrategy(int userId, int strategyId);
+        Task<StrategyDto> GetStrategy(int userId, int strategyId);
 
-        void DeleteStrategy(int strategyId, int userId);
-        void UpdateStrategy(StrategyDto dto);
+        Task DeleteStrategy(int strategyId, int userId);
+
+        Task UpdateStrategy(StrategyDto dto);
     }
 }

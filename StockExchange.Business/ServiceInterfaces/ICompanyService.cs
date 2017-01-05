@@ -1,14 +1,15 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using StockExchange.Business.Models.Company;
 
 namespace StockExchange.Business.ServiceInterfaces
 {
     public interface ICompanyService
     {
-        IEnumerable<string> GetCompanyNames();
+        Task<IList<string>> GetCompanyNames();
 
-        IList<CompanyDto> GetAllCompanies();
+        Task<IList<CompanyDto>> GetCompanies();
 
-        IList<CompanyDto> GetCompanies(IList<int> ids);
+        Task<IList<CompanyDto>> GetCompanies(IList<int> ids);
     }
 }

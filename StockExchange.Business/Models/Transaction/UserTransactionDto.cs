@@ -32,10 +32,16 @@ namespace StockExchange.Business.Models.Transaction
         public decimal Profit { get; set; }
 
         [Display(Name = "Action")]
-        public string Action { get; set; }
+        public Action Action { get; set; }
 
         public int UserId { get; set; }
 
         public int CompanyId { get; set; }
+    }
+
+    public enum Action
+    {
+        Buy = 1,
+        Sell = 2
     }
 }

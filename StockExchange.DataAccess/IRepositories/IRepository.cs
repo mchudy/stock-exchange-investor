@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace StockExchange.DataAccess.IRepositories
 {
@@ -14,8 +15,8 @@ namespace StockExchange.DataAccess.IRepositories
 
         void Remove(TEntity entity);
 
-        void RemoveRange(IQueryable<TEntity> entities);
+        Task<int> RemoveRange(IQueryable<TEntity> entities);
 
-        int Save();
+        Task<int> Save();
     }
 }

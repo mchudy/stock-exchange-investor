@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace StockExchange.DataAccess.Repositories
 {
@@ -42,14 +43,14 @@ namespace StockExchange.DataAccess.Repositories
             DbSet.Remove(entity);
         }
 
-        public void RemoveRange(IQueryable<TEntity> entities)
+        public Task<int> RemoveRange(IQueryable<TEntity> entities)
         {
-            entities.Delete();
+            return entities.DeleteAsync();
         }
 
-        public int Save()
+        public Task<int> Save()
         {
-            return Context.SaveChanges();
+            return Context.SaveChangesAsync();
         }
 
         public void Dispose()

@@ -4,29 +4,29 @@ using StockExchange.Business.Models.Price;
 using StockExchange.DataAccess.Models;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace StockExchange.Business.ServiceInterfaces
 {
     public interface IPriceService
     {
-        PagedList<PriceDto> Get(PagedFilterDefinition<PriceFilter> pagedFilterDefinition);
+        Task<PagedList<PriceDto>> GetPrices(PagedFilterDefinition<PriceFilter> pagedFilterDefinition);
 
-        object GetValues(FilterDefinition<PriceFilter> toPagedFilterDefinition, string fieldName);
+        Task<IList<CompanyPricesDto>> GetPrices(IList<int> companyIds);
+        Task<IList<Price>> GetPrices(int companyId, DateTime endDate);
 
-        IList<CompanyPricesDto> GetPricesForCompanies(IList<int> companyIds);
+        Task<object> GetFilterValues(FilterDefinition<PriceFilter> toPagedFilterDefinition, string fieldName);
 
-        IList<Price> GetCurrentPrices(IList<int> companyIds);
+        Task<IList<Price>> GetCurrentPrices(IList<int> companyIds);
 
-        IList<Price> GetPrices(int companyId, DateTime endDate);
+        Task<IList<Price>> GetCurrentPrices(int days);
 
-        IList<Price> GetLastPricesForAllCompanies();
+        Task<DateTime> GetMaxDate();
 
-        DateTime GetMaxDate();
+        Task<PagedList<MostActivePriceDto>> GetAdvancers(PagedFilterDefinition<TransactionFilter> message);
 
-        PagedList<MostActivePriceDto> GetAdvancers(PagedFilterDefinition<TransactionFilter> message);
+        Task<PagedList<MostActivePriceDto>> GetDecliners(PagedFilterDefinition<TransactionFilter> message);
 
-        PagedList<MostActivePriceDto> GetDecliners(PagedFilterDefinition<TransactionFilter> message);
-
-        PagedList<MostActivePriceDto> GetMostAactive(PagedFilterDefinition<TransactionFilter> message);
+        Task<PagedList<MostActivePriceDto>> GetMostActive(PagedFilterDefinition<TransactionFilter> message);
     }
 }

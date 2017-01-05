@@ -8,6 +8,7 @@ using StockExchange.Web.Models.Indicator;
 using StockExchange.Web.Models.Strategy;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 
 namespace StockExchange.Web.Controllers
@@ -24,22 +25,22 @@ namespace StockExchange.Web.Controllers
             _indicatorsService = indicatorsService;
         }
 
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            var strategies = _strategyService.GetUserStrategies(CurrentUserId);
+            var strategies = await _strategyService.GetStrategies(CurrentUserId);
             return View(strategies);
         }
 
         [HttpGet]
-        public ActionResult EditStrategy(int? id)
+        public async Task<ActionResult> EditStrategy(int? id)
         {
-            var model = GetViewModel(id);
+            var model = await GetViewModel(id);
             return View(model);
         }
 
         [HttpPost]
         [HandleJsonError]
-        public ActionResult EditStrategy(EditStrategyViewModel model)
+        public async Task<ActionResult> EditStrategy(EditStrategyViewModel model)
         {
             if (!model.Indicators?.Any() ?? false)
             {
@@ -49,11 +50,11 @@ namespace StockExchange.Web.Controllers
             int? id = model.Id;
             if (model.Id.HasValue)
             {
-                _strategyService.UpdateStrategy(dto);
+                await _strategyService.UpdateStrategy(dto);
             }
             else
             {
-                id = _strategyService.CreateStrategy(dto);
+                id = await _strategyService.CreateStrategy(dto);
             }
             ShowNotification("", "Strategy has been saved", ToastType.Success);
             return new JsonNetResult(new {id, redirectUrl = Url.Action("Index")});
@@ -90,7 +91,7 @@ namespace StockExchange.Web.Controllers
             return dto;
         }
 
-        private EditStrategyViewModel GetViewModel(int? id)
+        private async Task<EditStrategyViewModel> GetViewModel(int? id)
         {
             var model = new EditStrategyViewModel
             {
@@ -108,15 +109,15 @@ namespace StockExchange.Web.Controllers
             if (id.HasValue)
             {
                 model.Id = id;
-                FillIndicatorValues(id, model);
+                await FillIndicatorValues(id, model);
             }
             return model;
         }
 
         [SuppressMessage("ReSharper", "PossibleInvalidOperationException")]
-        private void FillIndicatorValues(int? id, EditStrategyViewModel model)
+        private async Task FillIndicatorValues(int? id, EditStrategyViewModel model)
         {
-            var strategy = _strategyService.GetUserStrategy(CurrentUserId, id.Value);
+            var strategy = await _strategyService.GetStrategy(CurrentUserId, id.Value);
             model.Name = strategy.Name;
             foreach (var parameterizedIndicator in strategy.Indicators.Where(t => t.IndicatorType.HasValue))
             {

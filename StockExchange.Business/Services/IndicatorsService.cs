@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 
 namespace StockExchange.Business.Services
 {
@@ -64,17 +65,17 @@ namespace StockExchange.Business.Services
             }).ToList();
         }
 
-        public IList<CompanyIndicatorValues> GetIndicatorValues(IIndicator indicator, IList<int> companyIds)
+        public async Task<IList<CompanyIndicatorValues>> GetIndicatorValues(IIndicator indicator, IList<int> companyIds)
         {
-            IList<CompanyPricesDto> companyPrices = _priceService.GetPricesForCompanies(companyIds);
+            IList<CompanyPricesDto> companyPrices = await _priceService.GetPrices(companyIds);
             return ComputeIndicatorValues(indicator, companyPrices);
         }
 
-        public IList<CompanyIndicatorValues> GetIndicatorValues(IndicatorType type, IList<int> companyIds, IList<IndicatorProperty> properties)
+        public async Task<IList<CompanyIndicatorValues>> GetIndicatorValues(IndicatorType type, IList<int> companyIds, IList<IndicatorProperty> properties)
         {
             var propertiesDict = properties?.ToDictionary(t => t.Name, t => t.Value) ?? new Dictionary<string, int>();
             var indicator = _indicatorFactory.CreateIndicator(type, propertiesDict);
-            return GetIndicatorValues(indicator, companyIds);
+            return await GetIndicatorValues(indicator, companyIds);
         }
 
         public IList<ParameterizedIndicator> ConvertIndicators(IEnumerable<StrategyIndicator> indicators)
@@ -86,7 +87,7 @@ namespace StockExchange.Business.Services
             }).ToList();
         }
 
-        public IList<SignalEvent> GetSignals(DateTime startDate, DateTime endDate, IList<int> companiesIds, IList<ParameterizedIndicator> indicators)
+        public async Task<IList<SignalEvent>> GetSignals(DateTime startDate, DateTime endDate, IList<int> companiesIds, IList<ParameterizedIndicator> indicators)
         {
             var signalEvents = new List<SignalEvent>();
             for (var date = startDate; date < endDate; date = date.AddDays(1))
@@ -100,7 +101,7 @@ namespace StockExchange.Business.Services
             }
             foreach (var company in companiesIds)
             {
-                var prices = _priceService.GetPrices(company, endDate);
+                var prices = await _priceService.GetPrices(company, endDate);
                 foreach (var indicator in indicators)
                 {
                     if (indicator.IndicatorType == null) continue;
@@ -129,13 +130,13 @@ namespace StockExchange.Business.Services
             return signalEvents;
         }
 
-        public PagedList<TodaySignal> GetSignals(PagedFilterDefinition<TransactionFilter> message)
+        public async Task<PagedList<TodaySignal>> GetSignals(PagedFilterDefinition<TransactionFilter> message)
         {
             var indicators = GetAllIndicators();
             var indicatorObjects = indicators.Select(indicator => _indicatorFactory.CreateIndicator(indicator.IndicatorType)).ToList();
-            var prices = _priceService.GetLastPricesForAllCompanies();
-            var companies = _companyService.GetAllCompanies();
-            var maxDate = _priceService.GetMaxDate();
+            var prices = await _priceService.GetCurrentPrices(100);
+            var companies = await _companyService.GetCompanies();
+            var maxDate = await _priceService.GetMaxDate();
             var computed = new List<TodaySignal>();
             foreach (var company in companies)
             {
@@ -161,16 +162,16 @@ namespace StockExchange.Business.Services
             }
             var ret = new List<TodaySignal>();
             ret.AddRange(computed.GroupBy(item => new { item.Company, item.Action }).Select(item => new TodaySignal { Company = item.Key.Company, Action = item.Key.Action, Indicator = string.Join(", ", (IEnumerable<string>)item.Select(it => it.Indicator).ToArray())}));
-            return ret.OrderBy(item => item.Company).ThenBy(item => item.Action).ThenBy(item => item.Indicator).ToPagedList(message.Start, message.Length);
+            return await ret.OrderBy(item => item.Company).ThenBy(item => item.Action).ThenBy(item => item.Indicator).ToPagedList(message.Start, message.Length);
         }
 
-        public int GetSignalsCount()
+        public async Task<int> GetSignalsCount()
         {
             var indicators = GetAllIndicators();
             var indicatorObjects = indicators.Select(indicator => _indicatorFactory.CreateIndicator(indicator.IndicatorType)).ToList();
-            var prices = _priceService.GetLastPricesForAllCompanies();
-            var companies = _companyService.GetAllCompanies();
-            var maxDate = _priceService.GetMaxDate();
+            var prices = await _priceService.GetCurrentPrices(100);
+            var companies = await _companyService.GetCompanies();
+            var maxDate = await _priceService.GetMaxDate();
             var computed = 0;
             foreach (var company in companies)
             {

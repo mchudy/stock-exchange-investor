@@ -5,6 +5,7 @@ using StockExchange.Business.ServiceInterfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace StockExchange.Business.Services
 {
@@ -23,7 +24,7 @@ namespace StockExchange.Business.Services
             _priceService = priceService;
         }
 
-        public SimulationResultDto RunSimulation(SimulationDto simulationDto)
+        public async Task<SimulationResultDto> RunSimulation(SimulationDto simulationDto)
         {
             var simulationResult = new SimulationResultDto
             {
@@ -31,14 +32,14 @@ namespace StockExchange.Business.Services
                 CurrentCompanyQuantity = new Dictionary<int, int>(),
                 StartBudget = simulationDto.Budget,
             };
-            var strategy = _strategyService.GetUserStrategy(simulationDto.UserId, simulationDto.SelectedStrategyId);
+            var strategy = await _strategyService.GetStrategy(simulationDto.UserId, simulationDto.SelectedStrategyId);
             if (simulationDto.SelectedCompanyIds == null)
-                simulationDto.SelectedCompanyIds = _companyService.GetAllCompanies().Select(item => item.Id).ToList();
+                simulationDto.SelectedCompanyIds = (await _companyService.GetCompanies()).Select(item => item.Id).ToList();
 
-            var signalEvents = _indicatorsService.GetSignals(simulationDto.StartDate, simulationDto.EndDate,
+            var signalEvents = await _indicatorsService.GetSignals(simulationDto.StartDate, simulationDto.EndDate,
                 simulationDto.SelectedCompanyIds, strategy.Indicators);
 
-            var allPrices = _priceService.GetPricesForCompanies(simulationDto.SelectedCompanyIds);
+            var allPrices = await _priceService.GetPrices(simulationDto.SelectedCompanyIds);
             decimal lastSellValue = simulationDto.Budget;
             decimal mindiff = 0m;
             decimal maxdiff = 0m;
@@ -107,7 +108,7 @@ namespace StockExchange.Business.Services
                     }
                 }
             }
-            var currentPrices = _priceService.GetCurrentPrices(simulationResult.CurrentCompanyQuantity.Keys.ToList()).ToDictionary(x => x.CompanyId);
+            var currentPrices =  (await _priceService.GetCurrentPrices(simulationResult.CurrentCompanyQuantity.Keys.ToList())).ToDictionary(x => x.CompanyId);
             simulationResult.SimulationTotalValue = simulationResult.CurrentCompanyQuantity.Sum(x => x.Value * currentPrices[x.Key].ClosePrice) + simulationDto.Budget;
             simulationResult.PercentageProfit = Math.Round((double)((simulationResult.SimulationTotalValue - simulationResult.StartBudget) / simulationResult.StartBudget) * 100, 2);
             CalculateMinimalAndMaximalSimulationValue(simulationDto.StartDate, simulationDto.EndDate, allPrices, simulationDto.SelectedCompanyIds, simulationResult);

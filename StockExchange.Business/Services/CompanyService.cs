@@ -2,7 +2,9 @@
 using StockExchange.DataAccess.IRepositories;
 using StockExchange.DataAccess.Models;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 using StockExchange.Business.Models.Company;
 
 namespace StockExchange.Business.Services
@@ -16,29 +18,29 @@ namespace StockExchange.Business.Services
             _companyRepository = companyRepository;
         }
 
-        public IEnumerable<string> GetCompanyNames()
+        public async Task<IList<string>> GetCompanyNames()
         {
-            return _companyRepository.GetQueryable().Select(item => item.Code).Distinct().ToList();
+            return await _companyRepository.GetQueryable().Select(item => item.Code).Distinct().ToListAsync();
         }
 
-        public IList<CompanyDto> GetAllCompanies()
+        public async Task<IList<CompanyDto>> GetCompanies()
         {
-            return _companyRepository.GetQueryable().Select(c => new CompanyDto
+            return await _companyRepository.GetQueryable().Select(c => new CompanyDto
             {
                 Code = c.Code,
                 Id = c.Id,
                 Name = c.Code
-            }).ToList();
+            }).ToListAsync();
         }
 
-        public IList<CompanyDto> GetCompanies(IList<int> ids)
+        public async Task<IList<CompanyDto>> GetCompanies(IList<int> ids)
         {
-            return _companyRepository.GetQueryable().Where(item => ids.Contains(item.Id)).Select( item => new CompanyDto
+            return await _companyRepository.GetQueryable().Where(item => ids.Contains(item.Id)).Select(item => new CompanyDto
             {
-                Name = item.Name,
+                Name = item.Code,
                 Code = item.Code,
                 Id = item.Id
-            }).ToList();
+            }).ToListAsync();
         }
     }
 }

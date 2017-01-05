@@ -3,6 +3,7 @@ using StockExchange.Business.ServiceInterfaces;
 using StockExchange.Web.Models.Simulation;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 
 namespace StockExchange.Web.Controllers
@@ -22,26 +23,26 @@ namespace StockExchange.Web.Controllers
         }
 
         [HttpGet]
-        public ActionResult RunSimulation()
+        public async Task<ActionResult> RunSimulation()
         {
-            var model = GetViewModel();
+            var model = await GetViewModel();
             return View(model);
         }
 
         [HttpPost]
-        public ActionResult RunSimulation(SimulationViewModel model)
+        public async Task<ActionResult> RunSimulation(SimulationViewModel model)
         {
             if (!ModelState.IsValid)
             {
-                model.Strategies = _strategyService.GetUserStrategies(CurrentUserId);
-                model.Companies = _companyService.GetAllCompanies();
+                model.Strategies = await _strategyService.GetStrategies(CurrentUserId);
+                model.Companies = await _companyService.GetCompanies();
                 return View(model);
             }
 
-            var ret = _simulationService.RunSimulation(ConvertViewModelToDto(model));
+            var ret = await _simulationService.RunSimulation(await ConvertViewModelToDto(model));
             var ids = ret.CurrentCompanyQuantity.Keys.ToList();
             ids.AddRange(ret.TransactionsLog.Select(item => item.CompanyId));
-            var companies = _companyService.GetCompanies(ids);
+            var companies = await _companyService.GetCompanies(ids);
             return View("Results", new SimulationResultViewModel
             {
                 CurrentCompanyQuantity = ret.CurrentCompanyQuantity.ToDictionary(item => companies.FirstOrDefault(x => x.Id == item.Key), item => item.Value),
@@ -70,7 +71,7 @@ namespace StockExchange.Web.Controllers
             return View();
         }
 
-        private SimulationDto ConvertViewModelToDto(SimulationViewModel viewModel)
+        private async Task<SimulationDto> ConvertViewModelToDto(SimulationViewModel viewModel)
         {
             return new SimulationDto
             {
@@ -78,21 +79,21 @@ namespace StockExchange.Web.Controllers
                 EndDate = viewModel.EndDate,
                 SelectedStrategyId = viewModel.SelectedStrategyId,
                 SelectedCompanyIds = viewModel.AllCompanies ?
-                    _companyService.GetAllCompanies().Select(c => c.Id).ToList() :
+                    (await _companyService.GetCompanies()).Select(c => c.Id).ToList() :
                     viewModel.SelectedCompanyIds,
                 UserId = CurrentUserId,
                 Budget = viewModel.Budget
             };
         }
 
-        private SimulationViewModel GetViewModel()
+        private async Task<SimulationViewModel> GetViewModel()
         {
             var model = new SimulationViewModel
             {
-                Companies = _companyService.GetAllCompanies(),
+                Companies = await _companyService.GetCompanies(),
                 StartDate = new DateTime(2006, 01, 01),
                 EndDate = DateTime.Today, 
-                Strategies = _strategyService.GetUserStrategies(CurrentUserId)
+                Strategies = await _strategyService.GetStrategies(CurrentUserId)
             };
             return model;
         }

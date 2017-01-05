@@ -1,55 +1,57 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace StockExchange.Business.Extensions
 {
     public static class PagedListExtension
     {
-        public static PagedList<T> ToPagedList<T>(this IQueryable<T> queryable, int skip, int take)
+        public static async Task<PagedList<T>> ToPagedList<T>(this IQueryable<T> queryable, int skip, int take)
         {
-            return new PagedList<T>(queryable, skip, take);
+            var count = queryable.CountAsync();
+            var list = queryable.Skip(skip).Take(take).ToListAsync();
+            var pagedList = new PagedList<T>
+            {
+                Skip = skip,
+                Take = take
+            };
+            await Task.WhenAll(count, list);
+            pagedList.TotalCount = count.Result;
+            pagedList.List = list.Result;
+            return pagedList;
         }
 
-        public static PagedList<T> ToPagedList<T>(this IEnumerable<T> queryable, int skip, int take)
+        public static async Task<PagedList<T>> ToPagedList<T>(this IEnumerable<T> queryable, int skip, int take)
         {
-            return new PagedList<T>(queryable, skip, take);
+            var enumerable = queryable as IList<T> ?? queryable.ToList();
+            var count = enumerable.Count;
+            var list = enumerable.Skip(skip).Take(take).ToList();
+            var pagedList = new PagedList<T>
+            {
+                Skip = skip,
+                Take = take,
+                TotalCount = count,
+                List = list
+            };
+            return pagedList;
         }
     }
 
     public sealed class PagedList<T> : IReadOnlyList<T>
     {
-        private readonly List<T> _list;
+        public List<T> List { get; set; }
 
-        public int TotalCount { get; private set; }
+        public int TotalCount { get; set; }
 
         public int Take { get; set; }
 
         public int Skip { get; set; }
 
-        private PagedList(int skip, int take)
-        {
-            Skip = skip;
-            Take = take;
-        }
-
-        public PagedList(IQueryable<T> enumerable, int skip, int take) : this(skip, take)
-        {
-            TotalCount = enumerable.Count();
-            _list = enumerable.Skip(skip).Take(take).ToList();
-        }
-
-        public PagedList(IEnumerable<T> enumerable, int skip, int take) : this(skip, take)
-        {
-            // ReSharper disable once PossibleMultipleEnumeration
-            TotalCount = enumerable.Count();
-            // ReSharper disable once PossibleMultipleEnumeration
-            _list = enumerable.Skip(skip).Take(take).ToList();
-        }
-
         public IEnumerator<T> GetEnumerator()
         {
-            return _list.GetEnumerator();
+            return List.GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
@@ -57,8 +59,8 @@ namespace StockExchange.Business.Extensions
             return GetEnumerator();
         }
 
-        public int Count => _list.Count;
+        public int Count => List.Count;
 
-        public T this[int index] => _list[index];
+        public T this[int index] => List[index];
     }
 }

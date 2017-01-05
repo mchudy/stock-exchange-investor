@@ -3,17 +3,18 @@ using StockExchange.Business.Models.Filters;
 using StockExchange.Business.Models.Transaction;
 using StockExchange.DataAccess.Models;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace StockExchange.Business.ServiceInterfaces
 {
     public interface ITransactionsService
     {
-        void AddUserTransaction(UserTransactionDto dto);
+        Task AddTransaction(UserTransactionDto dto);
 
-        PagedList<UserTransactionDto> GetUserTransactions(int userId, PagedFilterDefinition<TransactionFilter> filter);
+        Task<PagedList<UserTransactionDto>> GetTransactions(int userId, PagedFilterDefinition<TransactionFilter> filter);
 
-        int GetUserTransactionsCount(int userId);
+        Task<int> GetTransactionsCount(int userId);
 
-        Dictionary<int, List<UserTransaction>> GetTransactionsByCompany(int userId);
+        Task<Dictionary<int, List<UserTransaction>>> GetTransactionsByCompany(int userId);
     }
 }
