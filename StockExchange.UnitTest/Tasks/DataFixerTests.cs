@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 
-namespace StockExchange.UnitTest.Task
+namespace StockExchange.UnitTest.Tasks
 {
     public class DataFixerTests
     {
