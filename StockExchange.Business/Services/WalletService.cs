@@ -1,11 +1,11 @@
-﻿using StockExchange.Business.ServiceInterfaces;
+﻿using StockExchange.Business.Extensions;
+using StockExchange.Business.Models.Filters;
+using StockExchange.Business.Models.Wallet;
+using StockExchange.Business.ServiceInterfaces;
 using StockExchange.DataAccess.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using StockExchange.Business.Extensions;
-using StockExchange.Business.Models.Filters;
-using StockExchange.Business.Models.Wallet;
 
 namespace StockExchange.Business.Services
 {
@@ -33,7 +33,7 @@ namespace StockExchange.Business.Services
         {
             var transactionsByCompany = await _transactionsService.GetTransactionsByCompany(currentUserId);
             var currentPrices = await _priceService.GetCurrentPrices(transactionsByCompany.Keys.ToList());
-            return await transactionsByCompany
+            return transactionsByCompany
                 .Select(entry => BuildCompanyOwnedStocksDto(currentUserId, entry, currentPrices))
                 .ToPagedList(searchMessage.Start, searchMessage.Length);
         }

@@ -41,8 +41,8 @@ namespace StockExchange.Business.Services
                     CompanyName = t.Company.Code,
                     Total = t.Quantity < 0 ? -t.Quantity * t.Price : t.Quantity * t.Price,
                     Profit = 0
-                }).ToListAsync();
-            var pagedTransactions = await transactions.ToPagedList(filter.Start, filter.Length);
+                }).ToListAsync(); //TODO: extract all necessary data in a single query
+            var pagedTransactions = transactions.ToPagedList(filter.Start, filter.Length);
             foreach (var pagedTransaction in pagedTransactions)
             {
                 if (pagedTransaction.Action == Action.Buy) continue;

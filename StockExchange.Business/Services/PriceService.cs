@@ -64,7 +64,7 @@ namespace StockExchange.Business.Services
 
         public async Task<IList<Price>> GetCurrentPrices(int days)
         {
-            var date = DateTime.Today.AddDays(days);
+            var date = DateTime.Today.AddDays(-days);
             return await _priceRepository.GetQueryable().Where(p => p.Date > date).ToListAsync();
         }
 
@@ -104,7 +104,7 @@ namespace StockExchange.Business.Services
                 var previousPrice = firstOrDefault.ClosePrice;
                 priceDto.Change = (priceDto.ClosePrice - previousPrice) / previousPrice * 100;
             }
-            return await ret.OrderByDescending(item => item.Change).Where(item => item.Change > 0).ToPagedList(message.Start, message.Length);
+            return ret.OrderByDescending(item => item.Change).Where(item => item.Change > 0).ToPagedList(message.Start, message.Length);
         }
 
         public async Task<PagedList<MostActivePriceDto>> GetDecliners(PagedFilterDefinition<TransactionFilter> message)
@@ -129,7 +129,7 @@ namespace StockExchange.Business.Services
                 var previousPrice = firstOrDefault.ClosePrice;
                 priceDto.Change = (priceDto.ClosePrice - previousPrice) / previousPrice * 100;
             }
-            return await ret.OrderBy(item => item.Change).Where(item => item.Change < 0).ToPagedList(message.Start, message.Length);
+            return ret.OrderBy(item => item.Change).Where(item => item.Change < 0).ToPagedList(message.Start, message.Length);
         }
 
         public async Task<PagedList<MostActivePriceDto>> GetMostActive(PagedFilterDefinition<TransactionFilter> message)
@@ -160,12 +160,17 @@ namespace StockExchange.Business.Services
                     priceDto.Change = 0;
                 }
             }
-            return await ret.OrderByDescending(item => item.Volume).ToPagedList(message.Start, message.Length);
+            return ret.OrderByDescending(item => item.Volume).ToPagedList(message.Start, message.Length);
         }
 
         private async Task<IList<DateTime>> GetTwoMaxDates()
         {
-            return await _priceRepository.GetQueryable().OrderByDescending(item => item.Date).Select(item => item.Date).Take(2).ToListAsync();
+            return await _priceRepository.GetQueryable()
+                .OrderByDescending(item => item.Date)
+                .Select(item => item.Date)
+                .Distinct()
+                .Take(2)
+                .ToListAsync();
         }
 
         private static IQueryable<PriceDto> Filter(PriceFilter filter, IQueryable<PriceDto> results)

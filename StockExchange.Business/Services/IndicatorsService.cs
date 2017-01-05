@@ -134,9 +134,12 @@ namespace StockExchange.Business.Services
         {
             var indicators = GetAllIndicators();
             var indicatorObjects = indicators.Select(indicator => _indicatorFactory.CreateIndicator(indicator.IndicatorType)).ToList();
+
+            //TODO: why 100?
             var prices = await _priceService.GetCurrentPrices(100);
             var companies = await _companyService.GetCompanies();
             var maxDate = await _priceService.GetMaxDate();
+
             var computed = new List<TodaySignal>();
             foreach (var company in companies)
             {
@@ -161,17 +164,28 @@ namespace StockExchange.Business.Services
                 }
             }
             var ret = new List<TodaySignal>();
-            ret.AddRange(computed.GroupBy(item => new { item.Company, item.Action }).Select(item => new TodaySignal { Company = item.Key.Company, Action = item.Key.Action, Indicator = string.Join(", ", (IEnumerable<string>)item.Select(it => it.Indicator).ToArray())}));
-            return await ret.OrderBy(item => item.Company).ThenBy(item => item.Action).ThenBy(item => item.Indicator).ToPagedList(message.Start, message.Length);
+            ret.AddRange(computed.GroupBy(item => new { item.Company, item.Action })
+                .Select(item => new TodaySignal
+                {
+                    Company = item.Key.Company,
+                    Action = item.Key.Action,
+                    Indicator = string.Join(", ", (IEnumerable<string>)item.Select(it => it.Indicator).ToArray())
+                }));
+            return ret.OrderBy(item => item.Company)
+                .ThenBy(item => item.Action)
+                .ThenBy(item => item.Indicator)
+                .ToPagedList(message.Start, message.Length);
         }
 
         public async Task<int> GetSignalsCount()
         {
             var indicators = GetAllIndicators();
             var indicatorObjects = indicators.Select(indicator => _indicatorFactory.CreateIndicator(indicator.IndicatorType)).ToList();
+
             var prices = await _priceService.GetCurrentPrices(100);
             var companies = await _companyService.GetCompanies();
             var maxDate = await _priceService.GetMaxDate();
+
             var computed = 0;
             foreach (var company in companies)
             {

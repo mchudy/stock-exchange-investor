@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -10,20 +11,18 @@ namespace StockExchange.Business.Extensions
     {
         public static async Task<PagedList<T>> ToPagedList<T>(this IQueryable<T> queryable, int skip, int take)
         {
-            var count = queryable.CountAsync();
-            var list = queryable.Skip(skip).Take(take).ToListAsync();
             var pagedList = new PagedList<T>
             {
                 Skip = skip,
-                Take = take
+                Take = take,
+                TotalCount = queryable.Count(),
+                List = await queryable.Skip(skip).Take(take).ToListAsync()
             };
-            await Task.WhenAll(count, list);
-            pagedList.TotalCount = count.Result;
-            pagedList.List = list.Result;
             return pagedList;
         }
 
-        public static async Task<PagedList<T>> ToPagedList<T>(this IEnumerable<T> queryable, int skip, int take)
+        [Obsolete("Try to use IQueryable instead, this defeats the purpose of paging")]
+        public static PagedList<T> ToPagedList<T>(this IEnumerable<T> queryable, int skip, int take)
         {
             var enumerable = queryable as IList<T> ?? queryable.ToList();
             var count = enumerable.Count;
