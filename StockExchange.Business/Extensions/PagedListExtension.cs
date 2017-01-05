@@ -15,7 +15,7 @@ namespace StockExchange.Business.Extensions
             {
                 Skip = skip,
                 Take = take,
-                TotalCount = queryable.Count(),
+                TotalCount = await queryable.CountAsync(),
                 List = await queryable.Skip(skip).Take(take).ToListAsync()
             };
             return pagedList;
