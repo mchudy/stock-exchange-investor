@@ -66,7 +66,7 @@ namespace StockExchange.Web.Controllers
         public ActionResult GetCurrentTransactionsTable(DataTableMessage<TransactionFilter> dataTableMessage)
         {
             var searchMessage = DataTableMessageConverter.ToPagedFilterDefinition(dataTableMessage);
-            var pagedList = await _walletService.GetOwnedStocks(CurrentUserId, searchMessage).Result;
+            var pagedList = _walletService.GetOwnedStocks(CurrentUserId, searchMessage).Result;
             var model = BuildCurrentDataTableResponse(dataTableMessage, pagedList);
             return new JsonNetResult(model, false);
         }
