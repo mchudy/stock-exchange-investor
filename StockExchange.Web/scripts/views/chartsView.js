@@ -68,6 +68,9 @@
             yAxis: [{
                 id: 'price-axis'
             }],
+            tooltip: {
+                pointFormat: '<span style="color:{point.color}">\u25CF</span> {series.name}: <b>{point.y:.2f}</b><br/>'
+            },
             rangeSelector: {
                 inputDateFormat: '%Y-%m-%d',
                 inputEditDateFormat: '%Y-%m-%d',
@@ -114,10 +117,12 @@
         if (!type) {
             removeIndicatorAxis();
             chart.redraw();
+            chart.hideLoading();
             return;
         }
+        chart.showLoading(loadingIndicator);
+
         var properties = getIndicatorProperties();
-    
         var params = $.param({
                 type: type,
                 companyIds: chosenCompanies
@@ -182,6 +187,7 @@
             }
         }
         chart.redraw();
+        chart.hideLoading();
     }
 
     function addIndicatorSeries(name, data) {
@@ -231,7 +237,6 @@
             chart.addSeries(data[i], false);
         }
         loadIndicatorValues($indicatorSelect.val());
-        chart.hideLoading();
         initDatepickers();
     };
 

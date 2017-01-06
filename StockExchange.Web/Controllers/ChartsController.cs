@@ -7,6 +7,7 @@ using StockExchange.Web.Helpers;
 using StockExchange.Web.Helpers.Json;
 using StockExchange.Web.Models.Charts;
 using StockExchange.Web.Models.Indicator;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -29,7 +30,6 @@ namespace StockExchange.Web.Controllers
 
         public async Task<ActionResult> Index()
         {
-            //TODO: load companies list from the view via AJAX
             var companies = await _companyService.GetCompanies();
             var model = BuildChartIndexModel(companies);
             return View(model);
@@ -70,7 +70,7 @@ namespace StockExchange.Web.Controllers
             {
                 Companies = companies,
                 Indicators = _indicatorsService.GetAllIndicators()
-                    .Select(i => new EditIndicatorViewModel()
+                    .Select(i => new EditIndicatorViewModel
                     {
                         Name = i.IndicatorName,
                         Type = i.IndicatorType,
@@ -98,14 +98,14 @@ namespace StockExchange.Web.Controllers
                 return values.Cast<DoubleLineIndicatorValue>().Select(v => new[]
                 {
                     v.Date.ToJavaScriptTimeStamp(),
-                    v.Value,
-                    v.SecondLineValue
-                }).ToList();
+                    decimal.Round(v.Value, 3, MidpointRounding.AwayFromZero),
+                    decimal.Round(v.SecondLineValue, 3, MidpointRounding.AwayFromZero)
+            }).ToList();
             }
             return values.Select(v => new[]
             {
                 v.Date.ToJavaScriptTimeStamp(),
-                v.Value,
+                decimal.Round(v.Value, 3, MidpointRounding.AwayFromZero)
             }).ToList();
         }
 
