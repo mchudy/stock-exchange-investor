@@ -17,6 +17,9 @@ namespace StockExchange.Web
             FilterConfig.RegisterFilters(GlobalFilters.Filters);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             log4net.Config.XmlConfigurator.Configure();
+
+            ViewEngines.Engines.Clear();
+            ViewEngines.Engines.Add(new RazorViewEngine());
         }
 
         protected void Application_Error(object sender, EventArgs e)

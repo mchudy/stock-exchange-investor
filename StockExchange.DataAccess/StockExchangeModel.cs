@@ -10,6 +10,9 @@ namespace StockExchange.DataAccess
     {
         public StockExchangeModel() : base("name=StockExchangeModel")
         {
+#if DEBUG
+            //Database.Log = s => { Debug.Write(s); };
+#endif
         }
 
         public IDbSet<Company> Companies { get; set; }

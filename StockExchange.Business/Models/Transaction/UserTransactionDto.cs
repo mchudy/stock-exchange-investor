@@ -1,6 +1,6 @@
-﻿using System;
+﻿using StockExchange.Common;
+using System;
 using System.ComponentModel.DataAnnotations;
-using StockExchange.Common;
 
 namespace StockExchange.Business.Models.Transaction
 {

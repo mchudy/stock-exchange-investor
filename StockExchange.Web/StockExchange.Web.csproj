@@ -2160,6 +2160,7 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\components\budgetInfoBox.js" />
+    <Content Include="Scripts\views\simulationResultsView.js" />
     <Content Include="Scripts\views\simulationView.js" />
     <Content Include="Scripts\views\chartsView.js" />
     <Content Include="Scripts\plugins\dataTablesFilters.js" />
