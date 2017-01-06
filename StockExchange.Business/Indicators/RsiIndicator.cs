@@ -69,12 +69,12 @@ namespace StockExchange.Business.Indicators
             SignalAction previousAction = SignalAction.NoSignal;
             foreach (var indicatorValue in values)
             {
-                if (indicatorValue.Value < Minimum && previousAction != SignalAction.Sell)
+                if (indicatorValue.Value > Maximum && previousAction != SignalAction.Sell)
                 {
                     signals.Add(new Signal(SignalAction.Sell) { Date = indicatorValue.Date });
                     previousAction = SignalAction.Sell;
                 }
-                else if (indicatorValue.Value > Maximum && previousAction != SignalAction.Buy)
+                else if (indicatorValue.Value < Minimum && previousAction != SignalAction.Buy)
                 {
                     signals.Add(new Signal(SignalAction.Buy) {Date = indicatorValue.Date});
                     previousAction = SignalAction.Buy;
