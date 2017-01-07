@@ -5,6 +5,9 @@ using System.Linq;
 
 namespace StockExchange.Common.Extensions
 {
+    /// <summary>
+    /// Extension methods for <see cref="decimal"/> class
+    /// </summary>
     public static class DecimalExtension
     {
         private static readonly Dictionary<string, CultureInfo> ISOCurrenciesToACultureMap =
@@ -13,6 +16,12 @@ namespace StockExchange.Common.Extensions
                 .GroupBy(x => x.ISOCurrencySymbol)
                 .ToDictionary(g => g.Key, g => g.First().c, StringComparer.OrdinalIgnoreCase);
 
+        /// <summary>
+        /// Formats currency
+        /// </summary>
+        /// <param name="amount">The number to be formatted</param>
+        /// <param name="currencyCode">The currency code</param>
+        /// <returns>The formatted currency string</returns>
         public static string FormatCurrency(this decimal amount, string currencyCode = Consts.Formats.CurrencyCode)
         {
             CultureInfo culture;
