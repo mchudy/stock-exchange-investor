@@ -7,12 +7,11 @@ using System.Linq;
 
 namespace StockExchange.UnitTest.TestHelpers
 {
-    //TODO: think about loading all test data from csv files
-    public class DataHelper
+    internal class DataHelper
     {
-        public static readonly DateTime StartDate = new DateTime(2015, 11, 1);
+        internal static readonly DateTime StartDate = new DateTime(2015, 11, 1);
 
-        public static IList<IndicatorValue> ConvertToIndicatorValues(decimal[] tab, int offset = 0)
+        internal static IList<IndicatorValue> ConvertToIndicatorValues(decimal[] tab, int offset = 0)
         {
             return tab.Select((t, i) => new IndicatorValue
             {
@@ -42,7 +41,7 @@ namespace StockExchange.UnitTest.TestHelpers
             return prices;
         }
 
-        public static IList<Price> ConvertToPrices(decimal[] tab, int offset = 0)
+        internal static IList<Price> ConvertToPrices(decimal[] tab, int offset = 0)
         {
             return tab.Select((t, i) => new Price
             {
@@ -51,7 +50,7 @@ namespace StockExchange.UnitTest.TestHelpers
             }).ToList();
         }
 
-        public static IList<Price> ConvertToPricesVolume(int[] tab, int offset = 0)
+        internal static IList<Price> ConvertToPricesVolume(int[] tab, int offset = 0)
         {
             return tab.Select((t, i) => new Price
             {
@@ -60,7 +59,7 @@ namespace StockExchange.UnitTest.TestHelpers
             }).ToList();
         }
 
-        public static void SetPrecisionForDecimal(int precision)
+        internal static void SetPrecisionForDecimal(int precision)
         {
             AssertionOptions.AssertEquivalencyUsing(options =>
                 options.Using<decimal>(ctx => ctx.Subject.Should()
