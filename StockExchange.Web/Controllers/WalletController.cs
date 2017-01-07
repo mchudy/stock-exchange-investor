@@ -92,13 +92,13 @@ namespace StockExchange.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult EditBudget(UpdateBudgetViewModel model)
+        public async Task<ActionResult> EditBudget(UpdateBudgetViewModel model)
         {
             if (!ModelState.IsValid)
             {
                 return JsonErrorResult(ModelState);
             }
-            _userService.EditBudget(CurrentUserId, model.NewBudget);
+            await _userService.EditBudget(CurrentUserId, model.NewBudget);
             return new JsonNetResult(new { UserId = CurrentUserId, model.NewBudget });
         }
 
