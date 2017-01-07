@@ -1,12 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using StockExchange.Common;
+﻿using StockExchange.Common;
 using StockExchange.Task.App.Helpers;
 using StockExchange.Task.Business;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace StockExchange.Task.App.Commands
 {
+    /// <summary>
+    /// Synchronizes stock data with the database
+    /// </summary>
     [CommandName(Consts.Commands.SyncData, "Synchronizes historical data")]
     internal sealed class SyncHistoricalDataCommand : ICommand
     {

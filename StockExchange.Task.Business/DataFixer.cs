@@ -10,6 +10,9 @@ using System.Reflection;
 
 namespace StockExchange.Task.Business
 {
+    /// <summary>
+    /// Fixes data downloaded from the GPW sources
+    /// </summary>
     public class DataFixer : IDataFixer
     {
         private static readonly ILog logger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
@@ -40,11 +43,17 @@ namespace StockExchange.Task.Business
             }
         };
 
+        /// <summary>
+        /// Creates a new instance of <see cref="DataFixer"/>
+        /// </summary>
+        /// <param name="priceRepository"></param>
         public DataFixer(IRepository<Price> priceRepository)
         {
             _priceRepository = priceRepository;
         }
 
+
+        /// <inheritdoc />
         public void FixData()
         {
             logger.Info("Beginning fixing data");

@@ -8,6 +8,9 @@ using System.Reflection;
 
 namespace StockExchange.Task.App.Commands
 {
+    /// <summary>
+    /// Synchronizes today's stock data with the database
+    /// </summary>
     [CommandName(Consts.Commands.SyncTodayData, "Synchronizes data from the last day")]
     internal class SyncTodayDataCommand : ICommand
     {

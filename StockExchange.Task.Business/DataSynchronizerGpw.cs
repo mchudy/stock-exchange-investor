@@ -15,18 +15,27 @@ using System.Reflection;
 
 namespace StockExchange.Task.Business
 {
+    /// <summary>
+    /// Synchronizes stock data using the GPW sources
+    /// </summary>
     public sealed class DataSynchronizerGpw : IDataSynchronizerGpw
     {
         private static readonly ILog Logger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         private readonly IRepository<Company> _companyRepository;
         private readonly IRepository<Price> _priceRepository;
 
+        /// <summary>
+        /// Creates a new instance of <see cref="DataSynchronizerGpw"/>
+        /// </summary>
+        /// <param name="companyRepository"></param>
+        /// <param name="priceRepository"></param>
         public DataSynchronizerGpw(IRepository<Company> companyRepository, IRepository<Price> priceRepository)
         {
             _companyRepository = companyRepository;
             _priceRepository = priceRepository;
         }
 
+        /// <inheritdoc />
         public void Sync(DateTime date)
         {
             Logger.Debug("Syncing historical data started");
@@ -86,12 +95,6 @@ namespace StockExchange.Task.Business
             _priceRepository.Save();
 
             Logger.Debug("Syncing historical data ended.");
-        }
-
-        private static bool IsIncorrectPrice(decimal close, decimal min, decimal max, decimal open)
-        {
-            return (close > 0 && min == 0 && max == 0 && open == 0) ||
-                   (open < max && open < min && open == 0);
         }
 
         private static string[,] LoadData(string dateString)

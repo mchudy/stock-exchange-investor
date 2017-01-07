@@ -10,11 +10,11 @@ namespace StockExchange.Task.App.Commands
     /// syncing all historical data.
     /// </summary>
     [CommandName(Consts.Commands.FixData, "Fixes incorrect data from GPW")]
-    public class FixDataCommand : ICommand
+    internal class FixDataCommand : ICommand
     {
         private readonly IDataFixer _dataFixer;
 
-        public FixDataCommand(IDataFixer dataFixer)
+        internal FixDataCommand(IDataFixer dataFixer)
         {
             _dataFixer = dataFixer;
         }

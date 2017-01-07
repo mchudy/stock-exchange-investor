@@ -6,6 +6,9 @@ using System.Reflection;
 
 namespace StockExchange.Task.App.Commands
 {
+    /// <summary>
+    /// Shows help
+    /// </summary>
     [CommandName(Consts.Commands.Help, "Displays help")]
     internal sealed class HelpCommand : ICommand
     {

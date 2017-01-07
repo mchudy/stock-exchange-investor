@@ -10,18 +10,27 @@ using System.Threading.Tasks;
 
 namespace StockExchange.Task.Business
 {
+    /// <summary>
+    /// Synchronizes stock data
+    /// </summary>
     public sealed class DataSynchronizer : IDataSynchronizer
     {
         private static readonly ILog Logger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         private readonly IRepository<Company> _companyRepository;
         private readonly IFactory<IRepository<Price>> _priceRepositoryFactory;
 
+        /// <summary>
+        /// Creates a new instance of <see cref="DataSynchronizer"/>
+        /// </summary>
+        /// <param name="companyRepository"></param>
+        /// <param name="priceRepositoryFactory"></param>
         public DataSynchronizer(IRepository<Company> companyRepository, IFactory<IRepository<Price>> priceRepositoryFactory)
         {
             _companyRepository = companyRepository;
             _priceRepositoryFactory = priceRepositoryFactory;
         }
 
+        /// <inheritdoc />
         public void Sync(DateTime startDate, DateTime endDate, IEnumerable<string> companyCodes = null)
         {
             Logger.Debug("Syncing historical data started");
