@@ -1,14 +1,19 @@
-﻿using StockExchange.DataAccess.Models;
-using System.Collections.Generic;
-using StockExchange.Business.Indicators.Common;
+﻿using StockExchange.Business.Indicators.Common;
 using StockExchange.Business.Models.Indicators;
+using StockExchange.DataAccess.Models;
+using System.Collections.Generic;
 
 namespace StockExchange.Business.Indicators
 {
+    /// <summary>
+    /// OBV technical indicator
+    /// </summary>
     public class ObvIndicator : IIndicator
     {
+        /// <inheritdoc />
         public IndicatorType Type => IndicatorType.Obv;
 
+        /// <inheritdoc />
         public IList<IndicatorValue> Calculate(IList<Price> prices)
         {
             var values = new List<IndicatorValue>
@@ -35,6 +40,7 @@ namespace StockExchange.Business.Indicators
             return values;
         }
 
+        /// <inheritdoc />
         public IList<Signal> GenerateSignals(IList<Price> prices)
         {
             var signals = new List<Signal>();

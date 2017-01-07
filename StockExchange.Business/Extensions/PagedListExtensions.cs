@@ -1,14 +1,25 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
+using StockExchange.Business.Models.Paging;
 
 namespace StockExchange.Business.Extensions
 {
-    public static class PagedListExtension
+    /// <summary>
+    /// Extension methods for <see cref="PagedList{T}" /> class
+    /// </summary>
+    public static class PagedListExtensions
     {
+        /// <summary>
+        /// Converts an <see cref="IQueryable{T}"/> object to <see cref="PagedList{T}"/> object
+        /// </summary>
+        /// <typeparam name="T">Type of object in the collection</typeparam>
+        /// <param name="queryable">The source collection</param>
+        /// <param name="skip">Number of items to skip</param>
+        /// <param name="take">Number of items take</param>
+        /// <returns>Paged collection</returns>
         public static async Task<PagedList<T>> ToPagedList<T>(this IQueryable<T> queryable, int skip, int take)
         {
             var pagedList = new PagedList<T>
@@ -21,6 +32,14 @@ namespace StockExchange.Business.Extensions
             return pagedList;
         }
 
+        /// <summary>
+        /// Converts an <see cref="IEnumerable{T}"/> object to <see cref="PagedList{T}"/> object
+        /// </summary>
+        /// <typeparam name="T">Type of object in the collection</typeparam>
+        /// <param name="queryable">The source collection</param>
+        /// <param name="skip">Number of items to skip</param>
+        /// <param name="take">Number of items take</param>
+        /// <returns>Paged collection</returns>
         [Obsolete("Try to use IQueryable instead, this defeats the purpose of paging")]
         public static PagedList<T> ToPagedList<T>(this IEnumerable<T> queryable, int skip, int take)
         {
@@ -36,30 +55,5 @@ namespace StockExchange.Business.Extensions
             };
             return pagedList;
         }
-    }
-
-    public sealed class PagedList<T> : IReadOnlyList<T>
-    {
-        public List<T> List { get; set; }
-
-        public int TotalCount { get; set; }
-
-        public int Take { get; set; }
-
-        public int Skip { get; set; }
-
-        public IEnumerator<T> GetEnumerator()
-        {
-            return List.GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
-
-        public int Count => List.Count;
-
-        public T this[int index] => List[index];
     }
 }

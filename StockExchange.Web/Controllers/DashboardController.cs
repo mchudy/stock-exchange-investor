@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using StockExchange.Business.Models.Paging;
 
 namespace StockExchange.Web.Controllers
 {
@@ -52,7 +53,7 @@ namespace StockExchange.Web.Controllers
         public async Task<ActionResult> GetTodaySignalsTable(DataTableMessage<TransactionFilter> dataTableMessage)
         {
             var searchMessage = DataTableMessageConverter.ToPagedFilterDefinition(dataTableMessage);
-            var pagedList = await _indicatorsService.GetSignals(searchMessage);
+            var pagedList = await _indicatorsService.GetCurrentSignals(searchMessage);
             var model = GetSimpleDataTableResponse(dataTableMessage, pagedList);
             return new JsonNetResult(model, false);
         }
@@ -119,7 +120,7 @@ namespace StockExchange.Web.Controllers
                     Title = "Owned stocks by value (PLN)",
                     Data = data
                 },
-                CurrentSignalsCount = await _indicatorsService.GetSignalsCount()
+                CurrentSignalsCount = await _indicatorsService.GetCurrentSignalsCount()
             };
             return walletModel;
         }

@@ -1,18 +1,30 @@
-﻿using StockExchange.Business.Models.Indicators;
+﻿using StockExchange.Business.Indicators.Common;
+using StockExchange.Business.Models.Indicators;
 using StockExchange.DataAccess.Models;
 using System.Collections.Generic;
-using StockExchange.Business.Indicators.Common;
 
 namespace StockExchange.Business.Indicators
 {
+    /// <summary>
+    /// Volume Rate of Change technical indicator
+    /// </summary>
     public class VrocIndicator : IIndicator
     {
+        /// <summary>
+        /// Default <see cref="Term"/> value for the VROC indicator
+        /// </summary>
         public const int DefaultVrocTerm = 14;
 
+        /// <summary>
+        /// The number of prices from previous days to include when computing 
+        /// an indicator value
+        /// </summary>
         public int Term { get; set; } = DefaultVrocTerm;
 
+        /// <inheritdoc />
         public IndicatorType Type => IndicatorType.Vroc;
 
+        /// <inheritdoc />
         public IList<IndicatorValue> Calculate(IList<Price> prices)
         {
             var values = new List<IndicatorValue>();
@@ -28,6 +40,7 @@ namespace StockExchange.Business.Indicators
             return values;
         }
 
+        /// <inheritdoc />
         public IList<Signal> GenerateSignals(IList<Price> prices)
         {
             var signals = new List<Signal>();

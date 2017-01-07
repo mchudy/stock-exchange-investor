@@ -13,17 +13,26 @@ using System.Threading.Tasks;
 
 namespace StockExchange.Business.Services
 {
+    /// <summary>
+    /// Provides methods for operating on trading strategies
+    /// </summary>
     public class StrategyService : IStrategyService
     {
         private readonly IStrategiesRepository _strategiesRepository;
         private readonly IIndicatorsService _indicatorsService;
 
+        /// <summary>
+        /// Creates a new instance of <see cref="StrategyService"/>
+        /// </summary>
+        /// <param name="strategiesRepository"></param>
+        /// <param name="indicatorsService"></param>
         public StrategyService(IStrategiesRepository strategiesRepository, IIndicatorsService indicatorsService)
         {
             _strategiesRepository = strategiesRepository;
             _indicatorsService = indicatorsService;
         }
 
+        /// <inheritdoc />
         public async Task<IList<StrategyDto>> GetStrategies(int userId)
         {
             return await _strategiesRepository.GetQueryable()
@@ -42,6 +51,7 @@ namespace StockExchange.Business.Services
                 }).ToListAsync();
         }
 
+        /// <inheritdoc />
         public async Task<StrategyDto> GetStrategy(int userId, int strategyId)
         {
             var ret = await _strategiesRepository
@@ -57,6 +67,7 @@ namespace StockExchange.Business.Services
             return new StrategyDto();
         }
 
+        /// <inheritdoc />
         public async Task DeleteStrategy(int strategyId, int userId)
         {
             var strategy = await _strategiesRepository.GetQueryable().FirstOrDefaultAsync(item => item.Id == strategyId && !item.IsDeleted);
@@ -68,6 +79,7 @@ namespace StockExchange.Business.Services
             await _strategiesRepository.Save();
         }
 
+        /// <inheritdoc />
         public async Task UpdateStrategy(StrategyDto dto)
         {
             var strategy = await _strategiesRepository.GetQueryable()
@@ -99,6 +111,7 @@ namespace StockExchange.Business.Services
             await _strategiesRepository.Save();
         }
 
+        /// <inheritdoc />
         public async Task<int> CreateStrategy(StrategyDto strategy)
         {
             if (await _strategiesRepository.GetQueryable().AnyAsync(s => s.UserId == strategy.UserId && s.Name == strategy.Name))

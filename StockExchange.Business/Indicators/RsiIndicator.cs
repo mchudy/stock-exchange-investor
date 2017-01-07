@@ -1,24 +1,50 @@
-﻿using StockExchange.DataAccess.Models;
-using System.Collections.Generic;
-using StockExchange.Business.Indicators.Common;
+﻿using StockExchange.Business.Indicators.Common;
 using StockExchange.Business.Models.Indicators;
+using StockExchange.DataAccess.Models;
+using System.Collections.Generic;
 
 namespace StockExchange.Business.Indicators
 {
+    /// <summary>
+    /// Relative Strength Index technical indicator
+    /// </summary>
     public class RsiIndicator : IIndicator
     {
+        /// <summary>
+        /// Default <see cref="Term"/> value for the RSI indicator
+        /// </summary>
         public const int DefaultRsiTerm = 14;
+
+        /// <summary>
+        /// Default <see cref="Minimum"/> value for the RSI indicator
+        /// </summary>
         public const int DefaultMinimum = 30;
+
+        /// <summary>
+        /// Default <see cref="Maximum"/> value for the RSI indicator
+        /// </summary>
         public const int DefaultMaximum = 70;
 
+        /// <summary>
+        /// The number of prices from previous days to include when computing 
+        /// an indicator value
+        /// </summary>
         public int Term { get; set; } = DefaultRsiTerm;
 
+        /// <summary>
+        /// The value of the lower RSI line (when crossed generates a signal)
+        /// </summary>
         public int Minimum { get; set; } = DefaultMinimum;
 
+        /// <summary>
+        /// The value of the upper RSI line (when crossed generates a signal)
+        /// </summary>
         public int Maximum { get; set; } = DefaultMaximum;
 
+        /// <inheritdoc />
         public IndicatorType Type => IndicatorType.Rsi;
 
+        /// <inheritdoc />
         public IList<IndicatorValue> Calculate(IList<Price> prices)
         {
             var gains = new List<IndicatorValue>();
@@ -42,26 +68,7 @@ namespace StockExchange.Business.Indicators
             return ComputeRsiValues(averageGains, averageLosses);
         }
 
-        private static IList<IndicatorValue> ComputeRsiValues(IList<IndicatorValue> averageGains, IList<IndicatorValue> averageLosses)
-        {
-            var result = new List<IndicatorValue>();
-            for (var i = 0; i < averageGains.Count; i++)
-            {
-                decimal rsi;
-                if (averageLosses[i].Value != 0)
-                {
-                    var rs = averageGains[i].Value / averageLosses[i].Value;
-                    rsi = 100m - 100m / (1m + rs);
-                }
-                else
-                {
-                    rsi = 100;
-                }
-                result.Add(new IndicatorValue { Date = averageGains[i].Date, Value = rsi });
-            }
-            return result;
-        }
-
+        /// <inheritdoc />
         public IList<Signal> GenerateSignals(IList<Price> prices)
         {
             var values = Calculate(prices);
@@ -84,5 +91,26 @@ namespace StockExchange.Business.Indicators
             }
             return signals;
         }
+
+        private static IList<IndicatorValue> ComputeRsiValues(IList<IndicatorValue> averageGains, IList<IndicatorValue> averageLosses)
+        {
+            var result = new List<IndicatorValue>();
+            for (var i = 0; i < averageGains.Count; i++)
+            {
+                decimal rsi;
+                if (averageLosses[i].Value != 0)
+                {
+                    var rs = averageGains[i].Value / averageLosses[i].Value;
+                    rsi = 100m - 100m / (1m + rs);
+                }
+                else
+                {
+                    rsi = 100;
+                }
+                result.Add(new IndicatorValue { Date = averageGains[i].Date, Value = rsi });
+            }
+            return result;
+        }
+
     }
 }

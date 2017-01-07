@@ -1,5 +1,6 @@
 ﻿using StockExchange.Business.Extensions;
 using StockExchange.Business.Models.Filters;
+using StockExchange.Business.Models.Paging;
 using StockExchange.Business.Models.Price;
 using StockExchange.Business.ServiceInterfaces;
 using StockExchange.DataAccess.IRepositories;
@@ -13,15 +14,23 @@ using System.Threading.Tasks;
 
 namespace StockExchange.Business.Services
 {
+    /// <summary>
+    /// Provides methods for operating on stock prices
+    /// </summary>
     public sealed class PriceService : IPriceService
     {
         private readonly IRepository<Price> _priceRepository;
 
+        /// <summary>
+        /// Creates a new instance of <see cref="PriceService"/>
+        /// </summary>
+        /// <param name="priceRepository"></param>
         public PriceService(IRepository<Price> priceRepository)
         {
             _priceRepository = priceRepository;
         }
 
+        /// <inheritdoc />
         public async Task<PagedList<PriceDto>> GetPrices(PagedFilterDefinition<PriceFilter> pagedFilterDefinition)
         {
             var results = _priceRepository.GetQueryable().Select(GetSelectDtoExpression());
@@ -32,6 +41,7 @@ namespace StockExchange.Business.Services
             return await results.ToPagedList(pagedFilterDefinition.Start, pagedFilterDefinition.Length);
         }
 
+        /// <inheritdoc />
         public async Task<IList<CompanyPricesDto>> GetPrices(IList<int> companyIds)
         {
             return await _priceRepository.GetQueryable()
@@ -46,6 +56,7 @@ namespace StockExchange.Business.Services
                 .ToListAsync();
         }
 
+        /// <inheritdoc />
         public async Task<IList<Price>> GetPrices(int companyId, DateTime endDate)
         {
             return await _priceRepository.GetQueryable()
@@ -54,6 +65,7 @@ namespace StockExchange.Business.Services
                 .ToListAsync();
         }
 
+        /// <inheritdoc />
         public async Task<IList<Price>> GetCurrentPrices(IList<int> companyIds)
         {
             return await _priceRepository.GetQueryable()
@@ -62,12 +74,14 @@ namespace StockExchange.Business.Services
                 .ToListAsync();
         }
 
+        /// <inheritdoc />
         public async Task<IList<Price>> GetCurrentPrices(int days)
         {
             var date = DateTime.Today.AddDays(-days);
             return await _priceRepository.GetQueryable().Where(p => p.Date > date).ToListAsync();
         }
 
+        /// <inheritdoc />
         public async Task<object> GetFilterValues(FilterDefinition<PriceFilter> filterDefinition, string fieldName)
         {
             var results = _priceRepository.GetQueryable().Select(GetSelectDtoExpression());
@@ -77,11 +91,13 @@ namespace StockExchange.Business.Services
             return await values.ToListAsync();
         }
 
+        /// <inheritdoc />
         public async Task<DateTime> GetMaxDate()
         {
             return await _priceRepository.GetQueryable().MaxAsync(item => item.Date);
         }
 
+        /// <inheritdoc />
         public async Task<PagedList<MostActivePriceDto>> GetAdvancers(PagedFilterDefinition<TransactionFilter> message)
         {
             var dates = await GetTwoMaxDates();
@@ -107,6 +123,7 @@ namespace StockExchange.Business.Services
             return ret.OrderByDescending(item => item.Change).Where(item => item.Change > 0).ToPagedList(message.Start, message.Length);
         }
 
+        /// <inheritdoc />
         public async Task<PagedList<MostActivePriceDto>> GetDecliners(PagedFilterDefinition<TransactionFilter> message)
         {
             var dates = await GetTwoMaxDates();
@@ -132,6 +149,7 @@ namespace StockExchange.Business.Services
             return ret.OrderBy(item => item.Change).Where(item => item.Change < 0).ToPagedList(message.Start, message.Length);
         }
 
+        /// <inheritdoc />
         public async Task<PagedList<MostActivePriceDto>> GetMostActive(PagedFilterDefinition<TransactionFilter> message)
         {
             var dates = await GetTwoMaxDates();

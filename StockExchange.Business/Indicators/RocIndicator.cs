@@ -1,18 +1,30 @@
-﻿using StockExchange.Business.Models.Indicators;
+﻿using StockExchange.Business.Indicators.Common;
+using StockExchange.Business.Models.Indicators;
 using StockExchange.DataAccess.Models;
 using System.Collections.Generic;
-using StockExchange.Business.Indicators.Common;
 
 namespace StockExchange.Business.Indicators
 {
+    /// <summary>
+    /// Rate of Change technical indicator
+    /// </summary>
     public class RocIndicator : IIndicator
     {
+        /// <summary>
+        /// Default <see cref="Term"/> value for the ROC indicator
+        /// </summary>
         public const int DefaultRocTerm = 12;
 
+        /// <summary>
+        /// The number of prices from previous days to include when computing 
+        /// an indicator value
+        /// </summary>
         public int Term { get; set; } = DefaultRocTerm;
 
+        /// <inheritdoc />
         public IndicatorType Type => IndicatorType.Roc;
 
+        /// <inheritdoc />
         public IList<IndicatorValue> Calculate(IList<Price> prices)
         {
             var values = new List<IndicatorValue>();
@@ -28,6 +40,7 @@ namespace StockExchange.Business.Indicators
             return values;
         }
 
+        /// <inheritdoc />
         public IList<Signal> GenerateSignals(IList<Price> prices)
         {
             var signals = new List<Signal>();

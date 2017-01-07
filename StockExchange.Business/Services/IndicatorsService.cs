@@ -3,6 +3,7 @@ using StockExchange.Business.Extensions;
 using StockExchange.Business.Indicators.Common;
 using StockExchange.Business.Models.Filters;
 using StockExchange.Business.Models.Indicators;
+using StockExchange.Business.Models.Paging;
 using StockExchange.Business.Models.Price;
 using StockExchange.Business.ServiceInterfaces;
 using StockExchange.Common.Extensions;
@@ -15,6 +16,9 @@ using System.Threading.Tasks;
 
 namespace StockExchange.Business.Services
 {
+    /// <summary>
+    /// Provides operations on technical indicators
+    /// </summary>
     public class IndicatorsService : IIndicatorsService
     {
         private static readonly ILog logger = LogManager.GetLogger(typeof(IndicatorsService));
@@ -23,6 +27,12 @@ namespace StockExchange.Business.Services
         private readonly IPriceService _priceService;
         private readonly ICompanyService _companyService;
 
+        /// <summary>
+        /// Creates a new instance of <see cref="IndicatorsService"/>
+        /// </summary>
+        /// <param name="indicatorFactory"></param>
+        /// <param name="priceService"></param>
+        /// <param name="companyService"></param>
         public IndicatorsService(IIndicatorFactory indicatorFactory, IPriceService priceService, ICompanyService companyService)
         {
             _indicatorFactory = indicatorFactory;
@@ -30,6 +40,7 @@ namespace StockExchange.Business.Services
             _companyService = companyService;
         }
 
+        /// <inheritdoc />
         public IList<IndicatorType> GetAllIndicatorTypes()
         {
             return typeof(IndicatorType).GetEnumValues()
@@ -37,6 +48,7 @@ namespace StockExchange.Business.Services
                 .ToList();
         }
 
+        /// <inheritdoc />
         public IList<IndicatorDto> GetAllIndicators()
         {
             return typeof(IndicatorType).GetEnumValues().Cast<IndicatorType>().Select(i => new IndicatorDto
@@ -46,6 +58,7 @@ namespace StockExchange.Business.Services
             }).ToList();
         }
 
+        /// <inheritdoc />
         public IndicatorType? GetTypeFromName(string indicatorName)
         {
             return typeof(IndicatorType).GetEnumValues()
@@ -53,6 +66,7 @@ namespace StockExchange.Business.Services
                     .FirstOrDefault(i => i.ToString() == indicatorName);
         }
 
+        /// <inheritdoc />
         public IList<IndicatorProperty> GetPropertiesForIndicator(IndicatorType type)
         {
             var indicator = _indicatorFactory.CreateIndicator(type);
@@ -65,12 +79,14 @@ namespace StockExchange.Business.Services
             }).ToList();
         }
 
+        /// <inheritdoc />
         public async Task<IList<CompanyIndicatorValues>> GetIndicatorValues(IIndicator indicator, IList<int> companyIds)
         {
             IList<CompanyPricesDto> companyPrices = await _priceService.GetPrices(companyIds);
             return ComputeIndicatorValues(indicator, companyPrices);
         }
 
+        /// <inheritdoc />
         public async Task<IList<CompanyIndicatorValues>> GetIndicatorValues(IndicatorType type, IList<int> companyIds, IList<IndicatorProperty> properties)
         {
             var propertiesDict = properties?.ToDictionary(t => t.Name, t => t.Value) ?? new Dictionary<string, int>();
@@ -78,6 +94,7 @@ namespace StockExchange.Business.Services
             return await GetIndicatorValues(indicator, companyIds);
         }
 
+        /// <inheritdoc />
         public IList<ParameterizedIndicator> ConvertIndicators(IEnumerable<StrategyIndicator> indicators)
         {
             return indicators.Select(item => new ParameterizedIndicator
@@ -87,6 +104,7 @@ namespace StockExchange.Business.Services
             }).ToList();
         }
 
+        /// <inheritdoc />
         public async Task<IList<SignalEvent>> GetSignals(DateTime startDate, DateTime endDate, IList<int> companiesIds, IList<ParameterizedIndicator> indicators)
         {
             var signalEvents = new List<SignalEvent>();
@@ -130,7 +148,8 @@ namespace StockExchange.Business.Services
             return signalEvents;
         }
 
-        public async Task<PagedList<TodaySignal>> GetSignals(PagedFilterDefinition<TransactionFilter> message)
+        /// <inheritdoc />
+        public async Task<PagedList<TodaySignal>> GetCurrentSignals(PagedFilterDefinition<TransactionFilter> message)
         {
             var indicators = GetAllIndicators();
             var indicatorObjects = indicators.Select(indicator => _indicatorFactory.CreateIndicator(indicator.IndicatorType)).ToList();
@@ -177,7 +196,8 @@ namespace StockExchange.Business.Services
                 .ToPagedList(message.Start, message.Length);
         }
 
-        public async Task<int> GetSignalsCount()
+        /// <inheritdoc />
+        public async Task<int> GetCurrentSignalsCount()
         {
             var indicators = GetAllIndicators();
             var indicatorObjects = indicators.Select(indicator => _indicatorFactory.CreateIndicator(indicator.IndicatorType)).ToList();

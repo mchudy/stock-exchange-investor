@@ -1,16 +1,21 @@
-﻿using System;
+﻿using StockExchange.Business.Indicators.Common;
 using StockExchange.Business.Models.Indicators;
 using StockExchange.DataAccess.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using StockExchange.Business.Indicators.Common;
 
 namespace StockExchange.Business.Indicators
 {
+    /// <summary>
+    /// Pivot Point technical indicator
+    /// </summary>
     public class PpIndicator : IIndicator
     {
+        /// <inheritdoc />
         public IndicatorType Type => IndicatorType.PivotPoint;
 
+        /// <inheritdoc />
         public IList<IndicatorValue> Calculate(IList<Price> prices)
         {
             return prices.Select(price => new IndicatorValue
@@ -19,6 +24,7 @@ namespace StockExchange.Business.Indicators
             }).ToList();
         }
 
+        /// <inheritdoc />
         public IList<Signal> GenerateSignals(IList<Price> prices)
         {
             List<Signal> signals = new List<Signal>();

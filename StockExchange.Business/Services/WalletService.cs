@@ -1,5 +1,6 @@
 ﻿using StockExchange.Business.Extensions;
 using StockExchange.Business.Models.Filters;
+using StockExchange.Business.Models.Paging;
 using StockExchange.Business.Models.Wallet;
 using StockExchange.Business.ServiceInterfaces;
 using StockExchange.DataAccess.Models;
@@ -9,17 +10,26 @@ using System.Threading.Tasks;
 
 namespace StockExchange.Business.Services
 {
+    /// <summary>
+    /// Provides methods for operating on user's wallet
+    /// </summary>
     public class WalletService : IWalletService
     {
         private readonly ITransactionsService _transactionsService;
         private readonly IPriceService _priceService;
 
+        /// <summary>
+        /// Creates a new <see cref="WalletService"/> instance
+        /// </summary>
+        /// <param name="transactionsService"></param>
+        /// <param name="priceService"></param>
         public WalletService(ITransactionsService transactionsService, IPriceService priceService)
         {
             _transactionsService = transactionsService;
             _priceService = priceService;
         }
 
+        /// <inheritdoc />
         public async Task<IList<OwnedCompanyStocksDto>> GetOwnedStocks(int userId)
         {
             var transactionsByCompany = await _transactionsService.GetTransactionsByCompany(userId);
@@ -29,6 +39,7 @@ namespace StockExchange.Business.Services
                 .ToList();
         }
 
+        /// <inheritdoc />
         public async Task<PagedList<OwnedCompanyStocksDto>> GetOwnedStocks(int currentUserId, PagedFilterDefinition<TransactionFilter> searchMessage)
         {
             var transactionsByCompany = await _transactionsService.GetTransactionsByCompany(currentUserId);

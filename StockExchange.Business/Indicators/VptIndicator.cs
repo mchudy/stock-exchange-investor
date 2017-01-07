@@ -1,14 +1,19 @@
-﻿using System.Collections.Generic;
-using StockExchange.Business.Indicators.Common;
+﻿using StockExchange.Business.Indicators.Common;
 using StockExchange.Business.Models.Indicators;
 using StockExchange.DataAccess.Models;
+using System.Collections.Generic;
 
 namespace StockExchange.Business.Indicators
 {
+    /// <summary>
+    /// Volume Price Trend technical indicator
+    /// </summary>
     public class VptIndicator : IIndicator
     {
+        /// <inheritdoc />
         public IndicatorType Type => IndicatorType.Vpt;
 
+        /// <inheritdoc />
         public IList<IndicatorValue> Calculate(IList<Price> prices)
         {
             var ret = new List<IndicatorValue> { new IndicatorValue { Date = prices[0].Date, Value = 0m } };
@@ -22,6 +27,7 @@ namespace StockExchange.Business.Indicators
             return ret;
         }
 
+        /// <inheritdoc />
         public IList<Signal> GenerateSignals(IList<Price> prices)
         {
             var signals = new List<Signal>();

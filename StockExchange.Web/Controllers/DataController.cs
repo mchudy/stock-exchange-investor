@@ -8,6 +8,7 @@ using StockExchange.Web.Models.DataTables;
 using StockExchange.Web.Models.Price;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using StockExchange.Business.Models.Paging;
 
 namespace StockExchange.Web.Controllers
 {

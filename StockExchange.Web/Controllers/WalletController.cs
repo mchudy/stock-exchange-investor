@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using StockExchange.Business.Models.Paging;
 using WalletViewModel = StockExchange.Web.Models.Wallet.WalletViewModel;
 
 namespace StockExchange.Web.Controllers

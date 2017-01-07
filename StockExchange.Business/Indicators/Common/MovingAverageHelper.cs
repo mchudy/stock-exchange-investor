@@ -1,13 +1,21 @@
-﻿using System;
+﻿using StockExchange.Business.Models.Indicators;
+using StockExchange.DataAccess.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using StockExchange.Business.Models.Indicators;
-using StockExchange.DataAccess.Models;
 
 namespace StockExchange.Business.Indicators.Common
 {
+    /// <summary>
+    /// Provides methods for computing moving averages
+    /// </summary>
     public static class MovingAverageHelper
     {
+        /// <summary>
+        /// Computes a simple moving average
+        /// </summary>
+        /// <param name="prices">Prices for which the average should be computed</param>
+        /// <returns>Value of the simple moving average</returns>
         public static IndicatorValue SimpleMovingAverage(IList<Price> prices)
         {
             if (prices == null || prices.Count == 0 || !CheckDates(prices.Select(pr => pr.Date).ToList()))
@@ -20,6 +28,11 @@ namespace StockExchange.Business.Indicators.Common
             };
         }
 
+        /// <summary>
+        /// Computes a simple moving average
+        /// </summary>
+        /// <param name="values">Indicator values for which the average should be computed</param>
+        /// <returns>Value of the simple moving average</returns>
         public static IndicatorValue SimpleMovingAverage(IList<IndicatorValue> values)
         {
             if (values == null || values.Count == 0 || !CheckDates(values.Select(v => v.Date).ToList()))
@@ -32,6 +45,12 @@ namespace StockExchange.Business.Indicators.Common
             };
         }
 
+        /// <summary>
+        /// Computes an exponential moving average
+        /// </summary>
+        /// <param name="prices">Prices for which the average should be computed</param>
+        /// <param name="terms">A period in days</param>
+        /// <returns>Values of the exponential moving average</returns>
         public static IList<IndicatorValue> ExpotentialMovingAverage(IList<Price> prices, int terms)
         {
             if (prices == null || prices.Count < terms || terms < 1 || !CheckDates(prices.Select(price => price.Date).ToList()))
@@ -54,6 +73,12 @@ namespace StockExchange.Business.Indicators.Common
             return averages;
         }
 
+        /// <summary>
+        /// Computes an exponential moving average
+        /// </summary>
+        /// <param name="values">Indicator values for which the average should be computed</param>
+        /// <param name="terms">A period in days</param>
+        /// <returns>Values of the exponential moving average</returns>
         public static IList<IndicatorValue> ExpotentialMovingAverage(IList<IndicatorValue> values, int terms)
         {
             if (!IsInputValid(values, terms))
@@ -63,6 +88,12 @@ namespace StockExchange.Business.Indicators.Common
             return ExponentialMovingAverageInternal(values, terms, alpha);
         }
 
+        /// <summary>
+        /// Computes a smoothed moving average (SSMA)
+        /// </summary>
+        /// <param name="values">Indicator values for which the average should be computed</param>
+        /// <param name="terms">A period in days</param>
+        /// <returns>Values of the smoothed moving average</returns>
         public static IList<IndicatorValue> SmoothedMovingAverage(IList<IndicatorValue> values, int terms)
         {
             if (!IsInputValid(values, terms))
@@ -72,6 +103,12 @@ namespace StockExchange.Business.Indicators.Common
             return ExponentialMovingAverageInternal(values, terms, alpha);
         }
 
+        /// <summary>
+        /// Computes a smoothed sum
+        /// </summary>
+        /// <param name="indicatorValues">Indicator values for which the sum should be computed</param>
+        /// <param name="terms">A period in days</param>
+        /// <returns>Values of the smoothed sum</returns>
         public static IList<IndicatorValue> SmoothedSum(IList<IndicatorValue> indicatorValues, int terms)
         {
             var values = new List<IndicatorValue>();
@@ -94,6 +131,12 @@ namespace StockExchange.Business.Indicators.Common
             return values;
         }
 
+        /// <summary>
+        /// Computes a smoothed moving average (SSMA)
+        /// </summary>
+        /// <param name="indicatorValues">Indicator values for which the average should be computed</param>
+        /// <param name="terms">A period in days</param>
+        /// <returns>Values of the smoothed moving average</returns>
         public static IList<IndicatorValue> SmoothedMovingAverage2(IList<IndicatorValue> indicatorValues, int terms)
         {
             var values = new List<IndicatorValue>();

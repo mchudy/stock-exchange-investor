@@ -1,30 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using StockExchange.Business.Models.Indicators;
 
-namespace StockExchange.Business.Indicators.Common
+namespace StockExchange.Business.Indicators.Common.Intersections
 {
-    public enum IntersectionType
+    internal static class IntersectionHelper
     {
-        FirstAbove,
-        SecondAbove,
-        Same
-    }
-
-    public class IntersectionInfo
-    {
-        public decimal Start1 { get; set; }
-        public decimal End1 { get; set; }
-        public decimal Start2 { get; set; }
-        public decimal End2 { get; set; }
-        public DateTime Date { get; set; }
-        public IntersectionType IntersectionType { get; set; }
-    }
-
-    public static class IntersectionHelper
-    {
-        public static IList<IntersectionInfo> FindIntersections(IList<IndicatorValue> line1, IList<IndicatorValue> line2)
+        internal static IList<IntersectionInfo> FindIntersections(IList<IndicatorValue> line1, IList<IndicatorValue> line2)
         {
             var doubleLine = line1.Select((t, i) => new DoubleLineIndicatorValue()
             {
@@ -33,7 +15,7 @@ namespace StockExchange.Business.Indicators.Common
             return FindIntersections(doubleLine);
         } 
 
-        public static IList<IntersectionInfo> FindIntersections(IList<DoubleLineIndicatorValue> doubleLineValues)
+        internal static IList<IntersectionInfo> FindIntersections(IList<DoubleLineIndicatorValue> doubleLineValues)
         {
             var intersections = new List<IntersectionInfo>();
             var previousValue = doubleLineValues[0];

@@ -2,6 +2,7 @@
 using StockExchange.Business.Exceptions;
 using StockExchange.Business.Extensions;
 using StockExchange.Business.Models.Filters;
+using StockExchange.Business.Models.Paging;
 using StockExchange.Business.Models.Transaction;
 using StockExchange.Business.ServiceInterfaces;
 using StockExchange.DataAccess.IRepositories;
@@ -13,17 +14,26 @@ using System.Threading.Tasks;
 
 namespace StockExchange.Business.Services
 {
+    /// <summary>
+    /// Provides methods for operating on user transactions
+    /// </summary>
     public class TransactionsService : ITransactionsService
     {
         private readonly IRepository<User> _userRepository;
         private readonly IRepository<UserTransaction> _transactionsRepository;
 
+        /// <summary>
+        /// Creates a new instance of <see cref="TransactionsService"/>
+        /// </summary>
+        /// <param name="userRepository"></param>
+        /// <param name="transactionsRepository"></param>
         public TransactionsService(IRepository<User> userRepository, IRepository<UserTransaction> transactionsRepository)
         {
             _userRepository = userRepository;
             _transactionsRepository = transactionsRepository;
         }
 
+        /// <inheritdoc />
         public async Task<PagedList<UserTransactionDto>> GetTransactions(int userId, PagedFilterDefinition<TransactionFilter> filter)
         {
             var transactions = await _transactionsRepository.GetQueryable()
@@ -69,12 +79,14 @@ namespace StockExchange.Business.Services
             return pagedTransactions;
         }
 
+        /// <inheritdoc />
         public async Task<int> GetTransactionsCount(int userId)
         {
             return await _transactionsRepository.GetQueryable()
                 .CountAsync(t => t.UserId == userId);
         }
 
+        /// <inheritdoc />
         public async Task AddTransaction(UserTransactionDto dto)
         {
             var user = await _userRepository.GetQueryable()
@@ -95,6 +107,7 @@ namespace StockExchange.Business.Services
             await _userRepository.Save();
         }
 
+        /// <inheritdoc />
         public async Task<Dictionary<int, List<UserTransaction>>> GetTransactionsByCompany(int userId)
         {
             return await _transactionsRepository.GetQueryable()

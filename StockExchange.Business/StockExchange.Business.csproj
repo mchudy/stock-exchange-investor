@@ -24,6 +24,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\StockExchange.Business.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -32,6 +33,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Release\StockExchange.Business.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Production|AnyCPU'">
     <OutputPath>bin\Production\</OutputPath>
@@ -79,10 +81,14 @@
     <Compile Include="Exceptions\BusinessException.cs" />
     <Compile Include="Exceptions\IndicatorNotFoundException.cs" />
     <Compile Include="ErrorHandling\ValidationError.cs" />
+    <Compile Include="Indicators\Common\Intersections\IntersectionType.cs" />
+    <Compile Include="Indicators\Common\Intersections\IntersectionInfo.cs" />
+    <Compile Include="Models\Indicators\SignalAction.cs" />
+    <Compile Include="Models\Paging\PagedList.cs" />
     <Compile Include="Indicators\AtrIndicator.cs" />
     <Compile Include="Indicators\Common\IIndicatorFactory.cs" />
     <Compile Include="Indicators\Common\IndicatorFactory.cs" />
-    <Compile Include="Indicators\Common\IntersectionHelper.cs" />
+    <Compile Include="Indicators\Common\Intersections\IntersectionHelper.cs" />
     <Compile Include="Indicators\PpIndicator.cs" />
     <Compile Include="Indicators\EmaIndicator.cs" />
     <Compile Include="Indicators\AdxIndicator.cs" />
@@ -101,6 +107,8 @@
     <Compile Include="Models\Indicators\SignalEvent.cs" />
     <Compile Include="Models\Indicators\TodaySignal.cs" />
     <Compile Include="Models\Price\MostActivePriceDto.cs" />
+    <Compile Include="Models\Simulations\ExtremeSimulationValue.cs" />
+    <Compile Include="Models\Simulations\ExtremeTransactionResult.cs" />
     <Compile Include="Models\Simulations\SimulationTransactionDto.cs" />
     <Compile Include="Models\Strategy\StrategyDto.cs" />
     <Compile Include="Models\Wallet\OwnedCompanyStocksDto.cs" />
@@ -123,8 +131,8 @@
     <Compile Include="ServiceInterfaces\IWalletService.cs" />
     <Compile Include="Services\CompanyService.cs" />
     <Compile Include="Services\PriceService.cs" />
-    <Compile Include="Extensions\PagedListExtension.cs" />
-    <Compile Include="Extensions\QueryableExtension.cs" />
+    <Compile Include="Extensions\PagedListExtensions.cs" />
+    <Compile Include="Extensions\IQueryableExtensions.cs" />
     <Compile Include="Extensions\SortOrderAttribute.cs" />
     <Compile Include="Indicators\Common\IIndicator.cs" />
     <Compile Include="Indicators\MacdIndicator.cs" />
