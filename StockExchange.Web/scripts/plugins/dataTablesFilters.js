@@ -1,6 +1,13 @@
-﻿(function ($) {
+﻿/**
+ * jQuery plugins for DataTables filters
+ */
+(function ($) {
     'use strict';
 
+    /**
+     * Creates a DataTables columns object from the data attributes
+     * @returns {Object} - Object to use for columns
+     */
     $.fn.DataTableColumns = function () {
         return $(this).map(function () {
             return {
@@ -10,6 +17,10 @@
         });
     };
 
+    /**
+     * Creates a DataTables columnsDefs object from the data attributes
+     * @returns {Object} - Object to use for columns defs
+     */
     $.fn.DataTableColumnDefs = function () {
         return $(this).map(function (col) {
             var template = $(this).data('template');
@@ -28,6 +39,11 @@
         });
     };
 
+    /**
+     * Creates DataTables filters
+     * @param {jQuery} o - Object for filters
+     * @returns {Object} 
+     */
     $.fn.DataTableColumnFilters = function(o) {
 
         var defaults = {
@@ -60,6 +76,10 @@
             });
 
         var filter = {
+
+            /**
+             * Clear the filters
+             */
             clear: function() {
 
                 $('.dataTables_scrollHead thead tr.dataTableFilterRow select', that)
@@ -77,10 +97,18 @@
                         }
                     });
             },
+
+            /**
+             * Assigns a DataTables object
+             * @param {Object} dt - A DataTables object to assign
+             */
             assign: function(dt) {
                 dataTable = dt;
             },
 
+            /**
+             * Initializes the plugin
+             */
             init: function() {
 
                 $('thead tr.dataTableFilterRow select', that)

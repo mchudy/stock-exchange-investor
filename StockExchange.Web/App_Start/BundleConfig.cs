@@ -3,8 +3,15 @@ using System.Web.Optimization;
 
 namespace StockExchange.Web
 {
+    /// <summary>
+    /// Configures the bundles
+    /// </summary>
     public class BundleConfig
     {
+        /// <summary>
+        /// Registeres bundles
+        /// </summary>
+        /// <param name="bundles">The bundles to register</param>
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/scripts/jquery").NonOrdering().Include(

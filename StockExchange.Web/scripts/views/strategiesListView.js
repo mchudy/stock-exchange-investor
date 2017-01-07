@@ -1,4 +1,7 @@
-﻿(function ($) {
+﻿/**
+ * A view for the strategies list page
+ */
+(function ($) {
     'use strict';
 
     $('#confirm-delete-modal').on('show.bs.modal', function (e) {

@@ -1,5 +1,6 @@
 ﻿using StockExchange.Business.Extensions;
 using StockExchange.Business.Models.Filters;
+using StockExchange.Business.Models.Paging;
 using StockExchange.Business.Models.Wallet;
 using StockExchange.Business.ServiceInterfaces;
 using StockExchange.Web.Helpers;
@@ -12,10 +13,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-using StockExchange.Business.Models.Paging;
 
 namespace StockExchange.Web.Controllers
 {
+    /// <summary>
+    /// Controller for the user dashboard
+    /// </summary>
     [Authorize]
     public class DashboardController : BaseController
     {
@@ -24,6 +27,13 @@ namespace StockExchange.Web.Controllers
         private readonly IIndicatorsService _indicatorsService;
         private readonly IPriceService _priceService;
 
+        /// <summary>
+        /// Creates a new instance of <see cref="DashboardController"/>
+        /// </summary>
+        /// <param name="transactionsService"></param>
+        /// <param name="walletService"></param>
+        /// <param name="indicatorsService"></param>
+        /// <param name="priceService"></param>
         public DashboardController(ITransactionsService transactionsService, IWalletService walletService, IIndicatorsService indicatorsService, IPriceService priceService)
         {
             _transactionsService = transactionsService;
@@ -32,6 +42,10 @@ namespace StockExchange.Web.Controllers
             _priceService = priceService;
         }
 
+        /// <summary>
+        /// Returns the index view
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult> Index()
         {
@@ -40,6 +54,11 @@ namespace StockExchange.Web.Controllers
             return View(walletModel);
         }
 
+        /// <summary>
+        /// Returns the data for the owned stocks table
+        /// </summary>
+        /// <param name="dataTableMessage"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult> GetOwnedStocksTable(DataTableMessage<TransactionFilter> dataTableMessage)
         {
@@ -49,6 +68,11 @@ namespace StockExchange.Web.Controllers
             return new JsonNetResult(model, false);
         }
 
+        /// <summary>
+        /// Returns the data for the todays signals table
+        /// </summary>
+        /// <param name="dataTableMessage"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult> GetTodaySignalsTable(DataTableMessage<TransactionFilter> dataTableMessage)
         {
@@ -57,7 +81,12 @@ namespace StockExchange.Web.Controllers
             var model = GetSimpleDataTableResponse(dataTableMessage, pagedList);
             return new JsonNetResult(model, false);
         }
-        
+
+        /// <summary>
+        /// Returns the data for the advancers table
+        /// </summary>
+        /// <param name="dataTableMessage"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult> GetAdvancersTable(DataTableMessage<TransactionFilter> dataTableMessage)
         {
@@ -67,6 +96,11 @@ namespace StockExchange.Web.Controllers
             return new JsonNetResult(model, false);
         }
 
+        /// <summary>
+        /// Returns the data for the decliners table
+        /// </summary>
+        /// <param name="dataTableMessage"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult> GetDeclinersTable(DataTableMessage<TransactionFilter> dataTableMessage)
         {
@@ -76,6 +110,11 @@ namespace StockExchange.Web.Controllers
             return new JsonNetResult(model, false);
         }
 
+        /// <summary>
+        /// Returns the data for the most active companies table
+        /// </summary>
+        /// <param name="dataTableMessage"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult> GetMostActiveTable(DataTableMessage<TransactionFilter> dataTableMessage)
         {

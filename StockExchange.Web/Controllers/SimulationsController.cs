@@ -8,6 +8,9 @@ using System.Web.Mvc;
 
 namespace StockExchange.Web.Controllers
 {
+    /// <summary>
+    /// Controller for simulations actions
+    /// </summary>
     [Authorize]
     public class SimulationsController : BaseController
     {
@@ -15,6 +18,12 @@ namespace StockExchange.Web.Controllers
         private readonly ICompanyService _companyService;
         private readonly ISimulationService _simulationService;
 
+        /// <summary>
+        /// Creates a new instance of <see cref="SimulationsController"/>
+        /// </summary>
+        /// <param name="strategyService"></param>
+        /// <param name="companyService"></param>
+        /// <param name="simulationService"></param>
         public SimulationsController(IStrategyService strategyService, ICompanyService companyService, ISimulationService simulationService)
         {
             _strategyService = strategyService;
@@ -22,6 +31,10 @@ namespace StockExchange.Web.Controllers
             _simulationService = simulationService;
         }
 
+        /// <summary>
+        /// Returns the run simulation view
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult> RunSimulation()
         {
@@ -29,6 +42,11 @@ namespace StockExchange.Web.Controllers
             return View(model);
         }
 
+        /// <summary>
+        /// Runs the simulation and returns the results view
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult> RunSimulation(SimulationViewModel model)
         {
@@ -64,12 +82,6 @@ namespace StockExchange.Web.Controllers
                 MinimalSimulationValue = ret.MinimalSimulationValue
             });
         }
-
-        //[HttpGet]
-        //public ActionResult Results()
-        //{
-        //    return View();
-        //}
 
         private async Task<SimulationDto> ConvertViewModelToDto(SimulationViewModel viewModel)
         {

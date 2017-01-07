@@ -15,12 +15,21 @@ using System.Web.Mvc;
 
 namespace StockExchange.Web.Controllers
 {
+    /// <summary>
+    /// Controller for charts actions
+    /// </summary>
     public class ChartsController : BaseController
     {
         private readonly IPriceService _priceService;
         private readonly IIndicatorsService _indicatorsService;
         private readonly ICompanyService _companyService;
 
+        /// <summary>
+        /// Creates a new instance of <see cref="ChartsController"/>
+        /// </summary>
+        /// <param name="priceService"></param>
+        /// <param name="indicatorsService"></param>
+        /// <param name="companyService"></param>
         public ChartsController(IPriceService priceService, IIndicatorsService indicatorsService, ICompanyService companyService)
         {
             _priceService = priceService;
@@ -28,6 +37,10 @@ namespace StockExchange.Web.Controllers
             _companyService = companyService;
         }
 
+        /// <summary>
+        /// Returns the index view
+        /// </summary>
+        /// <returns></returns>
         public async Task<ActionResult> Index()
         {
             var companies = await _companyService.GetCompanies();
@@ -35,6 +48,11 @@ namespace StockExchange.Web.Controllers
             return View(model);
         }
 
+        /// <summary>
+        /// Returns line chart stock JSON data
+        /// </summary>
+        /// <param name="companyIds"></param>
+        /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult> GetLineChartData(IList<int> companyIds)
         {
@@ -48,6 +66,11 @@ namespace StockExchange.Web.Controllers
             return new JsonNetResult(model);
         }
 
+        /// <summary>
+        /// Returns candlestick chart stock JSON data
+        /// </summary>
+        /// <param name="companyIds"></param>
+        /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult> GetCandlestickChartData(IList<int> companyIds)
         {
@@ -56,6 +79,13 @@ namespace StockExchange.Web.Controllers
             return new JsonNetResult(model);
         }
 
+        /// <summary>
+        /// Returns indicator values JSON data
+        /// </summary>
+        /// <param name="companyIds">Companies to include</param>
+        /// <param name="type">Indicator type to compute</param>
+        /// <param name="properties">Indicator properties</param>
+        /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult> GetIndicatorValues(IList<int> companyIds, IndicatorType type, IList<IndicatorProperty> properties)
         {

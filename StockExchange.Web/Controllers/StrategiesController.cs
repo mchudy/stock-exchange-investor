@@ -13,24 +13,41 @@ using System.Web.Mvc;
 
 namespace StockExchange.Web.Controllers
 {
+    /// <summary>
+    /// Controller for strategies actions
+    /// </summary>
     [Authorize]
     public class StrategiesController : BaseController
     {
         private readonly IStrategyService _strategyService;
         private readonly IIndicatorsService _indicatorsService;
 
+        /// <summary>
+        /// Creates a new instance of <see cref="StrategiesController"/>
+        /// </summary>
+        /// <param name="strategyService"></param>
+        /// <param name="indicatorsService"></param>
         public StrategiesController(IStrategyService strategyService, IIndicatorsService indicatorsService)
         {
             _strategyService = strategyService;
             _indicatorsService = indicatorsService;
         }
 
+        /// <summary>
+        /// Returns the index view
+        /// </summary>
+        /// <returns></returns>
         public async Task<ActionResult> Index()
         {
             var strategies = await _strategyService.GetStrategies(CurrentUserId);
             return View(strategies);
         }
 
+        /// <summary>
+        /// Returns the edit strategy view
+        /// </summary>
+        /// <param name="id">The edited strategy ID, 0 if for adding new strategy</param>
+        /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult> EditStrategy(int? id)
         {
@@ -38,6 +55,11 @@ namespace StockExchange.Web.Controllers
             return View(model);
         }
 
+        /// <summary>
+        /// Updates a strategy
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         [HandleJsonError]
         public async Task<ActionResult> EditStrategy(EditStrategyViewModel model)
@@ -60,6 +82,11 @@ namespace StockExchange.Web.Controllers
             return new JsonNetResult(new {id, redirectUrl = Url.Action("Index")});
         }
 
+        /// <summary>
+        /// Deletes a strategy
+        /// </summary>
+        /// <param name="id">ID of the strategy to delete</param>
+        /// <returns></returns>
         [HttpPost]
         [HandleJsonError]
         public ActionResult DeleteStrategy(int id)

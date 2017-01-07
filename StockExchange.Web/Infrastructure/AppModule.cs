@@ -8,8 +8,12 @@ using StockExchange.DataAccess.Repositories;
 
 namespace StockExchange.Web.Infrastructure
 {
+    /// <summary>
+    /// Autofac module for the application
+    /// </summary>
     public class AppModule : Module
     {
+        /// <inheritdoc />
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterControllers(typeof(MvcApplication).Assembly).PropertiesAutowired();

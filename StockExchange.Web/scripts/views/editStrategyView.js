@@ -1,6 +1,12 @@
-﻿(function ($) {
+﻿/**
+ * View for the edit strategy page
+ */
+(function ($) {
     'use strict';
 
+    /*
+     * Shows an indicator when it is chosen from the select
+     */
     $('.indicator-select').change(function () {
         var str = '';
         $('select option:selected').each(function () {
@@ -9,10 +15,16 @@
         $('.indicator[data-id=' + str +']').removeClass('hidden');
     });
 
+    /*
+     * Hides indicator where the remove icon is clicked
+     */
     $('.remove-indicator').on('click', function() {
         $(this).parents('.indicator').addClass('hidden');
     });
 
+    /*
+     * Send an AJAX request that updates or creates the strategy
+     */ 
     $('.edit-strategy').click(function (e) {
         e.preventDefault();
         if (!$('#edit-strategy-form').valid()) {

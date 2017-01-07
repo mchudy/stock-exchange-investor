@@ -1,6 +1,9 @@
 ﻿(function (StockExchange, $) {
     'use strict';
 
+    // ReSharper disable once UnusedLocals
+    var budgetBox = new StockExchange.BudgetInfoBox($('.budget-infobox'));
+
     drawPieChart('stocks-by-value-chart', config.stocksByValueData.title,
         mapData(config.stocksByValueData.data));
 
@@ -10,6 +13,11 @@
     StockExchange.createDataTable($('#most-grid'));
     initCurrentStocksTable();
 
+    /**
+     * Maps the data loaded from the server to Highcharts format
+     * @param {Array} data 
+     * @returns {Array} - Transformed data
+     */
     function mapData(data) {
         return data.map(function (item) {
             return {
@@ -19,6 +27,12 @@
         });
     }
 
+    /**
+     * Draws the owned stocks pie chart
+     * @param {jQuery} element - Container for the chart
+     * @param {string} title - Chart title
+     * @param {Array} data - Chart data
+     */
     function drawPieChart(element, title, data) {
         Highcharts.chart(element, {
             chart: {
@@ -55,6 +69,10 @@
         });
     }
 
+    /**
+     * Initializes the currently owned stocks table
+     * @returns {Object} - A created DataTables object
+     */
     function initCurrentStocksTable() {
         var columnDefsCurrent = [{
             targets: $('#current-grid th[data-column=Profit]').index(),

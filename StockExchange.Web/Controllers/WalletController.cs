@@ -1,6 +1,6 @@
-﻿using StockExchange.Business.Extensions;
-using StockExchange.Business.Models.Company;
+﻿using StockExchange.Business.Models.Company;
 using StockExchange.Business.Models.Filters;
+using StockExchange.Business.Models.Paging;
 using StockExchange.Business.Models.Transaction;
 using StockExchange.Business.Models.Wallet;
 using StockExchange.Business.ServiceInterfaces;
@@ -14,11 +14,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-using StockExchange.Business.Models.Paging;
 using WalletViewModel = StockExchange.Web.Models.Wallet.WalletViewModel;
 
 namespace StockExchange.Web.Controllers
 {
+    /// <summary>
+    /// Controller for user wallet actions
+    /// </summary>
     [Authorize]
     public class WalletController : BaseController
     {
@@ -27,6 +29,13 @@ namespace StockExchange.Web.Controllers
         private readonly ICompanyService _companyService;
         private readonly IUserService _userService;
 
+        /// <summary>
+        /// Creates a new instance of <see cref="WalletController"/>
+        /// </summary>
+        /// <param name="transactionsService"></param>
+        /// <param name="companyService"></param>
+        /// <param name="walletService"></param>
+        /// <param name="userService"></param>
         public WalletController(ITransactionsService transactionsService, ICompanyService companyService, IWalletService walletService, IUserService userService)
         {
             _transactionsService = transactionsService;
@@ -35,6 +44,10 @@ namespace StockExchange.Web.Controllers
             _userService = userService;
         }
 
+        /// <summary>
+        /// Returns the index view
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult> Index()
         {
@@ -43,6 +56,10 @@ namespace StockExchange.Web.Controllers
             return View(model);
         }
 
+        /// <summary>
+        /// Returns user budget info
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult> GetBudget()
         {
@@ -54,6 +71,11 @@ namespace StockExchange.Web.Controllers
             });
         }
 
+        /// <summary>
+        /// Returns data for the transactions table
+        /// </summary>
+        /// <param name="dataTableMessage"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult> GetTransactionsTable(DataTableMessage<TransactionFilter> dataTableMessage)
         {
@@ -63,6 +85,11 @@ namespace StockExchange.Web.Controllers
             return new JsonNetResult(model, false);
         }
 
+        /// <summary>
+        /// Returns data for the current transactions table
+        /// </summary>
+        /// <param name="dataTableMessage"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult> GetCurrentTransactionsTable(DataTableMessage<TransactionFilter> dataTableMessage)
         {
@@ -72,6 +99,11 @@ namespace StockExchange.Web.Controllers
             return new JsonNetResult(model, false);
         }
 
+        /// <summary>
+        /// Adds a new user transaction
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         [HandleJsonError]
         public async Task<ActionResult> AddTransaction(WalletViewModel model)
@@ -84,6 +116,10 @@ namespace StockExchange.Web.Controllers
             return new JsonNetResult(new { dto.Id });
         }
 
+        /// <summary>
+        /// Returns the dialog for editing user budget
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public ActionResult EditBudgetDialog()
         {
@@ -91,6 +127,11 @@ namespace StockExchange.Web.Controllers
             return PartialView("_EditBudgetDialog", model);
         }
 
+        /// <summary>
+        /// Edits the user budget
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult> EditBudget(UpdateBudgetViewModel model)
         {

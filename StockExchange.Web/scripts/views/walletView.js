@@ -1,4 +1,7 @@
-﻿(function (StockExchange, $) {
+﻿/**
+ * A view for the wallet main page
+ */
+(function (StockExchange, $) {
     'use strict';
     
     $("input[type='radio']").iCheck({
@@ -13,9 +16,13 @@
         endDate: new Date()
     });
 
+    var budgetBox = new StockExchange.BudgetInfoBox($('.budget-infobox'));
     var dataTable = initTransactionsTable();
     var dataTableCurrent = initCurrentStocksTable();
 
+    /*
+     * Send AJAX request for adding a new transaction
+     */
     $('#add-transaction-form').on('submit', function (event) {
         event.preventDefault();
 
@@ -32,7 +39,7 @@
             data: $this.serialize()
         }).done(function () {
             toastr.success('Transaction has been added');
-            $('.budget-infobox').trigger('box.refresh');
+            budgetBox.refresh();
             dataTable.draw();
             dataTableCurrent.draw();
         }).always(function() {
@@ -40,6 +47,10 @@
         });
     });
 
+    /**
+     * Initializes the transactions table
+     * @returns {Object} - The created DataTables object
+     */
     function initTransactionsTable() {
         var columnDefs =[{
             targets: $('#grid th[data-column=Total]').index(),
@@ -50,6 +61,10 @@
         return StockExchange.createDataTable($('#grid'), columnDefs);
     }
 
+    /**
+     * Initializes the current stocks table
+     * @returns {Object} - The created DataTables object
+     */
     function initCurrentStocksTable() {
         var columnDefsCurrent = [{
             targets: $('#current-grid th[data-column=Profit]').index(),

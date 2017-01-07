@@ -6,10 +6,16 @@ using System.Web.Routing;
 
 namespace StockExchange.Web
 {
+    /// <summary>
+    /// Global application class
+    /// </summary>
     public class MvcApplication : System.Web.HttpApplication
     {
         private static readonly ILog log = LogManager.GetLogger(typeof(MvcApplication));
 
+        /// <summary>
+        /// Invoked at the application start
+        /// </summary>
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
@@ -22,6 +28,11 @@ namespace StockExchange.Web
             ViewEngines.Engines.Add(new RazorViewEngine());
         }
 
+        /// <summary>
+        /// Invoked when a cricital error occurred while processing the request
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void Application_Error(object sender, EventArgs e)
         {
             Exception ex = Server.GetLastError().GetBaseException();

@@ -1,18 +1,22 @@
 ﻿using log4net;
 using StockExchange.Business.ErrorHandling;
 using StockExchange.Business.Exceptions;
+using StockExchange.Web.Helpers.Json;
 using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Web.Mvc;
-using StockExchange.Web.Helpers.Json;
 
 namespace StockExchange.Web.Filters
 {
+    /// <summary>
+    /// Filter for reacting to exceptions while processing an AJAX request
+    /// </summary>
     public class HandleJsonErrorAttribute : FilterAttribute, IExceptionFilter
     {
         private static readonly ILog logger = LogManager.GetLogger(typeof(HandleJsonErrorAttribute));
 
+        /// <inheritdoc />
         public void OnException(ExceptionContext filterContext)
         {
             if (filterContext == null)

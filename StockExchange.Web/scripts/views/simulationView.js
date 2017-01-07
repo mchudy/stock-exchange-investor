@@ -1,8 +1,10 @@
-﻿(function($) {
+﻿/**
+ * View for the run simulation page
+ */
+(function ($) {
     'use strict';
 
     var $companySelect = $('.company-select');
-
     $companySelect.select2({
         placeholder: 'Choose companies'
     });
@@ -14,6 +16,7 @@
     $('#StartDate').datepicker();
     $('#EndDate').datepicker();
 
+    // Disable companies select when AllCompanies checkbox is checked
     $('#AllCompanies')
         .on('ifChecked ', function() {
             $companySelect.prop('disabled', true);
@@ -22,6 +25,7 @@
             $companySelect.prop('disabled', false);
         });
 
+    // Disables button on submit to prevent multiple clicks
     $('#run-simulation-form').on('submit', function () {
         var $button = $(this).find('[type="submit"]');
         if ($(this).valid()) {

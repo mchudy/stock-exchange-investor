@@ -1,25 +1,60 @@
-﻿(function ($) {
+﻿/**
+ * jQuery plugin for date filtering in DataTables
+ */
+(function ($) {
     'use strict';
 
+    /**
+     * The DateFilter object
+     * @returns {} 
+     */
     $.DateFilter = function () {
         var date = new Date();
         date = new Date(date.getFullYear(), date.getMonth(), 1);
         var dateType = 'month';
 
         return {
+            /**
+             * Sets the date type
+             * @param {string} value - New date type
+             */
             setDateType: function (value) {
                 dateType = value;
             },
+
+            /**
+             * Gets the date type
+             * @returns {string} - The date type
+             */
             getDateType: function () {
                 return dateType;
             },
+
+            /**
+             * Sets the date
+             * @param {string} value - New date
+             */
             setDate: function (value) {
                 date = value;
             },
+
+            /**
+             * Sets the date
+             * @returns  {string} - The date
+             */
             getDate: function () {
                 return date;
             },
+
+            /**
+             * Invoked when the date value changes
+             */
             onChanged: function () { },
+
+            /**
+             * Gets the chosen period
+             * @returns {Object} - The chosen date period
+             */
             getPeriod: function () {
                 if (dateType === 'month') {
                     return {
@@ -35,6 +70,13 @@
             }
         }
     }
+
+    /**
+     * The DateFilter jQuery plugin
+     * @param {Object} d - A DateFilter object
+     * @param {Object} o - Initial configuration
+     * @returns {Object} - A DateFilter object
+     */
     $.fn.DateFilter = function (d, o) {
         var dateFilter = d;
         var defaults = {

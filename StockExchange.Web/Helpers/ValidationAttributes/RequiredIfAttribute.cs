@@ -2,7 +2,7 @@
 
 namespace StockExchange.Web.Helpers.ValidationAttributes
 {
-    public class RequiredIfAttribute : ValidationAttribute
+    internal class RequiredIfAttribute : ValidationAttribute
     {
         private readonly RequiredAttribute innerAttribute = new RequiredAttribute();
         public string DependentProperty { get; set; }

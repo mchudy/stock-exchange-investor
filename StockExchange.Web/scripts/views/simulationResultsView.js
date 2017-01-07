@@ -1,4 +1,7 @@
-﻿(function($) {
+﻿/**
+ * View for the simulation results page
+ */
+(function ($) {
     'use strict';
 
     var $transactionLogTable = $('#simulation-transactions-grid');

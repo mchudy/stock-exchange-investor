@@ -9,45 +9,56 @@
     var $refreshBtn = $('.refresh-chart');
     var chosenCompanies = $companySelect.val();
 
-    $companySelect.select2({
-        placeholder: 'Choose companies',
-        width: '100%'
-    });
-    $companySelect.trigger('change');
-
+    bindUIElements();
     initChart();
     loadChart();
 
-    $isCandleStickCheckbox.on('change', function () {
-        loadChart();
-    });
+    /**
+     * Initializes and binds events to the UI elements used for manipulating 
+     * the chart
+     */
+    function bindUIElements() {
+        $companySelect.select2({
+            placeholder: 'Choose companies',
+            width: '100%'
+        });
+        $companySelect.trigger('change');
 
-    $companySelect.on('change', function () {
-        chosenCompanies = $(this).val();
-        loadChart();
-    });
+        $companySelect.on('change', function () {
+            chosenCompanies = $(this).val();
+            loadChart();
+        });
 
-    $indicatorSelect.on('change', function () {
-        var type = $(this).val();
+        $indicatorSelect.on('change', function () {
+            var type = $(this).val();
 
-        $('.indicator-properties').addClass('hidden');
-        $refreshBtn.addClass('hidden');
+            $('.indicator-properties').addClass('hidden');
+            $refreshBtn.addClass('hidden');
 
-        if (type) {
-            var props = $('.indicator-properties[data-type="' + type + '"]');
-            props.removeClass('hidden');
-            if (props.length > 0) {
-                $refreshBtn.removeClass('hidden');
+            if (type) {
+                var props = $('.indicator-properties[data-type="' + type + '"]');
+                props.removeClass('hidden');
+                if (props.length > 0) {
+                    $refreshBtn.removeClass('hidden');
+                }
             }
-        } 
 
-        loadIndicatorValues(type);
-    });
+            loadIndicatorValues(type);
+        });
 
-    $refreshBtn.on('click', function () {
-        loadChart();
-    });
+        $isCandleStickCheckbox.on('change', function () {
+            loadChart();
+        });
 
+        $refreshBtn.on('click', function () {
+            loadChart();
+        });
+    }
+
+    /**
+     * Initialized the stock chart
+     * @returns {Object} - Highcharts chart object
+     */
     function initChart() {
         Highcharts.setOptions({
             global: {
@@ -85,6 +96,9 @@
         chart.showLoading(loadingIndicator);
     }
 
+    /**
+     * Loads the chart data
+     */
     function loadChart() {
         if (!chosenCompanies || !chosenCompanies.length) {
             clearChart();
@@ -113,6 +127,10 @@
         }
     }
 
+    /**
+     * Loads values for the given indicator
+     * @param {string} type - Indicator type
+     */
     function loadIndicatorValues(type) {
         if (!type) {
             removeIndicatorAxis();
@@ -135,6 +153,10 @@
             });
     }
 
+    /**
+     * Extracts current indicator properties values from the HTML
+     * @returns {Object} - Current indicator properties
+     */
     function getIndicatorProperties() {
         var properties = [];
         $('.indicator-property:visible').each(function () {
@@ -146,6 +168,11 @@
         return properties;
     }
 
+    /**
+     * Converts properties to an URL format recognized by ASP.NET MVC
+     * @param {Object} properties - Indicator properties
+     * @returns {string} - URL formatted properties
+     */
     function convertPropertiesToUrl(properties) {
         var url = '';
         for (var i = 0; i < properties.length; i++) {
@@ -156,6 +183,11 @@
         return url;
     }
 
+    /**
+     * Draws the lower chart with the indicator values
+     * @param {string} type - Indicator type
+     * @param {Array<Object>} data - Indicator values data returned from the server
+     */
     function drawIndicatorValues(type, data) {
         // the false parameters in Highcharts functions prevent from redrawing the chart on every operation
         // (we redraw it only once at the end)
@@ -190,6 +222,11 @@
         chart.hideLoading();
     }
 
+    /**
+     * Adds indicator series to the chart
+     * @param {string} name - Name of the series
+     * @param {Array} data - Chart data
+     */
     function addIndicatorSeries(name, data) {
         chart.addSeries({
             id: 'indicator-series',
@@ -199,14 +236,28 @@
         }, false);
     }
 
+    /**
+     * Constructs a title for an indicator series
+     * @param {string} companyName - Name of the company
+     * @param {string} type - Indicator type
+     * @returns {string} - Title for the chart series
+     */
     function getIndicatorLineTitle(companyName, type) {
         return companyName + ' - ' + type.toUpperCase();
     }
 
+    /**
+     * Checks whether the indicator has two lines
+     * @param {Array} data - Indicator chart data
+     * @returns {boolean} 
+     */
     function isDoubleLineIndicator(data) {
         return data[0] && data[0].length === 3;
     }
 
+    /**
+     * Removes the indicator axis from the chart
+     */
     function removeIndicatorAxis() {
         var axis = chart.get('indicator-axis');
         if (axis) {
@@ -215,6 +266,9 @@
         chart.get('price-axis').update({ height: '100%' }, false);
     }
 
+    /**
+     * Adds a new axis for the indicator series
+     */
     function addIndicatorAxis() {
         chart.addAxis({
             id: 'indicator-axis',
@@ -231,6 +285,10 @@
         chart.get('price-axis').update({ height: '60%' }, false);
     }
 
+    /**
+     * Refreshes the whole chart
+     * @param {Array} data - Data for the chart (stocks value, not indicators)
+     */
     function refreshChartData(data) {
         clearChart();
         for (var i = 0; i < data.length; i++) {
@@ -240,12 +298,18 @@
         initDatepickers();
     };
 
+    /**
+     * Clears the chart
+     */
     function clearChart() {
         while (chart.series.length > 0) {
             chart.series[0].remove(false);
         }
     }
 
+    /**
+     * Initializes the datepickers for the chart
+     */
     function initDatepickers() {
         $('input.highcharts-range-selector', $('#chart-container'))
             .datepicker({

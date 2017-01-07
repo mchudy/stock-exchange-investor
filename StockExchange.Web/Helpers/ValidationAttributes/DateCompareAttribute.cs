@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace StockExchange.Web.Helpers.ValidationAttributes
 {
-    public class DateCompareAttribute : ValidationAttribute
+    internal class DateCompareAttribute : ValidationAttribute
     {
         private readonly string _propertyName;
         private readonly DateTimeComparer _comparerType;
@@ -61,7 +61,7 @@ namespace StockExchange.Web.Helpers.ValidationAttributes
     }
 
 
-    public enum DateTimeComparer
+    internal enum DateTimeComparer
     {
         IsEqualTo,
         IsLessThan,
