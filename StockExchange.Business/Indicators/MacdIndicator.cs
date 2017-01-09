@@ -1,4 +1,5 @@
-﻿using StockExchange.Business.Indicators.Common;
+﻿using System;
+using StockExchange.Business.Indicators.Common;
 using StockExchange.Business.Indicators.Common.Intersections;
 using StockExchange.Business.Models.Indicators;
 using StockExchange.DataAccess.Models;
@@ -51,7 +52,7 @@ namespace StockExchange.Business.Indicators
 
         /// <inheritdoc />
         [IngoreIndicatorProperty]
-        public int RequiredPricesCountToSignal => LongTerm - ShortTerm + SignalTerm;
+        public int RequiredPricesCountToSignal => Math.Max(LongTerm, ShortTerm) + SignalTerm;
 
         /// <inheritdoc />
         public IList<IndicatorValue> Calculate(IList<Price> prices)

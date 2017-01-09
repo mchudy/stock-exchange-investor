@@ -32,7 +32,7 @@ namespace StockExchange.Business.Indicators
 
         /// <inheritdoc />
         [IngoreIndicatorProperty]
-        public int RequiredPricesCountToSignal => Term;
+        public int RequiredPricesCountToSignal => 2*Term;
 
         /// <inheritdoc />
         public IList<IndicatorValue> Calculate(IList<Price> prices)
