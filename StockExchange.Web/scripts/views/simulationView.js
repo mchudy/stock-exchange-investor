@@ -6,7 +6,8 @@
 
     var $companySelect = $('.company-select');
     $companySelect.select2({
-        placeholder: 'Choose companies'
+        placeholder: 'Choose companies',
+        //width: '100%'
     });
 
     $("input[type='checkbox']").iCheck({
