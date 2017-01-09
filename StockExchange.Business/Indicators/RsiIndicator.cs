@@ -42,7 +42,12 @@ namespace StockExchange.Business.Indicators
         public int Maximum { get; set; } = DefaultMaximum;
 
         /// <inheritdoc />
+        [IngoreIndicatorProperty]
         public IndicatorType Type => IndicatorType.Rsi;
+
+        /// <inheritdoc />
+        [IngoreIndicatorProperty]
+        public int IgnoredDays { get; }
 
         /// <inheritdoc />
         public IList<IndicatorValue> Calculate(IList<Price> prices)

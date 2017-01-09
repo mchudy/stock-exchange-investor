@@ -13,7 +13,12 @@ namespace StockExchange.Business.Indicators
     public class PpIndicator : IIndicator
     {
         /// <inheritdoc />
+        [IngoreIndicatorProperty]
         public IndicatorType Type => IndicatorType.PivotPoint;
+
+        /// <inheritdoc />
+        [IngoreIndicatorProperty]
+        public int IgnoredDays { get; }
 
         /// <inheritdoc />
         public IList<IndicatorValue> Calculate(IList<Price> prices)

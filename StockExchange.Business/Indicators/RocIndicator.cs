@@ -22,7 +22,12 @@ namespace StockExchange.Business.Indicators
         public int Term { get; set; } = DefaultRocTerm;
 
         /// <inheritdoc />
+        [IngoreIndicatorProperty]
         public IndicatorType Type => IndicatorType.Roc;
+
+        /// <inheritdoc />
+        [IngoreIndicatorProperty]
+        public int IgnoredDays { get; }
 
         /// <inheritdoc />
         public IList<IndicatorValue> Calculate(IList<Price> prices)

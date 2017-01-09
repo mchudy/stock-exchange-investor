@@ -46,7 +46,12 @@ namespace StockExchange.Business.Indicators
         public int SignalTerm { get; set; } = DefaultSignalTerm;
 
         /// <inheritdoc />
+        [IngoreIndicatorProperty]
         public IndicatorType Type => IndicatorType.Macd;
+
+        /// <inheritdoc />
+        [IngoreIndicatorProperty]
+        public int IgnoredDays { get; }
 
         /// <inheritdoc />
         public IList<IndicatorValue> Calculate(IList<Price> prices)

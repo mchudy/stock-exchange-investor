@@ -71,7 +71,7 @@ namespace StockExchange.Business.Services
         {
             var indicator = _indicatorFactory.CreateIndicator(type);
             var properties = indicator.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance)
-                .Where(p => p.Name != nameof(IIndicator.Type));
+                .Where(p => !p.GetCustomAttributes(typeof(IngoreIndicatorPropertyAttribute)).Any());
             return properties.Select(property => new IndicatorProperty
             {
                 Name = property.Name,

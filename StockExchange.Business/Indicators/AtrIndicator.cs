@@ -23,7 +23,12 @@ namespace StockExchange.Business.Indicators
         public int Term { get; set; } = DefaultAtrTerm;
 
         /// <inheritdoc />
+        [IngoreIndicatorProperty]
         public IndicatorType Type => IndicatorType.Atr;
+
+        /// <inheritdoc />
+        [IngoreIndicatorProperty]
+        public int IgnoredDays { get; }
 
         /// <inheritdoc />
         public IList<IndicatorValue> Calculate(IList<Price> prices)

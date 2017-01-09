@@ -12,7 +12,14 @@ namespace StockExchange.Business.Indicators.Common
         /// <summary>
         /// Type of the indicator
         /// </summary>
+        [IngoreIndicatorProperty]
         IndicatorType Type { get; }
+
+        /// <summary>
+        /// Gets the number of days in which indicator values are not defined.
+        /// </summary>
+        [IngoreIndicatorProperty]
+        int IgnoredDays { get; }
 
         /// <summary>
         /// Calculates the indicator for the given prices
