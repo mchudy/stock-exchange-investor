@@ -10,13 +10,15 @@ namespace StockExchange.Business.Indicators
     /// </summary>
     public class VptIndicator : IIndicator
     {
+        private const int _priceTerm = 14;
+
         /// <inheritdoc />
         [IngoreIndicatorProperty]
         public IndicatorType Type => IndicatorType.Vpt;
 
         /// <inheritdoc />
         [IngoreIndicatorProperty]
-        public int RequiredPricesCountToSignal { get; }
+        public int RequiredPricesCountToSignal => _priceTerm + 1;
 
         /// <inheritdoc />
         public IList<IndicatorValue> Calculate(IList<Price> prices)
@@ -37,12 +39,11 @@ namespace StockExchange.Business.Indicators
         {
             var signals = new List<Signal>();
             var values = Calculate(prices);
-            const int priceTerm = 14;
-            var priceTrend = MovingAverageHelper.ExpotentialMovingAverage(prices, priceTerm);
+            var priceTrend = MovingAverageHelper.ExpotentialMovingAverage(prices, _priceTerm);
             SignalAction lastAction = SignalAction.NoSignal;
-            for (int i = priceTerm; i < prices.Count; i++)
+            for (int i = _priceTerm; i < prices.Count; i++)
             {
-                if(values[i-1].Value < values[i].Value && priceTrend[i-priceTerm].Value < priceTrend[i - priceTerm + 1].Value)
+                if(values[i-1].Value < values[i].Value && priceTrend[i-_priceTerm].Value < priceTrend[i - _priceTerm + 1].Value)
                 {
                     if (lastAction != SignalAction.Buy)
                     {
@@ -51,7 +52,7 @@ namespace StockExchange.Business.Indicators
                     } 
                 }
                 if (values[i - 1].Value <= values[i].Value ||
-                    priceTrend[i - priceTerm].Value <= priceTrend[i - priceTerm + 1].Value) continue;
+                    priceTrend[i - _priceTerm].Value <= priceTrend[i - _priceTerm + 1].Value) continue;
                 if (lastAction == SignalAction.Sell) continue;
                 signals.Add(new Signal(SignalAction.Sell) {Date = values[i].Date});
                 lastAction = SignalAction.Sell;

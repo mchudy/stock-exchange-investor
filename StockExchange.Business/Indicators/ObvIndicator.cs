@@ -10,13 +10,15 @@ namespace StockExchange.Business.Indicators
     /// </summary>
     public class ObvIndicator : IIndicator
     {
+        private const int _trendTerm = 20;
+
         /// <inheritdoc />
         [IngoreIndicatorProperty]
         public IndicatorType Type => IndicatorType.Obv;
 
         /// <inheritdoc />
         [IngoreIndicatorProperty]
-        public int RequiredPricesCountToSignal { get; }
+        public int RequiredPricesCountToSignal => _trendTerm;
 
         /// <inheritdoc />
         public IList<IndicatorValue> Calculate(IList<Price> prices)
@@ -50,18 +52,17 @@ namespace StockExchange.Business.Indicators
         {
             var signals = new List<Signal>();
             var values = Calculate(prices);
-            const int trendTerm = 20;
-            var trend = MovingAverageHelper.ExpotentialMovingAverage(values, trendTerm);
+            var trend = MovingAverageHelper.ExpotentialMovingAverage(values, _trendTerm);
             SignalAction lastAction = SignalAction.NoSignal;
-            for (int i = trendTerm; i < prices.Count; i++)
+            for (int i = _trendTerm; i < prices.Count; i++)
             {
-                if (trend[i - trendTerm].Value < trend[i - trendTerm + 1].Value && values[i].Value > prices[i].Volume)
+                if (trend[i - _trendTerm].Value < trend[i - _trendTerm + 1].Value && values[i].Value > prices[i].Volume)
                 {
                     if (lastAction == SignalAction.Sell) continue;
                     signals.Add(new Signal(SignalAction.Sell) {Date = prices[i].Date});
                     lastAction = SignalAction.Sell;
                 }
-                else if(trend[i-trendTerm].Value > trend[i-trendTerm+1].Value && values[i].Value < prices[i].Volume)
+                else if(trend[i-_trendTerm].Value > trend[i-_trendTerm+1].Value && values[i].Value < prices[i].Volume)
                 {
                     if (lastAction == SignalAction.Buy) continue;
                     signals.Add(new Signal(SignalAction.Buy) {Date = prices[i].Date});
