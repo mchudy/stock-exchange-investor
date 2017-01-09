@@ -4,8 +4,17 @@ using System.Linq;
 
 namespace StockExchange.Common.Extensions
 {
+    /// <summary>
+    /// Extension methods for the enumeration types
+    /// </summary>
     public static class EnumExtension
     {
+        /// <summary>
+        /// Returns an enum description extracted from <see cref="DisplayAttribute"/>
+        /// </summary>
+        /// <typeparam name="TEnum">Type of enum</typeparam>
+        /// <param name="value">The enum value</param>
+        /// <returns>The enum description</returns>
         public static string GetEnumDescription<TEnum>(this TEnum value)
         {
             var fi = value.GetType().GetField(value.ToString());
@@ -14,6 +23,12 @@ namespace StockExchange.Common.Extensions
             return attributes.Length > 0 ? attributes[0].Name : value.ToString();
         }
 
+        /// <summary>
+        /// Returns an enum value which passes to the description
+        /// </summary>
+        /// <typeparam name="TEnum">The type of enum</typeparam>
+        /// <param name="description">The enum description</param>
+        /// <returns>The enum value</returns>
         public static TEnum GetEnumValueByDescription<TEnum>(string description)
         {
             var type = typeof(TEnum);

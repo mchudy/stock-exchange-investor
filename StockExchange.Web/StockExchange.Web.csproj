@@ -38,6 +38,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\StockExchange.Web.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -46,6 +47,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\StockExchange.Web.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Antlr3.Runtime, Version=3.5.0.2, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
@@ -2135,6 +2137,10 @@
     <Content Include="bower_components\select2\docs\_layouts\default.html" />
     <Content Include="bower_components\select2\docs\_layouts\home.html" />
     <Content Include="bower_components\select2\Gruntfile.js" />
+    <Content Include="bower_components\toastr\toastr.css" />
+    <Content Include="bower_components\toastr\toastr.js" />
+    <Content Include="bower_components\toastr\toastr.min.css" />
+    <Content Include="bower_components\toastr\toastr.min.js" />
     <Content Include="Content\css\charts.css">
       <DependentUpon>charts.less</DependentUpon>
     </Content>
@@ -2155,10 +2161,12 @@
     </Content>
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="Scripts\components\budgetInfoBox.js" />
+    <Content Include="Scripts\views\simulationResultsView.js" />
     <Content Include="Scripts\views\simulationView.js" />
     <Content Include="Scripts\views\chartsView.js" />
-    <Content Include="Scripts\dataTablesExtensions.js" />
-    <Content Include="Scripts\dateFilter.js" />
+    <Content Include="Scripts\plugins\dataTablesFilters.js" />
+    <Content Include="Scripts\plugins\dateFilter.js" />
     <Content Include="bower.json" />
     <Content Include="bower_components\bootstrap-datepicker\.bower.json" />
     <Content Include="bower_components\bootstrap-datepicker\.editorconfig" />
@@ -2497,6 +2505,15 @@
     <Content Include="bower_components\datatables.net-responsive\.bower.json" />
     <Content Include="bower_components\datatables.net-responsive\bower.json" />
     <Content Include="bower_components\datatables.net-responsive\Readme.md" />
+    <Content Include="bower_components\toastr\.bower.json" />
+    <Content Include="bower_components\toastr\bower.json" />
+    <Content Include="bower_components\toastr\LICENSE" />
+    <Content Include="bower_components\toastr\README.md" />
+    <Content Include="bower_components\toastr\toastr.js.map" />
+    <Content Include="bower_components\toastr\toastr.less" />
+    <Content Include="bower_components\toastr\toastr.scss" />
+    <Content Include="App_Code\NotificationsBuilder.cshtml" />
+    <Content Include="App_Code\Modals.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
@@ -2508,18 +2525,16 @@
       <TransformOnBuild>true</TransformOnBuild>
     </Content>
     <Content Include="Content\css\charts.less" />
-    <Content Include="Connections.config">
-      <SubType>Designer</SubType>
-    </Content>
     <Content Include="Content\css\colors.less" />
     <Content Include="Content\css\boxes.less" />
     <Content Include="Content\css\forms.less" />
     <Content Include="Content\css\variables.less" />
+    <Content Include="Content\css\spinner.less" />
     <None Include="Log4Net.Debug.config">
       <DependentUpon>Log4Net.config</DependentUpon>
       <IsTransformFile>True</IsTransformFile>
     </None>
-    <None Include="Log4Net.Release.config">
+    <None Include="Log4Net.Production.config">
       <DependentUpon>Log4Net.config</DependentUpon>
       <IsTransformFile>True</IsTransformFile>
     </None>
@@ -2531,51 +2546,64 @@
     </None>
     <Content Include="Scripts\views\pricesView.js" />
     <Content Include="Scripts\site.js" />
-    <Content Include="Scripts\views\transactionsView.js" />
+    <Content Include="Scripts\views\editStrategyView.js" />
+    <Content Include="Scripts\views\strategiesListView.js" />
     <Content Include="Scripts\views\walletView.js" />
+    <Content Include="Scripts\views\dashboardView.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Views\Price\_PricesDataTable.cshtml" />
+    <Content Include="Views\Data\_PricesDataTable.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\ChartsController.cs" />
-    <Compile Include="Controllers\PriceController.cs" />
+    <Compile Include="Controllers\DataController.cs" />
     <Compile Include="Controllers\SimulationsController.cs" />
     <Compile Include="Controllers\StrategiesController.cs" />
-    <Compile Include="Controllers\TransactionsController.cs" />
     <Compile Include="Controllers\WalletController.cs" />
-    <Compile Include="Helpers\CustomFormatResolver.cs" />
+    <Compile Include="Controllers\DashboardController.cs" />
+    <Compile Include="Filters\HandleJsonErrorAttribute.cs" />
+    <Compile Include="Helpers\ValidationAttributes\DateCompareAttribute.cs" />
+    <Compile Include="Helpers\Json\CustomFormatResolver.cs" />
     <Compile Include="Helpers\DataTableMessageConverter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\DateTimeExtensions.cs" />
-    <Compile Include="Helpers\DisplayFormatConverter.cs" />
-    <Compile Include="Helpers\EnumDisplayFormatConverter.cs" />
-    <Compile Include="Helpers\HtmlExtension.cs" />
-    <Compile Include="Helpers\JsonNetResult.cs" />
+    <Compile Include="Helpers\Json\DisplayFormatConverter.cs" />
+    <Compile Include="Helpers\Json\EnumDisplayFormatConverter.cs" />
+    <Compile Include="Helpers\HtmlHelperExtensions.cs" />
+    <Compile Include="Helpers\Json\JsonNetResult.cs" />
+    <Compile Include="Helpers\ToastNotifications\ToastMessage.cs" />
+    <Compile Include="Helpers\ToastNotifications\ToastType.cs" />
+    <Compile Include="Helpers\ToastNotifications\NotificationsWrapper.cs" />
+    <Compile Include="Helpers\ValidationAttributes\RequiredIfAttribute.cs" />
     <Compile Include="Infrastructure\AppModule.cs" />
     <Compile Include="Infrastructure\IdentityModule.cs" />
     <Compile Include="Models\Account\RegisterViewModel.cs" />
     <Compile Include="Models\Charts\ChartsIndexModel.cs" />
     <Compile Include="Models\Charts\PieChartModel.cs" />
-    <Compile Include="Models\IndicatorViewModel.cs" />
+    <Compile Include="Models\Indicator\IndicatorViewModel.cs" />
     <Compile Include="Models\Charts\LineChartModel.cs" />
     <Compile Include="Models\DataTables\DataTableMessage.cs" />
     <Compile Include="Models\DataTables\DataTableResponse.cs" />
     <Compile Include="Models\DataTables\DataTableSimpleMessage.cs" />
     <Compile Include="Models\Account\LoginViewModel.cs" />
-    <Compile Include="Models\PriceViewModel.cs" />
-    <Compile Include="Models\SimulationViewModel.cs" />
-    <Compile Include="Models\StrategyViewModel.cs" />
-    <Compile Include="Models\Transactions\AddTransactionViewModel.cs" />
-    <Compile Include="Models\Wallet\CreateWalletViewModel.cs" />
-    <Compile Include="Models\Wallet\UpdateBudgetViewModel.cs" />
+    <Compile Include="Models\Price\PriceViewModel.cs" />
+    <Compile Include="Models\Simulation\SimulationResultViewModel.cs" />
+    <Compile Include="Models\Simulation\SimulationTransaction.cs" />
+    <Compile Include="Models\Simulation\SimulationViewModel.cs" />
+    <Compile Include="Models\Indicator\EditIndicatorViewModel.cs" />
+    <Compile Include="Models\Strategy\EditStrategyViewModel.cs" />
+    <Compile Include="Models\Indicator\IndicatorPropertyViewModel.cs" />
+    <Compile Include="Models\Wallet\AddTransactionViewModel.cs" />
     <Compile Include="Models\Wallet\WalletViewModel.cs" />
+    <Compile Include="Models\Wallet\BudgetInfoViewModel.cs" />
+    <Compile Include="Models\Wallet\UpdateBudgetViewModel.cs" />
+    <Compile Include="Models\Dashboard\DashboardViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -2586,21 +2614,37 @@
     </Content>
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Price\Price.cshtml" />
+    <Content Include="Views\Data\Index.cshtml" />
     <Content Include="Properties\SlowCheetah\SlowCheetah.Transforms.targets" />
     <Content Include="Views\Charts\Index.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\Dashboard\Index.cshtml" />
     <Content Include="Views\Wallet\Index.cshtml" />
-    <Content Include="Views\Transactions\Index.cshtml" />
-    <Content Include="Views\Simulations\Index.cshtml" />
-    <Content Include="Views\Strategies\Index.cshtml" />
+    <Content Include="Views\Simulations\RunSimulation.cshtml" />
+    <Content Include="Views\Strategies\EditStrategy.cshtml" />
     <Content Include="Views\Account\Settings.cshtml" />
     <Content Include="Views\Simulations\Results.cshtml" />
-    <Content Include="Views\Transactions\_TransactionsTable.cshtml" />
+    <Content Include="Views\Wallet\_TransactionsTable.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\EnumTemplate.cshtml" />
+    <Content Include="Views\Strategies\Index.cshtml" />
+    <Content Include="Views\Wallet\_CurrentTransactionsTable.cshtml" />
+    <Content Include="Views\Wallet\_BudgetInfo.cshtml" />
     <Content Include="Views\Wallet\_EditBudgetDialog.cshtml" />
+    <Content Include="Views\Wallet\_AddTransaction.cshtml" />
+    <Content Include="Views\Dashboard\_SignalInfo.cshtml" />
+    <Content Include="Views\Dashboard\_TransactionInfo.cshtml" />
+    <Content Include="Views\Dashboard\_OwnedCompanyStats.cshtml" />
+    <Content Include="Views\Dashboard\_OwnedStocksTable.cshtml" />
+    <Content Include="Views\Dashboard\_SignalTable.cshtml" />
+    <Content Include="Views\Dashboard\_AdvancersTable.cshtml" />
+    <Content Include="Views\Dashboard\_DeclinersTable.cshtml" />
+    <Content Include="Views\Dashboard\_MostActiveTable.cshtml" />
+    <Content Include="Scripts\utils.js" />
     <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Production.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
     <None Include="Web.Release.config">
@@ -2608,6 +2652,11 @@
     </None>
   </ItemGroup>
   <ItemGroup />
+  <ItemGroup Condition="'$(Configuration)' != 'Production'">
+    <Content Include="Connections.config">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\StockExchange.Business\StockExchange.Business.csproj">
       <Project>{14a3ba8d-7d94-46f3-a1b9-3c9fc0e2fac5}</Project>
@@ -2641,6 +2690,15 @@
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Production|AnyCPU'">
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
@@ -2648,7 +2706,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>39051</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

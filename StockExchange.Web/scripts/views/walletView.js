@@ -1,50 +1,78 @@
-﻿(function () {
+﻿/**
+ * A view for the wallet main page
+ */
+(function (StockExchange, $) {
     'use strict';
+    
+    $("input[type='radio']").iCheck({
+        radioClass: 'iradio_flat'
+    });
+    $('#SelectedCompanyId').select2();
+    $('.company-select').select2({
+        height: '100%'
+    });
 
-    drawPieChart('stocks-by-value-chart', config.stocksByValueData.title,
-        mapData(config.stocksByValueData.data));
-    drawPieChart('stocks-by-quantity-chart', config.stocksByQuantityData.title,
-        mapData(config.stocksByQuantityData.data));
+    $('#AddTransactionViewModel_Date').datepicker({
+        endDate: new Date()
+    });
 
-    function mapData(data) {
-        return data.map(function(item) {
-            return {
-                name: item.name,
-                y: item.value
-            };
+    var budgetBox = new StockExchange.BudgetInfoBox($('.budget-infobox'));
+    var dataTable = initTransactionsTable();
+    var dataTableCurrent = initCurrentStocksTable();
+
+    /*
+     * Send AJAX request for adding a new transaction
+     */
+    $('#add-transaction-form').on('submit', function (event) {
+        event.preventDefault();
+
+        var $this = $(this);
+        if (!($this.valid())) {
+            return;
+        }
+
+        $('#add-transaction-button').prop('disabled', true);
+
+        $.ajax({
+            url: $this.attr('action'),
+            type: $this.attr('method'),
+            data: $this.serialize()
+        }).done(function () {
+            toastr.success('Transaction has been added');
+            budgetBox.refresh();
+            dataTable.draw();
+            dataTableCurrent.draw();
+        }).always(function() {
+            $('#add-transaction-button').prop('disabled', false);
         });
+    });
+
+    /**
+     * Initializes the transactions table
+     * @returns {Object} - The created DataTables object
+     */
+    function initTransactionsTable() {
+        var columnDefs =[{
+            targets: $('#grid th[data-column=Total]').index(),
+            render: function (data, type, full) {
+                return StockExchange.getPriceWithIconHtml(data, full.Action === 'Sell');
+            }
+        }];
+        return StockExchange.createDataTable($('#grid'), columnDefs);
     }
 
-    function drawPieChart(element, title, data) {
-        Highcharts.chart(element, {
-            chart: {
-                plotBackgroundColor: null,
-                plotBorderWidth: null,
-                plotShadow: false,
-                type: 'pie',
-                height: 300
-            },
-            title: {
-                text: title
-            },
-            tooltip: {
-                pointFormat: '{series.name}: <b>{point.y:.2f}</b> ({point.percentage:.2f}%)'
-            },
-            plotOptions: {
-                pie: {
-                    allowPointSelect: true,
-                    cursor: 'pointer',
-                    dataLabels: {
-                        enabled: false
-                    },
-                    showInLegend: true
-                }
-            },
-            series: [{
-                name: 'Company',
-                colorByPoint: true,
-                data: data
-            }]
-        });
+    /**
+     * Initializes the current stocks table
+     * @returns {Object} - The created DataTables object
+     */
+    function initCurrentStocksTable() {
+        var columnDefsCurrent = [{
+            targets: $('#current-grid th[data-column=Profit]').index(),
+            render: function (data) {
+                return StockExchange.getPriceWithIconHtml(data);
+            }
+        }];
+        return StockExchange.createDataTable($('#current-grid'), columnDefsCurrent);
     }
-})();
+
+})(StockExchange, jQuery);

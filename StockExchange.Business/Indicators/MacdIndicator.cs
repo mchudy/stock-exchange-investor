@@ -1,27 +1,54 @@
-﻿using StockExchange.Business.Models.Indicators;
+﻿using StockExchange.Business.Indicators.Common;
+using StockExchange.Business.Indicators.Common.Intersections;
+using StockExchange.Business.Models.Indicators;
 using StockExchange.DataAccess.Models;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
-using StockExchange.Business.Models;
 
 namespace StockExchange.Business.Indicators
 {
     /// <summary>
-    /// Wskaźnik Macd
+    /// Moving Average Convergence Divergence technical indicator
     /// </summary>
     public class MacdIndicator : IIndicator
     {
+        /// <summary>
+        /// Default <see cref="LongTerm"/> value for the MACD indicator
+        /// </summary>
         public const int DefaultLongTerm = 26;
+
+        /// <summary>
+        /// Default <see cref="ShortTerm"/> value for the MACD indicator
+        /// </summary>
         public const int DefaultShortTerm = 12;
+
+        /// <summary>
+        /// Default <see cref="SignalTerm"/> value for the MACD indicator
+        /// </summary>
         public const int DefaultSignalTerm = 9;
 
+        /// <summary>
+        /// The number of prices from previous days to include when computing 
+        /// the longer moving average
+        /// </summary>
         public int LongTerm { get; set; } = DefaultLongTerm;
+
+        /// <summary>
+        /// The number of prices from previous days to include when computing 
+        /// the shorter moving average
+        /// </summary>
         public int ShortTerm { get; set; } = DefaultShortTerm;
+
+        /// <summary>
+        /// The number of prices from previous days to include when computing 
+        /// the signal line
+        /// </summary>
         public int SignalTerm { get; set; } = DefaultSignalTerm;
 
+        /// <inheritdoc />
         public IndicatorType Type => IndicatorType.Macd;
 
+        /// <inheritdoc />
         public IList<IndicatorValue> Calculate(IList<Price> prices)
         {
             var longEma = MovingAverageHelper.ExpotentialMovingAverage(prices, LongTerm);
@@ -31,7 +58,17 @@ namespace StockExchange.Business.Indicators
             return PrepareResult(macdLine, signalLine);
         }
 
-        private IList<IndicatorValue> SubstractLongEmaFromShortEma(IList<IndicatorValue> shortEma, IList<IndicatorValue> longEma)
+        /// <inheritdoc />
+        public IList<Signal> GenerateSignals(IList<Price> prices)
+        {
+            var doubleLineValues = Calculate(prices).Cast<DoubleLineIndicatorValue>().ToList();
+            return IntersectionHelper.FindIntersections(doubleLineValues).
+                Select(i => new Signal(Convert(i.IntersectionType)) { Date = i.Date }).ToList();
+            //Note that if we generate this signal with date one day back results are far much better, but this is a deception
+        }
+
+        private IList<IndicatorValue> SubstractLongEmaFromShortEma(IList<IndicatorValue> shortEma,
+            IList<IndicatorValue> longEma)
         {
             var difference = LongTerm - ShortTerm;
             IList<IndicatorValue> values = new List<IndicatorValue>();
@@ -47,7 +84,8 @@ namespace StockExchange.Business.Indicators
             return values;
         }
 
-        private static IList<IndicatorValue> PrepareResult(IList<IndicatorValue> macdLine, IList<IndicatorValue> signalLine)
+        private static IList<IndicatorValue> PrepareResult(IList<IndicatorValue> macdLine,
+            IList<IndicatorValue> signalLine)
         {
             IList<IndicatorValue> resultList = new List<IndicatorValue>();
             var difference = macdLine.Count - signalLine.Count;
@@ -63,37 +101,18 @@ namespace StockExchange.Business.Indicators
             return resultList;
         }
 
-        public IList<Signal> GenerateSignals(IList<IndicatorValue> values)
+        private static SignalAction Convert(IntersectionType intersectionType)
         {
-            var doubleLineValues = values.Cast<DoubleLineIndicatorValue>().ToList();
-            var signals = new List<Signal>();
-            var previousValue = doubleLineValues[0];
-            for (int i = 1; i < doubleLineValues.Count; i++)
+            // ReSharper disable once SwitchStatementMissingSomeCases
+            switch (intersectionType)
             {
-                //we consider 2 lines - indicator and signal line
-                //with equations 
-                //y = (curr.* - prev.*)x + prev.* (y = Ax+B and y=Cx+D) - * may be Value or SecondLineValue
-                //intersection exists when their difference
-                //has value 0 somewhere, thus (C-A)x=B-D -> a=C-A, b=B-D
-                //intersection exists if a=b=0 (lines overlap -> NOSIGNAL) or (x=B/A and 0<x<1)
-                //if MACD intersects signal line upside -> BUY otherwise SELL
-                var currentValue = doubleLineValues[i];
-                decimal a = currentValue.SecondLineValue - previousValue.SecondLineValue - currentValue.Value +
-                            previousValue.Value;
-                decimal b = previousValue.Value - currentValue.Value;
-                if ((a == 0 && b == 0) || (a*b > 0 && b < a)) //intersection
-                {
-                    decimal diff = previousValue.Value - previousValue.SecondLineValue; //B-D
-                    SignalAction action = ( diff== 0) ? SignalAction.NoSignal : (diff < 0 ? SignalAction.Buy : SignalAction.Sell);
-                    var signal = new Signal(action)
-                    {
-                        Date = currentValue.Date
-                    };
-                    signals.Add(signal);
-                }
-                previousValue = currentValue;
+                case IntersectionType.FirstAbove:
+                    return SignalAction.Buy;
+                case IntersectionType.SecondAbove:
+                    return SignalAction.Sell;
+                default:
+                    return SignalAction.NoSignal;
             }
-            return signals;
         }
     }
 }

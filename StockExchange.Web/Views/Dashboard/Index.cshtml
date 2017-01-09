@@ -1,0 +1,38 @@
+﻿@model StockExchange.Web.Models.Dashboard.DashboardViewModel
+@using System.Web.Optimization
+@using StockExchange.Web.Helpers
+@{
+    ViewBag.Title = "Dashboard";
+}
+<div class="row">
+    <div class="col-md-4">
+        @Html.Partial("_SignalTable")
+     
+    </div>
+    <div class="col-md-4">
+        @Html.Partial("~/Views/Wallet/_BudgetInfo.cshtml", Model.BudgetInfo)
+        @Html.Partial("_SignalInfo") 
+        @Html.Partial("_TransactionInfo")  
+        @Html.Partial("_OwnedStocksTable") 
+        @Html.Partial("_OwnedCompanyStats")
+    </div>
+    <div class="col-md-4">
+        @Html.Partial("_AdvancersTable")
+        @Html.Partial("_DeclinersTable")
+        @Html.Partial("_MostActiveTable")
+    </div>
+</div>
+
+@section scripts {
+    @Scripts.Render("~/bundles/scripts/highcharts")
+
+    <script>
+        var config = {
+            stocksByValueData: @Html.ToJsonString(Model.StocksByValue)
+        };
+    </script>
+    @Scripts.Render("~/bundles/scripts/datatables")
+    @Scripts.Render("~/Scripts/utils.js")
+    @Scripts.Render("~/Scripts/components/budgetInfoBox.js")
+    @Scripts.Render("/Scripts/Views/dashboardView.js")
+}

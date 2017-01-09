@@ -1,22 +1,50 @@
-﻿using StockExchange.Business.Models;
+﻿using StockExchange.Business.Indicators.Common;
+using StockExchange.Business.Models.Indicators;
 using StockExchange.DataAccess.Models;
 using System.Collections.Generic;
-using StockExchange.Business.Models.Indicators;
 
 namespace StockExchange.Business.Indicators
 {
+    /// <summary>
+    /// Relative Strength Index technical indicator
+    /// </summary>
     public class RsiIndicator : IIndicator
     {
+        /// <summary>
+        /// Default <see cref="Term"/> value for the RSI indicator
+        /// </summary>
         public const int DefaultRsiTerm = 14;
+
+        /// <summary>
+        /// Default <see cref="Minimum"/> value for the RSI indicator
+        /// </summary>
         public const int DefaultMinimum = 30;
+
+        /// <summary>
+        /// Default <see cref="Maximum"/> value for the RSI indicator
+        /// </summary>
         public const int DefaultMaximum = 70;
 
+        /// <summary>
+        /// The number of prices from previous days to include when computing 
+        /// an indicator value
+        /// </summary>
         public int Term { get; set; } = DefaultRsiTerm;
+
+        /// <summary>
+        /// The value of the lower RSI line (when crossed generates a signal)
+        /// </summary>
         public int Minimum { get; set; } = DefaultMinimum;
+
+        /// <summary>
+        /// The value of the upper RSI line (when crossed generates a signal)
+        /// </summary>
         public int Maximum { get; set; } = DefaultMaximum;
 
+        /// <inheritdoc />
         public IndicatorType Type => IndicatorType.Rsi;
 
+        /// <inheritdoc />
         public IList<IndicatorValue> Calculate(IList<Price> prices)
         {
             var gains = new List<IndicatorValue>();
@@ -35,11 +63,33 @@ namespace StockExchange.Business.Indicators
                     gains.Add(new IndicatorValue { Date = prices[i].Date, Value = 0 });
                 }
             }
-
             var averageGains = MovingAverageHelper.SmoothedMovingAverage(gains, Term);
             var averageLosses = MovingAverageHelper.SmoothedMovingAverage(losses, Term);
-
             return ComputeRsiValues(averageGains, averageLosses);
+        }
+
+        /// <inheritdoc />
+        public IList<Signal> GenerateSignals(IList<Price> prices)
+        {
+            var values = Calculate(prices);
+            var signals = new List<Signal>();
+            SignalAction previousAction = SignalAction.NoSignal;
+            foreach (var indicatorValue in values)
+            {
+                if (indicatorValue.Value > Maximum && previousAction != SignalAction.Sell)
+                {
+                    signals.Add(new Signal(SignalAction.Sell) { Date = indicatorValue.Date });
+                    previousAction = SignalAction.Sell;
+                }
+                else if (indicatorValue.Value < Minimum && previousAction != SignalAction.Buy)
+                {
+                    signals.Add(new Signal(SignalAction.Buy) {Date = indicatorValue.Date});
+                    previousAction = SignalAction.Buy;
+                }
+                else
+                    previousAction = SignalAction.NoSignal;
+            }
+            return signals;
         }
 
         private static IList<IndicatorValue> ComputeRsiValues(IList<IndicatorValue> averageGains, IList<IndicatorValue> averageLosses)
@@ -62,26 +112,5 @@ namespace StockExchange.Business.Indicators
             return result;
         }
 
-        public IList<Signal> GenerateSignals(IList<IndicatorValue> values)
-        {
-            var signals = new List<Signal>();
-            SignalAction previousAction = SignalAction.NoSignal;
-            foreach (var indicatorValue in values)
-            {
-                if (indicatorValue.Value < Minimum && previousAction != SignalAction.Buy)
-                {
-                    signals.Add(new Signal(SignalAction.Buy) { Date = indicatorValue.Date });
-                    previousAction = SignalAction.Buy;
-                }
-                else if (indicatorValue.Value > Maximum && previousAction != SignalAction.Sell)
-                {
-                    signals.Add(new Signal(SignalAction.Sell) {Date = indicatorValue.Date});
-                    previousAction = SignalAction.Sell;
-                }
-                else
-                    previousAction = SignalAction.NoSignal;
-            }
-            return signals;
-        }
     }
 }

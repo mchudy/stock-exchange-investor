@@ -3,15 +3,23 @@ using System.Web.Optimization;
 
 namespace StockExchange.Web
 {
+    /// <summary>
+    /// Configures the bundles
+    /// </summary>
     public class BundleConfig
     {
+        /// <summary>
+        /// Registeres bundles
+        /// </summary>
+        /// <param name="bundles">The bundles to register</param>
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/scripts/jquery").NonOrdering().Include(
                 "~/bower_components/jquery/dist/jquery.min.js",
                 "~/bower_components/jquery-validation/dist/jquery.validate.js",
                 "~/bower_components/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js",
-                "~/bower_components/select2/dist/js/select2.min.js"));
+                "~/bower_components/select2/dist/js/select2.min.js",
+                "~/bower_components/toastr/toastr.min.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/scripts/jquery-ui").NonOrdering().Include(
                 "~/bower_components/jquery-ui/jquery-ui.min.js",
@@ -27,7 +35,8 @@ namespace StockExchange.Web
                 "~/bower_components/datatables.net/js/jquery.dataTables.js",
                 "~/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js",
                 "~/bower_components/datatables.net-responsive/js/dataTables.responsive.min.js",
-                "~/Scripts/dataTablesExtensions.js"));
+                "~/Scripts/plugins/dataTablesFilters.js",
+                "~/Scripts/plugins/dateFilter.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/scripts/highcharts").Include(
                 "~/bower_components/highcharts/highstock.js",
@@ -39,6 +48,7 @@ namespace StockExchange.Web
                 .Include("~/bower_components/jquery-ui/themes/base/jquery-ui.min.css", new CssRewriteUrlTransform())
                 .Include("~/bower_components/Bootflat/bootflat/css/bootflat.css",
                 "~/bower_components/select2/dist/css/select2.min.css",
+                "~/bower_components/toastr/toastr.min.css",
                 "~/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker3.css",
                 "~/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css")
                 .Include("~/bower_components/font-awesome/css/font-awesome.min.css", new CssRewriteUrlTransform()));

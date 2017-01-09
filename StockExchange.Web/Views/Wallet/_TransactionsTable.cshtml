@@ -1,0 +1,39 @@
+﻿@model StockExchange.Web.Models.Wallet.WalletViewModel
+
+<div class="box box-info">
+    <div class="box-header with-border">
+        <h3 class="box-title">Recent transactions</h3>
+    </div>
+    <div class="box-body">
+        <div class="table-responsive">
+            <table id="grid" class="table table-hover table-stripe"
+                   data-ordering="false"
+                   data-searching="false"
+                   data-auto-width="false"
+                   data-scroll-collapse="true"
+                   data-processing="true"
+                   data-server-side="true"
+                   data-length-change="false"
+                   data-ajax-url="@Url.Action("GetTransactionsTable")">
+                <thead>
+                <tr>
+                    <th data-column="Date">@Html.DisplayNameFor(i => Model.Transactions.FirstOrDefault().Date)</th>
+                    <th data-column="CompanyName">@Html.DisplayNameFor(i => Model.Transactions.FirstOrDefault().CompanyName)</th>
+                    <th data-column="Price">@Html.DisplayNameFor(i => Model.Transactions.FirstOrDefault().Price)</th>
+                    <th data-column="Quantity">@Html.DisplayNameFor(i => Model.Transactions.FirstOrDefault().Quantity)</th>
+                    <th data-column="Total">@Html.DisplayNameFor(i => Model.Transactions.FirstOrDefault().Total)</th>
+                    <th data-column="Action">@Html.DisplayNameFor(i => Model.Transactions.FirstOrDefault().Action)</th>
+                    <th data-column="Profit">@Html.DisplayNameFor(i => Model.Transactions.FirstOrDefault().Profit)</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td colspan="7">
+                        <span>No data found...</span>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -8,6 +8,9 @@ using System.Web.Mvc;
 
 namespace StockExchange.Web.Controllers
 {
+    /// <summary>
+    /// Controller for account actions
+    /// </summary>
     [Authorize]
     public class AccountController : BaseController
     {
@@ -15,6 +18,12 @@ namespace StockExchange.Web.Controllers
         private readonly IAuthenticationManager _authenticationManager;
         private readonly ApplicationUserManager _userManager;
 
+        /// <summary>
+        /// Creates a new instance of <see cref="AccountController"/>
+        /// </summary>
+        /// <param name="signInManager"></param>
+        /// <param name="authenticationManager"></param>
+        /// <param name="userManager"></param>
         public AccountController(ApplicationSignInManager signInManager, IAuthenticationManager authenticationManager, ApplicationUserManager userManager)
         {
             _signInManager = signInManager;
@@ -22,6 +31,10 @@ namespace StockExchange.Web.Controllers
             _userManager = userManager;
         }
 
+        /// <summary>
+        /// Returns a login view
+        /// </summary>
+        /// <param name="returnUrl">URL to redirect to</param>
         [HttpGet]
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
@@ -30,6 +43,12 @@ namespace StockExchange.Web.Controllers
             return View();
         }
 
+        /// <summary>
+        /// Loggs in the user
+        /// </summary>
+        /// <param name="model">View model</param>
+        /// <param name="returnUrl">URL to redirect to</param>
+        /// <returns></returns>
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -51,6 +70,10 @@ namespace StockExchange.Web.Controllers
             }
         }
 
+        /// <summary>
+        /// Returns a register view
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [AllowAnonymous]
         public ActionResult Register()
@@ -58,6 +81,11 @@ namespace StockExchange.Web.Controllers
             return View();
         }
 
+        /// <summary>
+        /// Registers the user
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -84,14 +112,22 @@ namespace StockExchange.Web.Controllers
             return View(model);
         }
 
+        /// <summary>
+        /// Logs out the users
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult LogOut()
         {
             _authenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            return RedirectToAction("Price", "Price");
+            return RedirectToAction("Index", "Charts");
         }
 
+        /// <summary>
+        /// Returns the settings view
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public ActionResult Settings()
         {

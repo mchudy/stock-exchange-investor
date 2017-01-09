@@ -1,5 +1,6 @@
 ﻿@using System.Web.Optimization
 @using StockExchange.Web.Helpers
+@using StockExchange.Web.Helpers.ToastNotifications
 
 <!DOCTYPE html>
 <html lang="en">
@@ -54,21 +55,15 @@
                 <ul class="nav sidebar-menu">
                     @if (Request.IsAuthenticated)
                     {
-                        <li class="list-header"></li>
-                        <li class="@Html.IsSelected("Wallet")">
-                            <a href="@Url.Action("Index", "Wallet")">
+                        <li class="list-header">Dashboard</li>
+                        <li class="@Html.IsSelected("Dashboard")">
+                            <a href="@Url.Action("Index", "Dashboard")">
                                 <i class="fa fa-dashboard fa-lg"></i>
                                 <span>Dashboard</span>
                             </a>
                         </li>
                     }
-                    <li class="list-header">Data</li>
-                    <li class="@Html.IsSelected("Price")">
-                        <a href="@Url.Action("Price", "Price")">
-                            <i class="fa fa-table fa-lg"></i>
-                            <span>Prices</span>
-                        </a>
-                    </li>
+                    <li class="list-header">Charts</li>
                     <li class="@Html.IsSelected("Charts")">
                         <a href="@Url.Action("Index", "Charts")">
                             <i class="fa fa-line-chart fa-lg"></i>
@@ -78,10 +73,10 @@
                     @if (Request.IsAuthenticated)
                     {
                         <li class="list-header">Your investments</li>
-                        <li class="@Html.IsSelected("Transactions", "Index")">
-                            <a href="@Url.Action("Index", "Transactions")">
+                        <li class="@Html.IsSelected("Wallet")">
+                            <a href="@Url.Action("Index", "Wallet")">
                                 <i class="fa fa-usd fa-lg"></i>
-                                <span>Transactions</span>
+                                <span>Wallet</span>
                             </a>
                         </li>
                         <li class="@Html.IsSelected("Strategies")">
@@ -91,38 +86,47 @@
                             </a>
                         </li>
                         <li class="@Html.IsSelected("Simulations")">
-                            <a href="@Url.Action("Index", "Simulations")">
+                            <a href="@Url.Action("RunSimulation", "Simulations")">
                                 <i class="fa fa-play-circle fa-lg"></i>
                                 <span>Simulations</span>
                             </a>
                         </li>
                     }
+                    <li class="list-header">Data</li>
+                    <li class="@Html.IsSelected("Data")">
+                        <a href="@Url.Action("Index", "Data")">
+                            <i class="fa fa-table fa-lg"></i>
+                            <span>Historical Data</span>
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>
         <div class="main-content">
-            <h1 class="page-header">
-                @ViewBag.Title
-            </h1>
-            @RenderBody()
+            <div class="page-content">
+                <h1 class="page-header">
+                    @ViewBag.Title
+                </h1>
+                @RenderBody()
+            </div>
             <footer>
                 &copy; Bartosz Woźniak, Marcin Chudy, Mateusz Bąkała @DateTime.Now.Year - Stock Exchange Investor
             </footer>
+            <div class="page-spinner spinner spinner-big hidden"></div>
         </div>
-
     </div>
-
     <div id="modal-container" class="modal fade" tabindex="-1" role="dialog">
         <div class="modal-dialog">
-            <div class="modal-content"></div>
+            <div class="modal-content">
+                <div class="spinner"></div>
+            </div>
         </div>
     </div>
-
     @Scripts.Render("~/bundles/scripts/jquery")
     @Scripts.Render("~/bundles/scripts/jquery-ui")
     @Scripts.Render("~/bundles/scripts/bootstrap")
-
     @Scripts.Render("~/Scripts/site.js")
+    @NotificationsBuilder.ShowToastMessages(TempData?["Notifications"] as NotificationsWrapper)
     @RenderSection("scripts", false)
 </body>
 </html>

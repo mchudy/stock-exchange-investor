@@ -2,6 +2,7 @@
 @import "boxes.less";
 @import "forms.less";
 @import "variables.less";
+@import "spinner.less";
 
 @import url(https://fonts.googleapis.com/css?family=Open+Sans);
 
@@ -125,11 +126,15 @@ body {
         a {
             color: #dadada;
             font-size: 12px;
-        }
 
-        a:hover {
-            background-color: #2e2e2e;
-            color: #eeeeee;
+            &:hover {
+                background-color: #2e2e2e;
+                color: #eeeeee;
+            }
+
+            &:focus {
+                background-color: transparent;
+            }
         }
 
         i {
@@ -172,10 +177,6 @@ footer {
     color: @red;
 }
 
-.datepicker {
-    background-color: white;
-}
-
 .alert {
     border-radius: @input-radius;
 }
@@ -184,4 +185,15 @@ footer {
     width: 600px !important;
     margin: 30px auto !important;
     padding: 10px;
+}
+
+:not(a) > .fa-trash {
+    color: #bbb;
+    &:hover {
+        color: @black;
+    }
+}
+
+.btn i {
+    margin-right: 5px;
 }

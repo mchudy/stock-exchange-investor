@@ -15,6 +15,7 @@
     "highcharts": "5.0.2",
     "jquery-validation-unobtrusive": "3.2.6",
     "select2": "4.0.3",
-    "datatables.net-responsive":  "2.0.1" 
+    "datatables.net-responsive": "2.0.1",
+    "toastr":  "2.1.3"
   }
 }

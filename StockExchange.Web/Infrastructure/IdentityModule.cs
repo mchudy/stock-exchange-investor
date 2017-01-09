@@ -6,8 +6,12 @@ using System.Web;
 
 namespace StockExchange.Web.Infrastructure
 {
+    /// <summary>
+    /// Autofac module for ASP.NET Identity services
+    /// </summary>
     public class IdentityModule : Module
     {
+        /// <inheritdoc />
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterType<ApplicationUserStore>()

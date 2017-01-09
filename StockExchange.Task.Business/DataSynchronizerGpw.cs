@@ -4,6 +4,7 @@ using NPOI.SS.UserModel;
 using StockExchange.Common;
 using StockExchange.DataAccess.IRepositories;
 using StockExchange.DataAccess.Models;
+using StockExchange.Task.Business.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -14,25 +15,34 @@ using System.Reflection;
 
 namespace StockExchange.Task.Business
 {
+    /// <summary>
+    /// Synchronizes stock data using the GPW sources
+    /// </summary>
     public sealed class DataSynchronizerGpw : IDataSynchronizerGpw
     {
         private static readonly ILog Logger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         private readonly IRepository<Company> _companyRepository;
         private readonly IRepository<Price> _priceRepository;
 
+        /// <summary>
+        /// Creates a new instance of <see cref="DataSynchronizerGpw"/>
+        /// </summary>
+        /// <param name="companyRepository"></param>
+        /// <param name="priceRepository"></param>
         public DataSynchronizerGpw(IRepository<Company> companyRepository, IRepository<Price> priceRepository)
         {
             _companyRepository = companyRepository;
             _priceRepository = priceRepository;
         }
 
+        /// <inheritdoc />
         public void Sync(DateTime date)
         {
             Logger.Debug("Syncing historical data started");
 
             var dateString = date.ToString(Consts.Formats.DateGpwFormat);
             IList<Company> companies = _companyRepository.GetQueryable().ToList();
-            IList<Price> prices = _priceRepository.GetQueryable(item => item.Date == date).ToList();
+            IList<Price> prices = _priceRepository.GetQueryable().Where(item => item.Date == date).ToList();
             var pricesToInsert = new List<Price>();
             string[,] data;
             try
@@ -64,8 +74,9 @@ namespace StockExchange.Task.Business
                     companies = _companyRepository.GetQueryable().ToList();
                 }
                 var company = companies.First(item => item.Code == name);
-                if (prices.Any(item => item.CompanyId == company.Id)) continue;
-                pricesToInsert.Add(new Price
+                if (prices.Any(item => item.CompanyId == company.Id))
+                    continue;
+                var price = new Price
                 {
                     Date = day,
                     ClosePrice = close,
@@ -74,7 +85,11 @@ namespace StockExchange.Task.Business
                     LowPrice = min,
                     OpenPrice = open,
                     Volume = volumen
-                });
+                };
+                if (!PriceValidationHelper.IsInvalid(price))
+                {
+                    pricesToInsert.Add(price);
+                }
             }
             _priceRepository.BulkInsert(pricesToInsert);
             _priceRepository.Save();

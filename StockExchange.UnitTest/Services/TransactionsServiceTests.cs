@@ -1,12 +1,15 @@
 ﻿using FluentAssertions;
 using Moq;
-using StockExchange.Business.Models;
+using StockExchange.Business.ErrorHandling;
+using StockExchange.Business.Exceptions;
+using StockExchange.Business.Models.Transaction;
 using StockExchange.Business.ServiceInterfaces;
 using StockExchange.Business.Services;
 using StockExchange.DataAccess.IRepositories;
 using StockExchange.DataAccess.Models;
+using StockExchange.UnitTest.TestHelpers;
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using Xunit;
 
 namespace StockExchange.UnitTest.Services
@@ -40,20 +43,20 @@ namespace StockExchange.UnitTest.Services
         public TransactionsServiceTests()
         {
             _service = new TransactionsService(_userRepository.Object, _transactionRepository.Object);
-            _userRepository.Setup(u => u.GetQueryable(null, null, null, null, null))
-                .Returns(new List<User> { _user }.AsQueryable());
+            _userRepository.Setup(u => u.GetQueryable())
+                .Returns(new List<User> { _user }.GetTestAsyncQueryable());
         }
 
         [Fact]
-        public void Should_return_false_if_user_does_not_exist()
+        public void Should_throw_if_user_does_not_exist()
         {
             var dto = new UserTransactionDto { UserId = 4 };
-
-            _service.AddUserTransaction(dto).Should().BeFalse();
+            Func<System.Threading.Tasks.Task> act = async () => await _service.AddTransaction(dto);
+            act.ShouldThrow<BusinessException>().Where(e => e.Status == ErrorStatus.DataNotFound);
         }
 
         [Fact]
-        public void Should_update_user_budget_when_selling()
+        public async System.Threading.Tasks.Task Should_update_user_budget_when_selling()
         {
             var dto = new UserTransactionDto
             {
@@ -62,14 +65,12 @@ namespace StockExchange.UnitTest.Services
                 Price = 5,
                 CompanyId = ownedCompanyId
             };
-
-            _service.AddUserTransaction(dto);
-
+            await _service.AddTransaction(dto);
             _user.Budget.Should().Be(110);
         }
 
         [Fact]
-        public void Should_update_user_budget_when_buying()
+        public async System.Threading.Tasks.Task Should_update_user_budget_when_buying()
         {
             var dto = new UserTransactionDto
             {
@@ -78,9 +79,7 @@ namespace StockExchange.UnitTest.Services
                 Price = 10,
                 CompanyId = notOwnedCompanyId
             };
-
-            _service.AddUserTransaction(dto);
-
+            await _service.AddTransaction(dto);
             _user.Budget.Should().Be(80);
         }
 
@@ -94,8 +93,8 @@ namespace StockExchange.UnitTest.Services
                 Price = 10,
                 CompanyId = notOwnedCompanyId
             };
-
-            _service.AddUserTransaction(dto).Should().BeFalse();
+            Func<System.Threading.Tasks.Task> act = async () => await _service.AddTransaction(dto);
+            act.ShouldThrow<BusinessException>().Where(e => e.Status == ErrorStatus.BusinessRuleViolation);
             _user.Transactions.Count.Should().Be(1);
         }
 
@@ -109,8 +108,8 @@ namespace StockExchange.UnitTest.Services
                 Price = 10,
                 CompanyId = ownedCompanyId
             };
-
-            _service.AddUserTransaction(dto).Should().BeFalse();
+            Func<System.Threading.Tasks.Task> act = async () => await _service.AddTransaction(dto);
+            act.ShouldThrow<BusinessException>().Where(e => e.Status == ErrorStatus.BusinessRuleViolation);
             _user.Transactions.Count.Should().Be(1);
         }
 
@@ -124,8 +123,8 @@ namespace StockExchange.UnitTest.Services
                 Price = 1000,
                 CompanyId = notOwnedCompanyId
             };
-
-            _service.AddUserTransaction(dto).Should().BeFalse();
+            Func<System.Threading.Tasks.Task> act = async () => await _service.AddTransaction(dto);
+            act.ShouldThrow<BusinessException>().Where(e => e.Status == ErrorStatus.BusinessRuleViolation);
             _user.Transactions.Count.Should().Be(1);
         }
     }

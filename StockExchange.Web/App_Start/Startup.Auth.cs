@@ -10,8 +10,15 @@ using System;
 
 namespace StockExchange.Web
 {
+    /// <summary>
+    /// OWIN startup class of the application
+    /// </summary>
     public partial class Startup
     {
+        /// <summary>
+        /// Configures the authentication in the application
+        /// </summary>
+        /// <param name="app"></param>
         public void ConfigureAuth(IAppBuilder app)
         {
             app.UseCookieAuthentication(new CookieAuthenticationOptions
@@ -23,7 +30,7 @@ namespace StockExchange.Web
                     OnValidateIdentity = SecurityStampValidator.OnValidateIdentity<ApplicationUserManager, User, int>(
                          validateInterval: TimeSpan.FromMinutes(30),
                          regenerateIdentityCallback: (manager, user) => user.GenerateUserIdentityAsync(manager),
-                         getUserIdCallback: (id) => id.GetUserId<int>()
+                         getUserIdCallback: id => id.GetUserId<int>()
                     )
                 }
             });

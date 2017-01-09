@@ -1,35 +1,55 @@
-﻿using StockExchange.Business.Models;
+﻿using StockExchange.Business.Extensions;
+using StockExchange.Business.Models.Filters;
+using StockExchange.Business.Models.Paging;
+using StockExchange.Business.Models.Wallet;
 using StockExchange.Business.ServiceInterfaces;
-using StockExchange.DataAccess.IRepositories;
 using StockExchange.DataAccess.Models;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace StockExchange.Business.Services
 {
+    /// <summary>
+    /// Provides methods for operating on user's wallet
+    /// </summary>
     public class WalletService : IWalletService
     {
-        private readonly IRepository<UserTransaction> _transactionsRepository;
+        private readonly ITransactionsService _transactionsService;
         private readonly IPriceService _priceService;
 
-        public WalletService(IRepository<UserTransaction> transactionsRepository, IPriceService priceService)
+        /// <summary>
+        /// Creates a new <see cref="WalletService"/> instance
+        /// </summary>
+        /// <param name="transactionsService"></param>
+        /// <param name="priceService"></param>
+        public WalletService(ITransactionsService transactionsService, IPriceService priceService)
         {
-            _transactionsRepository = transactionsRepository;
+            _transactionsService = transactionsService;
             _priceService = priceService;
         }
 
-        public IList<OwnedCompanyStocksDto> GetOwnedStocks(int userId)
+        /// <inheritdoc />
+        public async Task<IList<OwnedCompanyStocksDto>> GetOwnedStocks(int userId)
         {
-            var transactionsByCompany = GetTransactionsByCompany(userId);
-            var currentPrices = _priceService.GetCurrentPrices(transactionsByCompany.Keys.ToList());
-
+            var transactionsByCompany = await _transactionsService.GetTransactionsByCompany(userId);
+            var currentPrices = await _priceService.GetCurrentPrices(transactionsByCompany.Keys.ToList());
             return transactionsByCompany
                 .Select(entry => BuildCompanyOwnedStocksDto(userId, entry, currentPrices))
-                .ToList();;
+                .ToList();
         }
 
-        private OwnedCompanyStocksDto BuildCompanyOwnedStocksDto(int userId, KeyValuePair<int, List<UserTransaction>> entry, IList<Price> currentPrices)
+        /// <inheritdoc />
+        public async Task<PagedList<OwnedCompanyStocksDto>> GetOwnedStocks(int currentUserId, PagedFilterDefinition<TransactionFilter> searchMessage)
+        {
+            var transactionsByCompany = await _transactionsService.GetTransactionsByCompany(currentUserId);
+            var currentPrices = await _priceService.GetCurrentPrices(transactionsByCompany.Keys.ToList());
+            return transactionsByCompany
+                .Select(entry => BuildCompanyOwnedStocksDto(currentUserId, entry, currentPrices))
+                .ToPagedList(searchMessage.Start, searchMessage.Length);
+        }
+
+        private static OwnedCompanyStocksDto BuildCompanyOwnedStocksDto(int userId, KeyValuePair<int, List<UserTransaction>> entry, IEnumerable<Price> currentPrices)
         {
             var transactions = entry.Value;
             decimal currentPrice = currentPrices.FirstOrDefault(p => p.CompanyId == entry.Key)?.ClosePrice ?? 0;
@@ -40,20 +60,11 @@ namespace StockExchange.Business.Services
                 CompanyName = transactions.FirstOrDefault()?.Company?.Code,
                 CurrentPrice = currentPrice,
                 OwnedStocksCount = ownedStocksCount,
-                CurrentValue = currentPrice*ownedStocksCount,
+                CurrentValue = currentPrice * ownedStocksCount,
                 UserId = userId,
-                TotalBuyPrice = transactions.Sum(t => t.Quantity*t.Price)
+                TotalBuyPrice = transactions.Sum(t => t.Quantity * t.Price),
+                AverageBuyPrice = transactions.Sum(t => t.Quantity * t.Price) / ownedStocksCount
             };
-        }
-
-        private Dictionary<int, List<UserTransaction>> GetTransactionsByCompany(int userId)
-        {
-            return _transactionsRepository.GetQueryable()
-                .Include(t => t.Company)
-                .Where(t => t.UserId == userId)
-                .GroupBy(t => t.CompanyId)
-                .Where(t => t.Sum(tr => tr.Quantity) > 0)
-                .ToDictionary(t => t.Key, t => t.ToList());
         }
     }
 }

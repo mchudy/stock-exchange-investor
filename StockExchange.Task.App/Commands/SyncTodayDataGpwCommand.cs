@@ -8,6 +8,9 @@ using System.Reflection;
 
 namespace StockExchange.Task.App.Commands
 {
+    /// <summary>
+    /// Synchronizes today's stock data with the database using GPW sources
+    /// </summary>
     [CommandName(Consts.Commands.SyncTodayDataGpw, "Synchronizes data from the last day")]
     internal class SyncTodayDataGpwCommand : ICommand
     {

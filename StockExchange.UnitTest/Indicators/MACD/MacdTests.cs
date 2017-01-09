@@ -1,13 +1,14 @@
-﻿using FluentAssertions;
+﻿using System;
+using System.Collections.Generic;
+using FluentAssertions;
 using StockExchange.Business.Indicators;
+using StockExchange.Business.Indicators.Common;
 using StockExchange.Business.Models.Indicators;
 using StockExchange.DataAccess.Models;
 using StockExchange.UnitTest.TestHelpers;
-using System;
-using System.Collections.Generic;
 using Xunit;
 
-namespace StockExchange.UnitTest.Indicators
+namespace StockExchange.UnitTest.Indicators.MACD
 {
     /// <summary>
     /// Tests for macd indicator - based on example data from MacdData.
@@ -24,7 +25,6 @@ namespace StockExchange.UnitTest.Indicators
         public void ExpotentialMovingAverage26Test()
         {
             var actual26DaysEma = MovingAverageHelper.ExpotentialMovingAverage(MacdData.HistoricalData, 26);
-
             actual26DaysEma.ShouldAllBeEquivalentTo(MacdData.Ema26DaysResults);
         }
 
@@ -32,7 +32,6 @@ namespace StockExchange.UnitTest.Indicators
         public void ExpotentialMovingAverage12Test()
         {
             var actual12DaysEma = MovingAverageHelper.ExpotentialMovingAverage(MacdData.HistoricalData, 12);
-
             actual12DaysEma.ShouldAllBeEquivalentTo(MacdData.Ema12DaysResults);
         }
 
@@ -44,9 +43,7 @@ namespace StockExchange.UnitTest.Indicators
                 new Price {ClosePrice = 10, Date = new DateTime(2016, 10, 1)},
                 new Price {ClosePrice = 20, Date = new DateTime(2016, 10, 4)}
             };
-
             var ema = MovingAverageHelper.ExpotentialMovingAverage(data, 1);
-
             ema.Count.Should().Be(2);
         }
 
@@ -54,9 +51,7 @@ namespace StockExchange.UnitTest.Indicators
         public void SignalLineTest()
         {
             var indicator = new MacdIndicator();
-
             var actual9DaysSignalLine = indicator.Calculate(MacdData.HistoricalData);
-
             var expected9DaysSignalLine = MacdData.Signal9DaysResults;
             Assert.Equal(expected9DaysSignalLine.Count, actual9DaysSignalLine.Count);
             for (var i = 0; i < expected9DaysSignalLine.Count; i++)

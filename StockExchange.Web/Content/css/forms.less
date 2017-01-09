@@ -37,6 +37,10 @@
 }
 
 .form-group {
+    .help-block {
+        color: @red;
+    }
+
   &.has-success {
     label {
       color: @green;
@@ -78,6 +82,10 @@
       color: @red;
     }
   }
+
+  legend {
+      font-size: 16px;
+  }
 }
 
 .input-group {
@@ -98,10 +106,32 @@
     border-radius: @input-radius;
 }
 
-.select2-container--default .select2-selection--multiple {
-    border-radius: @input-radius;
+.select2-container--default {
+    .select2-selection--multiple {
+        border-radius: @input-radius;
+    }
+
+    .select2-selection--single {
+        height: 34px !important;
+        border-radius: @input-radius;
+        border: 1px solid rgb(210, 214, 222);
+
+        .select2-selection__rendered {
+            line-height: 32px !important;
+        }
+        .select2-selection__choice {
+            line-height: 20px !important;
+        }
+        select2-search__field {
+            padding-right: 5px;
+        }
+    }
 }
 
 .radio-label {
     margin-right: 8px;
+}
+
+.datepicker {
+    background-color: white;
 }

@@ -1,0 +1,3 @@
+StockExchange.Web\Connections.config
+StockExchange.Task.App\Connections.config
+StockExchange.Migrations\Connections.config

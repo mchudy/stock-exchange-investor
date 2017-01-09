@@ -1,0 +1,36 @@
+﻿@model StockExchange.Web.Models.Dashboard.DashboardViewModel
+
+<div class="box box-info">
+    <div class="box-header with-border">
+        <h3 class="box-title">Today Signals - Tips: Buy/Sell Stocks</h3>
+    </div>
+    <div class="box-body">
+        <div class="table-responsive">
+            <table id="signal-grid" class="table table-hover table-stripe"
+                   data-length-menu="[15, 30, 40]"
+                   data-page-length="15"
+                   data-ordering="false"
+                   data-searching="false"
+                   data-auto-width="false"
+                   data-scroll-collapse="true"
+                   data-processing="true"
+                   data-server-side="true"
+                   data-ajax-url="@Url.Action("GetTodaySignalsTable")">
+                <thead>
+                    <tr>
+                        <th data-column="Company">@Html.DisplayNameFor(i => Model.TodaySignals.FirstOrDefault().Company)</th>
+                        <th data-column="Indicator">@Html.DisplayNameFor(i => Model.TodaySignals.FirstOrDefault().Indicator)</th>
+                        <th data-column="Action">@Html.DisplayNameFor(i => Model.TodaySignals.FirstOrDefault().Action)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="3">
+                            <span>No data found...</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,37 @@
+﻿@model StockExchange.Web.Models.Dashboard.DashboardViewModel
+
+<div class="box box-info">
+    <div class="box-header with-border">
+        <h3 class="box-title">Most Active</h3>
+    </div>
+    <div class="box-body">
+        <div class="table-responsive">
+            <table id="most-grid" class="table table-hover table-stripe"
+                    data-ordering="false"
+                   data-searching="false"
+                   data-auto-width="false"
+                   data-scroll-collapse="true"
+                   data-processing="true"
+                   data-server-side="true"
+                   data-length-change="false"
+                   data-ajax-url="@Url.Action("GetMostActiveTable")">
+                <thead>
+                    <tr>
+                        <th data-column="CompanyName">@Html.DisplayNameFor(i => Model.MostActive.FirstOrDefault().CompanyName)</th>
+                        <th data-column="ClosePrice">@Html.DisplayNameFor(i => Model.MostActive.FirstOrDefault().ClosePrice)</th>
+                        <th data-column="Change">@Html.DisplayNameFor(i => Model.MostActive.FirstOrDefault().Change)</th>
+                        <th data-column="Volume">@Html.DisplayNameFor(i => Model.MostActive.FirstOrDefault().Volume)</th>
+                       
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="5">
+                            <span>No data found...</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

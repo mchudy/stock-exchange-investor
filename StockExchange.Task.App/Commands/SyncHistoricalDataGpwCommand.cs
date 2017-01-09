@@ -7,6 +7,9 @@ using StockExchange.Task.Business;
 
 namespace StockExchange.Task.App.Commands
 {
+    /// <summary>
+    /// Synchronizes stock data with the database using GPW sources
+    /// </summary>
     [CommandName(Consts.Commands.SyncDataGpw, "Synchronizes historical data")]
     internal sealed class SyncHistoricalDataGpwCommand : ICommand
     {

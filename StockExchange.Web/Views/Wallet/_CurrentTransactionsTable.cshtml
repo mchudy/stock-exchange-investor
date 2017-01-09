@@ -1,0 +1,39 @@
+﻿@model StockExchange.Web.Models.Wallet.WalletViewModel
+
+<div class="box box-info">
+    <div class="box-header with-border">
+        <h3 class="box-title">Currently Owned Stocks</h3>
+    </div>
+    <div class="box-body">
+        <div class="table-responsive">
+            <table id="current-grid" class="table table-hover table-stripe"
+                    data-ordering="false"
+                   data-searching="false"
+                   data-auto-width="false"
+                   data-scroll-collapse="true"
+                   data-processing="true"
+                   data-server-side="true"
+                   data-length-change="false"
+                   data-ajax-url="@Url.Action("GetCurrentTransactionsTable")">
+                <thead>
+                    <tr>
+                        <th data-column="CompanyName">@Html.DisplayNameFor(i => Model.CurrentTransactions.FirstOrDefault().CompanyName)</th>
+                        <th data-column="OwnedStocksCount">@Html.DisplayNameFor(i => Model.CurrentTransactions.FirstOrDefault().OwnedStocksCount)</th>
+                        <th data-column="AverageBuyPrice">@Html.DisplayNameFor(i => Model.CurrentTransactions.FirstOrDefault().AverageBuyPrice)</th>
+                        <th data-column="TotalBuyPrice">@Html.DisplayNameFor(i => Model.CurrentTransactions.FirstOrDefault().TotalBuyPrice)</th>
+                        <th data-column="CurrentPrice">@Html.DisplayNameFor(i => Model.CurrentTransactions.FirstOrDefault().CurrentPrice)</th>
+                        <th data-column="CurrentValue">@Html.DisplayNameFor(i => Model.CurrentTransactions.FirstOrDefault().CurrentValue)</th>
+                        <th data-column="Profit" class="width-smaller">@Html.DisplayNameFor(i => Model.CurrentTransactions.FirstOrDefault().Profit)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="7">
+                            <span>No data found...</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

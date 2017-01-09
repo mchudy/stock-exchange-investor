@@ -25,7 +25,6 @@ namespace StockExchange.Task.App
                         var parameters = args.Skip(1).ToList();
                         if (scope.IsRegisteredWithName(commandName, typeof(ICommand)))
                         {
-                            // TODO: Task Log Db
                             scope.ResolveNamed<ICommand>(commandName).Execute(parameters);
                         }
                         else

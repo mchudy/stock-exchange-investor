@@ -24,6 +24,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\StockExchange.Business.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -32,6 +33,16 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Release\StockExchange.Business.XML</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Production|AnyCPU'">
+    <OutputPath>bin\Production\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
@@ -40,6 +51,10 @@
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="log4net, Version=1.2.15.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.5\lib\net45-full\log4net.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -51,6 +66,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Activities" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -61,49 +77,73 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ErrorHandling\ErrorStatus.cs" />
+    <Compile Include="Exceptions\BusinessException.cs" />
     <Compile Include="Exceptions\IndicatorNotFoundException.cs" />
+    <Compile Include="ErrorHandling\ValidationError.cs" />
+    <Compile Include="Indicators\Common\Intersections\IntersectionType.cs" />
+    <Compile Include="Indicators\Common\Intersections\IntersectionInfo.cs" />
+    <Compile Include="Models\Indicators\SignalAction.cs" />
+    <Compile Include="Models\Paging\PagedList.cs" />
     <Compile Include="Indicators\AtrIndicator.cs" />
-    <Compile Include="Indicators\IIndicatorFactory.cs" />
-    <Compile Include="Indicators\IndicatorFactory.cs" />
-    <Compile Include="Indicators\PivotPointIndicator.cs" />
+    <Compile Include="Indicators\Common\IIndicatorFactory.cs" />
+    <Compile Include="Indicators\Common\IndicatorFactory.cs" />
+    <Compile Include="Indicators\Common\Intersections\IntersectionHelper.cs" />
+    <Compile Include="Indicators\PpIndicator.cs" />
+    <Compile Include="Indicators\EmaIndicator.cs" />
+    <Compile Include="Indicators\AdxIndicator.cs" />
+    <Compile Include="Indicators\VptIndicator.cs" />
+    <Compile Include="Indicators\VhfIndicator.cs" />
+    <Compile Include="Indicators\VrocIndicator.cs" />
+    <Compile Include="Indicators\SmaIndicator.cs" />
+    <Compile Include="Models\Filters\TransactionFilter.cs" />
     <Compile Include="Models\Indicators\CompanyIndicatorValues.cs" />
+    <Compile Include="Models\Indicators\IndicatorDto.cs" />
     <Compile Include="Models\Indicators\IndicatorProperty.cs" />
-    <Compile Include="Indicators\IndicatorType.cs" />
+    <Compile Include="Indicators\Common\IndicatorType.cs" />
     <Compile Include="Indicators\ObvIndicator.cs" />
     <Compile Include="Indicators\RocIndicator.cs" />
+    <Compile Include="Models\Indicators\ParameterizedIndicator.cs" />
+    <Compile Include="Models\Indicators\SignalEvent.cs" />
+    <Compile Include="Models\Indicators\TodaySignal.cs" />
+    <Compile Include="Models\Price\MostActivePriceDto.cs" />
+    <Compile Include="Models\Simulations\ExtremeSimulationValue.cs" />
+    <Compile Include="Models\Simulations\ExtremeTransactionResult.cs" />
+    <Compile Include="Models\Simulations\SimulationTransactionDto.cs" />
+    <Compile Include="Models\Strategy\StrategyDto.cs" />
     <Compile Include="Models\Wallet\OwnedCompanyStocksDto.cs" />
-    <Compile Include="Models\Simulations\CompanyStockQuantity.cs" />
     <Compile Include="Models\Indicators\IndicatorValue.cs" />
-    <Compile Include="Indicators\MovingAverageHelper.cs" />
+    <Compile Include="Indicators\Common\MovingAverageHelper.cs" />
     <Compile Include="Indicators\RsiIndicator.cs" />
-    <Compile Include="Models\Signal.cs" />
-    <Compile Include="Models\CompanyPricesDto.cs" />
-    <Compile Include="Models\Simulations\SimulationCompany.cs" />
-    <Compile Include="Models\Simulations\SimulationResult.cs" />
-    <Compile Include="Models\Simulations\SimulationValue.cs" />
-    <Compile Include="Models\StrategyDto.cs" />
-    <Compile Include="Models\Simulations\SimulationTransaction.cs" />
-    <Compile Include="Models\UserTransactionDto.cs" />
+    <Compile Include="Models\Indicators\Signal.cs" />
+    <Compile Include="Models\Price\CompanyPricesDto.cs" />
+    <Compile Include="Models\Simulations\SimulationDto.cs" />
+    <Compile Include="Models\Simulations\SimulationResultDto.cs" />
+    <Compile Include="Models\Transaction\UserTransactionDto.cs" />
     <Compile Include="ServiceInterfaces\IIndicatorsService.cs" />
+    <Compile Include="ServiceInterfaces\ICompanyService.cs" />
+    <Compile Include="ServiceInterfaces\ISimulationService.cs" />
     <Compile Include="Services\IndicatorsService.cs" />
     <Compile Include="ServiceInterfaces\IPriceService.cs" />
     <Compile Include="ServiceInterfaces\IStrategyService.cs" />
     <Compile Include="ServiceInterfaces\ITransactionsService.cs" />
     <Compile Include="ServiceInterfaces\IUserService.cs" />
     <Compile Include="ServiceInterfaces\IWalletService.cs" />
+    <Compile Include="Services\CompanyService.cs" />
     <Compile Include="Services\PriceService.cs" />
-    <Compile Include="Extensions\PagedListExtension.cs" />
-    <Compile Include="Extensions\QueryableExtension.cs" />
+    <Compile Include="Extensions\PagedListExtensions.cs" />
+    <Compile Include="Extensions\IQueryableExtensions.cs" />
     <Compile Include="Extensions\SortOrderAttribute.cs" />
-    <Compile Include="Indicators\IIndicator.cs" />
+    <Compile Include="Indicators\Common\IIndicator.cs" />
     <Compile Include="Indicators\MacdIndicator.cs" />
-    <Compile Include="Models\CompanyDto.cs" />
+    <Compile Include="Models\Company\CompanyDto.cs" />
     <Compile Include="Models\Filters\FilterDefinition.cs" />
     <Compile Include="Models\Filters\IFilter.cs" />
     <Compile Include="Models\Filters\PagedFilterDefinition.cs" />
-    <Compile Include="Models\PriceDto.cs" />
+    <Compile Include="Models\Price\PriceDto.cs" />
     <Compile Include="Models\Filters\PriceFilter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\SimulationService.cs" />
     <Compile Include="Services\StrategyService.cs" />
     <Compile Include="Services\TransactionsService.cs" />
     <Compile Include="Services\UserService.cs" />
@@ -122,9 +162,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Validation\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

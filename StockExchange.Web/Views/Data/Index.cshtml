@@ -1,0 +1,23 @@
+﻿@using System.Web.Optimization
+@model StockExchange.Web.Models.Price.PriceViewModel
+@{
+    ViewBag.Title = "Data";
+}
+<div class="row">
+    <div class="col-md-11 col-centered">
+        @Html.Partial("_PricesDataTable")
+    </div>
+</div>
+
+    @section scripts
+{
+
+        @Scripts.Render("~/bundles/scripts/datatables")
+        @Scripts.Render("~/Scripts/Views/pricesView.js")
+    }
+
+    @section css
+{
+        @Styles.Render("~/bundles/styles/jquery-ui-multiselect")
+        @Styles.Render("~/Content/css/dataTableFix.css")
+    }

@@ -1,0 +1,105 @@
+﻿@using System.Web.Optimization
+@using StockExchange.Business.Models.Strategy
+@model StockExchange.Web.Models.Simulation.SimulationViewModel
+@{
+    ViewBag.Title = "Simulations";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-4 col-centered">
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Run simulation</h3>
+                </div>
+                <div class="box-body col-sm-10 col-centered">
+                    @if (!Model.Strategies.Any())
+                    {
+                        <div class="alert alert-warning alert-dismissable">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                            Looks like you haven't defined any investment strategy yet. To create one, click <a href="@Url.Action("Index", "Strategies")">here</a>.
+                        </div>
+                    }
+                    @using (Html.BeginForm("RunSimulation", "Simulations", new { ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form", id="run-simulation-form" }))
+                    {
+                        <div class="form-group has-feedback">
+                            @Html.LabelFor(m => m.Strategies, new { @class = "col-sm-4 control-label" })
+                            <div class="col-sm-8 input-group">
+                                @* ReSharper disable once UnknownCssClass *@
+                                @Html.DropDownListFor(x => x.SelectedStrategyId, new SelectList(Model.Strategies, nameof(StrategyDto.Id), nameof(StrategyDto.Name)), "Select Strategy", new { @class = "form-control strategy-select" })
+                                <span class="glyphicon form-control-feedback"></span>
+                                @Html.ValidationMessageFor(m => m.SelectedStrategyId, null, new { @class = "help-block" })
+                            </div>
+                        </div>
+
+                        <div class="form-group has-feedback">
+                            @Html.LabelFor(m => m.StartDate, new { @class = "col-sm-4 control-label" })
+                            <div class="input-group col-sm-8">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                                @Html.TextBoxFor(m => m.StartDate, new { @class = "form-control", Value = Model.StartDate.ToShortDateString() })
+                                <span class="glyphicon form-control-feedback"></span>
+                            </div>
+                            <div class="input-group col-sm-8 col-sm-offset-4">
+                                @Html.ValidationMessageFor(m => m.StartDate, null, new { @class = "help-block" })
+                            </div>
+                        </div>
+
+                        <div class="form-group has-feedback">
+                            @Html.LabelFor(m => m.EndDate, new { @class = "col-sm-4 control-label" })
+                            <div class="input-group col-sm-8">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                                @Html.TextBoxFor(m => m.EndDate, new { @class = "form-control", Value = Model.EndDate.ToShortDateString() })
+                                <span class="glyphicon form-control-feedback"></span>
+                            </div>
+                            <div class="input-group col-sm-8 col-sm-offset-4">
+                                @Html.ValidationMessageFor(m => m.EndDate, null, new { @class = "help-block" })
+                            </div>
+                        </div>
+
+                        <div class="form-group has-feedback">
+                            @Html.LabelFor(m => m.Budget, new { @class = "col-sm-4 control-label" })
+                            <div class="input-group col-sm-8">
+                                @Html.TextBoxFor(m => m.Budget, new { @class = "form-control", Value = Model.Budget })
+                                <span class="glyphicon form-control-feedback"></span>
+                                @Html.ValidationMessageFor(m => m.Budget, null, new { @class = "help-block" })
+                            </div>
+                        </div>
+
+                        <div class="form-group has-feedback">
+                            @Html.LabelFor(m => m.Companies, new { @class = "col-sm-4 control-label" })
+                            <div class="col-sm-8 input-group">
+                                @* ReSharper disable once UnknownCssClass *@
+                                @Html.DropDownListFor(m => m.SelectedCompanyIds, new MultiSelectList(Model.Companies, "Id", "Name"),
+                                    new { @class = "form-control company-select", multiple = "" })
+                                <span class="glyphicon form-control-feedback"></span>
+                                @Html.ValidationMessageFor(m => m.SelectedCompanyIds, null, new { @class = "help-block" })
+                            </div>
+
+                            <div class="checkbox col-sm-8 col-sm-offset-4">
+                                <div class="icheckbox_flat">
+                                    @Html.CheckBoxFor(m => m.AllCompanies)
+                                </div>
+                                @Html.LabelFor(m => m.AllCompanies, new { @class = "control-label" })
+                            </div>
+
+                        </div>
+
+                        <div class="form-group">
+                            <button class="btn btn-success pull-right" type="submit">Run</button>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts
+{
+    @Scripts.Render("~/Scripts/Views/simulationView.js")
+}

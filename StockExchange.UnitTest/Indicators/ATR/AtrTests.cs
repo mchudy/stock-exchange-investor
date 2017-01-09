@@ -29,9 +29,7 @@ namespace StockExchange.UnitTest.Indicators.ATR
                 new Price {HighPrice = 8, LowPrice = 2, ClosePrice = 4, Date = date.AddDays(1)}
             };
             _indicator.Term = 2;
-
             var values = _indicator.Calculate(prices);
-
             values.Count.Should().Be(1);
             values[0].Value.Should().Be(4);
         }
@@ -40,9 +38,7 @@ namespace StockExchange.UnitTest.Indicators.ATR
         public void Test_for_default_term()
         {
             var values = _indicator.Calculate(AtrData.HistoricalData);
-
             values.ShouldAllBeEquivalentTo(AtrData.Term14Results);
         }
-
     }
 }

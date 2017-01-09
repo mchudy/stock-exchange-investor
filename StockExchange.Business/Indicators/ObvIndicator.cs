@@ -1,14 +1,19 @@
-﻿using StockExchange.Business.Models;
+﻿using StockExchange.Business.Indicators.Common;
+using StockExchange.Business.Models.Indicators;
 using StockExchange.DataAccess.Models;
 using System.Collections.Generic;
-using StockExchange.Business.Models.Indicators;
 
 namespace StockExchange.Business.Indicators
 {
+    /// <summary>
+    /// OBV technical indicator
+    /// </summary>
     public class ObvIndicator : IIndicator
     {
+        /// <inheritdoc />
         public IndicatorType Type => IndicatorType.Obv;
 
+        /// <inheritdoc />
         public IList<IndicatorValue> Calculate(IList<Price> prices)
         {
             var values = new List<IndicatorValue>
@@ -35,9 +40,29 @@ namespace StockExchange.Business.Indicators
             return values;
         }
 
-        public IList<Signal> GenerateSignals(IList<IndicatorValue> values)
+        /// <inheritdoc />
+        public IList<Signal> GenerateSignals(IList<Price> prices)
         {
             var signals = new List<Signal>();
+            var values = Calculate(prices);
+            const int trendTerm = 20;
+            var trend = MovingAverageHelper.ExpotentialMovingAverage(values, trendTerm);
+            SignalAction lastAction = SignalAction.NoSignal;
+            for (int i = trendTerm; i < prices.Count; i++)
+            {
+                if (trend[i - trendTerm].Value < trend[i - trendTerm + 1].Value && values[i].Value > prices[i].Volume)
+                {
+                    if (lastAction == SignalAction.Sell) continue;
+                    signals.Add(new Signal(SignalAction.Sell) {Date = prices[i].Date});
+                    lastAction = SignalAction.Sell;
+                }
+                else if(trend[i-trendTerm].Value > trend[i-trendTerm+1].Value && values[i].Value < prices[i].Volume)
+                {
+                    if (lastAction == SignalAction.Buy) continue;
+                    signals.Add(new Signal(SignalAction.Buy) {Date = prices[i].Date});
+                    lastAction = SignalAction.Buy;
+                }
+            } 
             return signals;
         }
     }

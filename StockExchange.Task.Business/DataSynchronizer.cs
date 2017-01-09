@@ -10,24 +10,35 @@ using System.Threading.Tasks;
 
 namespace StockExchange.Task.Business
 {
+    /// <summary>
+    /// Synchronizes stock data
+    /// </summary>
     public sealed class DataSynchronizer : IDataSynchronizer
     {
         private static readonly ILog Logger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         private readonly IRepository<Company> _companyRepository;
         private readonly IFactory<IRepository<Price>> _priceRepositoryFactory;
 
+        /// <summary>
+        /// Creates a new instance of <see cref="DataSynchronizer"/>
+        /// </summary>
+        /// <param name="companyRepository"></param>
+        /// <param name="priceRepositoryFactory"></param>
         public DataSynchronizer(IRepository<Company> companyRepository, IFactory<IRepository<Price>> priceRepositoryFactory)
         {
             _companyRepository = companyRepository;
             _priceRepositoryFactory = priceRepositoryFactory;
         }
 
+        /// <inheritdoc />
         public void Sync(DateTime startDate, DateTime endDate, IEnumerable<string> companyCodes = null)
         {
             Logger.Debug("Syncing historical data started");
             var startDateString = startDate.ToString(Consts.Formats.DateFormat);
             var endDateString = endDate.ToString(Consts.Formats.DateFormat);
-            IList<Company> companies = companyCodes == null ? _companyRepository.GetQueryable().ToList() : _companyRepository.GetQueryable(item => companyCodes.ToList().Contains(item.Code)).ToList();
+            IList<Company> companies = companyCodes == null 
+                ? _companyRepository.GetQueryable().ToList() 
+                : _companyRepository.GetQueryable().Where(item => companyCodes.ToList().Contains(item.Code)).ToList();
             IList<Price> prices = _priceRepositoryFactory.CreateInstance().GetQueryable().ToList();
             Parallel.ForEach(companies, company => ThreadSync(startDateString, endDateString, company, prices));
             Logger.Debug("Syncing historical data ended.");

@@ -1,11 +1,20 @@
-﻿using StockExchange.DataAccess.Models;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace StockExchange.Business.Models.Indicators
 {
+    /// <summary>
+    /// Contains indicator values computed for the company
+    /// </summary>
     public class CompanyIndicatorValues
     {
-        public Company Company { get; set; }
+        /// <summary>
+        /// The company
+        /// </summary>
+        public DataAccess.Models.Company Company { get; set; }
+
+        /// <summary>
+        /// The computed indicator values
+        /// </summary>
         public IList<IndicatorValue> IndicatorValues { get; set; } = new List<IndicatorValue>();
     }
 }
