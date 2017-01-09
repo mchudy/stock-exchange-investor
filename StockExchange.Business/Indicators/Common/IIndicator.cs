@@ -19,7 +19,7 @@ namespace StockExchange.Business.Indicators.Common
         /// Gets the number of days in which indicator values are not defined.
         /// </summary>
         [IngoreIndicatorProperty]
-        int IgnoredDays { get; }
+        int RequiredPricesCountToSignal { get; }
 
         /// <summary>
         /// Calculates the indicator for the given prices

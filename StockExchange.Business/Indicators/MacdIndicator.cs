@@ -51,7 +51,7 @@ namespace StockExchange.Business.Indicators
 
         /// <inheritdoc />
         [IngoreIndicatorProperty]
-        public int IgnoredDays { get; }
+        public int RequiredPricesCountToSignal { get; }
 
         /// <inheritdoc />
         public IList<IndicatorValue> Calculate(IList<Price> prices)
