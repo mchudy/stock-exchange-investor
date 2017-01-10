@@ -154,15 +154,15 @@ namespace StockExchange.Business.Services
             var indicators = GetAllIndicators();
             var indicatorObjects = indicators.Select(indicator => _indicatorFactory.CreateIndicator(indicator.IndicatorType)).ToList();
 
-            //TODO: why 100?
-            var prices = await _priceService.GetCurrentPrices(100);
             var companies = await _companyService.GetCompanies();
             var maxDate = await _priceService.GetMaxDate();
+            var prices = await _priceService.GetCurrentPrices(indicatorObjects.Max(i => i.RequiredPricesCountToSignal));
 
             var computed = new List<TodaySignal>();
             foreach (var company in companies)
             {
-                var companyPrices = prices.Where(item => item.CompanyId == company.Id).OrderBy(item => item.Date).ToList();
+                var companyPrices =
+                        prices.Where(item => item.CompanyId == company.Id).OrderBy(item => item.Date).ToList();
                 if (!companyPrices.Any()) continue;
                 foreach (var indicator in indicatorObjects)
                 {
@@ -173,23 +173,34 @@ namespace StockExchange.Business.Services
                     }
                     catch (Exception ex)
                     {
-                        logger.Warn($"Error when generating signals for company {company.Code} and indicator {indicator.Type}", ex);
+                        logger.Warn(
+                            $"Error when generating signals for company {company.Code} and indicator {indicator.Type}",
+                            ex);
                     }
                     var todaySignal = signals.FirstOrDefault(item => item.Date == maxDate);
                     if (todaySignal != null)
                     {
-                        computed.Add(new TodaySignal { Action = todaySignal.Action.ToString(), Company = company.Code, Indicator = indicator.Type.ToString() });
+                        computed.Add(new TodaySignal
+                        {
+                            Action = todaySignal.Action.ToString(),
+                            Company = company.Code,
+                            Indicator = indicator.Type.ToString()
+                        });
                     }
                 }
             }
             var ret = new List<TodaySignal>();
-            ret.AddRange(computed.GroupBy(item => new { item.Company, item.Action })
-                .Select(item => new TodaySignal
-                {
-                    Company = item.Key.Company,
-                    Action = item.Key.Action,
-                    Indicator = string.Join(", ", (IEnumerable<string>)item.Select(it => it.Indicator).ToArray())
-                }));
+            ret.AddRange(computed.GroupBy(item => new
+            {
+                item.Company,
+                item.Action
+            })
+                    .Select(item => new TodaySignal
+                    {
+                        Company = item.Key.Company,
+                        Action = item.Key.Action,
+                        Indicator = string.Join(", ", (IEnumerable<string>)item.Select(it => it.Indicator).ToArray())
+                    }));
             return ret.OrderBy(item => item.Company)
                 .ThenBy(item => item.Action)
                 .ThenBy(item => item.Indicator)
