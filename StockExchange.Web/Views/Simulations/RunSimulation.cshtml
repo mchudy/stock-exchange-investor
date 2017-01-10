@@ -25,7 +25,8 @@
                         @Html.LabelFor(m => m.Strategies, new { @class = "col-sm-4 control-label" })
                         <div class="col-sm-8 input-group">
                             @* ReSharper disable once UnknownCssClass *@
-                            @Html.DropDownListFor(x => x.SelectedStrategyId, new SelectList(Model.Strategies, nameof(StrategyDto.Id), nameof(StrategyDto.Name)), "Select Strategy", new { @class = "form-control strategy-select" })
+                            @* Don't use nameof here (breaks CI build)!!! *@
+                            @Html.DropDownListFor(x => x.SelectedStrategyId, new SelectList(Model.Strategies, "Id", "Name"), "Select Strategy", new { @class = "form-control strategy-select" })
                             <span class="glyphicon form-control-feedback"></span>
                             @Html.ValidationMessageFor(m => m.SelectedStrategyId, null, new { @class = "help-block" })
                         </div>

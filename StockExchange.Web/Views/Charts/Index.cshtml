@@ -33,7 +33,8 @@
         <div class="form-group">
             <label>Indicator</label>
             @* ReSharper disable once UnknownCssClass *@
-            @Html.DropDownList("Indicators", new SelectList(Model.Indicators, nameof(IndicatorViewModel.Type), nameof(IndicatorViewModel.Name)), "Select indicator",
+            @* Don't use nameof here (breaks CI build)!!! *@
+            @Html.DropDownList("Indicators", new SelectList(Model.Indicators, "Type", "Name"), "Select indicator",
                 new { @class = "form-control indicator-select" })
         </div>
         @foreach (var indicator in Model.Indicators.Where(i => i.Properties.Any()))

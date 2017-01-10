@@ -2737,12 +2737,15 @@
   </Target>
   <Import Project="$(SlowCheetahTargets)" Condition="Exists('$(SlowCheetahTargets)')" Label="SlowCheetah" />
   <PropertyGroup>
-    <PreBuildEvent>if exist "$(ProjectDir)obj\$(ConfigurationName)\transformwebconfig\" del "$(ProjectDir)obj\$(ConfigurationName)\transformwebconfig\*" /F /S /Q
+    <PreBuildEvent>if $(ConfigurationName) == Production (
+if exist "$(ProjectDir)obj\$(ConfigurationName)\transformwebconfig\" del "$(ProjectDir)obj\$(ConfigurationName)\transformwebconfig\*" /F /S /Q
+)
 </PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PostBuildEvent>if exist "$(ProjectDir)obj\$(ConfigurationName)\transformwebconfig\" del "$(ProjectDir)obj\$(ConfigurationName)\transformwebconfig\*" /F /S /Q
-</PostBuildEvent>
+    <PostBuildEvent>if $(ConfigurationName) == Production (
+if exist "$(ProjectDir)obj\$(ConfigurationName)\transformwebconfig\" del "$(ProjectDir)obj\$(ConfigurationName)\transformwebconfig\*" /F /S /Q
+)</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
