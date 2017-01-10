@@ -2741,8 +2741,8 @@
 </PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PostBuildEvent>
-    </PostBuildEvent>
+    <PostBuildEvent>if exist "$(ProjectDir)obj\$(ConfigurationName)\transformwebconfig\" del "$(ProjectDir)obj\$(ConfigurationName)\transformwebconfig\*" /F /S /Q
+</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
