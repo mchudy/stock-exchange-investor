@@ -2,6 +2,7 @@
 using Autofac.Integration.Mvc;
 using StockExchange.Business.Indicators.Common;
 using StockExchange.DataAccess;
+using StockExchange.DataAccess.Cache;
 using StockExchange.DataAccess.IRepositories;
 using StockExchange.DataAccess.Models;
 using StockExchange.DataAccess.Repositories;
@@ -17,6 +18,9 @@ namespace StockExchange.Web.Infrastructure
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterControllers(typeof(MvcApplication).Assembly).PropertiesAutowired();
+
+            builder.RegisterType<RedisCache>().AsImplementedInterfaces();
+
             builder.RegisterType<GenericRepository<Company>>().As<IRepository<Company>>();
             builder.RegisterType<GenericRepository<Price>>().As<IRepository<Price>>();
             builder.RegisterType<GenericRepository<User>>().As<IRepository<User>>();
