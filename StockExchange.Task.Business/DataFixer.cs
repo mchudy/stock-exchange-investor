@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Reflection;
+using System.Transactions;
 
 namespace StockExchange.Task.Business
 {
@@ -54,29 +55,36 @@ namespace StockExchange.Task.Business
 
 
         /// <inheritdoc />
-        public void FixData()
+        public async System.Threading.Tasks.Task FixData()
         {
             logger.Info("Beginning fixing data");
 
-            DeleteWrongEntries();
-            UpdateIncorrectData();
-            _priceRepository.Save();
+            using (var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+            {
+                await DeleteWrongEntries();
+                await UpdateIncorrectData();
+                scope.Complete();
+            }
 
             logger.Info("Finished fixing data");
         }
 
-        private void DeleteWrongEntries()
+        private async System.Threading.Tasks.Task DeleteWrongEntries()
         {
             // delete entries for which companies weren't actually listed on GPW on the given date 
             // (caused by incorrect data loaded from GPW site, spooq doesn't return those dates)
             var toDelete = _priceRepository.GetQueryable()
                 .Where(PriceValidationHelper.IsInvalidExpression());
             logger.Info($"Found {toDelete.Count()} records to delete");
-            _priceRepository.RemoveRange(toDelete);
+            if (toDelete.Any())
+            {
+                await _priceRepository.RemoveRange(toDelete);
+                await _priceRepository.Save();
+            }
             logger.Info("Deleted successfully\n");
         }
 
-        private void UpdateIncorrectData()
+        private async System.Threading.Tasks.Task UpdateIncorrectData()
         {
             // some rare weird cases where close price is wrong, needs manual correction
             var toUpdate = _priceRepository.GetQueryable()
@@ -93,6 +101,7 @@ namespace StockExchange.Task.Business
 
                 CorrectPrices(company, companyPrices);
             }
+            await _priceRepository.Save();
             logger.Info("Finished updating incorrect data");
         }
 

@@ -8,6 +8,6 @@
         /// <summary>
         /// Fixes the stock data
         /// </summary>
-        void FixData();
+        System.Threading.Tasks.Task FixData();
     }
 }
