@@ -29,6 +29,7 @@ namespace StockExchange.Business.Services
             _priceService = priceService;
         }
 
+        //TODO: cache
         /// <inheritdoc />
         public async Task<IList<OwnedCompanyStocksDto>> GetOwnedStocks(int userId)
         {

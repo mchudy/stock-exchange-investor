@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using log4net;
+using Newtonsoft.Json;
 using StackExchange.Redis;
 using System;
 using System.Collections.Generic;
@@ -16,11 +17,10 @@ namespace StockExchange.DataAccess.Cache
     {
         private const string ConnectionStringKey = "RedisConnection";
 
+        private static readonly ILog log = LogManager.GetLogger(typeof(RedisCache));
         private static readonly JsonSerializerSettings _serializerSettings = new JsonSerializerSettings
         {
-            ReferenceLoopHandling = ReferenceLoopHandling.Serialize,
-            PreserveReferencesHandling = PreserveReferencesHandling.Objects,
-            TypeNameHandling = TypeNameHandling.All
+            ReferenceLoopHandling = ReferenceLoopHandling.Serialize
         };
 
         private static readonly Lazy<ConnectionMultiplexer> _lazyRedisConnection;
@@ -36,10 +36,17 @@ namespace StockExchange.DataAccess.Cache
         /// <inheritdoc />
         public async Task<T> Get<T>(string key) where T : class
         {
-            var redisObject = await _db.StringGetAsync(key);
-            if (redisObject.HasValue)
+            try
             {
-                return JsonConvert.DeserializeObject<T>(redisObject, _serializerSettings);
+                var redisObject = await _db.StringGetAsync(key);
+                if (redisObject.HasValue)
+                {
+                    return JsonConvert.DeserializeObject<T>(redisObject, _serializerSettings);
+                }
+            }
+            catch (RedisConnectionException e)
+            {
+                log.Error("Redis connection error", e);
             }
             return null;
         }
@@ -47,7 +54,15 @@ namespace StockExchange.DataAccess.Cache
         /// <inheritdoc />
         public async Task Set<T>(string key, T objectToCache) where T : class
         {
-            await _db.StringSetAsync(key, JsonConvert.SerializeObject(objectToCache, _serializerSettings));
+            var serializedObject = JsonConvert.SerializeObject(objectToCache, _serializerSettings);
+            try
+            {
+                await _db.StringSetAsync(key, serializedObject);
+            }
+            catch (RedisConnectionException e)
+            {
+                log.Error("Redis connection error", e);
+            }
         }
 
         /// <inheritdoc />

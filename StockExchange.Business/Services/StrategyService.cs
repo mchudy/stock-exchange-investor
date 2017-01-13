@@ -32,6 +32,7 @@ namespace StockExchange.Business.Services
             _indicatorsService = indicatorsService;
         }
 
+        //TODO: repo
         /// <inheritdoc />
         public async Task<IList<StrategyDto>> GetStrategies(int userId)
         {
@@ -51,6 +52,7 @@ namespace StockExchange.Business.Services
                 }).ToListAsync();
         }
 
+        //TODO: repo
         /// <inheritdoc />
         public async Task<StrategyDto> GetStrategy(int userId, int strategyId)
         {
@@ -66,7 +68,8 @@ namespace StockExchange.Business.Services
                 };
             return new StrategyDto();
         }
-
+        
+        //TODO: repo
         /// <inheritdoc />
         public async Task DeleteStrategy(int strategyId, int userId)
         {
@@ -79,6 +82,7 @@ namespace StockExchange.Business.Services
             await _strategiesRepository.Save();
         }
 
+        //TODO: repo
         /// <inheritdoc />
         public async Task UpdateStrategy(StrategyDto dto)
         {
@@ -111,6 +115,7 @@ namespace StockExchange.Business.Services
             await _strategiesRepository.Save();
         }
 
+        //TODO: repo
         /// <inheritdoc />
         public async Task<int> CreateStrategy(StrategyDto strategy)
         {

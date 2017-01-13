@@ -33,6 +33,7 @@ namespace StockExchange.Business.Services
             _transactionsRepository = transactionsRepository;
         }
 
+        //TODO: repo
         /// <inheritdoc />
         public async Task<PagedList<UserTransactionDto>> GetTransactions(int userId, PagedFilterDefinition<TransactionFilter> filter)
         {
@@ -79,6 +80,7 @@ namespace StockExchange.Business.Services
             return pagedTransactions;
         }
 
+        //TODO: cache
         /// <inheritdoc />
         public async Task<int> GetTransactionsCount(int userId)
         {
@@ -106,7 +108,8 @@ namespace StockExchange.Business.Services
             });
             await _userRepository.Save();
         }
-
+        
+        //TODO: repo
         /// <inheritdoc />
         public async Task<Dictionary<int, List<UserTransaction>>> GetTransactionsByCompany(int userId)
         {

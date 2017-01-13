@@ -148,6 +148,7 @@ namespace StockExchange.Business.Services
             return signalEvents;
         }
 
+        //TODO: cache
         /// <inheritdoc />
         public async Task<PagedList<TodaySignal>> GetCurrentSignals(PagedFilterDefinition<TransactionFilter> message)
         {
@@ -207,6 +208,7 @@ namespace StockExchange.Business.Services
                 .ToPagedList(message.Start, message.Length);
         }
 
+        //TODO: cache
         /// <inheritdoc />
         public async Task<int> GetCurrentSignalsCount()
         {

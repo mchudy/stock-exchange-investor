@@ -74,6 +74,10 @@
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="log4net, Version=1.2.15.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.5\lib\net45-full\log4net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
       <Private>True</Private>
@@ -105,10 +109,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CachedRepositories\CachedPriceRepository.cs" />
+    <Compile Include="CachedRepositories\CachedRepositoryBase.cs" />
+    <Compile Include="Cache\CacheKeys.cs" />
     <Compile Include="Cache\ICache.cs" />
     <Compile Include="Cache\RedisCache.cs" />
+    <Compile Include="IRepositories\ICompanyRepository.cs" />
     <Compile Include="IRepositories\IRepository.cs" />
     <Compile Include="IRepositories\IStrategiesRepository.cs" />
+    <Compile Include="IRepositories\IPriceRepository.cs" />
     <Compile Include="Models\Company.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\InvestmentStrategy.cs" />
@@ -119,7 +128,9 @@
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\UserTransaction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\CompanyRepository.cs" />
     <Compile Include="Repositories\GenericRepository.cs" />
+    <Compile Include="Repositories\PriceRepository.cs" />
     <Compile Include="Repositories\StrategiesRepository.cs" />
     <Compile Include="StockExchangeModel.cs" />
   </ItemGroup>
@@ -127,7 +138,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="CachedRepositories\" />
+    <ProjectReference Include="..\StockExchange.Common\StockExchange.Common.csproj">
+      <Project>{ABF032DB-F0CE-4F94-AD17-AD142B67F448}</Project>
+      <Name>StockExchange.Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

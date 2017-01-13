@@ -3,9 +3,12 @@ using Autofac.Integration.Mvc;
 using StockExchange.Business.Indicators.Common;
 using StockExchange.DataAccess;
 using StockExchange.DataAccess.Cache;
+using StockExchange.DataAccess.CachedRepositories;
 using StockExchange.DataAccess.IRepositories;
 using StockExchange.DataAccess.Models;
 using StockExchange.DataAccess.Repositories;
+using System.Web.Configuration;
+// ReSharper disable ArgumentsStyleStringLiteral
 
 namespace StockExchange.Web.Infrastructure
 {
@@ -17,13 +20,28 @@ namespace StockExchange.Web.Infrastructure
         /// <inheritdoc />
         protected override void Load(ContainerBuilder builder)
         {
+            bool useCache;
+            bool.TryParse(WebConfigurationManager.AppSettings["UseCache"], out useCache);
+
             builder.RegisterControllers(typeof(MvcApplication).Assembly).PropertiesAutowired();
 
-            builder.RegisterType<RedisCache>().AsImplementedInterfaces();
+            builder.RegisterType<RedisCache>().AsImplementedInterfaces().SingleInstance();
 
-            builder.RegisterType<GenericRepository<Company>>().As<IRepository<Company>>();
-            builder.RegisterType<GenericRepository<Price>>().As<IRepository<Price>>();
-            builder.RegisterType<GenericRepository<User>>().As<IRepository<User>>();
+            if (useCache)
+            {
+                builder.RegisterType<PriceRepository>()
+                    .Named<IPriceRepository>("base")
+                    .Named<IRepository<Price>>("base");
+                builder.RegisterDecorator<IPriceRepository>((c, inner) =>
+                    new CachedPriceRepository(inner, c.Resolve<ICache>(), c.Resolve<ICompanyRepository>()), fromKey: "base");
+            }
+            else
+            {
+                builder.RegisterType<PriceRepository>().AsImplementedInterfaces();
+            }
+
+            builder.RegisterType<CompanyRepository>().AsImplementedInterfaces();
+            builder.RegisterType<GenericRepository<User>>().AsImplementedInterfaces();
             builder.RegisterType<StrategiesRepository>().AsImplementedInterfaces();
             builder.RegisterType<GenericRepository<UserTransaction>>().AsImplementedInterfaces();
             builder.RegisterAssemblyTypes(typeof(IIndicator).Assembly)
