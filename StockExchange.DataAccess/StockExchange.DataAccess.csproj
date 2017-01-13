@@ -122,7 +122,6 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\InvestmentStrategy.cs" />
     <Compile Include="Models\Price.cs" />
-    <Compile Include="Models\Simulation.cs" />
     <Compile Include="Models\StrategyIndicator.cs" />
     <Compile Include="Models\StrategyIndicatorProperty.cs" />
     <Compile Include="Models\User.cs" />

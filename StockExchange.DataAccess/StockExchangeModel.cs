@@ -41,11 +41,6 @@ namespace StockExchange.DataAccess
         /// </summary>
         public IDbSet<InvestmentStrategy> Strategies { get; set; }
 
-        // <summary>
-        // The simulations table
-        // </summary>
-        //public IDbSet<Simulation> Simulations { get; set; }
-
         /// <summary>
         /// The strategy indicators table
         /// </summary>
