@@ -9,7 +9,7 @@ namespace StockExchange.DataAccess
     /// <summary>
     /// A StockExchange database model
     /// </summary>
-    public sealed class StockExchangeModel : IdentityDbContext<User, AppRole, int, AppUserLogin, AppUserRole, AppUserClaim>
+    public class StockExchangeModel : IdentityDbContext<User, AppRole, int, AppUserLogin, AppUserRole, AppUserClaim>
     {
         /// <summary>
         /// Creates a new instance of <see cref="StockExchangeModel"/>
@@ -29,7 +29,7 @@ namespace StockExchange.DataAccess
         /// <summary>
         /// The prices table
         /// </summary>
-        public IDbSet<Price> Prices { get; set; }
+        public virtual IDbSet<Price> Prices { get; set; }
 
         /// <summary>
         /// The user transactions table

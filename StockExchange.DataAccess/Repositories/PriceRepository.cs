@@ -9,6 +9,9 @@ namespace StockExchange.DataAccess.Repositories
 {
     public class PriceRepository : GenericRepository<Price>, IPriceRepository
     {
+        public PriceRepository(StockExchangeModel model) : base(model)
+        { }
+
         public async Task<IList<Price>> GetCurrentPrices(int days)
         {
             return await DbSet.GroupBy(p => p.CompanyId, (c, prices) => prices.OrderByDescending(p => p.Date).Take(days))
