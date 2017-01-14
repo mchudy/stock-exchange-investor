@@ -196,12 +196,12 @@ namespace StockExchange.Business.Services
                 item.Company,
                 item.Action
             })
-                    .Select(item => new TodaySignal
-                    {
-                        Company = item.Key.Company,
-                        Action = item.Key.Action,
-                        Indicator = string.Join(", ", (IEnumerable<string>)item.Select(it => it.Indicator).ToArray())
-                    }));
+            .Select(item => new TodaySignal
+            {
+                Company = item.Key.Company,
+                Action = item.Key.Action,
+                Indicator = string.Join(", ", (IEnumerable<string>)item.Select(it => it.Indicator).ToArray())
+            }));
             return ret.OrderBy(item => item.Company)
                 .ThenBy(item => item.Action)
                 .ThenBy(item => item.Indicator)

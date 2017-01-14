@@ -77,5 +77,17 @@ namespace StockExchange.DataAccess.Cache
         {
             return await _db.KeyDeleteAsync(keys.Cast<RedisKey>().ToArray());
         }
+
+        /// <inheritdoc />
+        public async Task Flush()
+        {
+            var endpoints = _redisConnection.GetEndPoints(true);
+            foreach (var endpoint in endpoints)
+            {
+                var server = _redisConnection.GetServer(endpoint);
+                await server.FlushAllDatabasesAsync();
+            }
+        }
+
     }
 }

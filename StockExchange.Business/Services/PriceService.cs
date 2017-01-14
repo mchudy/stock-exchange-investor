@@ -41,30 +41,21 @@ namespace StockExchange.Business.Services
             return await results.ToPagedList(pagedFilterDefinition.Start, pagedFilterDefinition.Length);
         }
 
-        //TODO: repo
         /// <inheritdoc />
         public async Task<IList<CompanyPricesDto>> GetPrices(IList<int> companyIds)
         {
-            return await _priceRepository.GetQueryable()
-                .Include(p => p.Company)
-                .Where(p => companyIds.Contains(p.CompanyId))
-                .GroupBy(p => p.Company)
-                .Select(g => new CompanyPricesDto
-                {
-                    Company = g.Key,
-                    Prices = g.OrderBy(p => p.Date).ToList()
-                })
-                .ToListAsync();
+            var prices = await _priceRepository.GetPrices(companyIds);
+            return prices.Select(g => new CompanyPricesDto
+            {
+                Company = g.Key,
+                Prices = g.Value
+            }).ToList();
         }
 
-        //TODO: repo
         /// <inheritdoc />
         public async Task<IList<Price>> GetPrices(int companyId, DateTime endDate)
         {
-            return await _priceRepository.GetQueryable()
-                .Where(p => p.CompanyId == companyId && p.Date <= endDate)
-                .OrderBy(item => item.Date)
-                .ToListAsync();
+            return await _priceRepository.GetPrices(companyId, endDate);
         }
 
         /// <inheritdoc />

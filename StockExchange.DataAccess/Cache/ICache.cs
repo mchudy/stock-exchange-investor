@@ -38,5 +38,9 @@ namespace StockExchange.DataAccess.Cache
         /// <returns>The number of items removed</returns>
         Task<long> Remove(IEnumerable<string> keys);
 
+        /// <summary>
+        /// Flushes the entire cache
+        /// </summary>
+        Task Flush();
     }
 }

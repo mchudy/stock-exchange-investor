@@ -1,4 +1,6 @@
 ﻿using StockExchange.DataAccess.Models;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace StockExchange.DataAccess.IRepositories
 {
@@ -12,5 +14,10 @@ namespace StockExchange.DataAccess.IRepositories
         /// </summary>
         /// <param name="strategyIndicator">An indicator to remove</param>
         void DeleteIndicator(StrategyIndicator strategyIndicator);
+
+        Task<IList<InvestmentStrategy>> GetStrategies(int userId);
+
+        Task<InvestmentStrategy> GetStrategy(int userId, int strategyId);
+        Task<bool> StrategyExists(int userId, string name);
     }
 }
