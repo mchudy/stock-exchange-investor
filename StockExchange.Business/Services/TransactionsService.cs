@@ -8,7 +8,6 @@ using StockExchange.Business.ServiceInterfaces;
 using StockExchange.DataAccess.IRepositories;
 using StockExchange.DataAccess.Models;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -19,30 +18,25 @@ namespace StockExchange.Business.Services
     /// </summary>
     public class TransactionsService : ITransactionsService
     {
-        private readonly IRepository<User> _userRepository;
-        private readonly IRepository<UserTransaction> _transactionsRepository;
+        private readonly IUserRepository _userRepository;
+        private readonly ITransactionsRepository _transactionsRepository;
 
         /// <summary>
         /// Creates a new instance of <see cref="TransactionsService"/>
         /// </summary>
         /// <param name="userRepository"></param>
         /// <param name="transactionsRepository"></param>
-        public TransactionsService(IRepository<User> userRepository, IRepository<UserTransaction> transactionsRepository)
+        public TransactionsService(IUserRepository userRepository, ITransactionsRepository transactionsRepository)
         {
             _userRepository = userRepository;
             _transactionsRepository = transactionsRepository;
         }
 
-        //TODO: repo
         /// <inheritdoc />
         public async Task<PagedList<UserTransactionDto>> GetTransactions(int userId, PagedFilterDefinition<TransactionFilter> filter)
         {
-            var transactions = await _transactionsRepository.GetQueryable()
-                .Include(t => t.Company)
-                .Where(t => t.UserId == userId)
-                .OrderByDescending(t => t.Date)
-                .ThenByDescending(t => t.Id)
-                .Select(t => new UserTransactionDto
+            var allTransactions = await _transactionsRepository.GetAllUserTransactions(userId);
+            var transactions = allTransactions.Select(t => new UserTransactionDto
                 {
                     Date = t.Date,
                     Price = t.Price,
@@ -52,14 +46,15 @@ namespace StockExchange.Business.Services
                     CompanyName = t.Company.Code,
                     Total = t.Quantity < 0 ? -t.Quantity * t.Price : t.Quantity * t.Price,
                     Profit = 0
-                }).ToListAsync(); //TODO: extract all necessary data in a single query
+                }).ToList();
             var pagedTransactions = transactions.ToPagedList(filter.Start, filter.Length);
             foreach (var pagedTransaction in pagedTransactions)
             {
                 if (pagedTransaction.Action == Action.Buy) continue;
-                var pastTransactions =
-                    transactions.Where(
-                        item => item.CompanyName == pagedTransaction.CompanyName && item.Date < pagedTransaction.Date).OrderBy(item => item.Date).ToList();
+                var pastTransactions = transactions
+                    .Where(item => item.CompanyName == pagedTransaction.CompanyName && item.Date < pagedTransaction.Date)
+                    .OrderBy(item => item.Date)
+                    .ToList();
                 var quantity = 0m;
                 var price = 0m;
                 foreach (var pastTransaction in pastTransactions)
@@ -80,20 +75,16 @@ namespace StockExchange.Business.Services
             return pagedTransactions;
         }
 
-        //TODO: cache
         /// <inheritdoc />
         public async Task<int> GetTransactionsCount(int userId)
         {
-            return await _transactionsRepository.GetQueryable()
-                .CountAsync(t => t.UserId == userId);
+            return await _transactionsRepository.GetTransactionsCount(userId);
         }
 
         /// <inheritdoc />
         public async Task AddTransaction(UserTransactionDto dto)
         {
-            var user = await _userRepository.GetQueryable()
-                .Include(u => u.Transactions)
-                .FirstOrDefaultAsync(u => u.Id == dto.UserId);
+            var user = await _userRepository.GetUserWithTransactions(dto.UserId);
             if (user == null)
                 throw new BusinessException(nameof(dto.UserId), "User does not exist", ErrorStatus.DataNotFound);
             VerifyTransaction(dto, user);
@@ -109,16 +100,10 @@ namespace StockExchange.Business.Services
             await _userRepository.Save();
         }
         
-        //TODO: repo
         /// <inheritdoc />
         public async Task<Dictionary<int, List<UserTransaction>>> GetTransactionsByCompany(int userId)
         {
-            return await _transactionsRepository.GetQueryable()
-                .Include(t => t.Company)
-                .Where(t => t.UserId == userId)
-                .GroupBy(t => t.CompanyId)
-                .Where(t => t.Sum(tr => tr.Quantity) > 0)
-                .ToDictionaryAsync(t => t.Key, t => t.ToList());
+            return await _transactionsRepository.GetTransactionsByCompany(userId);
         }
 
         private static void VerifyTransaction(UserTransactionDto dto, User user)

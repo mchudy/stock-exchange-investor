@@ -118,6 +118,8 @@
     <Compile Include="IRepositories\IRepository.cs" />
     <Compile Include="IRepositories\IStrategiesRepository.cs" />
     <Compile Include="IRepositories\IPriceRepository.cs" />
+    <Compile Include="IRepositories\ITransactionsRepository.cs" />
+    <Compile Include="IRepositories\IUserRepository.cs" />
     <Compile Include="Models\Company.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\InvestmentStrategy.cs" />
@@ -131,6 +133,8 @@
     <Compile Include="Repositories\GenericRepository.cs" />
     <Compile Include="Repositories\PriceRepository.cs" />
     <Compile Include="Repositories\StrategiesRepository.cs" />
+    <Compile Include="Repositories\TransactionsRepository.cs" />
+    <Compile Include="Repositories\UserRepository.cs" />
     <Compile Include="StockExchangeModel.cs" />
   </ItemGroup>
   <ItemGroup>
