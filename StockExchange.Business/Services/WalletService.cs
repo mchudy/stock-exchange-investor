@@ -36,11 +36,11 @@ namespace StockExchange.Business.Services
             //var ownedStocks = _priceRepository.GetOwnedStocks(userId);
             //if(ownedStocks == null)
             //{
-            var transactionsByCompany = await _transactionsService.GetTransactionsByCompany(userId);
-            var currentPrices = await _priceService.GetCurrentPrices(transactionsByCompany.Keys.ToList());
-            return transactionsByCompany
-                .Select(entry => BuildCompanyOwnedStocksDto(userId, entry, currentPrices))
-                .ToList();
+                var transactionsByCompany = await _transactionsService.GetTransactionsByCompany(userId);
+                var currentPrices = await _priceService.GetCurrentPrices(transactionsByCompany.Keys.ToList());
+                return transactionsByCompany
+                    .Select(entry => BuildCompanyOwnedStocksDto(userId, entry, currentPrices))
+                    .ToList();
             //_priceRepository.SaveOwnedStocks(ownedStocks);
             //}
             //return ownedStocks;

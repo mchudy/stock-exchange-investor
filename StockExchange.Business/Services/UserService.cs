@@ -2,8 +2,6 @@
 using StockExchange.Business.Exceptions;
 using StockExchange.Business.ServiceInterfaces;
 using StockExchange.DataAccess.IRepositories;
-using StockExchange.DataAccess.Models;
-using System.Data.Entity;
 using System.Threading.Tasks;
 
 namespace StockExchange.Business.Services
@@ -13,13 +11,13 @@ namespace StockExchange.Business.Services
     /// </summary>
     public class UserService : IUserService
     {
-        private readonly IRepository<User> _userRepository;
+        private readonly IUserRepository _userRepository;
 
         /// <summary>
         /// Creates a new instance of <see cref="UserService"/>
         /// </summary>
         /// <param name="userRepository"></param>
-        public UserService(IRepository<User> userRepository)
+        public UserService(IUserRepository userRepository)
         {
             _userRepository = userRepository;
         }
@@ -27,7 +25,7 @@ namespace StockExchange.Business.Services
         /// <inheritdoc />
         public async Task EditBudget(int userId, decimal newBudget)
         {
-            var user = await _userRepository.GetQueryable().FirstOrDefaultAsync(u => u.Id == userId);
+            var user = await _userRepository.GetUser(userId);
             if (user != null)
                 user.Budget = newBudget;
             else

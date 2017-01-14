@@ -7,7 +7,6 @@ using StockExchange.Business.ServiceInterfaces;
 using StockExchange.Business.Services;
 using StockExchange.DataAccess.IRepositories;
 using StockExchange.DataAccess.Models;
-using StockExchange.UnitTest.TestHelpers;
 using System;
 using System.Collections.Generic;
 using Xunit;
@@ -17,8 +16,8 @@ namespace StockExchange.UnitTest.Services
     public class TransactionsServiceTests
     {
         private readonly ITransactionsService _service;
-        private readonly Mock<IRepository<User>> _userRepository = new Mock<IRepository<User>>();
-        private readonly Mock<IRepository<UserTransaction>> _transactionRepository = new Mock<IRepository<UserTransaction>>();
+        private readonly Mock<IUserRepository> _userRepository = new Mock<IUserRepository>();
+        private readonly Mock<ITransactionsRepository> _transactionRepository = new Mock<ITransactionsRepository>();
 
         private const int userId = 1;
         private const int notOwnedCompanyId = 1;
@@ -43,8 +42,8 @@ namespace StockExchange.UnitTest.Services
         public TransactionsServiceTests()
         {
             _service = new TransactionsService(_userRepository.Object, _transactionRepository.Object);
-            _userRepository.Setup(u => u.GetQueryable())
-                .Returns(new List<User> { _user }.GetTestAsyncQueryable());
+            _userRepository.Setup(u => u.GetUserWithTransactions(userId))
+                .Returns(System.Threading.Tasks.Task.FromResult(_user));
         }
 
         [Fact]

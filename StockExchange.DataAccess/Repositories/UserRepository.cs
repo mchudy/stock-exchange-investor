@@ -7,6 +7,11 @@ namespace StockExchange.DataAccess.Repositories
 {
     public class UserRepository : GenericRepository<User>, IUserRepository
     {
+        public async Task<User> GetUser(int userId)
+        {
+            return await DbSet.FirstOrDefaultAsync(u => u.Id == userId);
+        }
+
         public async Task<User> GetUserWithTransactions(int userId)
         {
             return await DbSet.Include(u => u.Transactions)
