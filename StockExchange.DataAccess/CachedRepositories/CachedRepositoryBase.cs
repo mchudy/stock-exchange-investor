@@ -20,7 +20,6 @@ namespace StockExchange.DataAccess.CachedRepositories
         /// </summary>
         protected readonly ICache _cache;
 
-        //TODO: could use property injection
         /// <summary>
         /// Creates a new instance of <see cref="CachedRepositoryBase{T}"/>
         /// </summary>

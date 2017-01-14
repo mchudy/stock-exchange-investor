@@ -11,13 +11,11 @@ namespace StockExchange.DataAccess.CachedRepositories
     public class CachedPriceRepository : CachedRepositoryBase<Price>, IPriceRepository
     {
         private readonly IPriceRepository _baseRepository;
-        private readonly ICompanyRepository _companyRepository;
 
-        public CachedPriceRepository(IPriceRepository baseRepository, ICache cache, ICompanyRepository companyRepository) 
+        public CachedPriceRepository(IPriceRepository baseRepository, ICache cache) 
             : base(baseRepository, cache)
         {
             _baseRepository = baseRepository;
-            _companyRepository = companyRepository;
         }
 
         public async Task<IList<Price>> GetCurrentPrices(int days) => 
