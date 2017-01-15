@@ -36,7 +36,7 @@ namespace StockExchange.Business.Indicators.Common
             {
                 var prop = type.GetProperty(property.Key);
                 if (prop == null)
-                    throw new ArgumentException($"Nonexistent property {property.Key} for indicator {indicator.Type}");
+                    throw new IndicatorArgumentException($"Nonexistent property {property.Key} for indicator {indicator.Type}");
                 prop.SetValue(indicator, property.Value);
             }
             return indicator;

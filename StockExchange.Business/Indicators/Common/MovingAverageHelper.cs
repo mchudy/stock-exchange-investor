@@ -1,4 +1,5 @@
-﻿using StockExchange.Business.Models.Indicators;
+﻿using StockExchange.Business.Exceptions;
+using StockExchange.Business.Models.Indicators;
 using StockExchange.DataAccess.Models;
 using System;
 using System.Collections.Generic;
@@ -19,7 +20,7 @@ namespace StockExchange.Business.Indicators.Common
         public static IndicatorValue SimpleMovingAverage(IList<Price> prices)
         {
             if (prices == null || prices.Count == 0 || !CheckDates(prices.Select(pr => pr.Date).ToList()))
-                throw new ArgumentException();
+                throw new IndicatorArgumentException();
 
             return new IndicatorValue
             {
@@ -36,7 +37,7 @@ namespace StockExchange.Business.Indicators.Common
         public static IndicatorValue SimpleMovingAverage(IList<IndicatorValue> values)
         {
             if (values == null || values.Count == 0 || !CheckDates(values.Select(v => v.Date).ToList()))
-                throw new ArgumentException();
+                throw new IndicatorArgumentException();
 
             return new IndicatorValue
             {
@@ -54,7 +55,7 @@ namespace StockExchange.Business.Indicators.Common
         public static IList<IndicatorValue> ExpotentialMovingAverage(IList<Price> prices, int terms)
         {
             if (prices == null || prices.Count < terms || terms < 1 || !CheckDates(prices.Select(price => price.Date).ToList()))
-                throw new ArgumentException();
+                throw new IndicatorArgumentException();
             IList<IndicatorValue> averages = new List<IndicatorValue>();
             var ema = SimpleMovingAverage(prices.Take(terms).ToList());
             averages.Add(ema);
@@ -82,7 +83,7 @@ namespace StockExchange.Business.Indicators.Common
         public static IList<IndicatorValue> ExpotentialMovingAverage(IList<IndicatorValue> values, int terms)
         {
             if (!IsInputValid(values, terms))
-                throw new ArgumentException();
+                throw new IndicatorArgumentException();
 
             var alpha = 2.0m / (terms + 1);
             return ExponentialMovingAverageInternal(values, terms, alpha);
@@ -97,7 +98,7 @@ namespace StockExchange.Business.Indicators.Common
         public static IList<IndicatorValue> SmoothedMovingAverage(IList<IndicatorValue> values, int terms)
         {
             if (!IsInputValid(values, terms))
-                throw new ArgumentException();
+                throw new IndicatorArgumentException();
 
             var alpha = 1m / terms;
             return ExponentialMovingAverageInternal(values, terms, alpha);

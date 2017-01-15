@@ -83,6 +83,7 @@
   <ItemGroup>
     <Compile Include="ErrorHandling\ErrorStatus.cs" />
     <Compile Include="Exceptions\BusinessException.cs" />
+    <Compile Include="Exceptions\IndicatorArgumentException.cs" />
     <Compile Include="Exceptions\IndicatorNotFoundException.cs" />
     <Compile Include="ErrorHandling\ValidationError.cs" />
     <Compile Include="Indicators\Common\IngoreIndicatorPropertyAttribute.cs" />

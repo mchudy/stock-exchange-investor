@@ -1,4 +1,5 @@
 ﻿using log4net;
+using StockExchange.Business.Exceptions;
 using StockExchange.Business.Extensions;
 using StockExchange.Business.Indicators.Common;
 using StockExchange.Business.Models.Company;
@@ -135,7 +136,7 @@ namespace StockExchange.Business.Services
                     {
                         signals = ind.GenerateSignals(prices);
                     }
-                    catch (ArgumentException e)
+                    catch (Exception e) when (e is IndicatorArgumentException || e is ArgumentException)
                     {
                         logger.Warn($"Error when generating signals for company {company} and indicator {ind.Type}, end date {endDate}", e);
                     }
