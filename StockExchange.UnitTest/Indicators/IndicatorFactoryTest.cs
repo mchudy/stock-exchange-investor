@@ -67,7 +67,7 @@ namespace StockExchange.UnitTest.Indicators
 
             Action act = () => _factory.CreateIndicator(IndicatorType.Ema, properties);
 
-            act.ShouldThrow<ArgumentException>();
+            act.ShouldThrow<IndicatorArgumentException>();
         }
     }
 }
