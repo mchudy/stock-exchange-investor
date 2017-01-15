@@ -8,11 +8,16 @@ using System.Threading.Tasks;
 namespace StockExchange.DataAccess.Repositories
 {
     /// <summary>
-    /// Repository for <see cref="Company"/> entities
+    /// A database for <see cref="Company"/> entities
     /// </summary>
     public class CompanyRepository : GenericRepository<Company>, ICompanyRepository
     {
-        // No need to cache these queries, no real performance gain
+        /// <summary>
+        /// Creates a new instance of <see cref="CompanyRepository"/>
+        /// </summary>
+        /// <param name="model">Database context</param>
+        public CompanyRepository(StockExchangeModel model) : base(model)
+        { }
 
         /// <inheritdoc />
         public async Task<IList<Company>> GetCompanies()
@@ -26,6 +31,7 @@ namespace StockExchange.DataAccess.Repositories
             return await DbSet.Select(c => c.Code).Distinct().ToListAsync();
         }
 
+        /// <inheritdoc />
         public async Task<IList<Company>> GetCompanies(IList<int> ids)
         {
             return await GetQueryable().Where(item => ids.Contains(item.Id)).ToListAsync();

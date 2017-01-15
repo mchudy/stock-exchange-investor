@@ -8,18 +8,29 @@ using System.Threading.Tasks;
 
 namespace StockExchange.DataAccess.Repositories
 {
+    /// <summary>
+    /// A database repository for <see cref="Price"/> entities
+    /// </summary>
     public class PriceRepository : GenericRepository<Price>, IPriceRepository
     {
+        /// <summary>
+        /// Creates a new instance of <see cref="PriceRepository"/>
+        /// </summary>
+        /// <param name="model">Database context</param>
         public PriceRepository(StockExchangeModel model) : base(model)
-        { }
-
-        public async Task<IList<Price>> GetCurrentPrices(int days)
         {
-            return await DbSet.GroupBy(p => p.CompanyId, (c, prices) => prices.OrderByDescending(p => p.Date).Take(days))
-                .SelectMany(p => p)
-                .ToListAsync();
         }
 
+        /// <inheritdoc />
+        public async Task<IList<Price>> GetCurrentPrices(int days)
+        {
+            return
+                await DbSet.GroupBy(p => p.CompanyId, (c, prices) => prices.OrderByDescending(p => p.Date).Take(days))
+                    .SelectMany(p => p)
+                    .ToListAsync();
+        }
+
+        /// <inheritdoc />
         public async Task<IList<Price>> GetCurrentPrices(IList<int> companyIds)
         {
             return await DbSet.Where(p => companyIds.Contains(p.CompanyId))
@@ -27,6 +38,7 @@ namespace StockExchange.DataAccess.Repositories
                 .ToListAsync();
         }
 
+        /// <inheritdoc />
         public async Task<Dictionary<Company, List<Price>>> GetPrices(IList<int> companyIds)
         {
             return await DbSet
@@ -36,6 +48,7 @@ namespace StockExchange.DataAccess.Repositories
                 .ToDictionaryAsync(g => g.Key, g => g.OrderBy(p => p.Date).ToList());
         }
 
+        /// <inheritdoc />
         public async Task<IList<Price>> GetPrices(int companyId, DateTime endDate)
         {
             return await DbSet
@@ -44,11 +57,13 @@ namespace StockExchange.DataAccess.Repositories
                 .ToListAsync();
         }
 
+        /// <inheritdoc />
         public async Task<DateTime> GetMaxDate()
         {
             return await DbSet.MaxAsync(item => item.Date);
         }
 
+        /// <inheritdoc />
         public async Task<IList<DateTime>> GetTwoMaxDates()
         {
             return await DbSet
@@ -59,6 +74,7 @@ namespace StockExchange.DataAccess.Repositories
                 .ToListAsync();
         }
 
+        /// <inheritdoc />
         public async Task<List<Price>> GetPricesForDates(IList<DateTime> dates)
         {
             return await DbSet

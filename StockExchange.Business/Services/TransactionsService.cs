@@ -103,7 +103,7 @@ namespace StockExchange.Business.Services
         }
         
         /// <inheritdoc />
-        public async Task<Dictionary<int, List<UserTransaction>>> GetTransactionsByCompany(int userId)
+        public async Task<Dictionary<Company, List<UserTransaction>>> GetTransactionsByCompany(int userId)
         {
             return await _transactionsRepository.GetTransactionsByCompany(userId);
         }

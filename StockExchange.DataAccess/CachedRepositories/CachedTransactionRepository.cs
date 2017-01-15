@@ -1,30 +1,42 @@
 ﻿using StockExchange.DataAccess.Cache;
 using StockExchange.DataAccess.IRepositories;
 using StockExchange.DataAccess.Models;
+using StockExchange.DataAccess.Repositories;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace StockExchange.DataAccess.CachedRepositories
 {
+    /// <summary>
+    /// Decorator for <see cref="TransactionsRepository"/> which uses cache
+    /// </summary>
     public class CachedTransactionRepository : CachedRepositoryBase<UserTransaction>, ITransactionsRepository
     {
         private readonly ITransactionsRepository _baseRepository;
 
+        /// <summary>
+        /// Creates a new instance of <see cref="CachedTransactionRepository"/>
+        /// </summary>
+        /// <param name="baseRepository">Database repository</param>
+        /// <param name="cache">Cache implementation</param>
         public CachedTransactionRepository(ITransactionsRepository baseRepository, ICache cache) : base(baseRepository, cache)
         {
             _baseRepository = baseRepository;
         }
 
+        /// <inheritdoc />
         public async Task<IList<UserTransaction>> GetAllUserTransactions(int userId)
         {
             return await _baseRepository.GetAllUserTransactions(userId);
         }
 
-        public async Task<Dictionary<int, List<UserTransaction>>> GetTransactionsByCompany(int userId)
+        /// <inheritdoc />
+        public async Task<Dictionary<Company, List<UserTransaction>>> GetTransactionsByCompany(int userId)
         {
             return await _baseRepository.GetTransactionsByCompany(userId);
         }
 
+        /// <inheritdoc />
         public async Task<int> GetTransactionsCount(int userId)
         {
             var value = await _cache.Get<int?>(CacheKeys.TransactionsCount(userId));
@@ -36,6 +48,7 @@ namespace StockExchange.DataAccess.CachedRepositories
             return value.Value;
         }
 
+        /// <inheritdoc />
         public async Task ClearTransactionsCache(int userId)
         {
             await _cache.Remove(new [] 

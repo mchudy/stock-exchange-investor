@@ -25,6 +25,7 @@ namespace StockExchange.Business.Services
         /// </summary>
         /// <param name="transactionsService"></param>
         /// <param name="priceService"></param>
+        /// <param name="cache"></param>
         public WalletService(ITransactionsService transactionsService, IPriceService priceService, ICache cache)
         {
             _transactionsService = transactionsService;
@@ -41,7 +42,7 @@ namespace StockExchange.Business.Services
                 return ownedStocks;
 
             var transactionsByCompany = await _transactionsService.GetTransactionsByCompany(userId);
-            var currentPrices = await _priceService.GetCurrentPrices(transactionsByCompany.Keys.ToList());
+            var currentPrices = await _priceService.GetCurrentPrices(transactionsByCompany.Keys.Select(k => k.Id).ToList());
             ownedStocks = transactionsByCompany
                 .Select(entry => BuildCompanyOwnedStocksDto(userId, entry, currentPrices))
                 .ToList();
@@ -53,21 +54,21 @@ namespace StockExchange.Business.Services
         public async Task<PagedList<OwnedCompanyStocksDto>> GetOwnedStocks(int currentUserId, PagedFilterDefinition<TransactionFilter> searchMessage)
         {
             var transactionsByCompany = await _transactionsService.GetTransactionsByCompany(currentUserId);
-            var currentPrices = await _priceService.GetCurrentPrices(transactionsByCompany.Keys.ToList());
+            var currentPrices = await _priceService.GetCurrentPrices(transactionsByCompany.Keys.Select(k => k.Id).ToList());
             return transactionsByCompany
                 .Select(entry => BuildCompanyOwnedStocksDto(currentUserId, entry, currentPrices))
                 .ToPagedList(searchMessage.Start, searchMessage.Length);
         }
 
-        private static OwnedCompanyStocksDto BuildCompanyOwnedStocksDto(int userId, KeyValuePair<int, List<UserTransaction>> entry, IEnumerable<Price> currentPrices)
+        private static OwnedCompanyStocksDto BuildCompanyOwnedStocksDto(int userId, KeyValuePair<Company, List<UserTransaction>> entry, IEnumerable<Price> currentPrices)
         {
             var transactions = entry.Value;
-            decimal currentPrice = currentPrices.FirstOrDefault(p => p.CompanyId == entry.Key)?.ClosePrice ?? 0;
+            decimal currentPrice = currentPrices.FirstOrDefault(p => p.CompanyId == entry.Key.Id)?.ClosePrice ?? 0;
             int ownedStocksCount = transactions.Sum(t => t.Quantity);
             return new OwnedCompanyStocksDto
             {
-                CompanyId = entry.Key,
-                CompanyName = transactions.FirstOrDefault()?.Company?.Code,
+                CompanyId = entry.Key.Id,
+                CompanyName = entry.Key.Code,
                 CurrentPrice = currentPrice,
                 OwnedStocksCount = ownedStocksCount,
                 CurrentValue = currentPrice * ownedStocksCount,

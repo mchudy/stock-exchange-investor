@@ -1,6 +1,7 @@
 ﻿using log4net;
 using StockExchange.Business.Extensions;
 using StockExchange.Business.Indicators.Common;
+using StockExchange.Business.Models.Company;
 using StockExchange.Business.Models.Filters;
 using StockExchange.Business.Models.Indicators;
 using StockExchange.Business.Models.Paging;
@@ -155,25 +156,68 @@ namespace StockExchange.Business.Services
 
         //TODO: refactor cache usage
         /// <inheritdoc />
+        #pragma warning disable CS0618 // Type or member is obsolete, the queries are cached
         public async Task<PagedList<TodaySignal>> GetCurrentSignals(PagedFilterDefinition<TransactionFilter> message)
         {
-            string cacheKey = CacheKeys.CurrentSignals(message.Start, message.Length);
-            var currentSignals = await _cache.Get<PagedList<TodaySignal>>(cacheKey);
-            if (currentSignals != null)
-                return currentSignals;
+            // double level caching, we cache both all signals and single pages of the table
+            string pageCacheKey = CacheKeys.CurrentSignals(message.Start, message.Length);
+            var pagedSignals = await _cache.Get<PagedList<TodaySignal>>(pageCacheKey);
+            if (pagedSignals != null)
+                return pagedSignals;
 
+            var allSignals = await _cache.Get<List<TodaySignal>>(CacheKeys.AllCurrentSignals);
+            if (allSignals != null)
+            {
+                pagedSignals = allSignals.ToPagedList(message.Start, message.Length);
+                await _cache.Set(pageCacheKey, pagedSignals);
+                return pagedSignals;
+            }
+
+            allSignals = await GetAllCurrentSignals();
+
+            pagedSignals = allSignals.ToPagedList(message.Start, message.Length);
+            await _cache.Set(CacheKeys.AllCurrentSignals, allSignals);
+            await _cache.Set(pageCacheKey, pagedSignals);
+            return pagedSignals;
+        }
+        #pragma warning restore CS0618 // Type or member is obsolete, the queries are cached
+
+        private async Task<List<TodaySignal>> GetAllCurrentSignals()
+        {
             var indicators = GetAllIndicators();
-            var indicatorObjects = indicators.Select(indicator => _indicatorFactory.CreateIndicator(indicator.IndicatorType)).ToList();
+            var indicatorObjects =
+                indicators.Select(indicator => _indicatorFactory.CreateIndicator(indicator.IndicatorType)).ToList();
 
             var companies = await _companyService.GetCompanies();
             var maxDate = await _priceService.GetMaxDate();
             var prices = await _priceService.GetCurrentPrices(indicatorObjects.Max(i => i.RequiredPricesCountToSignal));
 
+            var computed = ComputeSignals(companies, prices, indicatorObjects, maxDate);
+            var ret = new List<TodaySignal>();
+            ret.AddRange(computed.GroupBy(item => new
+                {
+                    item.Company,
+                    item.Action
+                })
+                .Select(item => new TodaySignal
+                {
+                    Company = item.Key.Company,
+                    Action = item.Key.Action,
+                    Indicator = string.Join(", ", (IEnumerable<string>) item.Select(it => it.Indicator).ToArray())
+                }));
+            return ret.OrderBy(item => item.Company)
+                .ThenBy(item => item.Action)
+                .ThenBy(item => item.Indicator)
+                .ToList();
+        }
+
+        private static List<TodaySignal> ComputeSignals(IList<CompanyDto> companies, IList<Price> prices, List<IIndicator> indicatorObjects, DateTime maxDate)
+        {
             var computed = new List<TodaySignal>();
             foreach (var company in companies)
             {
                 var companyPrices =
-                        prices.Where(item => item.CompanyId == company.Id).OrderBy(item => item.Date).ToList();
+                    prices.Where(item => item.CompanyId == company.Id).OrderBy(item => item.Date).ToList();
                 if (!companyPrices.Any()) continue;
                 foreach (var indicator in indicatorObjects)
                 {
@@ -200,24 +244,7 @@ namespace StockExchange.Business.Services
                     }
                 }
             }
-            var ret = new List<TodaySignal>();
-            ret.AddRange(computed.GroupBy(item => new
-            {
-                item.Company,
-                item.Action
-            })
-            .Select(item => new TodaySignal
-            {
-                Company = item.Key.Company,
-                Action = item.Key.Action,
-                Indicator = string.Join(", ", (IEnumerable<string>)item.Select(it => it.Indicator).ToArray())
-            }));
-            currentSignals = ret.OrderBy(item => item.Company)
-                .ThenBy(item => item.Action)
-                .ThenBy(item => item.Indicator)
-                .ToPagedList(message.Start, message.Length);
-            await _cache.Set(cacheKey, currentSignals);
-            return currentSignals;
+            return computed;
         }
 
         //TODO: refactor cache usage

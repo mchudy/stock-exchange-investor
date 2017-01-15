@@ -31,6 +31,7 @@ namespace StockExchange.Task.Business
         /// </summary>
         /// <param name="companyRepository"></param>
         /// <param name="priceRepository"></param>
+        /// <param name="cache"></param>
         public DataSynchronizerGpw(IRepository<Company> companyRepository, IRepository<Price> priceRepository, ICache cache)
         {
             _companyRepository = companyRepository;
