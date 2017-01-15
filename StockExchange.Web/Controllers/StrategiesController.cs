@@ -1,7 +1,6 @@
 ﻿using StockExchange.Business.Models.Indicators;
 using StockExchange.Business.Models.Strategy;
 using StockExchange.Business.ServiceInterfaces;
-using StockExchange.Web.Filters;
 using StockExchange.Web.Helpers.Json;
 using StockExchange.Web.Helpers.ToastNotifications;
 using StockExchange.Web.Models.Indicator;
@@ -61,7 +60,6 @@ namespace StockExchange.Web.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
-        [HandleJsonError]
         public async Task<ActionResult> EditStrategy(EditStrategyViewModel model)
         {
             if (!model.Indicators?.Any() ?? false)
@@ -88,7 +86,6 @@ namespace StockExchange.Web.Controllers
         /// <param name="id">ID of the strategy to delete</param>
         /// <returns></returns>
         [HttpPost]
-        [HandleJsonError]
         public ActionResult DeleteStrategy(int id)
         {
             _strategyService.DeleteStrategy(id, CurrentUserId);

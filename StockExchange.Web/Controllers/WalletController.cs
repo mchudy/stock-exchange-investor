@@ -3,7 +3,6 @@ using StockExchange.Business.Models.Filters;
 using StockExchange.Business.Models.Paging;
 using StockExchange.Business.Models.Transaction;
 using StockExchange.Business.ServiceInterfaces;
-using StockExchange.Web.Filters;
 using StockExchange.Web.Helpers;
 using StockExchange.Web.Helpers.Json;
 using StockExchange.Web.Models.DataTables;
@@ -104,7 +103,6 @@ namespace StockExchange.Web.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
-        [HandleJsonError]
         public async Task<ActionResult> AddTransaction(WalletViewModel model)
         {
             if (!ModelState.IsValid)
