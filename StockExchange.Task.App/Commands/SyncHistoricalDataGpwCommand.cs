@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using StockExchange.Common;
+﻿using StockExchange.Common;
 using StockExchange.Task.App.Helpers;
 using StockExchange.Task.Business;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace StockExchange.Task.App.Commands
 {
@@ -31,7 +31,8 @@ namespace StockExchange.Task.App.Commands
                 : DateTime.Now;
             for (var date = startDate; date <= endDate; date = date.AddDays(1))
             {
-                _synchronizer.Sync(date);
+                var dateCopy = date;
+                _synchronizer.Sync(dateCopy);
             }
         }
     }

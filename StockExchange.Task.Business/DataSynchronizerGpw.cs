@@ -2,6 +2,7 @@
 using NPOI.POIFS.FileSystem;
 using NPOI.SS.UserModel;
 using StockExchange.Common;
+using StockExchange.DataAccess.Cache;
 using StockExchange.DataAccess.IRepositories;
 using StockExchange.DataAccess.Models;
 using StockExchange.Task.Business.Helpers;
@@ -23,20 +24,22 @@ namespace StockExchange.Task.Business
         private static readonly ILog Logger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         private readonly IRepository<Company> _companyRepository;
         private readonly IRepository<Price> _priceRepository;
+        private readonly ICache _cache;
 
         /// <summary>
         /// Creates a new instance of <see cref="DataSynchronizerGpw"/>
         /// </summary>
         /// <param name="companyRepository"></param>
         /// <param name="priceRepository"></param>
-        public DataSynchronizerGpw(IRepository<Company> companyRepository, IRepository<Price> priceRepository)
+        public DataSynchronizerGpw(IRepository<Company> companyRepository, IRepository<Price> priceRepository, ICache cache)
         {
             _companyRepository = companyRepository;
             _priceRepository = priceRepository;
+            _cache = cache;
         }
 
         /// <inheritdoc />
-        public void Sync(DateTime date)
+        public async System.Threading.Tasks.Task Sync(DateTime date)
         {
             Logger.Debug("Syncing historical data started");
 
@@ -70,7 +73,7 @@ namespace StockExchange.Task.Business
                         Code = name,
                         Name = ""
                     });
-                    _companyRepository.Save();
+                    await _companyRepository.Save();
                     companies = _companyRepository.GetQueryable().ToList();
                 }
                 var company = companies.First(item => item.Code == name);
@@ -92,7 +95,8 @@ namespace StockExchange.Task.Business
                 }
             }
             _priceRepository.BulkInsert(pricesToInsert);
-            _priceRepository.Save();
+            await _priceRepository.Save();
+            await _cache.Flush();
 
             Logger.Debug("Syncing historical data ended.");
         }

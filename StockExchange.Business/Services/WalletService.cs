@@ -3,6 +3,7 @@ using StockExchange.Business.Models.Filters;
 using StockExchange.Business.Models.Paging;
 using StockExchange.Business.Models.Wallet;
 using StockExchange.Business.ServiceInterfaces;
+using StockExchange.DataAccess.Cache;
 using StockExchange.DataAccess.Models;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,33 +18,35 @@ namespace StockExchange.Business.Services
     {
         private readonly ITransactionsService _transactionsService;
         private readonly IPriceService _priceService;
+        private readonly ICache _cache;
 
         /// <summary>
         /// Creates a new <see cref="WalletService"/> instance
         /// </summary>
         /// <param name="transactionsService"></param>
         /// <param name="priceService"></param>
-        public WalletService(ITransactionsService transactionsService, IPriceService priceService)
+        public WalletService(ITransactionsService transactionsService, IPriceService priceService, ICache cache)
         {
             _transactionsService = transactionsService;
             _priceService = priceService;
+            _cache = cache;
         }
 
-        //TODO: cache
+        //TODO: refactor cache usage
         /// <inheritdoc />
         public async Task<IList<OwnedCompanyStocksDto>> GetOwnedStocks(int userId)
         {
-            //var ownedStocks = _priceRepository.GetOwnedStocks(userId);
-            //if(ownedStocks == null)
-            //{
-                var transactionsByCompany = await _transactionsService.GetTransactionsByCompany(userId);
-                var currentPrices = await _priceService.GetCurrentPrices(transactionsByCompany.Keys.ToList());
-                return transactionsByCompany
-                    .Select(entry => BuildCompanyOwnedStocksDto(userId, entry, currentPrices))
-                    .ToList();
-            //_priceRepository.SaveOwnedStocks(ownedStocks);
-            //}
-            //return ownedStocks;
+            var ownedStocks = await _cache.Get<IList<OwnedCompanyStocksDto>>(CacheKeys.OwnedStocks(userId));
+            if (ownedStocks != null)
+                return ownedStocks;
+
+            var transactionsByCompany = await _transactionsService.GetTransactionsByCompany(userId);
+            var currentPrices = await _priceService.GetCurrentPrices(transactionsByCompany.Keys.ToList());
+            ownedStocks = transactionsByCompany
+                .Select(entry => BuildCompanyOwnedStocksDto(userId, entry, currentPrices))
+                .ToList();
+            await _cache.Set(CacheKeys.OwnedStocks(userId), ownedStocks);
+            return ownedStocks;
         }
 
         /// <inheritdoc />

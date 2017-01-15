@@ -57,13 +57,13 @@ namespace StockExchange.DataAccess.CachedRepositories
         /// Returns a value from cache, if it doesn't exists uses a fallback
         /// and saves the value in cache
         /// </summary>
-        /// <typeparam name="T">Type of object to retrieve</typeparam>
+        /// <typeparam name="TValue">Type of object to retrieve</typeparam>
         /// <param name="key">Cache key</param>
         /// <param name="fallback">Method returning the value</param>
         /// <returns>The value from cache</returns>
-        protected async Task<T> Get<T>(string key, Func<Task<T>> fallback) where T : class
+        protected async Task<TValue> Get<TValue>(string key, Func<Task<TValue>> fallback) where TValue : class
         {
-            var value = await _cache.Get<T>(key);
+            var value = await _cache.Get<TValue>(key);
             if (value == null)
             {
                 value = await fallback();

@@ -14,7 +14,7 @@ namespace StockExchange.DataAccess.Cache
         /// <typeparam name="T">Type of object to get</typeparam>
         /// <param name="key">Cache key</param>
         /// <returns>Deserialized object from cache</returns>
-        Task<T> Get<T>(string key) where T : class;
+        Task<T> Get<T>(string key);
 
         /// <summary>
         /// Saves an object in cache
@@ -22,7 +22,7 @@ namespace StockExchange.DataAccess.Cache
         /// <typeparam name="T">Type of object to cache</typeparam>
         /// <param name="key">Cache key</param>
         /// <param name="objectToCache">Object to cache</param>
-        Task Set<T>(string key, T objectToCache) where T : class;
+        Task Set<T>(string key, T objectToCache);
 
         /// <summary>
         /// Removes a key-value pair from the cache

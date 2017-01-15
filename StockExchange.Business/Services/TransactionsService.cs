@@ -48,7 +48,7 @@ namespace StockExchange.Business.Services
                     Profit = 0
                 }).ToList();
             var pagedTransactions = transactions.ToPagedList(filter.Start, filter.Length);
-            foreach (var pagedTransaction in pagedTransactions)
+            foreach (var pagedTransaction in pagedTransactions.List)
             {
                 if (pagedTransaction.Action == Action.Buy) continue;
                 var pastTransactions = transactions
@@ -97,7 +97,9 @@ namespace StockExchange.Business.Services
                 Price = dto.Price,
                 Quantity = dto.Quantity
             });
-            await _userRepository.Save();
+            var saveTask = _userRepository.Save();
+            var clearCache = _transactionsRepository.ClearTransactionsCache(dto.UserId);
+            await Task.WhenAll(saveTask, clearCache);
         }
         
         /// <inheritdoc />

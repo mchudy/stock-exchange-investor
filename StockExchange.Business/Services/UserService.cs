@@ -12,14 +12,17 @@ namespace StockExchange.Business.Services
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
+        private readonly ITransactionsRepository _transactionsRepository;
 
         /// <summary>
         /// Creates a new instance of <see cref="UserService"/>
         /// </summary>
         /// <param name="userRepository"></param>
-        public UserService(IUserRepository userRepository)
+        /// <param name="transactionsRepository"></param>
+        public UserService(IUserRepository userRepository, ITransactionsRepository transactionsRepository)
         {
             _userRepository = userRepository;
+            _transactionsRepository = transactionsRepository;
         }
 
         /// <inheritdoc />
@@ -31,6 +34,7 @@ namespace StockExchange.Business.Services
             else
                 throw new BusinessException(nameof(userId), "User does not exist", ErrorStatus.DataNotFound);
             await _userRepository.Save();
+            await _transactionsRepository.ClearTransactionsCache(userId);
         }
     }
 }

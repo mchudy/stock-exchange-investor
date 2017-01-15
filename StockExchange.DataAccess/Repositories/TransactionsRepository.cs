@@ -34,5 +34,10 @@ namespace StockExchange.DataAccess.Repositories
         {
             return await DbSet.CountAsync(t => t.UserId == userId);
         }
+
+        public Task ClearTransactionsCache(int userId)
+        {
+            return Task.FromResult(0);
+        }
     }
 }

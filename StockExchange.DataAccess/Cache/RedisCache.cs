@@ -4,7 +4,6 @@ using StackExchange.Redis;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -18,10 +17,6 @@ namespace StockExchange.DataAccess.Cache
         private const string ConnectionStringKey = "RedisConnection";
 
         private static readonly ILog log = LogManager.GetLogger(typeof(RedisCache));
-        private static readonly JsonSerializerSettings _serializerSettings = new JsonSerializerSettings
-        {
-            ReferenceLoopHandling = ReferenceLoopHandling.Serialize
-        };
 
         private static readonly Lazy<ConnectionMultiplexer> _lazyRedisConnection;
         private static ConnectionMultiplexer _redisConnection => _lazyRedisConnection.Value;
@@ -34,27 +29,27 @@ namespace StockExchange.DataAccess.Cache
         }
 
         /// <inheritdoc />
-        public async Task<T> Get<T>(string key) where T : class
+        public async Task<T> Get<T>(string key)
         {
             try
             {
                 var redisObject = await _db.StringGetAsync(key);
                 if (redisObject.HasValue)
                 {
-                    return JsonConvert.DeserializeObject<T>(redisObject, _serializerSettings);
+                    return JsonConvert.DeserializeObject<T>(redisObject);
                 }
             }
             catch (RedisConnectionException e)
             {
                 log.Error("Redis connection error", e);
             }
-            return null;
+            return default(T);
         }
 
         /// <inheritdoc />
-        public async Task Set<T>(string key, T objectToCache) where T : class
+        public async Task Set<T>(string key, T objectToCache)
         {
-            var serializedObject = JsonConvert.SerializeObject(objectToCache, _serializerSettings);
+            string serializedObject = JsonConvert.SerializeObject(objectToCache);
             try
             {
                 await _db.StringSetAsync(key, serializedObject);
@@ -72,10 +67,9 @@ namespace StockExchange.DataAccess.Cache
         }
 
         /// <inheritdoc />
-        [SuppressMessage("ReSharper", "SuspiciousTypeConversion.Global")]
         public async Task<long> Remove(IEnumerable<string> keys)
         {
-            return await _db.KeyDeleteAsync(keys.Cast<RedisKey>().ToArray());
+            return await _db.KeyDeleteAsync(keys.Select(key => (RedisKey)key).ToArray());
         }
 
         /// <inheritdoc />

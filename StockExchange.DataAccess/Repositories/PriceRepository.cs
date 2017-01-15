@@ -43,5 +43,28 @@ namespace StockExchange.DataAccess.Repositories
                 .OrderBy(item => item.Date)
                 .ToListAsync();
         }
+
+        public async Task<DateTime> GetMaxDate()
+        {
+            return await DbSet.MaxAsync(item => item.Date);
+        }
+
+        public async Task<IList<DateTime>> GetTwoMaxDates()
+        {
+            return await DbSet
+                .OrderByDescending(item => item.Date)
+                .Select(item => item.Date)
+                .Distinct()
+                .Take(2)
+                .ToListAsync();
+        }
+
+        public async Task<List<Price>> GetPricesForDates(IList<DateTime> dates)
+        {
+            return await DbSet
+                .Include(p => p.Company)
+                .Where(p => dates.Contains(p.Date))
+                .ToListAsync();
+        }
     }
 }

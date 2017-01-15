@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace StockExchange.Business.Models.Paging
 {
@@ -7,7 +6,7 @@ namespace StockExchange.Business.Models.Paging
     /// Represents a paged list of objects
     /// </summary>
     /// <typeparam name="T">Type of objects in the list</typeparam>
-    public sealed class PagedList<T> : IReadOnlyList<T>
+    public sealed class PagedList<T>
     {
         /// <summary>
         /// List of objects
@@ -40,16 +39,5 @@ namespace StockExchange.Business.Models.Paging
         /// <param name="index">The index of the element</param>
         /// <returns>The item at the given index</returns>
         public T this[int index] => List[index];
-
-        /// <inheritdoc />
-        public IEnumerator<T> GetEnumerator()
-        {
-            return List.GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
     }
 }

@@ -2,6 +2,7 @@
 using Moq;
 using StockExchange.Business.ServiceInterfaces;
 using StockExchange.Business.Services;
+using StockExchange.DataAccess.Cache;
 using StockExchange.DataAccess.Models;
 using System;
 using System.Collections.Generic;
@@ -17,10 +18,11 @@ namespace StockExchange.UnitTest.Services
         private readonly IWalletService _service;
         private readonly Mock<ITransactionsService> _transactionsService = new Mock<ITransactionsService>();
         private readonly Mock<IPriceService> _priceService = new Mock<IPriceService>();
+        private readonly Mock<ICache> _cache = new Mock<ICache>();
 
         public WalletServiceTests()
         {
-            _service = new WalletService(_transactionsService.Object, _priceService.Object);
+            _service = new WalletService(_transactionsService.Object, _priceService.Object, _cache.Object);
         }
 
         [Fact]

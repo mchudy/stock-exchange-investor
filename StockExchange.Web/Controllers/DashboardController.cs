@@ -131,7 +131,7 @@ namespace StockExchange.Web.Controllers
             {
                 RecordsFiltered = pagedList.TotalCount,
                 RecordsTotal = pagedList.TotalCount,
-                Data = pagedList,
+                Data = pagedList.List,
                 Draw = dataTableMessage.Draw
             };
             return model;

@@ -7,6 +7,7 @@ using StockExchange.Business.Models.Paging;
 using StockExchange.Business.Models.Price;
 using StockExchange.Business.ServiceInterfaces;
 using StockExchange.Common.Extensions;
+using StockExchange.DataAccess.Cache;
 using StockExchange.DataAccess.Models;
 using System;
 using System.Collections.Generic;
@@ -26,6 +27,7 @@ namespace StockExchange.Business.Services
         private readonly IIndicatorFactory _indicatorFactory;
         private readonly IPriceService _priceService;
         private readonly ICompanyService _companyService;
+        private readonly ICache _cache;
 
         /// <summary>
         /// Creates a new instance of <see cref="IndicatorsService"/>
@@ -33,11 +35,14 @@ namespace StockExchange.Business.Services
         /// <param name="indicatorFactory"></param>
         /// <param name="priceService"></param>
         /// <param name="companyService"></param>
-        public IndicatorsService(IIndicatorFactory indicatorFactory, IPriceService priceService, ICompanyService companyService)
+        /// <param name="cache"></param>
+        public IndicatorsService(IIndicatorFactory indicatorFactory, IPriceService priceService, 
+            ICompanyService companyService, ICache cache)
         {
             _indicatorFactory = indicatorFactory;
             _priceService = priceService;
             _companyService = companyService;
+            _cache = cache;
         }
 
         /// <inheritdoc />
@@ -148,10 +153,15 @@ namespace StockExchange.Business.Services
             return signalEvents;
         }
 
-        //TODO: cache
+        //TODO: refactor cache usage
         /// <inheritdoc />
         public async Task<PagedList<TodaySignal>> GetCurrentSignals(PagedFilterDefinition<TransactionFilter> message)
         {
+            string cacheKey = CacheKeys.CurrentSignals(message.Start, message.Length);
+            var currentSignals = await _cache.Get<PagedList<TodaySignal>>(cacheKey);
+            if (currentSignals != null)
+                return currentSignals;
+
             var indicators = GetAllIndicators();
             var indicatorObjects = indicators.Select(indicator => _indicatorFactory.CreateIndicator(indicator.IndicatorType)).ToList();
 
@@ -202,16 +212,23 @@ namespace StockExchange.Business.Services
                 Action = item.Key.Action,
                 Indicator = string.Join(", ", (IEnumerable<string>)item.Select(it => it.Indicator).ToArray())
             }));
-            return ret.OrderBy(item => item.Company)
+            currentSignals = ret.OrderBy(item => item.Company)
                 .ThenBy(item => item.Action)
                 .ThenBy(item => item.Indicator)
                 .ToPagedList(message.Start, message.Length);
+            await _cache.Set(cacheKey, currentSignals);
+            return currentSignals;
         }
 
-        //TODO: cache
+        //TODO: refactor cache usage
         /// <inheritdoc />
         public async Task<int> GetCurrentSignalsCount()
         {
+            string cacheKey = CacheKeys.CurrentSignalsCount;
+            var signalsCount = await _cache.Get<int?>(cacheKey);
+            if (signalsCount.HasValue)
+                return signalsCount.Value;
+
             var indicators = GetAllIndicators();
             var indicatorObjects = indicators.Select(indicator => _indicatorFactory.CreateIndicator(indicator.IndicatorType)).ToList();
 
@@ -242,6 +259,7 @@ namespace StockExchange.Business.Services
                     }
                 }
             }
+            await _cache.Set(cacheKey, computed);
             return computed;
         }
 
