@@ -67,9 +67,9 @@ namespace StockExchange.DataAccess.Repositories
         public async Task<IList<DateTime>> GetTwoMaxDates()
         {
             return await DbSet
-                .OrderByDescending(item => item.Date)
                 .Select(item => item.Date)
                 .Distinct()
+                .OrderByDescending(item => item)                
                 .Take(2)
                 .ToListAsync();
         }
