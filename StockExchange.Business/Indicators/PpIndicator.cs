@@ -35,7 +35,6 @@ namespace StockExchange.Business.Indicators
             List<Signal> signals = new List<Signal>();
             var values = CalculateSupportsAndResistances(prices);
             PivotPointSupportResistance lastpp = null;
-            const SignalAction lastAction = SignalAction.NoSignal;
             foreach (var pp in values)
             {
                 if (lastpp == null)
@@ -44,10 +43,10 @@ namespace StockExchange.Business.Indicators
                     continue;
                 }
                 // ReSharper disable once RedundantLogicalConditionalExpressionOperand
-                if(pp.ClosePrice > lastpp.Resistance2 && lastAction != SignalAction.Buy)
+                if(pp.ClosePrice > lastpp.Resistance2)
                     signals.Add(new Signal(SignalAction.Buy) {Date = pp.Date});
                 // ReSharper disable once RedundantLogicalConditionalExpressionOperand
-                if(pp.ClosePrice < lastpp.Support2 && lastAction != SignalAction.Sell)
+                if(pp.ClosePrice < lastpp.Support2)
                     signals.Add(new Signal(SignalAction.Sell) {Date = pp.Date});
                 lastpp = pp;
             }
