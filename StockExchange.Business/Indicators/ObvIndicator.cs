@@ -13,12 +13,12 @@ namespace StockExchange.Business.Indicators
         private const int _trendTerm = 20;
 
         /// <inheritdoc />
-        [IngoreIndicatorProperty]
+        [IgnoreIndicatorProperty]
         public IndicatorType Type => IndicatorType.Obv;
 
         /// <inheritdoc />
-        [IngoreIndicatorProperty]
-        public int RequiredPricesCountToSignal => _trendTerm;
+        [IgnoreIndicatorProperty]
+        public int RequiredPricesForSignalCount => _trendTerm;
 
         /// <inheritdoc />
         public IList<IndicatorValue> Calculate(IList<Price> prices)

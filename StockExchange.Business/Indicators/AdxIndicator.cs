@@ -27,12 +27,12 @@ namespace StockExchange.Business.Indicators
         public int Term { get; set; } = DefaultTerm;
 
         /// <inheritdoc />
-        [IngoreIndicatorProperty]
+        [IgnoreIndicatorProperty]
         public IndicatorType Type => IndicatorType.Adx;
 
         /// <inheritdoc />
-        [IngoreIndicatorProperty]
-        public int RequiredPricesCountToSignal => 2*Term;
+        [IgnoreIndicatorProperty]
+        public int RequiredPricesForSignalCount => 2*Term;
 
         /// <inheritdoc />
         public IList<IndicatorValue> Calculate(IList<Price> prices)

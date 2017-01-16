@@ -22,12 +22,12 @@ namespace StockExchange.Business.Indicators
         public int Term { get; set; } = DefaultVrocTerm;
 
         /// <inheritdoc />
-        [IngoreIndicatorProperty]
+        [IgnoreIndicatorProperty]
         public IndicatorType Type => IndicatorType.Vroc;
 
         /// <inheritdoc />
-        [IngoreIndicatorProperty]
-        public int RequiredPricesCountToSignal => Term;
+        [IgnoreIndicatorProperty]
+        public int RequiredPricesForSignalCount => Term;
 
         /// <inheritdoc />
         public IList<IndicatorValue> Calculate(IList<Price> prices)

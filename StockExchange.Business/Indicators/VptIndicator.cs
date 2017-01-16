@@ -13,12 +13,12 @@ namespace StockExchange.Business.Indicators
         private const int _priceTerm = 14;
 
         /// <inheritdoc />
-        [IngoreIndicatorProperty]
+        [IgnoreIndicatorProperty]
         public IndicatorType Type => IndicatorType.Vpt;
 
         /// <inheritdoc />
-        [IngoreIndicatorProperty]
-        public int RequiredPricesCountToSignal => _priceTerm + 1;
+        [IgnoreIndicatorProperty]
+        public int RequiredPricesForSignalCount => _priceTerm + 1;
 
         /// <inheritdoc />
         public IList<IndicatorValue> Calculate(IList<Price> prices)

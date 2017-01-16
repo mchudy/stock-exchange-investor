@@ -47,12 +47,12 @@ namespace StockExchange.Business.Indicators
         public int SignalTerm { get; set; } = DefaultSignalTerm;
 
         /// <inheritdoc />
-        [IngoreIndicatorProperty]
+        [IgnoreIndicatorProperty]
         public IndicatorType Type => IndicatorType.Macd;
 
         /// <inheritdoc />
-        [IngoreIndicatorProperty]
-        public int RequiredPricesCountToSignal => Math.Max(LongTerm, ShortTerm) + SignalTerm;
+        [IgnoreIndicatorProperty]
+        public int RequiredPricesForSignalCount => Math.Max(LongTerm, ShortTerm) + SignalTerm;
 
         /// <inheritdoc />
         public IList<IndicatorValue> Calculate(IList<Price> prices)

@@ -10,7 +10,7 @@ namespace StockExchange.Business.Indicators.Common
     /// Marks the property that is not an indicator parameter.
     /// </summary>
     [AttributeUsage(AttributeTargets.Property)]
-    public class IngoreIndicatorPropertyAttribute : Attribute
+    public class IgnoreIndicatorProperty : Attribute
     {
     }
 }

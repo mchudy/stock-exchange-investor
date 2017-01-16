@@ -81,7 +81,7 @@ namespace StockExchange.UnitTest.Indicators
         public void Is_Required_Prices_Count_Valid_For_Generating_Signals(IndicatorType type)
         {
             IIndicator indicator = _indicatorFactory.CreateIndicator(type);
-            var examplePrices = ExampleData.Take(indicator.RequiredPricesCountToSignal).ToList();
+            var examplePrices = ExampleData.Take(indicator.RequiredPricesForSignalCount).ToList();
             try
             {
                 var signals = indicator.GenerateSignals(examplePrices);

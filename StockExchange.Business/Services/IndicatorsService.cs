@@ -78,7 +78,7 @@ namespace StockExchange.Business.Services
         {
             var indicator = _indicatorFactory.CreateIndicator(type);
             var properties = indicator.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance)
-                .Where(p => !p.GetCustomAttributes(typeof(IngoreIndicatorPropertyAttribute)).Any());
+                .Where(p => !p.GetCustomAttributes(typeof(IgnoreIndicatorProperty)).Any());
             return properties.Select(property => new IndicatorProperty
             {
                 Name = property.Name,
@@ -191,7 +191,7 @@ namespace StockExchange.Business.Services
 
             var companies = await _companyService.GetCompanies();
             var maxDate = await _priceService.GetMaxDate();
-            var prices = await _priceService.GetCurrentPrices(indicatorObjects.Max(i => i.RequiredPricesCountToSignal));
+            var prices = await _priceService.GetCurrentPrices(indicatorObjects.Max(i => i.RequiredPricesForSignalCount));
 
             var computed = ComputeSignals(companies, prices, indicatorObjects, maxDate);
             var ret = new List<TodaySignal>();
