@@ -98,12 +98,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CompanyGroupsSynchronizer.cs" />
     <Compile Include="DataFixer.cs" />
     <Compile Include="DataSynchronizerGpw.cs" />
+    <Compile Include="Data\CompanyGroupsData.cs" />
     <Compile Include="Helpers\CsvImporter.cs" />
     <Compile Include="DataSynchronizer.cs" />
     <Compile Include="Helpers\PriceConverter.cs" />
     <Compile Include="Helpers\PriceValidationHelper.cs" />
+    <Compile Include="ICompanyGroupsSynchronizer.cs" />
     <Compile Include="IDataFixer.cs" />
     <Compile Include="IDataSynchronizerGpw.cs" />
     <Compile Include="IDataSynchronizer.cs" />

@@ -25,6 +25,7 @@ namespace StockExchange.Task.App
             builder.RegisterType<DataSynchronizer>().As<IDataSynchronizer>();
             builder.RegisterType<DataSynchronizerGpw>().As<IDataSynchronizerGpw>();
             builder.RegisterType<DataFixer>().AsImplementedInterfaces();
+            builder.RegisterType<CompanyGroupsSynchronizer>().AsImplementedInterfaces();
             builder.RegisterAssemblyTypes(assembly).Where(CommandHelper.IsCommand).Named<ICommand>(a => CommandHelper.GetCommandName(a).Name);
 
             bool useCache;

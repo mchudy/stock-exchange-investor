@@ -39,6 +39,11 @@
             /// The command for fixing data from the GPW
             /// </summary>
             public const string FixData = "fix-data";
+
+            /// <summary>
+            /// The command for adding company groups to the database
+            /// </summary>
+            public const string AddCompanyGroups = "add-company-groups";
         }
 
         /// <summary>
