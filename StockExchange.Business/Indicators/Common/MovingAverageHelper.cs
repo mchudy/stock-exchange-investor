@@ -158,7 +158,21 @@ namespace StockExchange.Business.Indicators.Common
                 prev = newVal;
             }
             return values;
-        } 
+        }
+
+        internal static IList<Signal> GenerateSignalsForMovingAverages(IIndicator indicator, int term, IList<Price> prices)
+        {
+            var signals = new List<Signal>();
+            var values = indicator.Calculate(prices);
+            for (int i = term; i < prices.Count; i++)
+            {
+                if (values[i - term].Value < values[i - term + 1].Value && prices[i].ClosePrice > values[i - term + 1].Value)
+                    signals.Add(new Signal(SignalAction.Buy) { Date = prices[i].Date });
+                else if (values[i - term].Value > values[i - term + 1].Value && prices[i].ClosePrice < values[i - term + 1].Value)
+                    signals.Add(new Signal(SignalAction.Sell) { Date = prices[i].Date });
+            }
+            return signals;
+        }
 
         private static IList<IndicatorValue> ExponentialMovingAverageInternal(IList<IndicatorValue> values, int terms, decimal alpha)
         {
