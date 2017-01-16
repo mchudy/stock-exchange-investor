@@ -7,6 +7,7 @@
     initSidebarToggle();
     setValidatorDefaults();
     setDatepickerDefaults();
+    setSelect2Defaults();
     initModals();
     initAjaxErrorToasts();
 
@@ -100,6 +101,19 @@
                 message = response[0].message;
             }
             toastr.error(message, 'Error');
+        });
+    }
+
+    /**
+     * Sets default actions for select2 components
+     */
+    function setSelect2Defaults() {
+        $.fn.select2.defaults.set('matcher', function(params, data) {
+            params.term = params.term || '';
+            if (data.text.toUpperCase().indexOf(params.term.toUpperCase()) == 0) {
+                return data;
+            }
+            return false;
         });
     }
 
