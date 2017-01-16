@@ -78,21 +78,12 @@ namespace StockExchange.Business.Indicators
         {
             var values = Calculate(prices);
             var signals = new List<Signal>();
-            SignalAction previousAction = SignalAction.NoSignal;
             foreach (var indicatorValue in values)
             {
-                if (indicatorValue.Value > Maximum && previousAction != SignalAction.Sell)
-                {
+                if (indicatorValue.Value > Maximum)
                     signals.Add(new Signal(SignalAction.Sell) { Date = indicatorValue.Date });
-                    previousAction = SignalAction.Sell;
-                }
-                else if (indicatorValue.Value < Minimum && previousAction != SignalAction.Buy)
-                {
+                else if (indicatorValue.Value < Minimum)
                     signals.Add(new Signal(SignalAction.Buy) {Date = indicatorValue.Date});
-                    previousAction = SignalAction.Buy;
-                }
-                else
-                    previousAction = SignalAction.NoSignal;
             }
             return signals;
         }
