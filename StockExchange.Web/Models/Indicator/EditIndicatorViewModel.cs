@@ -1,5 +1,6 @@
 ﻿using StockExchange.Business.Indicators.Common;
 using System.Collections.Generic;
+using StockExchange.Business.Models.Indicators;
 
 namespace StockExchange.Web.Models.Indicator
 {
@@ -27,5 +28,20 @@ namespace StockExchange.Web.Models.Indicator
         /// Whether the indicator has been selected
         /// </summary>
         public bool IsSelected { get; set; }
+
+        /// <summary>
+        /// Indicator description.
+        /// </summary>
+        public string IndicatorDescription { get; set; }
+
+        /// <summary>
+        /// Buy signal description. 
+        /// </summary>
+        public string BuySignalDescription { get; set; }
+
+        /// <summary>
+        /// Sell signal description.
+        /// </summary>
+        public string SellSignalDescription { get; set; }
     }
 }
