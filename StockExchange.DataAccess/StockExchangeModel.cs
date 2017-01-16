@@ -27,6 +27,16 @@ namespace StockExchange.DataAccess
         public IDbSet<Company> Companies { get; set; }
 
         /// <summary>
+        /// The company groups tables
+        /// </summary>
+        public IDbSet<CompanyGroup> CompanyGroups { get; set; }
+
+        /// <summary>
+        /// The table connecting companies and company groups
+        /// </summary>
+        public IDbSet<CompanyGroupCompany> CompanyGroupCompanies { get; set; }
+
+        /// <summary>
         /// The prices table
         /// </summary>
         public virtual IDbSet<Price> Prices { get; set; }

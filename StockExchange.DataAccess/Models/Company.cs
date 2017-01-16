@@ -30,7 +30,6 @@ namespace StockExchange.DataAccess.Models
         /// <summary>
         /// Stock prices for the company
         /// </summary>
-        //TODO: this should't be here
         [JsonIgnore]
         public virtual ICollection<Price> Prices { get; set; } = new HashSet<Price>();
     }

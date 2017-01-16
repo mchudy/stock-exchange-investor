@@ -123,6 +123,8 @@
     <Compile Include="IRepositories\ITransactionsRepository.cs" />
     <Compile Include="IRepositories\IUserRepository.cs" />
     <Compile Include="Models\Company.cs" />
+    <Compile Include="Models\CompanyGroup.cs" />
+    <Compile Include="Models\CompanyGroupCompany.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\InvestmentStrategy.cs" />
     <Compile Include="Models\Price.cs" />
