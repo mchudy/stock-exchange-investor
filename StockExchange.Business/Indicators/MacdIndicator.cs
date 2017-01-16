@@ -11,6 +11,7 @@ namespace StockExchange.Business.Indicators
     /// <summary>
     /// Moving Average Convergence Divergence technical indicator
     /// </summary>
+    [IndicatorDescription("Macd")]
     public class MacdIndicator : IIndicator
     {
         /// <summary>

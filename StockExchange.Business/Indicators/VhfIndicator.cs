@@ -10,6 +10,7 @@ namespace StockExchange.Business.Indicators
     /// <summary>
     /// Vertical Horizontal Filter technical indicator
     /// </summary>
+    [IndicatorDescription("Vhf")]
     public class VhfIndicator : IIndicator
     {
         /// <summary>

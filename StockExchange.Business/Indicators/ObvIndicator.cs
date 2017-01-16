@@ -8,6 +8,7 @@ namespace StockExchange.Business.Indicators
     /// <summary>
     /// OBV technical indicator
     /// </summary>
+    [IndicatorDescription("Obv")]
     public class ObvIndicator : IIndicator
     {
         private const int _trendTerm = 20;

@@ -87,8 +87,15 @@
     <Compile Include="Exceptions\IndicatorNotFoundException.cs" />
     <Compile Include="ErrorHandling\ValidationError.cs" />
     <Compile Include="Indicators\Common\IgnoreIndicatorProperty.cs" />
+    <Compile Include="Indicators\Common\IndicatorDescriptionAttribute.cs" />
+    <Compile Include="Indicators\Common\IndicatorDescriptions.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>IndicatorDescriptions.resx</DependentUpon>
+    </Compile>
     <Compile Include="Indicators\Common\Intersections\IntersectionType.cs" />
     <Compile Include="Indicators\Common\Intersections\IntersectionInfo.cs" />
+    <Compile Include="Models\Indicators\IndicatorDescriptionDto.cs" />
     <Compile Include="Models\Indicators\SignalAction.cs" />
     <Compile Include="Models\Paging\PagedList.cs" />
     <Compile Include="Indicators\AtrIndicator.cs" />
@@ -168,7 +175,12 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Indicators\Common\IndicatorDescriptions.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>IndicatorDescriptions.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -10,6 +10,7 @@ namespace StockExchange.Business.Indicators
     /// <summary>
     /// Pivot Point technical indicator
     /// </summary>
+    [IndicatorDescription("Pp")]
     public class PpIndicator : IIndicator
     {
         /// <inheritdoc />

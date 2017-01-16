@@ -11,6 +11,7 @@ namespace StockExchange.Business.Indicators
     /// <summary>
     /// Average Directional Movement Index technical indicator
     /// </summary>
+    [IndicatorDescription("Adx")]
     public class AdxIndicator : IIndicator
     {
         private const decimal AdxStrongTrendValue = 25m;

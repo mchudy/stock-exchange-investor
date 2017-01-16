@@ -74,6 +74,19 @@ namespace StockExchange.Business.Services
         }
 
         /// <inheritdoc />
+        public IndicatorDescriptionDto GetIndicatorDescription(IndicatorType indicatorType)
+        {
+            var indicator = _indicatorFactory.CreateIndicator(indicatorType);
+            var attribute = indicator.GetType().GetCustomAttribute(typeof(IndicatorDescriptionAttribute)) as IndicatorDescriptionAttribute;
+            return new IndicatorDescriptionDto()
+            {
+                IndicatorDescription = attribute?.IndicatorDescription,
+                BuySignalDescription = attribute?.BuySignalDescription,
+                SellSignalDescription = attribute?.SellSignalDescription
+            };
+        }
+
+        /// <inheritdoc />
         public IList<IndicatorProperty> GetPropertiesForIndicator(IndicatorType type)
         {
             var indicator = _indicatorFactory.CreateIndicator(type);

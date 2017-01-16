@@ -8,6 +8,7 @@ namespace StockExchange.Business.Indicators
     /// <summary>
     /// Volume Price Trend technical indicator
     /// </summary>
+    [IndicatorDescription("Vpt")]
     public class VptIndicator : IIndicator
     {
         private const int _priceTerm = 14;

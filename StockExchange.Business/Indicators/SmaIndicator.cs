@@ -9,6 +9,7 @@ namespace StockExchange.Business.Indicators
     /// <summary>
     /// Simple Moving Average technical indicator
     /// </summary>
+    [IndicatorDescription("Sma")]
     public class SmaIndicator : IIndicator
     {
         /// <summary>

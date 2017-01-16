@@ -8,6 +8,7 @@ namespace StockExchange.Business.Indicators
     /// <summary>
     /// Rate of Change technical indicator
     /// </summary>
+    [IndicatorDescription("Roc")]
     public class RocIndicator : IIndicator
     {
         /// <summary>

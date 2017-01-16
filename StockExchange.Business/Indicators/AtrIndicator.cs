@@ -9,6 +9,7 @@ namespace StockExchange.Business.Indicators
     /// <summary>
     /// Average True Range technical indicator
     /// </summary>
+    [IndicatorDescription("Atr")]
     public class AtrIndicator : IIndicator
     {
         /// <summary>

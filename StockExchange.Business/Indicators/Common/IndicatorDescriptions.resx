@@ -1,0 +1,228 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AdxBuySignal" xml:space="preserve">
+    <value>Occurs when +DI line crosses above -DI line and ADX value is greater than 25</value>
+  </data>
+  <data name="AdxDescription" xml:space="preserve">
+    <value>Average Directional Index indicator</value>
+  </data>
+  <data name="AdxSellSignal" xml:space="preserve">
+    <value>Occurs when +DI line crosses below -DI line and ADX value is greater than 25</value>
+  </data>
+  <data name="AtrBuySignal" xml:space="preserve">
+    <value>Occurs when ATR values are growing and price trend values are growing</value>
+  </data>
+  <data name="AtrDescription" xml:space="preserve">
+    <value>Average True Range indicator</value>
+  </data>
+  <data name="AtrSellSignal" xml:space="preserve">
+    <value>Occurs when ATR values are falling and price trend values are also falling</value>
+  </data>
+  <data name="EmaBuySignal" xml:space="preserve">
+    <value>Occurs when EMA values are growing and current close price is greater than EMA value.</value>
+  </data>
+  <data name="EmaDescription" xml:space="preserve">
+    <value>Expotential Moving Average indicator</value>
+  </data>
+  <data name="EmaSellSignal" xml:space="preserve">
+    <value>Occurs when EMA values are falling and current close price is less than SMA value</value>
+  </data>
+  <data name="MacdBuySignal" xml:space="preserve">
+    <value>Occurs when MACD line crosses above signal line</value>
+  </data>
+  <data name="MacdDescription" xml:space="preserve">
+    <value>Moving Average Convergence/Divergence indicator</value>
+  </data>
+  <data name="MacdSellSignal" xml:space="preserve">
+    <value>Occurs when MACD line crosses below signal line</value>
+  </data>
+  <data name="ObvBuySignal" xml:space="preserve">
+    <value>Occurs when OBV indicator value is greater than current volume value and prices trend values are growing</value>
+  </data>
+  <data name="ObvDescription" xml:space="preserve">
+    <value>On Balance Volume indicator</value>
+  </data>
+  <data name="ObvSellSignal" xml:space="preserve">
+    <value>Occurs when OBV indicator value is less than current volume value and prices trend values are falling</value>
+  </data>
+  <data name="PpBuySignal" xml:space="preserve">
+    <value>Occurs when current close price is greater than the second resistance level.</value>
+  </data>
+  <data name="PpDescription" xml:space="preserve">
+    <value>Pivot Point indicator</value>
+  </data>
+  <data name="PpSellSignal" xml:space="preserve">
+    <value>Occurs when current close price is greater than the second support level.</value>
+  </data>
+  <data name="RocBuySignal" xml:space="preserve">
+    <value>Occurs when ROC values are negative and prices trend values are growing</value>
+  </data>
+  <data name="RocDescription" xml:space="preserve">
+    <value>Rate Of Change indicator</value>
+  </data>
+  <data name="RocSellSignal" xml:space="preserve">
+    <value>Occurs when ROC values are positive and prices trend values are falling</value>
+  </data>
+  <data name="RsiBuySignal" xml:space="preserve">
+    <value>Occurs when RSI indicator value is less than Minimum property value.</value>
+  </data>
+  <data name="RsiDescription" xml:space="preserve">
+    <value>Relative Strength Index indicator</value>
+  </data>
+  <data name="RsiSellSignal" xml:space="preserve">
+    <value>Occurs when RSI indicator value is greater than Maximum property value.</value>
+  </data>
+  <data name="SmaBuySignal" xml:space="preserve">
+    <value>Occurs when SMA values are growing and current close price is greater than SMA value</value>
+  </data>
+  <data name="SmaDescription" xml:space="preserve">
+    <value>Simple Moving Average indicator</value>
+  </data>
+  <data name="SmaSellSignal" xml:space="preserve">
+    <value>Occurs when SMA values are falling and current close price is less than SMA value</value>
+  </data>
+  <data name="VhfBuySignal" xml:space="preserve">
+    <value>Occurs when VHF values are growing and prices trend values are also growing</value>
+  </data>
+  <data name="VhfDescription" xml:space="preserve">
+    <value>Vertical Horizontal Filter indicator</value>
+  </data>
+  <data name="VhfSellSignal" xml:space="preserve">
+    <value>Occurs when VHF values are falling and prices trend values are also falling</value>
+  </data>
+  <data name="VptBuySignal" xml:space="preserve">
+    <value>Occurs when VPT values are growing and prices trend values are also growing</value>
+  </data>
+  <data name="VptDescription" xml:space="preserve">
+    <value>Volume Price Trend indicator</value>
+  </data>
+  <data name="VptSellSignal" xml:space="preserve">
+    <value>Occurs when VPT values are falling and prices trend values are also falling</value>
+  </data>
+  <data name="VrocBuySignal" xml:space="preserve">
+    <value>Occurs when VROC values are negative and prices trend values are growing</value>
+  </data>
+  <data name="VrocDescription" xml:space="preserve">
+    <value>Volume Rate Of Change indicator</value>
+  </data>
+  <data name="VrocSellSignal" xml:space="preserve">
+    <value>Occurs when VROC values are positive and prices trend values are falling</value>
+  </data>
+</root>

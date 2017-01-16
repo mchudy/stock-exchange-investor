@@ -120,6 +120,7 @@
     <Compile Include="Indicators\ADX\AdxTests.cs" />
     <Compile Include="Indicators\EMA\EmaData.cs" />
     <Compile Include="Indicators\EMA\EmaTests.cs" />
+    <Compile Include="Indicators\IndicatorDescriptionTests.cs" />
     <Compile Include="Indicators\IndicatorRequiredPricesCountTests.cs" />
     <Compile Include="Indicators\VPT\VptTests.cs" />
     <Compile Include="Indicators\VHF\VhfData.cs" />

@@ -8,6 +8,7 @@ namespace StockExchange.Business.Indicators
     /// <summary>
     /// Exponential moving average technical indicator
     /// </summary>
+    [IndicatorDescription("Ema")]
     public class EmaIndicator : IIndicator
     {
         /// <summary>

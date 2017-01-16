@@ -8,6 +8,7 @@ namespace StockExchange.Business.Indicators
     /// <summary>
     /// Relative Strength Index technical indicator
     /// </summary>
+    [IndicatorDescription("Rsi")]
     public class RsiIndicator : IIndicator
     {
         /// <summary>
