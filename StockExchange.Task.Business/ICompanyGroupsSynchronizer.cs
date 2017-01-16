@@ -2,6 +2,6 @@
 {
     public interface ICompanyGroupsSynchronizer
     {
-        void UpdateCompanyGroups();
+        System.Threading.Tasks.Task UpdateCompanyGroups();
     }
 }

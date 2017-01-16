@@ -22,6 +22,7 @@ namespace StockExchange.Task.App
             builder.RegisterType<GenericRepository<Company>>().As<IRepository<Company>>();
             builder.RegisterType<Factory<GenericRepository<Price>>>().As<IFactory<IRepository<Price>>>();
             builder.RegisterType<GenericRepository<Price>>().As<IRepository<Price>>();
+            builder.RegisterType<GenericRepository<CompanyGroup>>().AsImplementedInterfaces();
             builder.RegisterType<DataSynchronizer>().As<IDataSynchronizer>();
             builder.RegisterType<DataSynchronizerGpw>().As<IDataSynchronizerGpw>();
             builder.RegisterType<DataFixer>().AsImplementedInterfaces();

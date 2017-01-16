@@ -17,7 +17,7 @@ namespace StockExchange.Task.App.Commands
 
         public void Execute(IEnumerable<string> parameters)
         {
-            _companyGroupsSynchronizer.UpdateCompanyGroups();
+            System.Threading.Tasks.Task.Run(() =>_companyGroupsSynchronizer.UpdateCompanyGroups()).Wait();
         }
     }
 }
