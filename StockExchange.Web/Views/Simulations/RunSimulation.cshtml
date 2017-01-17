@@ -95,7 +95,7 @@
                             @Html.LabelFor(m => m.HasTransactionLimit, new { @class = "control-label" })
                         </div>
                     </div>
-                    <div class="form-group has-feedback transactionLimit">
+                    <div class="form-group has-feedback transactionLimit hidden">
                         @Html.LabelFor(m => m.MaximalBudgetPerTransaction, new { @class = "col-sm-4 control-label" })
                         <div class="input-group col-sm-8">
                             @Html.TextBoxFor(m => m.MaximalBudgetPerTransaction, new { @class = "form-control", Value = Model.Budget })

@@ -19,11 +19,8 @@
 
     // Disable companies select when AllCompanies checkbox is checked
     $('#HasTransactionLimit')
-        .on('ifChecked ', function() {
-            $('.transactionLimit').show();
-        })
-        .on('ifUnchecked', function() {
-            $('.transactionLimit').hide();
+        .on('ifChecked ifUnchecked', function() {
+            $('.transactionLimit').toggleClass('hidden');
         });
 
     // Disables button on submit to prevent multiple clicks
