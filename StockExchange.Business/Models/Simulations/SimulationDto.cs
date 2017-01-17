@@ -37,5 +37,15 @@ namespace StockExchange.Business.Models.Simulations
         /// Total budget for the simulation
         /// </summary>
         public decimal Budget { get; set; }
+
+        /// <summary>
+        /// Maximal budget for single buy transaction.
+        /// </summary>
+        public decimal MaximalBudgetPerTransaction { get; set; }
+
+        /// <summary>
+        /// Indicates whether transaction limit is set. 
+        /// </summary>
+        public bool HasTransactionLimit { get; set; }
     }
 }

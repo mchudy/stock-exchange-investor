@@ -64,5 +64,17 @@ namespace StockExchange.Web.Models.Simulation
         /// </summary>
         [Range(1, int.MaxValue, ErrorMessage = "Budget must be greater than 0")]
         public decimal Budget { get; set; }
+
+        /// <summary>
+        /// Budget limit for a single buy transaction.
+        /// </summary>
+        [Display(Name = "Transaction limit value")]
+        public decimal MaximalBudgetPerTransaction { get; set; }
+
+        /// <summary>
+        /// Indicates whether transaction limit is defined.
+        /// </summary>
+        [Display(Name = "Transaction limit")]
+        public bool HasTransactionLimit { get; set; }
     }
 }

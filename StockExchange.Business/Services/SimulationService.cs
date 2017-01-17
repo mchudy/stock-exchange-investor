@@ -65,7 +65,7 @@ namespace StockExchange.Business.Services
                     HandleBuySignals(simulationDto, allPrices, signalEvent, simulationResult);
                 }
             }
-            var currentPrices =  (await _priceService.GetCurrentPrices(simulationResult.CurrentCompanyQuantity.Keys.ToList())).ToDictionary(x => x.CompanyId);
+            var currentPrices = (await _priceService.GetCurrentPrices(simulationResult.CurrentCompanyQuantity.Keys.ToList())).ToDictionary(x => x.CompanyId);
             simulationResult.SimulationTotalValue = simulationResult.CurrentCompanyQuantity.Sum(x => x.Value * currentPrices[x.Key].ClosePrice) + simulationDto.Budget;
             simulationResult.PercentageProfit = Math.Round((double)((simulationResult.SimulationTotalValue - simulationResult.StartBudget) / simulationResult.StartBudget) * 100, 2);
             CalculateMinimalAndMaximalSimulationValue(simulationDto.StartDate, simulationDto.EndDate, allPrices, simulationDto.SelectedCompanyIds, simulationResult);
@@ -75,27 +75,28 @@ namespace StockExchange.Business.Services
         private static void HandleBuySignals(SimulationDto simulationDto, IList<CompanyPricesDto> allPrices, SignalEvent signalEvent,
             SimulationResultDto simulationResult)
         {
-            var prices = ConvertPrices(allPrices, signalEvent.CompaniesToBuy, signalEvent.Date)
-                .OrderByDescending(item => item.Value); //think over that sort
+            var prices = ConvertPrices(allPrices, signalEvent.CompaniesToBuy, signalEvent.Date);
             foreach (var price in prices)
             {
-                if (simulationDto.Budget <= price.Value) continue;
+                var value = simulationDto.Budget;
+                if (simulationDto.HasTransactionLimit)
+                    value = Math.Min(value, simulationDto.MaximalBudgetPerTransaction);
+                if (value <= price.Value) continue;
+                int quantity = (int) Math.Floor(value/price.Value);
                 simulationResult.TransactionsLog.Add(new SimulationTransactionDto
                 {
                     Date = signalEvent.Date,
                     CompanyId = price.Key,
                     Price = price.Value,
                     Action = SignalAction.Buy,
-                    Quantity = (int) Math.Floor(simulationDto.Budget/price.Value), //add company stocks budget limit
+                    Quantity = quantity, //add company stocks budget limit
                     BudgetAfter =
-                        simulationDto.Budget - (int) Math.Floor(simulationDto.Budget/price.Value)*price.Value
+                        simulationDto.Budget - quantity * price.Value
                 });
                 if (simulationResult.CurrentCompanyQuantity.ContainsKey(price.Key))
-                    simulationResult.CurrentCompanyQuantity[price.Key] +=
-                        (int) Math.Floor(simulationDto.Budget/price.Value);
+                    simulationResult.CurrentCompanyQuantity[price.Key] += quantity;
                 else
-                    simulationResult.CurrentCompanyQuantity.Add(price.Key,
-                        (int) Math.Floor(simulationDto.Budget/price.Value));
+                    simulationResult.CurrentCompanyQuantity.Add(price.Key,quantity);
                 simulationDto.Budget = simulationResult.TransactionsLog.Last().BudgetAfter;
             }
         }
@@ -116,13 +117,13 @@ namespace StockExchange.Business.Services
                     Action = SignalAction.Sell,
                     Quantity = simulationResult.CurrentCompanyQuantity[price.Key],
                     BudgetAfter =
-                        simulationDto.Budget + simulationResult.CurrentCompanyQuantity[price.Key]*price.Value
+                        simulationDto.Budget + simulationResult.CurrentCompanyQuantity[price.Key] * price.Value
                 };
                 simulationResult.TransactionsLog.Add(transaction);
                 simulationDto.Budget = simulationResult.TransactionsLog.Last().BudgetAfter;
                 simulationResult.CurrentCompanyQuantity.Remove(price.Key);
                 var sellValue = transaction.BudgetAfter;
-                var diff = (sellValue - lastSellValue)/lastSellValue;
+                var diff = (sellValue - lastSellValue) / lastSellValue;
                 if (diff > maxdiff)
                 {
                     simulationResult.MaximalGainOnTransaction = new ExtremeTransactionResult(transaction.Date, lastSellValue,
@@ -155,8 +156,8 @@ namespace StockExchange.Business.Services
                     budget = trans.BudgetAfter;
                 }
                 var dailyPrices = ConvertPrices(prices, companyIds, d);
-                if(dailyPrices.Count == 0) continue;
-                decimal value = budget + dailyPrices.Sum(dailyPrice => dailyPrice.Value*quantities[dailyPrice.Key]);
+                if (dailyPrices.Count == 0) continue;
+                decimal value = budget + dailyPrices.Sum(dailyPrice => dailyPrice.Value * quantities[dailyPrice.Key]);
                 if (value > maxVal)
                 {
                     resultDto.MaximalSimulationValue = new ExtremeSimulationValue(d, value, resultDto.StartBudget);
