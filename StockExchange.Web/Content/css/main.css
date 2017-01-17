@@ -455,6 +455,10 @@
 .form-group legend {
   font-size: 16px;
 }
+.form-group legend a {
+  font-size: 12px;
+  margin-left: 5px;
+}
 .input-group .input-group-addon {
   border-radius: 0;
   border-color: #d2d6de;

@@ -34,12 +34,12 @@
                     foreach (var indicator in Model.Indicators)
                     {
                         <fieldset data-id="@indicator.Type" class="@(indicator.IsSelected ? "" : "hidden") indicator form-group">
-                            <legend class="col-sm-12">@indicator.Name<i class="fa fa-trash fa-pull-right remove-indicator"></i></legend>
-                            <div class="alert alert-info">
-                                <div>
+                            <legend class="col-sm-12">@indicator.Name<a href="#" class="show-indicator-description">Show description</a><i class="fa fa-trash fa-pull-right remove-indicator"></i></legend>
+                            <div class="alert hidden indicator-description">
+                                @*<div>
                                     <label>Description</label>
                                     <div>@indicator.IndicatorDescription</div>
-                                </div>
+                                </div>*@
                                 <div>
                                     <label>Buy signal:</label>
                                     <div>@indicator.BuySignalDescription</div>
