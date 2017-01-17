@@ -2584,6 +2584,7 @@
     <Compile Include="Helpers\ValidationAttributes\RequiredIfAttribute.cs" />
     <Compile Include="Infrastructure\AppModule.cs" />
     <Compile Include="Infrastructure\IdentityModule.cs" />
+    <Compile Include="Models\Account\ChangePasswordViewModel.cs" />
     <Compile Include="Models\Account\RegisterViewModel.cs" />
     <Compile Include="Models\Charts\ChartsIndexModel.cs" />
     <Compile Include="Models\Charts\PieChartModel.cs" />
