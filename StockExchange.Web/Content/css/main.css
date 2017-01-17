@@ -815,3 +815,9 @@ footer {
     width: 100% !important;
   }
 }
+.fa-remove {
+  color: #dd4b39;
+}
+.fa-remove:hover {
+  background-color: #d2d6de;
+}

@@ -101,6 +101,31 @@ namespace StockExchange.Business.Services
             var clearCache = _transactionsRepository.ClearTransactionsCache(dto.UserId);
             await Task.WhenAll(saveTask, clearCache);
         }
+
+
+        /// <inheritdoc />
+        public async Task DeleteTransaction(int id, int sessionUserId)
+        {
+            var transaction = await _transactionsRepository.GetTransaction(id);
+            if(transaction == null)
+                throw new BusinessException("The transaction does not exist", ErrorStatus.DataNotFound);
+            if(transaction.UserId != sessionUserId)
+                throw new BusinessException("No permissions to perform this action", ErrorStatus.AccessDenied);
+
+            var user = await _userRepository.GetUser(sessionUserId);
+            if(user == null)
+                throw new BusinessException("The user does not exist", ErrorStatus.DataNotFound);
+
+            var value = transaction.Quantity*transaction.Price;
+            user.Budget += value;
+            await _userRepository.Save();
+
+            _transactionsRepository.Remove(transaction);
+            var saveTransactionTask =_transactionsRepository.Save();
+            var clearCacheTask = _transactionsRepository.ClearTransactionsCache(sessionUserId);
+
+            await Task.WhenAll(saveTransactionTask, clearCacheTask);
+        }
         
         /// <inheritdoc />
         public async Task<Dictionary<Company, List<UserTransaction>>> GetTransactionsByCompany(int userId)
@@ -126,3 +151,4 @@ namespace StockExchange.Business.Services
         }
     }
 }
+

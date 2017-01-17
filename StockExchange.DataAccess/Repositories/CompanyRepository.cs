@@ -22,19 +22,25 @@ namespace StockExchange.DataAccess.Repositories
         /// <inheritdoc />
         public async Task<IList<Company>> GetCompanies()
         {
-            return await DbSet.ToListAsync();
+            return await DbSet
+                .OrderBy(c => c.Code)
+                .ToListAsync();
         }
 
         /// <inheritdoc />
         public async Task<IList<string>> GetCompanyNames()
         {
-            return await DbSet.Select(c => c.Code).Distinct().ToListAsync();
+            return await DbSet.Select(c => c.Code)
+                .Distinct()
+                .OrderBy(c => c)
+                .ToListAsync();
         }
 
         /// <inheritdoc />
         public async Task<IList<Company>> GetCompanies(IList<int> ids)
         {
-            return await GetQueryable().Where(item => ids.Contains(item.Id)).ToListAsync();
+            return await GetQueryable().Where(item => ids.Contains(item.Id))
+                .ToListAsync();
         }
     }
 }

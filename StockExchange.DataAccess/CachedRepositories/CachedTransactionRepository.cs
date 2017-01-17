@@ -25,6 +25,12 @@ namespace StockExchange.DataAccess.CachedRepositories
         }
 
         /// <inheritdoc />
+        public async Task<UserTransaction> GetTransaction(int id)
+        {
+            return await _baseRepository.GetTransaction(id);
+        }
+
+        /// <inheritdoc />
         public async Task<IList<UserTransaction>> GetAllUserTransactions(int userId)
         {
             return await _baseRepository.GetAllUserTransactions(userId);

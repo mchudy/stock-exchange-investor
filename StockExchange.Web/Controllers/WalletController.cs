@@ -114,6 +114,18 @@ namespace StockExchange.Web.Controllers
         }
 
         /// <summary>
+        /// Deletes a transaction
+        /// </summary>
+        /// <param name="id">Id of the transaction to delete</param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<ActionResult> DeleteTransaction(int id)
+        {
+            await _transactionsService.DeleteTransaction(id, CurrentUserId);
+            return new JsonNetResult(true);
+        }
+
+        /// <summary>
         /// Returns the dialog for editing user budget
         /// </summary>
         /// <returns></returns>

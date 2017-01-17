@@ -10,6 +10,13 @@ namespace StockExchange.DataAccess.IRepositories
     public interface ITransactionsRepository : IRepository<UserTransaction>
     {
         /// <summary>
+        /// Returns transaction with the given Id
+        /// </summary>
+        /// <param name="id">Transaction Id</param>
+        /// <returns>The transaction</returns>
+        Task<UserTransaction> GetTransaction(int id);
+
+        /// <summary>
         /// Returns all transactions concluded by the given user
         /// </summary>
         /// <param name="userId">User id</param>

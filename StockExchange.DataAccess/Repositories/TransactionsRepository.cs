@@ -20,6 +20,12 @@ namespace StockExchange.DataAccess.Repositories
         { }
 
         /// <inheritdoc />
+        public async Task<UserTransaction> GetTransaction(int id)
+        {
+            return await DbSet.FirstOrDefaultAsync(t => t.Id == id);
+        }
+
+        /// <inheritdoc />
         public async Task<IList<UserTransaction>> GetAllUserTransactions(int userId)
         {
             return await DbSet

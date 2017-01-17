@@ -1,17 +1,17 @@
-﻿using FluentAssertions;
+﻿using System;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
+using FluentAssertions;
 using Moq;
 using StockExchange.DataAccess;
 using StockExchange.DataAccess.IRepositories;
 using StockExchange.DataAccess.Models;
 using StockExchange.DataAccess.Repositories;
 using StockExchange.UnitTest.TestHelpers;
-using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
 using Xunit;
 
-namespace StockExchange.UnitTest.Services
+namespace StockExchange.UnitTest.Repositories
 {
     public class PriceRepositoryTests
     {
