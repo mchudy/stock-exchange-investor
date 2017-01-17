@@ -51,14 +51,11 @@ namespace StockExchange.Business.Services
                 simulationDto.SelectedCompanyIds, strategy.Indicators);
 
             var allPrices = await _priceService.GetPrices(simulationDto.SelectedCompanyIds);
-            decimal lastSellValue = simulationDto.Budget;
-            decimal mindiff = 0m;
-            decimal maxdiff = 0m;
             foreach (var signalEvent in signalEvents.OrderBy(item => item.Date))
             {
                 if (signalEvent.CompaniesToSell.Count > 0)
                 {
-                    lastSellValue = HandleSellSignals(simulationDto, allPrices, signalEvent, simulationResult, lastSellValue, ref maxdiff, ref mindiff);
+                    HandleSellSignals(simulationDto, allPrices, signalEvent, simulationResult);
                 }
                 if (signalEvent.CompaniesToBuy.Count > 0)
                 {
@@ -69,6 +66,7 @@ namespace StockExchange.Business.Services
             simulationResult.SimulationTotalValue = simulationResult.CurrentCompanyQuantity.Sum(x => x.Value * currentPrices[x.Key].ClosePrice) + simulationDto.Budget;
             simulationResult.PercentageProfit = Math.Round((double)((simulationResult.SimulationTotalValue - simulationResult.StartBudget) / simulationResult.StartBudget) * 100, 2);
             CalculateMinimalAndMaximalSimulationValue(simulationDto.StartDate, simulationDto.EndDate, allPrices, simulationDto.SelectedCompanyIds, simulationResult);
+            CalculateMaximalGainAndLossOnTransaction(simulationResult, simulationDto.SelectedCompanyIds);
             return simulationResult;
         }
 
@@ -76,14 +74,14 @@ namespace StockExchange.Business.Services
             SimulationResultDto simulationResult)
         {
             var prices = ConvertPrices(allPrices, signalEvent.CompaniesToBuy, signalEvent.Date)
-                .OrderByDescending(item=>item.Value);
+                .OrderByDescending(item => item.Value);
             foreach (var price in prices)
             {
                 var value = simulationDto.Budget;
                 if (simulationDto.HasTransactionLimit)
                     value = Math.Min(value, simulationDto.MaximalBudgetPerTransaction);
                 if (value <= price.Value) continue;
-                int quantity = (int) Math.Floor(value/price.Value);
+                int quantity = (int)Math.Floor(value / price.Value);
                 simulationResult.TransactionsLog.Add(new SimulationTransactionDto
                 {
                     Date = signalEvent.Date,
@@ -97,13 +95,13 @@ namespace StockExchange.Business.Services
                 if (simulationResult.CurrentCompanyQuantity.ContainsKey(price.Key))
                     simulationResult.CurrentCompanyQuantity[price.Key] += quantity;
                 else
-                    simulationResult.CurrentCompanyQuantity.Add(price.Key,quantity);
+                    simulationResult.CurrentCompanyQuantity.Add(price.Key, quantity);
                 simulationDto.Budget = simulationResult.TransactionsLog.Last().BudgetAfter;
             }
         }
 
-        private static decimal HandleSellSignals(SimulationDto simulationDto, IList<CompanyPricesDto> allPrices, SignalEvent signalEvent,
-            SimulationResultDto simulationResult, decimal lastSellValue, ref decimal maxdiff, ref decimal mindiff)
+        private static void HandleSellSignals(SimulationDto simulationDto, IList<CompanyPricesDto> allPrices, SignalEvent signalEvent,
+            SimulationResultDto simulationResult)
         {
             var prices = ConvertPrices(allPrices, signalEvent.CompaniesToSell, signalEvent.Date)
                 .OrderByDescending(item => item.Value);
@@ -123,23 +121,7 @@ namespace StockExchange.Business.Services
                 simulationResult.TransactionsLog.Add(transaction);
                 simulationDto.Budget = simulationResult.TransactionsLog.Last().BudgetAfter;
                 simulationResult.CurrentCompanyQuantity.Remove(price.Key);
-                var sellValue = transaction.BudgetAfter;
-                var diff = (sellValue - lastSellValue) / lastSellValue;
-                if (diff > maxdiff)
-                {
-                    simulationResult.MaximalGainOnTransaction = new ExtremeTransactionResult(transaction.Date, lastSellValue,
-                        sellValue);
-                    maxdiff = diff;
-                }
-                if (diff < mindiff)
-                {
-                    simulationResult.MaximalLossOnTransaction = new ExtremeTransactionResult(transaction.Date, lastSellValue,
-                        sellValue);
-                    mindiff = diff;
-                }
-                lastSellValue = sellValue;
             }
-            return lastSellValue;
         }
 
         private static void CalculateMinimalAndMaximalSimulationValue(DateTime startDate, DateTime endDate,
@@ -189,6 +171,37 @@ namespace StockExchange.Business.Services
             return allPrices.Where(p => companyIds.Contains(p.Company.Id) && p.Prices.Any(pr => pr.Date == date))
                 // ReSharper disable once PossibleNullReferenceException
                 .ToDictionary(p => p.Company.Id, p => p.Prices.FirstOrDefault(pr => pr.Date == date).ClosePrice);
+        }
+
+        private static void CalculateMaximalGainAndLossOnTransaction(SimulationResultDto resultDto, IList<int> companyIds)
+        {
+            var transactionDiffs = companyIds.ToDictionary<int, int, decimal>(companyId => companyId, companyId => 0);
+            var maxGain = 0m;
+            var maxLoss = 0m;
+            foreach (var trans in resultDto.TransactionsLog)
+            {
+                if (trans.Action == SignalAction.Buy)
+                {
+                    transactionDiffs[trans.CompanyId] += trans.Quantity * trans.Price;
+                }
+                else if (trans.Action == SignalAction.Sell)
+                {
+                    decimal buyValue = transactionDiffs[trans.CompanyId];
+                    decimal sellValue = trans.Quantity * trans.Price;
+                    transactionDiffs[trans.CompanyId] = 0;
+                    var diff = sellValue - buyValue;
+                    if (diff > maxGain)
+                    {
+                        maxGain = diff;
+                        resultDto.MaximalGainOnTransaction = new ExtremeTransactionResult(trans.Date, buyValue, sellValue);
+                    }
+                    if (diff < maxLoss)
+                    {
+                        maxLoss = diff;
+                        resultDto.MaximalLossOnTransaction = new ExtremeTransactionResult(trans.Date, buyValue, sellValue);
+                    }
+                }
+            }
         }
     }
 }
