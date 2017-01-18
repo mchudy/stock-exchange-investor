@@ -33,6 +33,7 @@ namespace StockExchange.Task.App
             bool.TryParse(ConfigurationManager.AppSettings["UseCache"], out useCache);
             if (useCache)
             {
+                builder.RegisterType<RedisSettings>().AsImplementedInterfaces().SingleInstance();
                 builder.RegisterType<RedisCache>().AsImplementedInterfaces();
             }
             else

@@ -50,14 +50,5 @@ namespace StockExchange.DataAccess.Cache
         /// <param name="userId">User id</param>
         /// <returns>Constructed cache key</returns>
         public static string TransactionsCount(int userId) => $"TransactionsCount_{userId}";
-
-        /// <summary>
-        /// Constructs a cache key for the table page of generated signals
-        /// </summary>
-        /// <param name="start"></param>
-        /// <param name="length"></param>
-        /// <returns>Constructed cache key</returns>
-        public static string CurrentSignals(int start, int length) => 
-            $"CurrentSignals_{start}_{length}";
     }
 }

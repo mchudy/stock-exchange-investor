@@ -114,8 +114,10 @@
     <Compile Include="CachedRepositories\CachedTransactionRepository.cs" />
     <Compile Include="Cache\CacheKeys.cs" />
     <Compile Include="Cache\ICache.cs" />
+    <Compile Include="Cache\IRedisSettings.cs" />
     <Compile Include="Cache\NoCache.cs" />
     <Compile Include="Cache\RedisCache.cs" />
+    <Compile Include="Cache\RedisSettings.cs" />
     <Compile Include="IRepositories\ICompanyRepository.cs" />
     <Compile Include="IRepositories\IRepository.cs" />
     <Compile Include="IRepositories\IStrategiesRepository.cs" />

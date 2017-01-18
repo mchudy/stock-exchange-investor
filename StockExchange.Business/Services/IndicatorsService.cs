@@ -173,26 +173,16 @@ namespace StockExchange.Business.Services
         #pragma warning disable CS0618 // Type or member is obsolete, the queries are cached
         public async Task<PagedList<TodaySignal>> GetCurrentSignals(PagedFilterDefinition<TransactionFilter> message)
         {
-            // double level caching, we cache both all signals and single pages of the table
-            string pageCacheKey = CacheKeys.CurrentSignals(message.Start, message.Length);
-            var pagedSignals = await _cache.Get<PagedList<TodaySignal>>(pageCacheKey);
-            if (pagedSignals != null)
-                return pagedSignals;
-
             var allSignals = await _cache.Get<List<TodaySignal>>(CacheKeys.AllCurrentSignals);
             if (allSignals != null)
             {
-                pagedSignals = allSignals.ToPagedList(message.Start, message.Length);
-                await _cache.Set(pageCacheKey, pagedSignals);
-                return pagedSignals;
+                return allSignals.ToPagedList(message.Start, message.Length);
             }
 
             allSignals = await GetAllCurrentSignals();
 
-            pagedSignals = allSignals.ToPagedList(message.Start, message.Length);
             await _cache.Set(CacheKeys.AllCurrentSignals, allSignals);
-            await _cache.Set(pageCacheKey, pagedSignals);
-            return pagedSignals;
+            return allSignals.ToPagedList(message.Start, message.Length);
         }
         #pragma warning restore CS0618 // Type or member is obsolete, the queries are cached
 

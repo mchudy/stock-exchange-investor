@@ -3,7 +3,6 @@ using Newtonsoft.Json;
 using StackExchange.Redis;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -14,18 +13,22 @@ namespace StockExchange.DataAccess.Cache
     /// </summary>
     public class RedisCache : ICache
     {
-        private const string ConnectionStringKey = "RedisConnection";
-
         private static readonly ILog log = LogManager.GetLogger(typeof(RedisCache));
 
-        private static readonly Lazy<ConnectionMultiplexer> _lazyRedisConnection;
+        private static Lazy<ConnectionMultiplexer> _lazyRedisConnection;
         private static ConnectionMultiplexer _redisConnection => _lazyRedisConnection.Value;
-        private static IDatabase _db => _redisConnection.GetDatabase();
 
-        static RedisCache()
+        private readonly IRedisSettings _settings;
+        private IDatabase _db => _redisConnection.GetDatabase(_settings.DatabaseNumber);
+
+        /// <summary>
+        /// Creates a new instance of <see cref="RedisCache"/>
+        /// </summary>
+        /// <param name="settings">The Redis connection settings</param>
+        public RedisCache(IRedisSettings settings)
         {
-            string connectionString = ConfigurationManager.ConnectionStrings[ConnectionStringKey].ConnectionString;
-            _lazyRedisConnection  = new Lazy<ConnectionMultiplexer>(() => ConnectionMultiplexer.Connect(connectionString), true);
+            _settings = settings;
+            _lazyRedisConnection  = new Lazy<ConnectionMultiplexer>(() => ConnectionMultiplexer.Connect(settings.ConnectionString), true);
         }
 
         /// <inheritdoc />

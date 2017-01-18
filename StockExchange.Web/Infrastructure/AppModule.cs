@@ -40,6 +40,7 @@ namespace StockExchange.Web.Infrastructure
 
             if (useCache)
             {
+                builder.RegisterType<RedisSettings>().AsImplementedInterfaces().SingleInstance();
                 builder.RegisterType<RedisCache>().AsImplementedInterfaces().SingleInstance();
 
                 builder.RegisterType<PriceRepository>().Named<IPriceRepository>("base")
