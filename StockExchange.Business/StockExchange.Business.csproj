@@ -123,6 +123,7 @@
     <Compile Include="Models\Simulations\ExtremeSimulationValue.cs" />
     <Compile Include="Models\Simulations\ExtremeTransactionResult.cs" />
     <Compile Include="Models\Simulations\SimulationTransactionDto.cs" />
+    <Compile Include="Models\Simulations\TransactionStatistics.cs" />
     <Compile Include="Models\Strategy\StrategyDto.cs" />
     <Compile Include="Models\Wallet\OwnedCompanyStocksDto.cs" />
     <Compile Include="Models\Indicators\IndicatorValue.cs" />

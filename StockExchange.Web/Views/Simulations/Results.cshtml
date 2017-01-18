@@ -19,47 +19,47 @@
                     <div class="table-responsive">
                         <table class="table no-margin">
                             <thead>
-                            <tr>
-                                <th>Start budget</th>
-                                <th>Total simulation value</th>
-                                <th>Percentage profit</th>
-                            </tr>
+                                <tr>
+                                    <th>Start budget</th>
+                                    <th>Total simulation value</th>
+                                    <th>Percentage profit</th>
+                                </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td>@Model.StartBudget</td>
-                                <td>@Model.TotalSimulationValue</td>
-                                <td>
-                                    @if (@Model.PercentageProfit > 0)
-                                    {
-                                        <i class="fa fa-arrow-up icon-stock-up"></i>
-                                        <span class="text-success">@Model.PercentageProfit%</span>
-                                    }
-                                    else
-                                    {
-                                        <i class="fa fa-arrow-down icon-stock-down"></i>
-                                        <span class="text-danger">@Model.PercentageProfit%</span>
-                                    }
-                                </td>
-                            </tr>
+                                <tr>
+                                    <td>@Model.StartBudget</td>
+                                    <td>@Model.TotalSimulationValue</td>
+                                    <td>
+                                        @if (@Model.PercentageProfit > 0)
+                                        {
+                                            <i class="fa fa-arrow-up icon-stock-up"></i>
+                                            <span class="text-success">@Model.PercentageProfit%</span>
+                                        }
+                                        else
+                                        {
+                                            <i class="fa fa-arrow-down icon-stock-down"></i>
+                                            <span class="text-danger">@Model.PercentageProfit%</span>
+                                        }
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
                     <div class="table-responsive">
                         <table class="table no-margin">
                             <thead>
-                            <tr>
-                                <th></th>
-                                <th>Date</th>
-                                <th>Value</th>
-                                <th>Percentage gain/loss</th>
-                            </tr>
+                                <tr>
+                                    <th></th>
+                                    <th>Date</th>
+                                    <th>Value</th>
+                                    <th>Percentage gain/loss</th>
+                                </tr>
                             </thead>
                             <tbody>
-                            @{
-                                string gainDate = Model.MaximalGainOnTransaction?.TransactionDate.ToShortDateString() ?? "-";
-                                string gainPercentage = (Model.MaximalGainOnTransaction?.PercentageIncome ?? 0.0) + "%";
-                                string maxGainValue = ((Model.MaximalGainOnTransaction?.ValueAfter ?? 0m) - (Model.MaximalGainOnTransaction?.ValueBefore ?? 0m)).ToString(CultureInfo.InvariantCulture);
+                                @{
+    string gainDate = Model.MaximalGainOnTransaction?.TransactionDate.ToShortDateString() ?? "-";
+    string gainPercentage = (Model.MaximalGainOnTransaction?.PercentageIncome ?? 0.0) + "%";
+    string maxGainValue = ((Model.MaximalGainOnTransaction?.ValueAfter ?? 0m) - (Model.MaximalGainOnTransaction?.ValueBefore ?? 0m)).ToString(CultureInfo.InvariantCulture);
                                 <tr>
                                     <th>Maximal gain on transaction</th>
                                     <td>@gainDate</td>
@@ -69,63 +69,81 @@
                                         <span class="text-success">@gainPercentage</span>
                                     </td>
                                 </tr>
-                                string lossDate = Model.MaximalLossOnTransaction?.TransactionDate.ToShortDateString() ?? "-";
-                                string lossPercentage = (Model.MaximalLossOnTransaction?.PercentageIncome ?? 0.0) + "%";
-                                string maxLossValue = ((Model.MaximalLossOnTransaction?.ValueAfter ?? 0m) - (Model.MaximalLossOnTransaction?.ValueBefore ?? 0m)).ToString(CultureInfo.InvariantCulture);
-                                <tr>
-                                    <th>Maximal loss on transaction</th>
-                                    <td>@lossDate</td>
-                                    <td>@maxLossValue</td>
-                                    <td>
-                                        <i class="fa fa-arrow-down icon-stock-down"></i>
-                                        <span class="text-danger">@lossPercentage</span>
-                                    </td>
-                                </tr>
-                                string maximalDate = Model.MaximalSimulationValue?.Date.ToShortDateString();
-                                string minimalDate = Model.MinimalSimulationValue?.Date.ToShortDateString();
-                                string maxValuePercentage = (Model.MaximalSimulationValue?.PercentageIncome ?? 0.0) + "%";
-                                string minValuePercentage = (Model.MinimalSimulationValue?.PercentageIncome ?? 0.0) + "%";
-                                string maxValue = (Model.MaximalSimulationValue?.Value.ToString(CultureInfo.InvariantCulture) ?? "0");
-                                string minValue = (Model.MinimalSimulationValue?.Value.ToString(CultureInfo.InvariantCulture) ?? "0");
-                                <tr>
-                                    <th>Maximal simulation value</th>
-                                    <td>@maximalDate</td>
-                                    <td>@maxValue</td>
-                                    <td>
-                                        <i class="fa fa-arrow-up icon-stock-up"></i>
-                                        <span class="text-success">@maxValuePercentage</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>Minimal simulation value</th>
-                                    <td>@minimalDate</td>
-                                    <td>@minValue</td>
-                                    <td>
-                                        <i class="fa fa-arrow-down icon-stock-down"></i>
-                                        <span class="text-danger">@minValuePercentage</span>
-                                    </td>
-                                </tr>
-                            }
+                                    string lossDate = Model.MaximalLossOnTransaction?.TransactionDate.ToShortDateString() ?? "-";
+                                    string lossPercentage = (Model.MaximalLossOnTransaction?.PercentageIncome ?? 0.0) + "%";
+                                    string maxLossValue = ((Model.MaximalLossOnTransaction?.ValueAfter ?? 0m) - (Model.MaximalLossOnTransaction?.ValueBefore ?? 0m)).ToString(CultureInfo.InvariantCulture);
+                                    <tr>
+                                        <th>Maximal loss on transaction</th>
+                                        <td>@lossDate</td>
+                                        <td>@maxLossValue</td>
+                                        <td>
+                                            <i class="fa fa-arrow-down icon-stock-down"></i>
+                                            <span class="text-danger">@lossPercentage</span>
+                                        </td>
+                                    </tr>
+                                    string maximalDate = Model.MaximalSimulationValue?.Date.ToShortDateString();
+                                    string minimalDate = Model.MinimalSimulationValue?.Date.ToShortDateString();
+                                    string maxValuePercentage = (Model.MaximalSimulationValue?.PercentageIncome ?? 0.0) + "%";
+                                    string minValuePercentage = (Model.MinimalSimulationValue?.PercentageIncome ?? 0.0) + "%";
+                                    string maxValue = (Model.MaximalSimulationValue?.Value.ToString(CultureInfo.InvariantCulture) ?? "0");
+                                    string minValue = (Model.MinimalSimulationValue?.Value.ToString(CultureInfo.InvariantCulture) ?? "0");
+                                    <tr>
+                                        <th>Maximal simulation value</th>
+                                        <td>@maximalDate</td>
+                                        <td>@maxValue</td>
+                                        <td>
+                                            <i class="fa fa-arrow-up icon-stock-up"></i>
+                                            <span class="text-success">@maxValuePercentage</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Minimal simulation value</th>
+                                        <td>@minimalDate</td>
+                                        <td>@minValue</td>
+                                        <td>
+                                            <i class="fa fa-arrow-down icon-stock-down"></i>
+                                            <span class="text-danger">@minValuePercentage</span>
+                                        </td>
+                                    </tr>
+                                }
                             </tbody>
                         </table>
                     </div>
-                    <h5>Stocks owned after simulation</h5>
+                    <div class="table-responsive">
+                        @{
+                            string successes = @Model.SuccessTransactionPercentage.ToString() + "%";
+                            string losses = @Model.FailedTransactionPercentage.ToString() + "%";
+                            <div class="form-control">
+                                <div class="form-control">
+                                    <label>Successful transactions</label>
+                                    <span class="text-success">@successes</span>
+                                </div>
+                                <div class="form-control">
+                                    <label>Failed transactions</label>
+                                    <span class="text-danger">@losses</span>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <div class="box-header with-border">
+                        <h5>Stocks owned after simulation</h5>
+                    </div>
                     <div class="table-responsive">
                         <table class="table no-margin">
                             <thead>
-                            <tr>
-                                <th>Company Name</th>
-                                <th>Quantity</th>
-                            </tr>
+                                <tr>
+                                    <th>Company Name</th>
+                                    <th>Quantity</th>
+                                </tr>
                             </thead>
                             <tbody>
-                            @foreach (var transaction in Model.CurrentCompanyQuantity)
-                            {
-                                <tr>
-                                    <td>@transaction.Key.Code</td>
-                                    <td>@transaction.Value</td>
-                                </tr>
-                            }
+                                @foreach (var transaction in Model.CurrentCompanyQuantity)
+                                {
+                                    <tr>
+                                        <td>@transaction.Key.Code</td>
+                                        <td>@transaction.Value</td>
+                                    </tr>
+                                }
                             </tbody>
                         </table>
                     </div>
@@ -151,21 +169,21 @@
                                data-processing="true"
                                data-server-side="false" @*TODO*@>
                             <thead>
-                            <tr>
-                                <th data-column="date">@Html.DisplayNameFor(i => Model.TransactionsLog.FirstOrDefault().Date)</th>
-                                <th data-column="companyCode">@Html.DisplayNameFor(i => Model.TransactionsLog.FirstOrDefault().Company)</th>
-                                <th data-column="price">@Html.DisplayNameFor(i => Model.TransactionsLog.FirstOrDefault().Price)</th>
-                                <th data-column="quantity">@Html.DisplayNameFor(i => Model.TransactionsLog.FirstOrDefault().Quantity)</th>
-                                <th data-column="action">@Html.DisplayNameFor(i => Model.TransactionsLog.FirstOrDefault().Action)</th>
-                                <th data-column="budgetAfter">@Html.DisplayNameFor(i => Model.TransactionsLog.FirstOrDefault().BudgetAfter)</th>
-                            </tr>
+                                <tr>
+                                    <th data-column="date">@Html.DisplayNameFor(i => Model.TransactionsLog.FirstOrDefault().Date)</th>
+                                    <th data-column="companyCode">@Html.DisplayNameFor(i => Model.TransactionsLog.FirstOrDefault().Company)</th>
+                                    <th data-column="price">@Html.DisplayNameFor(i => Model.TransactionsLog.FirstOrDefault().Price)</th>
+                                    <th data-column="quantity">@Html.DisplayNameFor(i => Model.TransactionsLog.FirstOrDefault().Quantity)</th>
+                                    <th data-column="action">@Html.DisplayNameFor(i => Model.TransactionsLog.FirstOrDefault().Action)</th>
+                                    <th data-column="budgetAfter">@Html.DisplayNameFor(i => Model.TransactionsLog.FirstOrDefault().BudgetAfter)</th>
+                                </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td colspan="5">
-                                    <span>No data found...</span>
-                                </td>
-                            </tr>
+                                <tr>
+                                    <td colspan="5">
+                                        <span>No data found...</span>
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -189,9 +207,9 @@
                                     Action = t.Action.ToString(),
                                     BudgetAfter = t.BudgetAfter.ToString("0.00")
                                 }))
-        };
+            };
     </script>
-    
+
     @Scripts.Render("~/bundles/scripts/datatables")
     @Scripts.Render("~/Scripts/views/simulationResultsView.js")
 }
