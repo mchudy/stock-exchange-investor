@@ -38,6 +38,13 @@ namespace StockExchange.Business.ServiceInterfaces
         /// </summary>
         /// <param name="userId">The user ID</param>
         /// <returns>Transactions grouped by companies</returns>
-        Task<Dictionary<int, List<UserTransaction>>> GetTransactionsByCompany(int userId);
+        Task<Dictionary<Company, List<UserTransaction>>> GetTransactionsByCompany(int userId);
+
+        /// <summary>
+        /// Deletes the transaction
+        /// </summary>
+        /// <param name="id">Transaction Id</param>
+        /// <param name="sessionUserId">Currently logged in user Id</param>
+        Task DeleteTransaction(int id, int sessionUserId);
     }
 }

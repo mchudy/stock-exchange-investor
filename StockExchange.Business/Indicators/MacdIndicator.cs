@@ -1,4 +1,5 @@
-﻿using StockExchange.Business.Indicators.Common;
+﻿using System;
+using StockExchange.Business.Indicators.Common;
 using StockExchange.Business.Indicators.Common.Intersections;
 using StockExchange.Business.Models.Indicators;
 using StockExchange.DataAccess.Models;
@@ -10,6 +11,7 @@ namespace StockExchange.Business.Indicators
     /// <summary>
     /// Moving Average Convergence Divergence technical indicator
     /// </summary>
+    [IndicatorDescription("Macd")]
     public class MacdIndicator : IIndicator
     {
         /// <summary>
@@ -46,7 +48,12 @@ namespace StockExchange.Business.Indicators
         public int SignalTerm { get; set; } = DefaultSignalTerm;
 
         /// <inheritdoc />
+        [IgnoreIndicatorProperty]
         public IndicatorType Type => IndicatorType.Macd;
+
+        /// <inheritdoc />
+        [IgnoreIndicatorProperty]
+        public int RequiredPricesForSignalCount => Math.Max(LongTerm, ShortTerm) + SignalTerm;
 
         /// <inheritdoc />
         public IList<IndicatorValue> Calculate(IList<Price> prices)

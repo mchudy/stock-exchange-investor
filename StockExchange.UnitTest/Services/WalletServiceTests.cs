@@ -2,6 +2,7 @@
 using Moq;
 using StockExchange.Business.ServiceInterfaces;
 using StockExchange.Business.Services;
+using StockExchange.DataAccess.Cache;
 using StockExchange.DataAccess.Models;
 using System;
 using System.Collections.Generic;
@@ -17,16 +18,17 @@ namespace StockExchange.UnitTest.Services
         private readonly IWalletService _service;
         private readonly Mock<ITransactionsService> _transactionsService = new Mock<ITransactionsService>();
         private readonly Mock<IPriceService> _priceService = new Mock<IPriceService>();
+        private readonly Mock<ICache> _cache = new Mock<ICache>();
 
         public WalletServiceTests()
         {
-            _service = new WalletService(_transactionsService.Object, _priceService.Object);
+            _service = new WalletService(_transactionsService.Object, _priceService.Object, _cache.Object);
         }
 
         [Fact]
         public async System.Threading.Tasks.Task Should_return_only_companies_which_stocks_user_currently_owns()
         {
-            var d = new Dictionary<int, List<UserTransaction>>
+            var d = new Dictionary<Company, List<UserTransaction>>
             {
                 //{
                 //    1, new List<UserTransaction>
@@ -36,7 +38,7 @@ namespace StockExchange.UnitTest.Services
                 //    }
                 //},
                 {
-                    2, new List<UserTransaction>
+                    new Company {Id = 2}, new List<UserTransaction>
                     {
                         new UserTransaction {CompanyId = 2, Price = 5, Quantity = 2, UserId = userId}
                     }
@@ -52,16 +54,16 @@ namespace StockExchange.UnitTest.Services
         [Fact]
         public async System.Threading.Tasks.Task Should_set_current_prices_to_correct_values()
         {
-            var d = new Dictionary<int, List<UserTransaction>>
+            var d = new Dictionary<Company, List<UserTransaction>>
             {
                 {
-                    1, new List<UserTransaction>
+                    new Company {Id = 1}, new List<UserTransaction>
                     {
                         new UserTransaction {CompanyId = 1, Price = 10, Quantity = 1, UserId = userId},
                     }
                 },
                 {
-                    2, new List<UserTransaction>
+                    new Company {Id = 2}, new List<UserTransaction>
                     {
                         new UserTransaction {CompanyId = 2, Price = 10, Quantity = 2, UserId = userId}
                     }
@@ -81,10 +83,10 @@ namespace StockExchange.UnitTest.Services
         [Fact]
         public async System.Threading.Tasks.Task Should_correctly_compute_aggregate_prices()
         {
-            var d = new Dictionary<int, List<UserTransaction>>
+            var d = new Dictionary<Company, List<UserTransaction>>
             {
                 {
-                    1, new List<UserTransaction>
+                    new Company {Id = 1}, new List<UserTransaction>
                     {
                         new UserTransaction { CompanyId = 1, Price = 10, Quantity = 3, UserId = userId }, // 30
                         new UserTransaction { CompanyId = 1, Price = 5, Quantity = -2, UserId = userId }, // -10
@@ -108,10 +110,10 @@ namespace StockExchange.UnitTest.Services
         [Fact]
         public async System.Threading.Tasks.Task Should_include_transactions_only_for_the_given_user()
         {
-            var d = new Dictionary<int, List<UserTransaction>>
+            var d = new Dictionary<Company, List<UserTransaction>>
             {
                 {
-                    1, new List<UserTransaction>
+                    new Company {Id = 1}, new List<UserTransaction>
                     {
                         new UserTransaction {CompanyId = 1, Price = 10, Quantity = 3, UserId = userId},
                         //new UserTransaction {CompanyId = 1, Price = 10, Quantity = 3, UserId = userId + 1}
@@ -135,7 +137,7 @@ namespace StockExchange.UnitTest.Services
             results.Should().ContainSingle(r => r.CompanyId == 1 && r.OwnedStocksCount == 3);
         }
 
-        private void SetupTransactions(Dictionary<int, List<UserTransaction>> transactions)
+        private void SetupTransactions(Dictionary<Company, List<UserTransaction>> transactions)
         {
             _transactionsService.Setup(r => r.GetTransactionsByCompany(userId))
                 .Returns(System.Threading.Tasks.Task.FromResult(transactions));

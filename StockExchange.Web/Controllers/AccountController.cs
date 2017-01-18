@@ -2,6 +2,7 @@
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using StockExchange.DataAccess.Models;
+using StockExchange.Web.Helpers.ToastNotifications;
 using StockExchange.Web.Models.Account;
 using System.Threading.Tasks;
 using System.Web.Mvc;
@@ -131,7 +132,28 @@ namespace StockExchange.Web.Controllers
         [HttpGet]
         public ActionResult Settings()
         {
-            return View();
+            return View(new ChangePasswordViewModel());
+        }
+
+        /// <summary>
+        /// Changes the user password
+        /// </summary>
+        /// <param name="model">View model</param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<ActionResult> ChangePassword(ChangePasswordViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return View("Settings", model);
+
+            var result = await _userManager.ChangePasswordAsync(CurrentUserId, model.OldPassword, model.NewPassword);
+            if (!result.Succeeded)
+            {
+                AddErrors(result);
+                return View("Settings", model);
+            }
+            ShowNotification("", "Password has been changed", ToastType.Success);
+            return View("Settings");
         }
 
         private ActionResult RedirectToLocal(string returnUrl)

@@ -11,6 +11,6 @@ namespace StockExchange.Task.Business
         /// Synchronizes the data from the given date
         /// </summary>
         /// <param name="date">Date for which to synchronize the stock data</param>
-        void Sync(DateTime date);
+        System.Threading.Tasks.Task Sync(DateTime date);
     }
 }

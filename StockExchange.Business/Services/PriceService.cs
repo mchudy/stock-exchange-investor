@@ -19,13 +19,13 @@ namespace StockExchange.Business.Services
     /// </summary>
     public sealed class PriceService : IPriceService
     {
-        private readonly IRepository<Price> _priceRepository;
+        private readonly IPriceRepository _priceRepository;
 
         /// <summary>
         /// Creates a new instance of <see cref="PriceService"/>
         /// </summary>
         /// <param name="priceRepository"></param>
-        public PriceService(IRepository<Price> priceRepository)
+        public PriceService(IPriceRepository priceRepository)
         {
             _priceRepository = priceRepository;
         }
@@ -44,41 +44,30 @@ namespace StockExchange.Business.Services
         /// <inheritdoc />
         public async Task<IList<CompanyPricesDto>> GetPrices(IList<int> companyIds)
         {
-            return await _priceRepository.GetQueryable()
-                .Include(p => p.Company)
-                .Where(p => companyIds.Contains(p.CompanyId))
-                .GroupBy(p => p.Company)
-                .Select(g => new CompanyPricesDto
-                {
-                    Company = g.Key,
-                    Prices = g.OrderBy(p => p.Date).ToList()
-                })
-                .ToListAsync();
+            var prices = await _priceRepository.GetPrices(companyIds);
+            return prices.Select(g => new CompanyPricesDto
+            {
+                Company = g.Key,
+                Prices = g.Value
+            }).ToList();
         }
 
         /// <inheritdoc />
         public async Task<IList<Price>> GetPrices(int companyId, DateTime endDate)
         {
-            return await _priceRepository.GetQueryable()
-                .Where(p => p.CompanyId == companyId && p.Date <= endDate)
-                .OrderBy(item => item.Date)
-                .ToListAsync();
+            return await _priceRepository.GetPrices(companyId, endDate);
         }
 
         /// <inheritdoc />
         public async Task<IList<Price>> GetCurrentPrices(IList<int> companyIds)
         {
-            return await _priceRepository.GetQueryable()
-                .Where(p => companyIds.Contains(p.CompanyId))
-                .GroupBy(p => p.CompanyId, (id, prices) => prices.OrderByDescending(pr => pr.Date).FirstOrDefault())
-                .ToListAsync();
+            return await _priceRepository.GetCurrentPrices(companyIds);
         }
 
         /// <inheritdoc />
         public async Task<IList<Price>> GetCurrentPrices(int days)
         {
-            var date = DateTime.Today.AddDays(-days);
-            return await _priceRepository.GetQueryable().Where(p => p.Date > date).ToListAsync();
+            return await _priceRepository.GetCurrentPrices(days);
         }
 
         /// <inheritdoc />
@@ -94,7 +83,7 @@ namespace StockExchange.Business.Services
         /// <inheritdoc />
         public async Task<DateTime> GetMaxDate()
         {
-            return await _priceRepository.GetQueryable().MaxAsync(item => item.Date);
+            return await _priceRepository.GetMaxDate();
         }
 
         /// <inheritdoc />
@@ -103,10 +92,7 @@ namespace StockExchange.Business.Services
             var dates = await GetTwoMaxDates();
             var date = dates.First();
             var previousDate = dates.Last();
-            var prices = await
-                _priceRepository.GetQueryable()
-                    .Include(p => p.Company)
-                    .Where(p => dates.Contains(p.Date)).ToListAsync();
+            var prices = await _priceRepository.GetPricesForDates(dates);
             var ret = prices.Where(p => p.Date == date).Select(p => new MostActivePriceDto
             {
                 ClosePrice = p.ClosePrice,
@@ -120,7 +106,9 @@ namespace StockExchange.Business.Services
                 var previousPrice = firstOrDefault.ClosePrice;
                 priceDto.Change = (priceDto.ClosePrice - previousPrice) / previousPrice * 100;
             }
-            return ret.OrderByDescending(item => item.Change).Where(item => item.Change > 0).ToPagedList(message.Start, message.Length);
+            return ret.OrderByDescending(item => item.Change)
+                .Where(item => item.Change > 0)
+                .ToPagedList(message.Start, message.Length);
         }
 
         /// <inheritdoc />
@@ -129,10 +117,7 @@ namespace StockExchange.Business.Services
             var dates = await GetTwoMaxDates();
             var date = dates.First();
             var previousDate = dates.Last();
-            var prices = await
-                  _priceRepository.GetQueryable()
-                      .Include(p => p.Company)
-                      .Where(p => dates.Contains(p.Date)).ToListAsync();
+            var prices = await _priceRepository.GetPricesForDates(dates);
             var ret = prices.Where(p => p.Date == date).Select(p => new MostActivePriceDto
             {
                 ClosePrice = p.ClosePrice,
@@ -146,7 +131,9 @@ namespace StockExchange.Business.Services
                 var previousPrice = firstOrDefault.ClosePrice;
                 priceDto.Change = (priceDto.ClosePrice - previousPrice) / previousPrice * 100;
             }
-            return ret.OrderBy(item => item.Change).Where(item => item.Change < 0).ToPagedList(message.Start, message.Length);
+            return ret.OrderBy(item => item.Change)
+                .Where(item => item.Change < 0)
+                .ToPagedList(message.Start, message.Length);
         }
 
         /// <inheritdoc />
@@ -155,10 +142,7 @@ namespace StockExchange.Business.Services
             var dates = await GetTwoMaxDates();
             var date = dates.First();
             var previousDate = dates.Last();
-            var prices = await
-                  _priceRepository.GetQueryable()
-                      .Include(p => p.Company)
-                      .Where(p => dates.Contains(p.Date)).ToListAsync();
+            var prices = await _priceRepository.GetPricesForDates(dates);
             var ret = prices.Where(p => p.Date == date).Select(p => new MostActivePriceDto
             {
                 ClosePrice = p.ClosePrice,
@@ -178,17 +162,13 @@ namespace StockExchange.Business.Services
                     priceDto.Change = 0;
                 }
             }
-            return ret.OrderByDescending(item => item.Volume).ToPagedList(message.Start, message.Length);
+            return ret.OrderByDescending(item => item.Volume).
+                ToPagedList(message.Start, message.Length);
         }
 
         private async Task<IList<DateTime>> GetTwoMaxDates()
         {
-            return await _priceRepository.GetQueryable()
-                .OrderByDescending(item => item.Date)
-                .Select(item => item.Date)
-                .Distinct()
-                .Take(2)
-                .ToListAsync();
+            return await _priceRepository.GetTwoMaxDates();
         }
 
         private static IQueryable<PriceDto> Filter(PriceFilter filter, IQueryable<PriceDto> results)

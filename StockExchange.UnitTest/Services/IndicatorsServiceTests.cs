@@ -5,6 +5,7 @@ using StockExchange.Business.Indicators.Common;
 using StockExchange.Business.Models.Indicators;
 using StockExchange.Business.ServiceInterfaces;
 using StockExchange.Business.Services;
+using StockExchange.DataAccess.Cache;
 using System;
 using System.Collections.Generic;
 using Xunit;
@@ -13,14 +14,17 @@ namespace StockExchange.UnitTest.Services
 {
     public class IndicatorsServiceTests
     {
+        private readonly IIndicatorsService _service;
+
         private readonly Mock<IIndicatorFactory> _factory = new Mock<IIndicatorFactory>();
         private readonly Mock<IPriceService> _pricesService = new Mock<IPriceService>();
         private readonly Mock<ICompanyService> _companyService = new Mock<ICompanyService>();
-        private readonly IIndicatorsService _service;
+        private readonly Mock<ICache> _cache = new Mock<ICache>();
 
         public IndicatorsServiceTests()
         {
-            _service = new IndicatorsService(_factory.Object, _pricesService.Object, _companyService.Object);
+            _service = new IndicatorsService(_factory.Object, _pricesService.Object, 
+                _companyService.Object, _cache.Object);
         }
 
         [Fact]

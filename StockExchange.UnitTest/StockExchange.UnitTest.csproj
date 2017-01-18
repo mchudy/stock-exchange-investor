@@ -60,6 +60,9 @@
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="FluentAssertions, Version=4.17.0.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
       <HintPath>..\packages\FluentAssertions.4.17.0\lib\net45\FluentAssertions.dll</HintPath>
       <Private>True</Private>
@@ -117,6 +120,8 @@
     <Compile Include="Indicators\ADX\AdxTests.cs" />
     <Compile Include="Indicators\EMA\EmaData.cs" />
     <Compile Include="Indicators\EMA\EmaTests.cs" />
+    <Compile Include="Indicators\IndicatorDescriptionTests.cs" />
+    <Compile Include="Indicators\IndicatorRequiredPricesCountTests.cs" />
     <Compile Include="Indicators\VPT\VptTests.cs" />
     <Compile Include="Indicators\VHF\VhfData.cs" />
     <Compile Include="Indicators\VHF\VhfTests.cs" />
@@ -124,7 +129,7 @@
     <Compile Include="Indicators\VROC\VrocTests.cs" />
     <Compile Include="Indicators\SMA\SmaData.cs" />
     <Compile Include="Indicators\SMA\SmaTests.cs" />
-    <Compile Include="Services\PriceServiceTests.cs" />
+    <Compile Include="Repositories\PriceRepositoryTests.cs" />
     <Compile Include="Services\StrategyServiceTests.cs" />
     <Compile Include="Services\WalletServiceTests.cs" />
     <Compile Include="Tasks\DataFixerTests.cs" />

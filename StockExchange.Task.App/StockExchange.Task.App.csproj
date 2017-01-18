@@ -100,6 +100,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bootstrapper.cs" />
+    <Compile Include="Commands\AddCompanyGroupsCommand.cs" />
     <Compile Include="Commands\FixDataCommand.cs" />
     <Compile Include="Commands\HelpCommand.cs" />
     <Compile Include="Commands\ICommand.cs" />

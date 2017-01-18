@@ -34,7 +34,8 @@ namespace StockExchange.Web.Controllers
         /// <param name="walletService"></param>
         /// <param name="indicatorsService"></param>
         /// <param name="priceService"></param>
-        public DashboardController(ITransactionsService transactionsService, IWalletService walletService, IIndicatorsService indicatorsService, IPriceService priceService)
+        public DashboardController(ITransactionsService transactionsService, IWalletService walletService, 
+            IIndicatorsService indicatorsService, IPriceService priceService)
         {
             _transactionsService = transactionsService;
             _walletService = walletService;
@@ -130,7 +131,7 @@ namespace StockExchange.Web.Controllers
             {
                 RecordsFiltered = pagedList.TotalCount,
                 RecordsTotal = pagedList.TotalCount,
-                Data = pagedList,
+                Data = pagedList.List,
                 Draw = dataTableMessage.Draw
             };
             return model;

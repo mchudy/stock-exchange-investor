@@ -64,4 +64,11 @@
         });
     });
 
+    $('.show-indicator-description').on('click', function () {
+        var $description = $('.indicator-description', $(this).parent().parent());
+        $description.toggleClass('hidden');
+        var isHidden = $description.hasClass('hidden');
+        $(this).text(isHidden ? 'Show description' : 'Hide description');
+    });
+
 })(jQuery);

@@ -26,7 +26,7 @@ namespace StockExchange.Task.App.Commands
         {
             var date = DateTime.Now.AddDays(-1).Date;
             Logger.Debug($"Synchronizing data from {date.ToShortDateString()}");
-            _synchronizer.Sync(date);
+            System.Threading.Tasks.Task.Run(() => _synchronizer.Sync(date)).Wait();
         }
     }
 }

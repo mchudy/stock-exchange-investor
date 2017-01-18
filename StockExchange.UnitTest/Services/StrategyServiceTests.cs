@@ -44,6 +44,8 @@ namespace StockExchange.UnitTest.Services
                 Name = "Strategy1",
                 UserId = 1
             };
+            _strategyRepository.Setup(s => s.StrategyExists(1, "Strategy1")).Returns(System.Threading.Tasks.Task.FromResult(true));
+
             Func<System.Threading.Tasks.Task> act = async () => await _service.CreateStrategy(newStrategy);
             act.ShouldThrow<BusinessException>();
         }

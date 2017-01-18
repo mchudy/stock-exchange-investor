@@ -1,12 +1,15 @@
 ﻿using log4net;
+using StockExchange.Business.Exceptions;
 using StockExchange.Business.Extensions;
 using StockExchange.Business.Indicators.Common;
+using StockExchange.Business.Models.Company;
 using StockExchange.Business.Models.Filters;
 using StockExchange.Business.Models.Indicators;
 using StockExchange.Business.Models.Paging;
 using StockExchange.Business.Models.Price;
 using StockExchange.Business.ServiceInterfaces;
 using StockExchange.Common.Extensions;
+using StockExchange.DataAccess.Cache;
 using StockExchange.DataAccess.Models;
 using System;
 using System.Collections.Generic;
@@ -26,6 +29,7 @@ namespace StockExchange.Business.Services
         private readonly IIndicatorFactory _indicatorFactory;
         private readonly IPriceService _priceService;
         private readonly ICompanyService _companyService;
+        private readonly ICache _cache;
 
         /// <summary>
         /// Creates a new instance of <see cref="IndicatorsService"/>
@@ -33,11 +37,14 @@ namespace StockExchange.Business.Services
         /// <param name="indicatorFactory"></param>
         /// <param name="priceService"></param>
         /// <param name="companyService"></param>
-        public IndicatorsService(IIndicatorFactory indicatorFactory, IPriceService priceService, ICompanyService companyService)
+        /// <param name="cache"></param>
+        public IndicatorsService(IIndicatorFactory indicatorFactory, IPriceService priceService, 
+            ICompanyService companyService, ICache cache)
         {
             _indicatorFactory = indicatorFactory;
             _priceService = priceService;
             _companyService = companyService;
+            _cache = cache;
         }
 
         /// <inheritdoc />
@@ -67,11 +74,24 @@ namespace StockExchange.Business.Services
         }
 
         /// <inheritdoc />
+        public IndicatorDescriptionDto GetIndicatorDescription(IndicatorType indicatorType)
+        {
+            var indicator = _indicatorFactory.CreateIndicator(indicatorType);
+            var attribute = indicator.GetType().GetCustomAttribute(typeof(IndicatorDescriptionAttribute)) as IndicatorDescriptionAttribute;
+            return new IndicatorDescriptionDto()
+            {
+                IndicatorDescription = attribute?.IndicatorDescription,
+                BuySignalDescription = attribute?.BuySignalDescription,
+                SellSignalDescription = attribute?.SellSignalDescription
+            };
+        }
+
+        /// <inheritdoc />
         public IList<IndicatorProperty> GetPropertiesForIndicator(IndicatorType type)
         {
             var indicator = _indicatorFactory.CreateIndicator(type);
             var properties = indicator.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance)
-                .Where(p => p.Name != nameof(IIndicator.Type));
+                .Where(p => !p.GetCustomAttributes(typeof(IgnoreIndicatorProperty)).Any());
             return properties.Select(property => new IndicatorProperty
             {
                 Name = property.Name,
@@ -129,7 +149,7 @@ namespace StockExchange.Business.Services
                     {
                         signals = ind.GenerateSignals(prices);
                     }
-                    catch (ArgumentException e)
+                    catch (Exception e) when (e is IndicatorArgumentException || e is ArgumentException)
                     {
                         logger.Warn($"Error when generating signals for company {company} and indicator {ind.Type}, end date {endDate}", e);
                     }
@@ -148,21 +168,60 @@ namespace StockExchange.Business.Services
             return signalEvents;
         }
 
+        //TODO: refactor cache usage
         /// <inheritdoc />
+        #pragma warning disable CS0618 // Type or member is obsolete, the queries are cached
         public async Task<PagedList<TodaySignal>> GetCurrentSignals(PagedFilterDefinition<TransactionFilter> message)
         {
-            var indicators = GetAllIndicators();
-            var indicatorObjects = indicators.Select(indicator => _indicatorFactory.CreateIndicator(indicator.IndicatorType)).ToList();
+            var allSignals = await _cache.Get<List<TodaySignal>>(CacheKeys.AllCurrentSignals);
+            if (allSignals != null)
+            {
+                return allSignals.ToPagedList(message.Start, message.Length);
+            }
 
-            //TODO: why 100?
-            var prices = await _priceService.GetCurrentPrices(100);
+            allSignals = await GetAllCurrentSignals();
+
+            await _cache.Set(CacheKeys.AllCurrentSignals, allSignals);
+            return allSignals.ToPagedList(message.Start, message.Length);
+        }
+        #pragma warning restore CS0618 // Type or member is obsolete, the queries are cached
+
+        private async Task<List<TodaySignal>> GetAllCurrentSignals()
+        {
+            var indicators = GetAllIndicators();
+            var indicatorObjects =
+                indicators.Select(indicator => _indicatorFactory.CreateIndicator(indicator.IndicatorType)).ToList();
+
             var companies = await _companyService.GetCompanies();
             var maxDate = await _priceService.GetMaxDate();
+            var prices = await _priceService.GetCurrentPrices(indicatorObjects.Max(i => i.RequiredPricesForSignalCount));
 
+            var computed = ComputeSignals(companies, prices, indicatorObjects, maxDate);
+            var ret = new List<TodaySignal>();
+            ret.AddRange(computed.GroupBy(item => new
+                {
+                    item.Company,
+                    item.Action
+                })
+                .Select(item => new TodaySignal
+                {
+                    Company = item.Key.Company,
+                    Action = item.Key.Action,
+                    Indicator = string.Join(", ", (IEnumerable<string>) item.Select(it => it.Indicator).ToArray())
+                }));
+            return ret.OrderBy(item => item.Company)
+                .ThenBy(item => item.Action)
+                .ThenBy(item => item.Indicator)
+                .ToList();
+        }
+
+        private static List<TodaySignal> ComputeSignals(IList<CompanyDto> companies, IList<Price> prices, List<IIndicator> indicatorObjects, DateTime maxDate)
+        {
             var computed = new List<TodaySignal>();
             foreach (var company in companies)
             {
-                var companyPrices = prices.Where(item => item.CompanyId == company.Id).OrderBy(item => item.Date).ToList();
+                var companyPrices =
+                    prices.Where(item => item.CompanyId == company.Id).OrderBy(item => item.Date).ToList();
                 if (!companyPrices.Any()) continue;
                 foreach (var indicator in indicatorObjects)
                 {
@@ -173,32 +232,34 @@ namespace StockExchange.Business.Services
                     }
                     catch (Exception ex)
                     {
-                        logger.Warn($"Error when generating signals for company {company.Code} and indicator {indicator.Type}", ex);
+                        logger.Warn(
+                            $"Error when generating signals for company {company.Code} and indicator {indicator.Type}",
+                            ex);
                     }
                     var todaySignal = signals.FirstOrDefault(item => item.Date == maxDate);
                     if (todaySignal != null)
                     {
-                        computed.Add(new TodaySignal { Action = todaySignal.Action.ToString(), Company = company.Code, Indicator = indicator.Type.ToString() });
+                        computed.Add(new TodaySignal
+                        {
+                            Action = todaySignal.Action.ToString(),
+                            Company = company.Code,
+                            Indicator = indicator.Type.ToString()
+                        });
                     }
                 }
             }
-            var ret = new List<TodaySignal>();
-            ret.AddRange(computed.GroupBy(item => new { item.Company, item.Action })
-                .Select(item => new TodaySignal
-                {
-                    Company = item.Key.Company,
-                    Action = item.Key.Action,
-                    Indicator = string.Join(", ", (IEnumerable<string>)item.Select(it => it.Indicator).ToArray())
-                }));
-            return ret.OrderBy(item => item.Company)
-                .ThenBy(item => item.Action)
-                .ThenBy(item => item.Indicator)
-                .ToPagedList(message.Start, message.Length);
+            return computed;
         }
 
+        //TODO: refactor cache usage
         /// <inheritdoc />
         public async Task<int> GetCurrentSignalsCount()
         {
+            string cacheKey = CacheKeys.CurrentSignalsCount;
+            var signalsCount = await _cache.Get<int?>(cacheKey);
+            if (signalsCount.HasValue)
+                return signalsCount.Value;
+
             var indicators = GetAllIndicators();
             var indicatorObjects = indicators.Select(indicator => _indicatorFactory.CreateIndicator(indicator.IndicatorType)).ToList();
 
@@ -229,6 +290,7 @@ namespace StockExchange.Business.Services
                     }
                 }
             }
+            await _cache.Set(cacheKey, computed);
             return computed;
         }
 

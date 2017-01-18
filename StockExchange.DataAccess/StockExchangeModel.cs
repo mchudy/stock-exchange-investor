@@ -9,7 +9,7 @@ namespace StockExchange.DataAccess
     /// <summary>
     /// A StockExchange database model
     /// </summary>
-    public sealed class StockExchangeModel : IdentityDbContext<User, AppRole, int, AppUserLogin, AppUserRole, AppUserClaim>
+    public class StockExchangeModel : IdentityDbContext<User, AppRole, int, AppUserLogin, AppUserRole, AppUserClaim>
     {
         /// <summary>
         /// Creates a new instance of <see cref="StockExchangeModel"/>
@@ -27,9 +27,19 @@ namespace StockExchange.DataAccess
         public IDbSet<Company> Companies { get; set; }
 
         /// <summary>
+        /// The company groups tables
+        /// </summary>
+        public IDbSet<CompanyGroup> CompanyGroups { get; set; }
+
+        /// <summary>
+        /// The table connecting companies and company groups
+        /// </summary>
+        public IDbSet<CompanyGroupCompany> CompanyGroupCompanies { get; set; }
+
+        /// <summary>
         /// The prices table
         /// </summary>
-        public IDbSet<Price> Prices { get; set; }
+        public virtual IDbSet<Price> Prices { get; set; }
 
         /// <summary>
         /// The user transactions table
@@ -40,11 +50,6 @@ namespace StockExchange.DataAccess
         /// The strategies table
         /// </summary>
         public IDbSet<InvestmentStrategy> Strategies { get; set; }
-
-        // <summary>
-        // The simulations table
-        // </summary>
-        //public IDbSet<Simulation> Simulations { get; set; }
 
         /// <summary>
         /// The strategy indicators table

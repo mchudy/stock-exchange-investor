@@ -9,6 +9,7 @@ namespace StockExchange.Business.Indicators
     /// <summary>
     /// Average True Range technical indicator
     /// </summary>
+    [IndicatorDescription("Atr")]
     public class AtrIndicator : IIndicator
     {
         /// <summary>
@@ -23,7 +24,12 @@ namespace StockExchange.Business.Indicators
         public int Term { get; set; } = DefaultAtrTerm;
 
         /// <inheritdoc />
+        [IgnoreIndicatorProperty]
         public IndicatorType Type => IndicatorType.Atr;
+
+        /// <inheritdoc />
+        [IgnoreIndicatorProperty]
+        public int RequiredPricesForSignalCount => Term;
 
         /// <inheritdoc />
         public IList<IndicatorValue> Calculate(IList<Price> prices)
@@ -38,22 +44,12 @@ namespace StockExchange.Business.Indicators
             var signals = new List<Signal>();
             var values = Calculate(prices);
             var trend = MovingAverageHelper.ExpotentialMovingAverage(prices, Term);
-            SignalAction lastAction = SignalAction.NoSignal;
-            for (int i = Term; i < prices.Count-1; i++)
+            for (int i = Term; i < prices.Count - 1; i++)
             {
                 if (values[i - Term].Value < values[i - Term + 1].Value && trend[i - Term].Value < trend[i - Term + 1].Value)
-                {
-                    if (lastAction != SignalAction.Buy)
-                    {
-                        signals.Add(new Signal(SignalAction.Buy) {Date = values[i-Term+1].Date});
-                        lastAction = SignalAction.Buy;
-                    }
-                }
-                if (values[i - Term].Value <= values[i - Term + 1].Value ||
-                    trend[i - Term].Value <= trend[i - Term + 1].Value) continue;
-                if (lastAction == SignalAction.Sell) continue;
-                signals.Add(new Signal(SignalAction.Sell) { Date = values[i - Term + 1].Date });
-                lastAction = SignalAction.Sell;
+                    signals.Add(new Signal(SignalAction.Buy) { Date = values[i - Term + 1].Date });
+                if (values[i - Term].Value > values[i - Term + 1].Value && trend[i - Term].Value > trend[i - Term + 1].Value)
+                    signals.Add(new Signal(SignalAction.Sell) { Date = values[i - Term + 1].Date });
             }
             return signals;
         }

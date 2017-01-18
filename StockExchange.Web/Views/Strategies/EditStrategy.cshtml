@@ -28,12 +28,27 @@
                     <div class="form-group">
                         <label class="control-label">Add indicators: </label>
                         @* ReSharper disable once UnknownCssClass *@
-                        @Html.DropDownList("Indicators", new SelectList(Model.Indicators, nameof(IndicatorViewModel.Type), nameof(IndicatorViewModel.Name)), " --- ", new {@class = "form-control indicator-select"})
+                        @* Don't use nameof here (breaks CI build)!!! *@
+                        @Html.DropDownList("Indicators", new SelectList(Model.Indicators, "Type", "Name"), " --- ", new {@class = "form-control indicator-select"})
                     </div>
                     foreach (var indicator in Model.Indicators)
                     {
                         <fieldset data-id="@indicator.Type" class="@(indicator.IsSelected ? "" : "hidden") indicator form-group">
-                            <legend class="col-sm-12">@indicator.Name<i class="fa fa-trash fa-pull-right remove-indicator"></i></legend>
+                            <legend class="col-sm-12">@indicator.Name<a href="#" class="show-indicator-description">Show description</a><i class="fa fa-trash fa-pull-right remove-indicator"></i></legend>
+                            <div class="alert hidden indicator-description">
+                                @*<div>
+                                    <label>Description</label>
+                                    <div>@indicator.IndicatorDescription</div>
+                                </div>*@
+                                <div>
+                                    <label>Buy signal:</label>
+                                    <div>@indicator.BuySignalDescription</div>
+                                </div>
+                                <div>
+                                    <label>Sell signal:</label>
+                                    <div>@indicator.SellSignalDescription</div>
+                                </div>
+                            </div>
                             @foreach (var property in indicator.Properties)
                             {
                                 <div class="property form-group" data-name="@property.Name">

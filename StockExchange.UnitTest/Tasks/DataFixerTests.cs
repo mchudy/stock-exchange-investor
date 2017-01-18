@@ -3,6 +3,7 @@ using Moq;
 using StockExchange.DataAccess.IRepositories;
 using StockExchange.DataAccess.Models;
 using StockExchange.Task.Business;
+using StockExchange.UnitTest.TestHelpers;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
@@ -18,11 +19,11 @@ namespace StockExchange.UnitTest.Tasks
         public DataFixerTests()
         {
             _dataFixer = new DataFixer(_priceRepository.Object);
-            _priceRepository.Setup(r => r.GetQueryable()).Returns(_prices.AsQueryable());
+            _priceRepository.Setup(r => r.GetQueryable()).Returns(_prices.GetTestAsyncQueryable());
         }
 
         [Fact]
-        public void Should_not_touch_correct_records()
+        public async System.Threading.Tasks.Task Should_not_touch_correct_records()
         {
             var _testPrices = new List<Price>
             {
@@ -33,36 +34,36 @@ namespace StockExchange.UnitTest.Tasks
             };
             _prices.AddRange(_testPrices);
 
-            _dataFixer.FixData();
+            await _dataFixer.FixData();
 
             _prices.Should().BeEquivalentTo(_testPrices);
             VerifyNoEntriesRemoved();
         }
 
         [Fact]
-        public void Should_delete_records_where_all_prices_except_close_price_are_zero_()
+        public async System.Threading.Tasks.Task Should_delete_records_where_all_prices_except_close_price_are_zero_()
         {
             var incorrectPrice = new Price {CompanyId = 1, HighPrice = 0, LowPrice = 0, ClosePrice = 10, OpenPrice = 0};
             _prices.Add(incorrectPrice);
 
-            _dataFixer.FixData();
+            await _dataFixer.FixData();
             
             _priceRepository.Verify(r => r.RemoveRange(It.Is((IQueryable<Price> p) => p.Contains(incorrectPrice))), Times.Once);
         }
 
         [Fact]
-        public void Should_delete_records_where_open_price_is_zero_and_rest_is_positive()
+        public async System.Threading.Tasks.Task Should_delete_records_where_open_price_is_zero_and_rest_is_positive()
         {
             var incorrectPrice = new Price {CompanyId = 1, HighPrice = 10, LowPrice = 5, ClosePrice = 8, OpenPrice = 0};
             _prices.Add(incorrectPrice);
 
-            _dataFixer.FixData();
+            await _dataFixer.FixData();
 
             _priceRepository.Verify(r => r.RemoveRange(It.Is((IQueryable<Price> p) => p.Contains(incorrectPrice))), Times.Once);
         }
 
         [Fact]
-        public void Should_not_delete_where_open_price_is_not_zero()
+        public async System.Threading.Tasks.Task Should_not_delete_where_open_price_is_not_zero()
         {
             var _testPrices = new List<Price>
             {
@@ -70,7 +71,7 @@ namespace StockExchange.UnitTest.Tasks
             };
             _prices.AddRange(_testPrices);
 
-            _dataFixer.FixData();
+            await _dataFixer.FixData();
 
             _prices.Should().BeEquivalentTo(_testPrices);
             VerifyNoEntriesRemoved();
@@ -78,7 +79,7 @@ namespace StockExchange.UnitTest.Tasks
 
         private void VerifyNoEntriesRemoved()
         {
-            _priceRepository.Verify(r => r.RemoveRange(It.Is((IQueryable<Price> p) => !p.Any())));
+            _priceRepository.Verify(r => r.RemoveRange(It.IsAny<IQueryable<Price>>()), Times.Never);
             _priceRepository.Verify(r => r.Remove(It.IsAny<Price>()), Times.Never);
         }
     }

@@ -87,7 +87,9 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -96,12 +98,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CompanyGroupsSynchronizer.cs" />
     <Compile Include="DataFixer.cs" />
     <Compile Include="DataSynchronizerGpw.cs" />
+    <Compile Include="Data\CompanyGroupsData.cs" />
     <Compile Include="Helpers\CsvImporter.cs" />
     <Compile Include="DataSynchronizer.cs" />
     <Compile Include="Helpers\PriceConverter.cs" />
     <Compile Include="Helpers\PriceValidationHelper.cs" />
+    <Compile Include="ICompanyGroupsSynchronizer.cs" />
     <Compile Include="IDataFixer.cs" />
     <Compile Include="IDataSynchronizerGpw.cs" />
     <Compile Include="IDataSynchronizer.cs" />

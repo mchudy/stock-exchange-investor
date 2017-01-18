@@ -8,6 +8,7 @@ namespace StockExchange.Business.Indicators
     /// <summary>
     /// Rate of Change technical indicator
     /// </summary>
+    [IndicatorDescription("Roc")]
     public class RocIndicator : IIndicator
     {
         /// <summary>
@@ -22,7 +23,12 @@ namespace StockExchange.Business.Indicators
         public int Term { get; set; } = DefaultRocTerm;
 
         /// <inheritdoc />
+        [IgnoreIndicatorProperty]
         public IndicatorType Type => IndicatorType.Roc;
+
+        /// <inheritdoc />
+        [IgnoreIndicatorProperty]
+        public int RequiredPricesForSignalCount => Term;
 
         /// <inheritdoc />
         public IList<IndicatorValue> Calculate(IList<Price> prices)
@@ -46,21 +52,12 @@ namespace StockExchange.Business.Indicators
             var signals = new List<Signal>();
             var values = Calculate(prices);
             var trend = MovingAverageHelper.ExpotentialMovingAverage(prices, Term);
-            SignalAction lastAction = SignalAction.NoSignal;
             for (int i = Term; i < prices.Count; i++)
             {
                 if (prices[i].ClosePrice > trend[i-Term+1].Value && trend[i-Term].Value < trend[i-Term+1].Value && values[i-Term].Value<0)
-                {
-                    if (lastAction == SignalAction.Buy) continue;
                     signals.Add(new Signal(SignalAction.Buy) {Date = prices[i].Date});
-                    lastAction = SignalAction.Buy;
-                }
                 else if (prices[i].ClosePrice < trend[i-Term+1].Value && trend[i-Term].Value > trend[i-Term+1].Value && values[i-Term].Value > 0)
-                {
-                    if (lastAction == SignalAction.Sell) continue;
                     signals.Add(new Signal(SignalAction.Sell) {Date = prices[i].Date});
-                    lastAction = SignalAction.Sell;
-                }
             }
             return signals;
         }

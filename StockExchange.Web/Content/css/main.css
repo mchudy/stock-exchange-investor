@@ -455,6 +455,10 @@
 .form-group legend {
   font-size: 16px;
 }
+.form-group legend a {
+  font-size: 12px;
+  margin-left: 5px;
+}
 .input-group .input-group-addon {
   border-radius: 0;
   border-color: #d2d6de;
@@ -809,4 +813,15 @@ footer {
 }
 .budget-infobox .info-box-number {
   font-size: 16px;
+}
+@media (min-width: 1200px) and (max-width: 1640px) {
+  .budget-infobox-column {
+    width: 100% !important;
+  }
+}
+.fa-remove {
+  color: #dd4b39;
+}
+.fa-remove:hover {
+  background-color: #d2d6de;
 }

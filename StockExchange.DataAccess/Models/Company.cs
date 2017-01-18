@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -29,6 +30,7 @@ namespace StockExchange.DataAccess.Models
         /// <summary>
         /// Stock prices for the company
         /// </summary>
+        [JsonIgnore]
         public virtual ICollection<Price> Prices { get; set; } = new HashSet<Price>();
     }
 }

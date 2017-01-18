@@ -5,17 +5,17 @@
     <span class="info-box-icon"><i class="fa fa-money"></i></span>
     <div class="info-box-content container-fluid">
         <div class="info-box-inner-content">
-            <div class="col-lg-4">
+            <div class="col-lg-4 budget-infobox-column">
                 <span class="info-box-text">Free budget</span>
                 <span id="free-budget" class="info-box-number">@Model.FreeBudget.FormatCurrency()</span>
                 <span class="info-box-text">Stocks value</span>
                 <span id="all-stocks" class="info-box-number">@Model.AllStocksValue.FormatCurrency()</span>
             </div>
-            <div class="col-lg-4">
+            <div class="col-lg-4 budget-infobox-column">
                 <span class="info-box-text">Total budget</span>
                 <span id="total-budget" class="info-box-number">@Model.TotalBudget.FormatCurrency()</span>
             </div>
-            <div class="col-lg-4">
+            <div class="col-lg-4 budget-infobox-column">
                 @Html.ActionLink("Edit ", "EditBudgetDialog", "Wallet", null, new { @class = "modal-link btn btn-success pull-right" })
             </div>
         </div>

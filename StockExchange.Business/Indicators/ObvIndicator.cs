@@ -8,10 +8,18 @@ namespace StockExchange.Business.Indicators
     /// <summary>
     /// OBV technical indicator
     /// </summary>
+    [IndicatorDescription("Obv")]
     public class ObvIndicator : IIndicator
     {
+        private const int _trendTerm = 20;
+
         /// <inheritdoc />
+        [IgnoreIndicatorProperty]
         public IndicatorType Type => IndicatorType.Obv;
+
+        /// <inheritdoc />
+        [IgnoreIndicatorProperty]
+        public int RequiredPricesForSignalCount => _trendTerm;
 
         /// <inheritdoc />
         public IList<IndicatorValue> Calculate(IList<Price> prices)
@@ -45,23 +53,13 @@ namespace StockExchange.Business.Indicators
         {
             var signals = new List<Signal>();
             var values = Calculate(prices);
-            const int trendTerm = 20;
-            var trend = MovingAverageHelper.ExpotentialMovingAverage(values, trendTerm);
-            SignalAction lastAction = SignalAction.NoSignal;
-            for (int i = trendTerm; i < prices.Count; i++)
+            var trend = MovingAverageHelper.ExpotentialMovingAverage(values, _trendTerm);
+            for (int i = _trendTerm; i < prices.Count; i++)
             {
-                if (trend[i - trendTerm].Value < trend[i - trendTerm + 1].Value && values[i].Value > prices[i].Volume)
-                {
-                    if (lastAction == SignalAction.Sell) continue;
+                if (trend[i - _trendTerm].Value < trend[i - _trendTerm + 1].Value && values[i].Value > prices[i].Volume)
                     signals.Add(new Signal(SignalAction.Sell) {Date = prices[i].Date});
-                    lastAction = SignalAction.Sell;
-                }
-                else if(trend[i-trendTerm].Value > trend[i-trendTerm+1].Value && values[i].Value < prices[i].Volume)
-                {
-                    if (lastAction == SignalAction.Buy) continue;
+                else if(trend[i-_trendTerm].Value > trend[i-_trendTerm+1].Value && values[i].Value < prices[i].Volume)
                     signals.Add(new Signal(SignalAction.Buy) {Date = prices[i].Date});
-                    lastAction = SignalAction.Buy;
-                }
             } 
             return signals;
         }

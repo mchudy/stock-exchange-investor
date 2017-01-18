@@ -8,6 +8,7 @@ namespace StockExchange.Business.Indicators
     /// <summary>
     /// Exponential moving average technical indicator
     /// </summary>
+    [IndicatorDescription("Ema")]
     public class EmaIndicator : IIndicator
     {
         /// <summary>
@@ -22,7 +23,12 @@ namespace StockExchange.Business.Indicators
         public int Term { get; set; } = DefaultTerm;
 
         /// <inheritdoc />
+        [IgnoreIndicatorProperty]
         public IndicatorType Type => IndicatorType.Ema;
+
+        /// <inheritdoc />
+        [IgnoreIndicatorProperty]
+        public int RequiredPricesForSignalCount => Term;
 
         /// <inheritdoc />
         public IList<IndicatorValue> Calculate(IList<Price> prices)
@@ -33,25 +39,7 @@ namespace StockExchange.Business.Indicators
         /// <inheritdoc />
         public IList<Signal> GenerateSignals(IList<Price> prices)
         {
-            var signals = new List<Signal>();
-            var values = Calculate(prices);
-            var lastAction = SignalAction.NoSignal;
-            for (int i = Term; i < prices.Count; i++)
-            {
-                if (values[i - Term].Value < values[i - Term + 1].Value && prices[i].ClosePrice > values[i - Term + 1].Value)
-                {
-                    if (lastAction == SignalAction.Buy) continue;
-                    signals.Add(new Signal(SignalAction.Buy) { Date = prices[i].Date });
-                    lastAction = SignalAction.Buy;
-                }
-                else if (values[i - Term].Value > values[i - Term + 1].Value && prices[i].ClosePrice < values[i - Term + 1].Value)
-                {
-                    if (lastAction == SignalAction.Sell) continue;
-                    signals.Add(new Signal(SignalAction.Sell) { Date = prices[i].Date });
-                    lastAction = SignalAction.Sell;
-                }
-            }
-            return signals;
+            return MovingAverageHelper.GenerateSignalsForMovingAverages(this, Term, prices);
         }
     }
 }

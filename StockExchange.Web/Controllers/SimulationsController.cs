@@ -94,7 +94,9 @@ namespace StockExchange.Web.Controllers
                     (await _companyService.GetCompanies()).Select(c => c.Id).ToList() :
                     viewModel.SelectedCompanyIds,
                 UserId = CurrentUserId,
-                Budget = viewModel.Budget
+                Budget = viewModel.Budget,
+                HasTransactionLimit = viewModel.HasTransactionLimit,
+                MaximalBudgetPerTransaction = viewModel.MaximalBudgetPerTransaction
             };
         }
 

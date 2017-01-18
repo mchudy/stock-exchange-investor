@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -52,6 +53,8 @@ namespace StockExchange.DataAccess.Models
         /// <summary>
         /// The company
         /// </summary>
+        //TODO: this should't be here
+        [JsonIgnore]
         public virtual Company Company { get; set; }
     }
 }

@@ -3,7 +3,6 @@ using StockExchange.Business.ErrorHandling;
 using StockExchange.Business.Exceptions;
 using StockExchange.Web.Helpers.Json;
 using System;
-using System.Collections.Generic;
 using System.Net;
 using System.Web.Mvc;
 
@@ -23,22 +22,19 @@ namespace StockExchange.Web.Filters
             {
                 throw new ArgumentNullException(nameof(filterContext));
             }
-            filterContext.ExceptionHandled = true;
+            if (!filterContext.HttpContext.Request.IsAjaxRequest())
+            {
+                return;
+            }
 
             if (filterContext.Exception is BusinessException)
             {
+                filterContext.ExceptionHandled = true;
                 var exception = filterContext.Exception as BusinessException;
                 logger.Error("Business error", exception);
 
                 filterContext.HttpContext.Response.StatusCode = (int) GetHttpStatusCode(exception.Status);
                 filterContext.Result = new JsonNetResult(exception.Errors);
-            }
-            else
-            {
-                filterContext.HttpContext.Response.StatusCode = 500;
-                filterContext.Result = new JsonNetResult(
-                    new List<ValidationError> { new ValidationError("", "An unexptected error occurred") });
-                logger.Error("Application error", filterContext.Exception);
             }
         }
 

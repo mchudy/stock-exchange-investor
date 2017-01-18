@@ -14,14 +14,14 @@ namespace StockExchange.Task.App.Commands
     {
         private readonly IDataFixer _dataFixer;
 
-        internal FixDataCommand(IDataFixer dataFixer)
+        public FixDataCommand(IDataFixer dataFixer)
         {
             _dataFixer = dataFixer;
         }
 
         public void Execute(IEnumerable<string> parameters)
         {
-            _dataFixer.FixData();
+            System.Threading.Tasks.Task.Run(() => _dataFixer.FixData()).Wait();
         }
     }
 }

@@ -18,12 +18,9 @@
     $('#EndDate').datepicker();
 
     // Disable companies select when AllCompanies checkbox is checked
-    $('#AllCompanies')
-        .on('ifChecked ', function() {
-            $companySelect.prop('disabled', true);
-        })
-        .on('ifUnchecked', function() {
-            $companySelect.prop('disabled', false);
+    $('#HasTransactionLimit')
+        .on('ifChecked ifUnchecked', function() {
+            $('.transactionLimit').toggleClass('hidden');
         });
 
     // Disables button on submit to prevent multiple clicks
