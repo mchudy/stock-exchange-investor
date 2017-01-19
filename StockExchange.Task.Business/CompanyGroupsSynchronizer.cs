@@ -6,17 +6,27 @@ using System.Linq;
 
 namespace StockExchange.Task.Business
 {
+    /// <summary>
+    /// Synchronizes company groups
+    /// </summary>
     public class CompanyGroupsSynchronizer : ICompanyGroupsSynchronizer
     {
         private readonly IRepository<Company> _companyRepository;
         private readonly IRepository<CompanyGroup> _groupRepository;
 
+        /// <summary>
+        /// Creates a new instance of <see cref="CompanyGroupsSynchronizer"/>
+        /// </summary>
+        /// <param name="companyRepository"></param>
+        /// <param name="groupRepository"></param>
         public CompanyGroupsSynchronizer(IRepository<Company> companyRepository, IRepository<CompanyGroup> groupRepository)
         {
             _companyRepository = companyRepository;
             _groupRepository = groupRepository;
         }
 
+
+        /// <inheritdoc />
         public async System.Threading.Tasks.Task UpdateCompanyGroups()
         {
             foreach (var groupEntry in CompanyGroupsData.Groups)

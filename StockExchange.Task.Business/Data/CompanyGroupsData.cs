@@ -2,7 +2,7 @@
 
 namespace StockExchange.Task.Business.Data
 {
-    public class CompanyGroupsData
+    internal class CompanyGroupsData
     {
         public static readonly Dictionary<string, List<string>> Groups = new Dictionary<string, List<string>>
         {
