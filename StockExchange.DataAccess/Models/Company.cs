@@ -32,5 +32,8 @@ namespace StockExchange.DataAccess.Models
         /// </summary>
         [JsonIgnore]
         public virtual ICollection<Price> Prices { get; set; } = new HashSet<Price>();
+
+        public virtual ICollection<CompanyGroupCompany> CompanyGroupCompanies { get; set; } = 
+            new List<CompanyGroupCompany>();
     }
 }

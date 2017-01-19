@@ -1,4 +1,5 @@
-﻿using StockExchange.Business.Models.Company;
+﻿using StockExchange.Business.Extensions;
+using StockExchange.Business.Models.Company;
 using StockExchange.Business.ServiceInterfaces;
 using StockExchange.DataAccess.IRepositories;
 using StockExchange.DataAccess.Models;
@@ -51,6 +52,18 @@ namespace StockExchange.Business.Services
                 Name = item.Code,
                 Code = item.Code,
                 Id = item.Id
+            }).ToList();
+        }
+
+        /// <inheritdoc />
+        public async Task<IList<CompanyGroupDto>> GetCompanyGroups()
+        {
+            var groups = await _companyRepository.GetCompanyGroups();
+            return groups.Select(g => new CompanyGroupDto
+            {
+                Id = g.Id,
+                Name = g.Name,
+                CompanyIds = g.CompanyGroupCompanies.Select(cgc => cgc.CompanyId).ToList()
             }).ToList();
         }
     }

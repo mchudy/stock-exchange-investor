@@ -54,6 +54,7 @@ namespace StockExchange.Web.Controllers
             {
                 model.Strategies = await _strategyService.GetStrategies(CurrentUserId);
                 model.Companies = await _companyService.GetCompanies();
+                model.CompanyGroups = await _companyService.GetCompanyGroups();
                 return View(model);
             }
 
@@ -109,7 +110,8 @@ namespace StockExchange.Web.Controllers
                 Companies = await _companyService.GetCompanies(),
                 StartDate = new DateTime(2006, 01, 01),
                 EndDate = DateTime.Today,
-                Strategies = await _strategyService.GetStrategies(CurrentUserId)
+                Strategies = await _strategyService.GetStrategies(CurrentUserId),
+                CompanyGroups = await _companyService.GetCompanyGroups()
             };
             return model;
         }

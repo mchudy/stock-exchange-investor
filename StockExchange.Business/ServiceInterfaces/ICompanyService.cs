@@ -26,7 +26,13 @@ namespace StockExchange.Business.ServiceInterfaces
         /// Returns companies by ids
         /// </summary>
         /// <param name="ids">Ids of the companies to return</param>
-        /// <returns>THe list of companies</returns>
+        /// <returns>The list of companies</returns>
         Task<IList<CompanyDto>> GetCompanies(IList<int> ids);
+
+        /// <summary>
+        /// Returns all company groups
+        /// </summary>
+        /// <returns>The list of company groups</returns>
+        Task<IList<CompanyGroupDto>> GetCompanyGroups();
     }
 }

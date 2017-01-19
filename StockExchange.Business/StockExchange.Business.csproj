@@ -95,6 +95,7 @@
     </Compile>
     <Compile Include="Indicators\Common\Intersections\IntersectionType.cs" />
     <Compile Include="Indicators\Common\Intersections\IntersectionInfo.cs" />
+    <Compile Include="Models\Company\CompanyGroupDto.cs" />
     <Compile Include="Models\Indicators\IndicatorDescriptionDto.cs" />
     <Compile Include="Models\Indicators\SignalAction.cs" />
     <Compile Include="Models\Paging\PagedList.cs" />

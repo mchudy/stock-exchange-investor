@@ -6,8 +6,24 @@
 
     var $companySelect = $('.company-select');
     $companySelect.select2({
-        placeholder: 'Choose companies',
-        //width: '100%'
+        placeholder: 'Choose companies'
+    });
+
+    $('.company-group-select').on('change', function () {
+        var $selected = $(this).find(':selected');
+        var companies = $selected.data('companies');
+
+        $('option', $companySelect).each(function () {
+            var value = parseInt($(this).val());
+            if (companies && $.inArray(value, companies) < 0) {
+                $(this).prop('disabled', true).prop('selected', false);
+            } else {
+                $(this).prop('disabled', false);
+            }
+        });
+        $companySelect.select2({
+            placeholder: 'Choose companies'
+        });
     });
 
     $("input[type='checkbox']").iCheck({

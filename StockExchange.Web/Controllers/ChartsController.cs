@@ -1,5 +1,4 @@
 ﻿using StockExchange.Business.Indicators.Common;
-using StockExchange.Business.Models.Company;
 using StockExchange.Business.Models.Indicators;
 using StockExchange.Business.Models.Price;
 using StockExchange.Business.ServiceInterfaces;
@@ -43,8 +42,7 @@ namespace StockExchange.Web.Controllers
         /// <returns></returns>
         public async Task<ActionResult> Index()
         {
-            var companies = await _companyService.GetCompanies();
-            var model = BuildChartIndexModel(companies);
+            var model = await BuildChartIndexModel();
             return View(model);
         }
 
@@ -94,8 +92,11 @@ namespace StockExchange.Web.Controllers
             return new JsonNetResult(model);
         }
 
-        private ChartsIndexModel BuildChartIndexModel(IList<CompanyDto> companies)
+        private async Task<ChartsIndexModel> BuildChartIndexModel()
         {
+            var companies = await _companyService.GetCompanies();
+            var groups = await _companyService.GetCompanyGroups();
+
             return new ChartsIndexModel
             {
                 Companies = companies,
@@ -106,7 +107,8 @@ namespace StockExchange.Web.Controllers
                         Type = i.IndicatorType,
                         Properties = _indicatorsService.GetPropertiesForIndicator(i.IndicatorType)
                             .Select(p => new IndicatorPropertyViewModel {Name = p.Name, Value = p.Value}).ToList()
-                    }).ToList()
+                    }).ToList(),
+                CompanyGroups = groups
             };
         }
 
@@ -122,7 +124,6 @@ namespace StockExchange.Web.Controllers
 
         private static IList<decimal[]> ConvertIndicatorValuesToData(IList<IndicatorValue> values)
         {
-            //TODO: needs refactoring, the inheritance of IndicatorValue is a bit troublesome
             if (values.FirstOrDefault() is DoubleLineIndicatorValue)
             {
                 return values.Cast<DoubleLineIndicatorValue>().Select(v => new[]
@@ -130,7 +131,7 @@ namespace StockExchange.Web.Controllers
                     v.Date.ToJavaScriptTimeStamp(),
                     decimal.Round(v.Value, 3, MidpointRounding.AwayFromZero),
                     decimal.Round(v.SecondLineValue, 3, MidpointRounding.AwayFromZero)
-            }).ToList();
+                }).ToList();
             }
             return values.Select(v => new[]
             {

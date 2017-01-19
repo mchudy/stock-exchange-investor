@@ -18,5 +18,10 @@ namespace StockExchange.Web.Models.Charts
         /// List of all available indicators
         /// </summary>
         public IList<EditIndicatorViewModel> Indicators { get; set; }
+
+        /// <summary>
+        /// List of all company groups
+        /// </summary>
+        public IList<CompanyGroupDto> CompanyGroups { get; set; }
     }
 }

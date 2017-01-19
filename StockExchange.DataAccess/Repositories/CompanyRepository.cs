@@ -28,6 +28,14 @@ namespace StockExchange.DataAccess.Repositories
         }
 
         /// <inheritdoc />
+        public async Task<IList<Company>> GetCompaniesFromGroup(int groupId)
+        {
+            return await DbSet
+                .Where(g => g.CompanyGroupCompanies.Any(cgc => cgc.CompanyGroupId == groupId))
+                .ToListAsync();
+        }
+
+        /// <inheritdoc />
         public async Task<IList<string>> GetCompanyNames()
         {
             return await DbSet.Select(c => c.Code)
@@ -40,6 +48,14 @@ namespace StockExchange.DataAccess.Repositories
         public async Task<IList<Company>> GetCompanies(IList<int> ids)
         {
             return await GetQueryable().Where(item => ids.Contains(item.Id))
+                .ToListAsync();
+        }
+
+        /// <inheritdoc />
+        public async Task<IList<CompanyGroup>> GetCompanyGroups()
+        {
+            return await Context.CompanyGroups
+                .Include(g => g.CompanyGroupCompanies)
                 .ToListAsync();
         }
     }
