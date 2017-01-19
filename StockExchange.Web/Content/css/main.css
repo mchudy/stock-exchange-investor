@@ -496,6 +496,9 @@
 .datepicker {
   background-color: white;
 }
+.select2-container--default .select2-results__option[aria-disabled=true] {
+  display: none;
+}
 .spinner {
   margin: 50px auto;
   font-size: 10px;
@@ -824,4 +827,11 @@ footer {
 }
 .fa-remove:hover {
   background-color: #d2d6de;
+}
+table.borderless td,
+table.borderless th {
+  border: none !important;
+}
+.indicator-description > div {
+  margin-bottom: 5px;
 }

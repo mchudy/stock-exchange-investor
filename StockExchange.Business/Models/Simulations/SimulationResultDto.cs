@@ -33,16 +33,6 @@ namespace StockExchange.Business.Models.Simulations
         public double PercentageProfit { get; set; }
 
         /// <summary>
-        /// The maximal gain on a single transaction achieved during the simulation
-        /// </summary>
-        public ExtremeTransactionResult MaximalGainOnTransaction { get; set; }
-
-        /// <summary>
-        /// The maximal loss on a single transaction achieved during the simulation
-        /// </summary>
-        public ExtremeTransactionResult MaximalLossOnTransaction { get; set; }
-
-        /// <summary>
         /// The minimal simulation value achieved during the simulation
         /// </summary>
         public ExtremeSimulationValue MinimalSimulationValue { get; set; }
@@ -51,5 +41,10 @@ namespace StockExchange.Business.Models.Simulations
         /// The maximal simulation value achieved during the simulation
         /// </summary>
         public ExtremeSimulationValue MaximalSimulationValue { get; set; }
+
+        /// <summary>
+        /// Transaction statistics.
+        /// </summary>
+        public TransactionStatistics TransactionStatistics { get; set; }
     }
 }

@@ -4,6 +4,7 @@
     var chart;
     var loadingIndicator = '<div class="spinner"></div>';
     var $companySelect = $('.company-select');
+    var $companyGroupSelect = $('.company-group-select');
     var $indicatorSelect = $('.indicator-select');
     var $isCandleStickCheckbox = $('#is-candlestick-chart');
     var $refreshBtn = $('.refresh-chart');
@@ -22,11 +23,29 @@
             placeholder: 'Choose companies',
             width: '100%'
         });
-        $companySelect.trigger('change');
 
+        $companySelect.trigger('change');
         $companySelect.on('change', function () {
             chosenCompanies = $(this).val();
             loadChart();
+        });
+
+        $companyGroupSelect.on('change', function () {
+            var $selected = $(this).find(':selected');
+            var companies = $selected.data('companies');
+
+            $('option', $companySelect).each(function () {
+                var value = parseInt($(this).val());
+                if (companies && $.inArray(value, companies) < 0) {
+                    $(this).prop('disabled', true).prop('selected', false);
+                } else {
+                    $(this).prop('disabled', false);
+                }
+            });
+            $companySelect.select2({
+                placeholder: 'Choose companies',
+                width: '100%'
+            });
         });
 
         $indicatorSelect.on('change', function () {

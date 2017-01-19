@@ -27,5 +27,18 @@ namespace StockExchange.DataAccess.IRepositories
         /// <param name="ids">Ids of companies to find</param>
         /// <returns>List of companies with given ids</returns>
         Task<IList<Company>> GetCompanies(IList<int> ids);
+
+        /// <summary>
+        /// Returns all company groups
+        /// </summary>
+        /// <returns>List of company groups</returns>
+        Task<IList<CompanyGroup>> GetCompanyGroups();
+
+        /// <summary>
+        /// Returns all companies from the given group
+        /// </summary>
+        /// <param name="groupId">Group id</param>
+        /// <returns>List of companies from the group</returns>
+        Task<IList<Company>> GetCompaniesFromGroup(int groupId);
     }
 }

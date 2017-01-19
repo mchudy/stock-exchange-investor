@@ -178,6 +178,9 @@ namespace StockExchange.Business.Services
             var transactionDiffs = companyIds.ToDictionary<int, int, decimal>(companyId => companyId, companyId => 0);
             var maxGain = 0m;
             var maxLoss = 0m;
+            var successes = 0;
+            var losses = 0;
+            TransactionStatistics stats = new TransactionStatistics();
             foreach (var trans in resultDto.TransactionsLog)
             {
                 if (trans.Action == SignalAction.Buy)
@@ -193,15 +196,22 @@ namespace StockExchange.Business.Services
                     if (diff > maxGain)
                     {
                         maxGain = diff;
-                        resultDto.MaximalGainOnTransaction = new ExtremeTransactionResult(trans.Date, buyValue, sellValue);
+                        stats.MaximalGainOnTransaction = new ExtremeTransactionResult(trans.Date, buyValue, sellValue);
                     }
                     if (diff < maxLoss)
                     {
                         maxLoss = diff;
-                        resultDto.MaximalLossOnTransaction = new ExtremeTransactionResult(trans.Date, buyValue, sellValue);
+                        stats.MaximalLossOnTransaction = new ExtremeTransactionResult(trans.Date, buyValue, sellValue);
                     }
+                    if (diff > 0m)
+                        successes++;
+                    else
+                        losses++;
                 }
             }
+            stats.SuccessTransactionPercentage = Math.Round(100*((double) successes)/(successes + losses), 2);
+            stats.FailedTransactionPercentage = Math.Round(100*((double) losses)/(successes + losses), 2);
+            resultDto.TransactionStatistics = stats;
         }
     }
 }

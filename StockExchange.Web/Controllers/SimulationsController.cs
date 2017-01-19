@@ -54,6 +54,7 @@ namespace StockExchange.Web.Controllers
             {
                 model.Strategies = await _strategyService.GetStrategies(CurrentUserId);
                 model.Companies = await _companyService.GetCompanies();
+                model.CompanyGroups = await _companyService.GetCompanyGroups();
                 return View(model);
             }
 
@@ -76,10 +77,12 @@ namespace StockExchange.Web.Controllers
                 StartBudget = model.Budget,
                 TotalSimulationValue = ret.SimulationTotalValue,
                 PercentageProfit = ret.PercentageProfit,
-                MaximalLossOnTransaction = ret.MaximalLossOnTransaction,
-                MaximalGainOnTransaction = ret.MaximalGainOnTransaction,
+                MaximalLossOnTransaction = ret.TransactionStatistics.MaximalLossOnTransaction,
+                MaximalGainOnTransaction = ret.TransactionStatistics.MaximalGainOnTransaction,
                 MaximalSimulationValue = ret.MaximalSimulationValue,
-                MinimalSimulationValue = ret.MinimalSimulationValue
+                MinimalSimulationValue = ret.MinimalSimulationValue,
+                SuccessTransactionPercentage = ret.TransactionStatistics.SuccessTransactionPercentage,
+                FailedTransactionPercentage = ret.TransactionStatistics.FailedTransactionPercentage
             });
         }
 
@@ -106,8 +109,9 @@ namespace StockExchange.Web.Controllers
             {
                 Companies = await _companyService.GetCompanies(),
                 StartDate = new DateTime(2006, 01, 01),
-                EndDate = DateTime.Today, 
-                Strategies = await _strategyService.GetStrategies(CurrentUserId)
+                EndDate = DateTime.Today,
+                Strategies = await _strategyService.GetStrategies(CurrentUserId),
+                CompanyGroups = await _companyService.GetCompanyGroups()
             };
             return model;
         }

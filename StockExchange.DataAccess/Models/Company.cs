@@ -32,5 +32,11 @@ namespace StockExchange.DataAccess.Models
         /// </summary>
         [JsonIgnore]
         public virtual ICollection<Price> Prices { get; set; } = new HashSet<Price>();
+
+        /// <summary>
+        /// Objects connecting company with company groups
+        /// </summary>
+        public virtual ICollection<CompanyGroupCompany> CompanyGroupCompanies { get; set; } = 
+            new List<CompanyGroupCompany>();
     }
 }

@@ -48,6 +48,12 @@ namespace StockExchange.Web.Models.Simulation
         public bool AllCompanies { get; set; }
 
         /// <summary>
+        /// List of all company groups
+        /// </summary>
+        [Display(Name = "Company group")]
+        public IList<CompanyGroupDto> CompanyGroups { get; set; }
+
+        /// <summary>
         /// All strategies available
         /// </summary>
         [Display(Name = "Strategy")]

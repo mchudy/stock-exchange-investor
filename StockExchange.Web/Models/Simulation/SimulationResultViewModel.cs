@@ -54,5 +54,15 @@ namespace StockExchange.Web.Models.Simulation
         /// The maximal simulation value achieved during the simulation
         /// </summary>
         public ExtremeSimulationValue MinimalSimulationValue { get; set; }
+
+        /// <summary>
+        /// Success transaction percentage.
+        /// </summary>
+        public double SuccessTransactionPercentage { get; set; }
+
+        /// <summary>
+        /// Failed transaction percentage.
+        /// </summary>
+        public double FailedTransactionPercentage { get; set; }
     }
 }

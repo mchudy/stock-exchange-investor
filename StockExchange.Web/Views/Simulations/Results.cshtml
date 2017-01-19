@@ -19,29 +19,29 @@
                     <div class="table-responsive">
                         <table class="table no-margin">
                             <thead>
-                            <tr>
-                                <th>Start budget</th>
-                                <th>Total simulation value</th>
-                                <th>Percentage profit</th>
-                            </tr>
+                                <tr>
+                                    <th>Start budget</th>
+                                    <th>Total simulation value</th>
+                                    <th>Percentage profit</th>
+                                </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td>@Model.StartBudget</td>
-                                <td>@Model.TotalSimulationValue</td>
-                                <td>
-                                    @if (@Model.PercentageProfit > 0)
-                                    {
-                                        <i class="fa fa-arrow-up icon-stock-up"></i>
-                                        <span class="text-success">@Model.PercentageProfit%</span>
-                                    }
-                                    else
-                                    {
-                                        <i class="fa fa-arrow-down icon-stock-down"></i>
-                                        <span class="text-danger">@Model.PercentageProfit%</span>
-                                    }
-                                </td>
-                            </tr>
+                                <tr>
+                                    <td>@Model.StartBudget</td>
+                                    <td>@Model.TotalSimulationValue</td>
+                                    <td>
+                                        @if (@Model.PercentageProfit > 0)
+                                        {
+                                            <i class="fa fa-arrow-up icon-stock-up"></i>
+                                            <span class="text-success">@Model.PercentageProfit%</span>
+                                        }
+                                        else
+                                        {
+                                            <i class="fa fa-arrow-down icon-stock-down"></i>
+                                            <span class="text-danger">@Model.PercentageProfit%</span>
+                                        }
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -109,23 +109,44 @@
                             </tbody>
                         </table>
                     </div>
-                    <h5>Stocks owned after simulation</h5>
+                    <div class="table-responsive col-md-4" style="padding-left: 0">
+                        <table class="table no-margin borderless">
+                            <tbody>
+                                @{
+                                    string successes = Model.SuccessTransactionPercentage + "%";
+                                    string losses = Model.FailedTransactionPercentage + "%";
+                                    <tr>
+                                        <td><label>Successful transactions</label></td>
+                                        <td><span class="text-success">@successes</span></td>
+                                    </tr>
+                                        <tr>
+                                            <td><label>Failed transactions</label></td>
+                                            <td><span class="text-danger">@losses</span></td>
+                                        </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="box-header with-border">
+                        <h5>Stocks owned after simulation</h5>
+                    </div>
                     <div class="table-responsive">
                         <table class="table no-margin">
                             <thead>
-                            <tr>
-                                <th>Company Name</th>
-                                <th>Quantity</th>
-                            </tr>
+                                <tr>
+                                    <th>Company Name</th>
+                                    <th>Quantity</th>
+                                </tr>
                             </thead>
                             <tbody>
-                            @foreach (var transaction in Model.CurrentCompanyQuantity)
-                            {
-                                <tr>
-                                    <td>@transaction.Key.Code</td>
-                                    <td>@transaction.Value</td>
-                                </tr>
-                            }
+                                @foreach (var transaction in Model.CurrentCompanyQuantity)
+                                {
+                                    <tr>
+                                        <td>@transaction.Key.Code</td>
+                                        <td>@transaction.Value</td>
+                                    </tr>
+                                }
                             </tbody>
                         </table>
                     </div>
@@ -151,21 +172,21 @@
                                data-processing="true"
                                data-server-side="false" @*TODO*@>
                             <thead>
-                            <tr>
-                                <th data-column="date">@Html.DisplayNameFor(i => Model.TransactionsLog.FirstOrDefault().Date)</th>
-                                <th data-column="companyCode">@Html.DisplayNameFor(i => Model.TransactionsLog.FirstOrDefault().Company)</th>
-                                <th data-column="price">@Html.DisplayNameFor(i => Model.TransactionsLog.FirstOrDefault().Price)</th>
-                                <th data-column="quantity">@Html.DisplayNameFor(i => Model.TransactionsLog.FirstOrDefault().Quantity)</th>
-                                <th data-column="action">@Html.DisplayNameFor(i => Model.TransactionsLog.FirstOrDefault().Action)</th>
-                                <th data-column="budgetAfter">@Html.DisplayNameFor(i => Model.TransactionsLog.FirstOrDefault().BudgetAfter)</th>
-                            </tr>
+                                <tr>
+                                    <th data-column="date">@Html.DisplayNameFor(i => Model.TransactionsLog.FirstOrDefault().Date)</th>
+                                    <th data-column="companyCode">@Html.DisplayNameFor(i => Model.TransactionsLog.FirstOrDefault().Company)</th>
+                                    <th data-column="price">@Html.DisplayNameFor(i => Model.TransactionsLog.FirstOrDefault().Price)</th>
+                                    <th data-column="quantity">@Html.DisplayNameFor(i => Model.TransactionsLog.FirstOrDefault().Quantity)</th>
+                                    <th data-column="action">@Html.DisplayNameFor(i => Model.TransactionsLog.FirstOrDefault().Action)</th>
+                                    <th data-column="budgetAfter">@Html.DisplayNameFor(i => Model.TransactionsLog.FirstOrDefault().BudgetAfter)</th>
+                                </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td colspan="5">
-                                    <span>No data found...</span>
-                                </td>
-                            </tr>
+                                <tr>
+                                    <td colspan="5">
+                                        <span>No data found...</span>
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -189,9 +210,9 @@
                                     Action = t.Action.ToString(),
                                     BudgetAfter = t.BudgetAfter.ToString("0.00")
                                 }))
-        };
+            };
     </script>
-    
+
     @Scripts.Render("~/bundles/scripts/datatables")
     @Scripts.Render("~/Scripts/views/simulationResultsView.js")
 }
