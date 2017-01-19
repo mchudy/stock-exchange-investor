@@ -48,18 +48,18 @@
                     <div class="table-responsive">
                         <table class="table no-margin">
                             <thead>
-                                <tr>
-                                    <th></th>
-                                    <th>Date</th>
-                                    <th>Value</th>
-                                    <th>Percentage gain/loss</th>
-                                </tr>
+                            <tr>
+                                <th></th>
+                                <th>Date</th>
+                                <th>Value</th>
+                                <th>Percentage gain/loss</th>
+                            </tr>
                             </thead>
                             <tbody>
-                                @{
-    string gainDate = Model.MaximalGainOnTransaction?.TransactionDate.ToShortDateString() ?? "-";
-    string gainPercentage = (Model.MaximalGainOnTransaction?.PercentageIncome ?? 0.0) + "%";
-    string maxGainValue = ((Model.MaximalGainOnTransaction?.ValueAfter ?? 0m) - (Model.MaximalGainOnTransaction?.ValueBefore ?? 0m)).ToString(CultureInfo.InvariantCulture);
+                            @{
+                                string gainDate = Model.MaximalGainOnTransaction?.TransactionDate.ToShortDateString() ?? "-";
+                                string gainPercentage = (Model.MaximalGainOnTransaction?.PercentageIncome ?? 0.0) + "%";
+                                string maxGainValue = ((Model.MaximalGainOnTransaction?.ValueAfter ?? 0m) - (Model.MaximalGainOnTransaction?.ValueBefore ?? 0m)).ToString(CultureInfo.InvariantCulture);
                                 <tr>
                                     <th>Maximal gain on transaction</th>
                                     <td>@gainDate</td>
@@ -69,62 +69,65 @@
                                         <span class="text-success">@gainPercentage</span>
                                     </td>
                                 </tr>
-                                    string lossDate = Model.MaximalLossOnTransaction?.TransactionDate.ToShortDateString() ?? "-";
-                                    string lossPercentage = (Model.MaximalLossOnTransaction?.PercentageIncome ?? 0.0) + "%";
-                                    string maxLossValue = ((Model.MaximalLossOnTransaction?.ValueAfter ?? 0m) - (Model.MaximalLossOnTransaction?.ValueBefore ?? 0m)).ToString(CultureInfo.InvariantCulture);
+                                string lossDate = Model.MaximalLossOnTransaction?.TransactionDate.ToShortDateString() ?? "-";
+                                string lossPercentage = (Model.MaximalLossOnTransaction?.PercentageIncome ?? 0.0) + "%";
+                                string maxLossValue = ((Model.MaximalLossOnTransaction?.ValueAfter ?? 0m) - (Model.MaximalLossOnTransaction?.ValueBefore ?? 0m)).ToString(CultureInfo.InvariantCulture);
+                                <tr>
+                                    <th>Maximal loss on transaction</th>
+                                    <td>@lossDate</td>
+                                    <td>@maxLossValue</td>
+                                    <td>
+                                        <i class="fa fa-arrow-down icon-stock-down"></i>
+                                        <span class="text-danger">@lossPercentage</span>
+                                    </td>
+                                </tr>
+                                string maximalDate = Model.MaximalSimulationValue?.Date.ToShortDateString();
+                                string minimalDate = Model.MinimalSimulationValue?.Date.ToShortDateString();
+                                string maxValuePercentage = (Model.MaximalSimulationValue?.PercentageIncome ?? 0.0) + "%";
+                                string minValuePercentage = (Model.MinimalSimulationValue?.PercentageIncome ?? 0.0) + "%";
+                                string maxValue = (Model.MaximalSimulationValue?.Value.ToString(CultureInfo.InvariantCulture) ?? "0");
+                                string minValue = (Model.MinimalSimulationValue?.Value.ToString(CultureInfo.InvariantCulture) ?? "0");
+                                <tr>
+                                    <th>Maximal simulation value</th>
+                                    <td>@maximalDate</td>
+                                    <td>@maxValue</td>
+                                    <td>
+                                        <i class="fa fa-arrow-up icon-stock-up"></i>
+                                        <span class="text-success">@maxValuePercentage</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Minimal simulation value</th>
+                                    <td>@minimalDate</td>
+                                    <td>@minValue</td>
+                                    <td>
+                                        <i class="fa fa-arrow-down icon-stock-down"></i>
+                                        <span class="text-danger">@minValuePercentage</span>
+                                    </td>
+                                </tr>
+                            }
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="table-responsive col-md-4" style="padding-left: 0">
+                        <table class="table no-margin borderless">
+                            <tbody>
+                                @{
+                                    string successes = Model.SuccessTransactionPercentage + "%";
+                                    string losses = Model.FailedTransactionPercentage + "%";
                                     <tr>
-                                        <th>Maximal loss on transaction</th>
-                                        <td>@lossDate</td>
-                                        <td>@maxLossValue</td>
-                                        <td>
-                                            <i class="fa fa-arrow-down icon-stock-down"></i>
-                                            <span class="text-danger">@lossPercentage</span>
-                                        </td>
+                                        <td><label>Successful transactions</label></td>
+                                        <td><span class="text-success">@successes</span></td>
                                     </tr>
-                                    string maximalDate = Model.MaximalSimulationValue?.Date.ToShortDateString();
-                                    string minimalDate = Model.MinimalSimulationValue?.Date.ToShortDateString();
-                                    string maxValuePercentage = (Model.MaximalSimulationValue?.PercentageIncome ?? 0.0) + "%";
-                                    string minValuePercentage = (Model.MinimalSimulationValue?.PercentageIncome ?? 0.0) + "%";
-                                    string maxValue = (Model.MaximalSimulationValue?.Value.ToString(CultureInfo.InvariantCulture) ?? "0");
-                                    string minValue = (Model.MinimalSimulationValue?.Value.ToString(CultureInfo.InvariantCulture) ?? "0");
-                                    <tr>
-                                        <th>Maximal simulation value</th>
-                                        <td>@maximalDate</td>
-                                        <td>@maxValue</td>
-                                        <td>
-                                            <i class="fa fa-arrow-up icon-stock-up"></i>
-                                            <span class="text-success">@maxValuePercentage</span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>Minimal simulation value</th>
-                                        <td>@minimalDate</td>
-                                        <td>@minValue</td>
-                                        <td>
-                                            <i class="fa fa-arrow-down icon-stock-down"></i>
-                                            <span class="text-danger">@minValuePercentage</span>
-                                        </td>
-                                    </tr>
+                                        <tr>
+                                            <td><label>Failed transactions</label></td>
+                                            <td><span class="text-danger">@losses</span></td>
+                                        </tr>
                                 }
                             </tbody>
                         </table>
                     </div>
-                    <div class="table-responsive">
-                        @{
-                            string successes = @Model.SuccessTransactionPercentage.ToString() + "%";
-                            string losses = @Model.FailedTransactionPercentage.ToString() + "%";
-                            <div class="form-control">
-                                <div class="form-control">
-                                    <label>Successful transactions</label>
-                                    <span class="text-success">@successes</span>
-                                </div>
-                                <div class="form-control">
-                                    <label>Failed transactions</label>
-                                    <span class="text-danger">@losses</span>
-                                </div>
-                            </div>
-                        }
-                    </div>
+                    <div class="clearfix"></div>
                     <div class="box-header with-border">
                         <h5>Stocks owned after simulation</h5>
                     </div>

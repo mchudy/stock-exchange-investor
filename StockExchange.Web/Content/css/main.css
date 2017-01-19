@@ -828,3 +828,7 @@ footer {
 .fa-remove:hover {
   background-color: #d2d6de;
 }
+table.borderless td,
+table.borderless th {
+  border: none !important;
+}
