@@ -109,11 +109,22 @@ namespace StockExchange.Business.Indicators
             var dxs = new List<IndicatorValue>();
             for (var i = 0; i < atr.Count; ++i)
             {
-                plusDis.Add(new IndicatorValue { Date = atr[i].Date, Value = 100 * plusDisMovingAverage[i].Value / atr[i].Value });
-                minusDis.Add(new IndicatorValue { Date = atr[i].Date, Value = 100 * minusDisMovingAverage[i].Value / atr[i].Value });
-                diDifferences.Add(new IndicatorValue { Date = plusDis[i].Date, Value = Math.Abs(plusDis[i].Value - minusDis[i].Value) });
-                diDifferences2.Add(new IndicatorValue { Date = plusDis[i].Date, Value = plusDis[i].Value + minusDis[i].Value });
-                dxs.Add(new IndicatorValue { Date = atr[i].Date, Value = 100 * diDifferences[i].Value / diDifferences2[i].Value });
+                if (atr[i].Value > 0)
+                {
+                    plusDis.Add(new IndicatorValue { Date = atr[i].Date, Value = 100 * plusDisMovingAverage[i].Value / atr[i].Value });
+                    minusDis.Add(new IndicatorValue { Date = atr[i].Date, Value = 100 * minusDisMovingAverage[i].Value / atr[i].Value });
+                    diDifferences.Add(new IndicatorValue { Date = plusDis[i].Date, Value = Math.Abs(plusDis[i].Value - minusDis[i].Value) });
+                    diDifferences2.Add(new IndicatorValue { Date = plusDis[i].Date, Value = plusDis[i].Value + minusDis[i].Value });
+                    dxs.Add(new IndicatorValue { Date = atr[i].Date, Value = 100 * diDifferences[i].Value / diDifferences2[i].Value });
+                }
+                else
+                {
+                    plusDis.Add(new IndicatorValue() {Date = atr[i].Date, Value = decimal.MaxValue});
+                    minusDis.Add(new IndicatorValue() {Date = atr[i].Date, Value = decimal.MaxValue});
+                    diDifferences.Add(new IndicatorValue() {Date = plusDis[i].Date, Value = 0});
+                    diDifferences2.Add(new IndicatorValue() {Date = minusDis[i].Date, Value = decimal.MaxValue});
+                    dxs.Add(new IndicatorValue() {Date = atr[i].Date, Value = 0});
+                }
             }
             var sma = MovingAverageHelper.SmoothedMovingAverage2(dxs, Term);
             diDifferences2 = diDifferences2.Skip(Term - 1).ToList();
