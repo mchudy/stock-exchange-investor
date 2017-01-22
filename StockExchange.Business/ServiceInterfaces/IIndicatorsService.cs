@@ -78,8 +78,10 @@ namespace StockExchange.Business.ServiceInterfaces
         /// <param name="endDate"></param>
         /// <param name="companiesIds"></param>
         /// <param name="indicators"></param>
+        /// <param name="isAnd"></param>
+        /// <param name="daysLimitToAnd"></param>
         /// <returns></returns>
-        Task<IList<SignalEvent>> GetSignals(DateTime startDate, DateTime endDate, IList<int> companiesIds, IList<ParameterizedIndicator> indicators);
+        Task<IList<SignalEvent>> GetSignals(DateTime startDate, DateTime endDate, IList<int> companiesIds, IList<ParameterizedIndicator> indicators, bool isAnd = false, int daysLimitToAnd = 0);
 
         /// <summary>
         /// Returns paginated signals list

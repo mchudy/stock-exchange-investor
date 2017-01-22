@@ -99,7 +99,9 @@ namespace StockExchange.Web.Controllers
                 UserId = CurrentUserId,
                 Budget = viewModel.Budget,
                 HasTransactionLimit = viewModel.HasTransactionLimit,
-                MaximalBudgetPerTransaction = viewModel.MaximalBudgetPerTransaction
+                MaximalBudgetPerTransaction = viewModel.MaximalBudgetPerTransaction,
+                AndIndicators = viewModel.AndIndictaors,
+                IndicatorsDays = viewModel.daysLimitToAnd
             };
         }
 

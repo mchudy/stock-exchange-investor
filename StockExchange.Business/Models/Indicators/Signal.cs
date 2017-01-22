@@ -16,6 +16,11 @@ namespace StockExchange.Business.Models.Indicators
             Action = action;
         }
 
+        public Signal()
+        {
+
+        }
+
         /// <summary>
         /// The action to take
         /// </summary>
@@ -25,6 +30,8 @@ namespace StockExchange.Business.Models.Indicators
         /// Date on which to take the action
         /// </summary>
         public DateTime Date { get; set; }
+
+        public int Indicator { get; set; }
 
     }
 }

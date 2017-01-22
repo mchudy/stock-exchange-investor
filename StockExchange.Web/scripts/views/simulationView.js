@@ -39,6 +39,11 @@
             $('.transactionLimit').toggleClass('hidden');
         });
 
+    $('#AndIndictaors')
+    .on('ifChecked ifUnchecked', function () {
+        $('.indicatorsLimit').toggleClass('hidden');
+    });
+
     // Disables button on submit to prevent multiple clicks
     $('#run-simulation-form').on('submit', function () {
         var $button = $(this).find('[type="submit"]');

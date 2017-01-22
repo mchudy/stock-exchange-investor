@@ -48,7 +48,7 @@ namespace StockExchange.Business.Services
                 simulationDto.SelectedCompanyIds = (await _companyService.GetCompanies()).Select(item => item.Id).ToList();
 
             var signalEvents = await _indicatorsService.GetSignals(simulationDto.StartDate, simulationDto.EndDate,
-                simulationDto.SelectedCompanyIds, strategy.Indicators);
+                simulationDto.SelectedCompanyIds, strategy.Indicators, simulationDto.AndIndicators, simulationDto.IndicatorsDays);
 
             var allPrices = await _priceService.GetPrices(simulationDto.SelectedCompanyIds);
             foreach (var signalEvent in signalEvents.OrderBy(item => item.Date))

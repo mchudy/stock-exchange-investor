@@ -82,5 +82,17 @@ namespace StockExchange.Web.Models.Simulation
         /// </summary>
         [Display(Name = "Transaction limit")]
         public bool HasTransactionLimit { get; set; }
+
+        /// <summary>
+        /// Indicates whether transaction limit is defined.
+        /// </summary>
+        [Display(Name = "And Indicators")]
+        public bool AndIndictaors { get; set; }
+
+        /// <summary>
+        /// Budget limit for a single buy transaction.
+        /// </summary>
+        [Display(Name = "Days Range")]
+        public int daysLimitToAnd { get; set; }
     }
 }
