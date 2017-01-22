@@ -82,7 +82,8 @@ namespace StockExchange.Web.Controllers
                 MaximalSimulationValue = ret.MaximalSimulationValue,
                 MinimalSimulationValue = ret.MinimalSimulationValue,
                 SuccessTransactionPercentage = ret.TransactionStatistics.SuccessTransactionPercentage,
-                FailedTransactionPercentage = ret.TransactionStatistics.FailedTransactionPercentage
+                FailedTransactionPercentage = ret.TransactionStatistics.FailedTransactionPercentage,
+                KeepStrategyProfit = (double)ret.KeepStrategyProfit
             });
         }
 

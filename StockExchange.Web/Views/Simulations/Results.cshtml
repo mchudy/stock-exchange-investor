@@ -115,14 +115,19 @@
                                 @{
                                     string successes = Model.SuccessTransactionPercentage + "%";
                                     string losses = Model.FailedTransactionPercentage + "%";
+                                    string keepStrategyProfit = (Model.KeepStrategyProfit / (double)Model.StartBudget * 100) + "%";
                                     <tr>
                                         <td><label>Successful transactions</label></td>
                                         <td><span class="text-success">@successes</span></td>
                                     </tr>
-                                        <tr>
-                                            <td><label>Failed transactions</label></td>
-                                            <td><span class="text-danger">@losses</span></td>
-                                        </tr>
+                                    <tr>
+                                        <td><label>Failed transactions</label></td>
+                                        <td><span class="text-danger">@losses</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><label>Strategy Buy and Keep Result</label></td>
+                                        <td><span class="text-danger">@keepStrategyProfit</span></td>
+                                    </tr>
                                 }
                             </tbody>
                         </table>

@@ -16,6 +16,9 @@ namespace StockExchange.Business.Models.Indicators
             Action = action;
         }
 
+        /// <summary>
+        /// Creates a new instance of <see cref="Signal"/>
+        /// </summary>
         public Signal()
         {
 
@@ -31,6 +34,9 @@ namespace StockExchange.Business.Models.Indicators
         /// </summary>
         public DateTime Date { get; set; }
 
+        /// <summary>
+        /// Indicator Id
+        /// </summary>
         public int Indicator { get; set; }
 
     }

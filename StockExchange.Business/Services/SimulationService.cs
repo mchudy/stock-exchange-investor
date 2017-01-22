@@ -62,11 +62,22 @@ namespace StockExchange.Business.Services
                     HandleBuySignals(simulationDto, allPrices, signalEvent, simulationResult);
                 }
             }
+            var budget = simulationResult.StartBudget;
+            var maxCompany = budget / allPrices.Count;
+            foreach (var companyPricesDto in allPrices)
+            {
+                var startDayPrice = companyPricesDto.Prices.Where(item => item.Date >= simulationDto.StartDate).OrderBy(item => item.Date).First();
+                var endDatePrice = companyPricesDto.Prices.Where(item => item.Date <= simulationDto.EndDate).OrderByDescending(item => item.Date).First();
+                var quantity = Math.Floor(maxCompany / startDayPrice.ClosePrice);
+                budget += quantity * (endDatePrice.ClosePrice - startDayPrice.ClosePrice);
+            }
+            var keepStrategyProfit = budget - simulationResult.StartBudget;
             var currentPrices = (await _priceService.GetCurrentPrices(simulationResult.CurrentCompanyQuantity.Keys.ToList())).ToDictionary(x => x.CompanyId);
             simulationResult.SimulationTotalValue = simulationResult.CurrentCompanyQuantity.Sum(x => x.Value * currentPrices[x.Key].ClosePrice) + simulationDto.Budget;
             simulationResult.PercentageProfit = Math.Round((double)((simulationResult.SimulationTotalValue - simulationResult.StartBudget) / simulationResult.StartBudget) * 100, 2);
             CalculateMinimalAndMaximalSimulationValue(simulationDto.StartDate, simulationDto.EndDate, allPrices, simulationDto.SelectedCompanyIds, simulationResult);
             CalculateMaximalGainAndLossOnTransaction(simulationResult, simulationDto.SelectedCompanyIds);
+            simulationResult.KeepStrategyProfit = keepStrategyProfit;
             return simulationResult;
         }
 
@@ -209,8 +220,8 @@ namespace StockExchange.Business.Services
                         losses++;
                 }
             }
-            stats.SuccessTransactionPercentage = Math.Round(100*((double) successes)/(successes + losses), 2);
-            stats.FailedTransactionPercentage = Math.Round(100*((double) losses)/(successes + losses), 2);
+            stats.SuccessTransactionPercentage = Math.Round(100 * ((double)successes) / (successes + losses), 2);
+            stats.FailedTransactionPercentage = Math.Round(100 * ((double)losses) / (successes + losses), 2);
             resultDto.TransactionStatistics = stats;
         }
     }

@@ -34,6 +34,8 @@ namespace StockExchange.Web.Models.Simulation
         /// </summary>
         public double PercentageProfit { get; set; }
 
+        public double KeepStrategyProfit { get; set; }
+
 
         /// <summary>
         /// The maximal gain on a single transaction achieved during the simulation
