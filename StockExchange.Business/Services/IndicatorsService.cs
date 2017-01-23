@@ -301,7 +301,7 @@ namespace StockExchange.Business.Services
             var scope =
                 signals.Where(
                     item =>
-                        item.Date <= signal.Date && item.Date >= item.Date.AddDays(-daysLimitToAnd + 1) &&
+                        item.Date <= signal.Date && item.Date >= signal.Date.AddDays(-daysLimitToAnd + 1) &&
                         item.Action == action).ToList();
             return scope
                 .Select(item => item.IndicatorType)
