@@ -69,7 +69,7 @@ namespace StockExchange.Web.Models.Simulation
         /// Total budget for the simulation
         /// </summary>
         [Range(1, int.MaxValue, ErrorMessage = "Budget must be greater than 0")]
-        public decimal Budget { get; set; }
+        public decimal Budget { get; set; } = 10000;
 
         /// <summary>
         /// Budget limit for a single buy transaction
