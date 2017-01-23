@@ -168,7 +168,7 @@ namespace StockExchange.Business.Services
                     indicator.Properties.ToDictionary(t => t.Name, t => t.Value));
                 try
                 {
-                    if(prices.Count <= ind.RequiredPricesForSignalCount)
+                    if (prices.Count <= ind.RequiredPricesForSignalCount)
                         continue;
                     var sig = ind.GenerateSignals(prices);
                     foreach (var signal in sig)
@@ -390,13 +390,12 @@ namespace StockExchange.Business.Services
 
         private static IList<CompanyIndicatorValues> ComputeIndicatorValues(IIndicator indicator, IEnumerable<CompanyPricesDto> companyPrices)
         {
-            return (from company in companyPrices
-                    let values = indicator.Calculate(company.Prices)
-                    select new CompanyIndicatorValues
-                    {
-                        Company = company.Company,
-                        IndicatorValues = values
-                    }).ToList();
+            return (companyPrices.Select(company => new { company, values = company.Prices.Count < indicator.RequiredPricesForSignalCount ? indicator.Calculate(company.Prices) : new List<IndicatorValue>() })
+                .Select(@t => new CompanyIndicatorValues
+                {
+                    Company = @t.company.Company,
+                    IndicatorValues = @t.values
+                })).ToList();
         }
     }
 }
