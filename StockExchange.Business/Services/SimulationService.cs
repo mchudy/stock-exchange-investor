@@ -168,6 +168,8 @@ namespace StockExchange.Business.Services
             decimal budget = resultDto.StartBudget;
             decimal minVal = resultDto.StartBudget;
             decimal maxVal = resultDto.StartBudget;
+            resultDto.MaximalSimulationValue = new ExtremeSimulationValue(startDate, budget, budget);
+            resultDto.MinimalSimulationValue = new ExtremeSimulationValue(startDate, budget, budget);
             for (DateTime d = startDate; d <= endDate; d = d.AddDays(1))
             {
                 foreach (var trans in resultDto.TransactionsLog.Where(trans => trans.Date == d))
