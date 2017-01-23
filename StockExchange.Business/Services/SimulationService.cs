@@ -245,10 +245,16 @@ namespace StockExchange.Business.Services
                     }
                 }
             }
-            stats.SuccessTransactionPercentage = Math.Round(100 * ((double)successes) / (successes + losses), 2);
-            stats.FailedTransactionPercentage = Math.Round(100 * ((double)losses) / (successes + losses), 2);
-            stats.AverageGainOnTransaction = new AverageTransactionResult(gain, successes);
-            stats.AverageLossOnTransaction = new AverageTransactionResult(loss, losses);
+            if (successes + losses != 0)
+            {
+                stats.SuccessTransactionPercentage = Math.Round(100*((double) successes)/(successes + losses), 2);
+                stats.FailedTransactionPercentage = Math.Round(100*((double) losses)/(successes + losses), 2);
+            }
+            else
+            {
+                stats.AverageGainOnTransaction = new AverageTransactionResult(gain, successes);
+                stats.AverageLossOnTransaction = new AverageTransactionResult(loss, losses);
+            }
             resultDto.TransactionStatistics = stats;
         }
     }
