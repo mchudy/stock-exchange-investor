@@ -168,7 +168,10 @@ namespace StockExchange.Business.Services
                     indicator.Properties.ToDictionary(t => t.Name, t => t.Value));
                 try
                 {
-                    foreach (var signal in ind.GenerateSignals(prices))
+                    if(prices.Count <= ind.RequiredPricesForSignalCount)
+                        continue;
+                    var sig = ind.GenerateSignals(prices);
+                    foreach (var signal in sig)
                     {
                         signals.Add(new Signal
                         {
@@ -216,6 +219,8 @@ namespace StockExchange.Business.Services
                 IList<Signal> signals = new List<Signal>();
                 try
                 {
+                    if (prices.Count < ind.RequiredPricesForSignalCount)
+                        continue;
                     signals = ind.GenerateSignals(prices);
                 }
                 catch (Exception e) when (e is IndicatorArgumentException || e is ArgumentException)

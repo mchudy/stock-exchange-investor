@@ -252,9 +252,11 @@ namespace StockExchange.Business.Services
             }
             else
             {
-                stats.AverageGainOnTransaction = new AverageTransactionResult(gain, successes);
-                stats.AverageLossOnTransaction = new AverageTransactionResult(loss, losses);
+                stats.SuccessTransactionPercentage = 0;
+                stats.FailedTransactionPercentage = 0;
             }
+            stats.AverageGainOnTransaction = new AverageTransactionResult(gain, successes);
+            stats.AverageLossOnTransaction = new AverageTransactionResult(loss, losses);
             resultDto.TransactionStatistics = stats;
         }
     }
