@@ -130,7 +130,7 @@ namespace StockExchange.Business.Services
         public async Task<IList<SignalEvent>> GetSignals(DateTime startDate, DateTime endDate, IList<int> companiesIds, IList<ParameterizedIndicator> indicators, bool isAnd, int daysLimitToAnd)
         {
             var signalEvents = new List<SignalEvent>();
-            for (var date = startDate; date < endDate; date = date.AddDays(1))
+            for (var date = startDate; date <= endDate; date = date.AddDays(1))
             {
                 signalEvents.Add(new SignalEvent
                 {
@@ -141,81 +141,95 @@ namespace StockExchange.Business.Services
             }
             foreach (var company in companiesIds)
             {
+                // przed pętlę
                 var prices = await _priceService.GetPrices(company, endDate);
                 if (!isAnd)
                 {
-                    foreach (var indicator in indicators)
-                    {
-                        if (indicator.IndicatorType == null)
-                            continue;
-                        var ind = _indicatorFactory.CreateIndicator(indicator.IndicatorType.Value,
-                            indicator.Properties.ToDictionary(t => t.Name, t => t.Value));
-                        IList<Signal> signals = new List<Signal>();
-                        try
-                        {
-                            signals = ind.GenerateSignals(prices);
-                        }
-                        catch (Exception e) when (e is IndicatorArgumentException || e is ArgumentException)
-                        {
-                            logger.Warn(
-                                $"Error when generating signals for company {company} and indicator {ind.Type}, end date {endDate}", e);
-                        }
-                        foreach (var signal in signals)
-                        {
-                            var signaEvent = signalEvents.FirstOrDefault(item => item.Date == signal.Date);
-                            if (signaEvent == null) continue;
-                            if (signal.Action == SignalAction.Buy && !signaEvent.CompaniesToBuy.Contains(company))
-                                signaEvent.CompaniesToBuy.Add(company);
-                            if (signal.Action == SignalAction.Sell && !signaEvent.CompaniesToSell.Contains(company))
-                                signaEvent.CompaniesToSell.Add(company);
-                        }
-                    }
+                    CalculateSignalsForOrStrategy(endDate, indicators, prices, company, signalEvents);
                 }
                 else
                 {
-                    IList<Signal> signals = new List<Signal>();
-                    foreach (var indicator in indicators)
-                    {
-                        if (indicator.IndicatorType == null)
-                            continue;      
-                        var ind = _indicatorFactory.CreateIndicator(indicator.IndicatorType.Value, indicator.Properties.ToDictionary(t => t.Name, t => t.Value));
-                        try
-                        {
-                            foreach (var signal in ind.GenerateSignals(prices))
-                            {
-                                signals.Add(new Signal
-                                {
-                                    Date = signal.Date,
-                                    Action = signal.Action,
-                                    IndicatorType = indicator.IndicatorType.Value
-                                });
-                            }
-                        }
-                        catch (Exception e) when (e is IndicatorArgumentException || e is ArgumentException)
-                        {
-                            logger.Warn(
-                                $"Error when generating signals for company {company} and indicator {ind.Type}, end date {endDate}", e);
-                        }
-                    }
-                    foreach (var signal in signals)
-                    {
-                        var signaEvent = signalEvents.FirstOrDefault(item => item.Date == signal.Date);
-                        if (signaEvent == null) continue;
-                        if (signal.Action == SignalAction.Buy && !signaEvent.CompaniesToBuy.Contains(company))
-                        {
-                            if (GetSignalsCount(daysLimitToAnd, signals, signal, SignalAction.Buy) == indicators.Count)
-                                signaEvent.CompaniesToBuy.Add(company);
-                        }
-                        if (signal.Action == SignalAction.Sell && !signaEvent.CompaniesToSell.Contains(company))
-                        {
-                            if (GetSignalsCount(daysLimitToAnd, signals, signal, SignalAction.Sell) == indicators.Count)
-                                signaEvent.CompaniesToSell.Add(company);
-                        }
-                    }
+                    CalculateSignalsForAndStrategy(endDate, indicators, daysLimitToAnd, prices, company, signalEvents);
                 }
             }
             signalEvents.RemoveAll(item => item.CompaniesToBuy.Count == 0 && item.CompaniesToSell.Count == 0);
             return signalEvents;
+        }
+
+        private void CalculateSignalsForAndStrategy(DateTime endDate, IList<ParameterizedIndicator> indicators, int daysLimitToAnd, IList<Price> prices,
+            int company, List<SignalEvent> signalEvents)
+        {
+            IList<Signal> signals = new List<Signal>();
+            foreach (var indicator in indicators)
+            {
+                if (indicator.IndicatorType == null)
+                    continue;
+                var ind = _indicatorFactory.CreateIndicator(indicator.IndicatorType.Value,
+                    indicator.Properties.ToDictionary(t => t.Name, t => t.Value));
+                try
+                {
+                    foreach (var signal in ind.GenerateSignals(prices))
+                    {
+                        signals.Add(new Signal
+                        {
+                            Date = signal.Date,
+                            Action = signal.Action,
+                            IndicatorType = indicator.IndicatorType.Value
+                        });
+                    }
+                }
+                catch (Exception e) when (e is IndicatorArgumentException || e is ArgumentException)
+                {
+                    logger.Warn(
+                        $"Error when generating signals for company {company} and indicator {ind.Type}, end date {endDate}", e);
+                }
+            }
+            foreach (var signal in signals)
+            {
+                var signaEvent = signalEvents.FirstOrDefault(item => item.Date == signal.Date);
+                if (signaEvent == null) continue;
+                if (signal.Action == SignalAction.Buy && !signaEvent.CompaniesToBuy.Contains(company))
+                {
+                    if (GetSignalsCount(daysLimitToAnd, signals, signal, SignalAction.Buy) == indicators.Count)
+                        signaEvent.CompaniesToBuy.Add(company);
+                }
+                if (signal.Action == SignalAction.Sell && !signaEvent.CompaniesToSell.Contains(company))
+                {
+                    if (GetSignalsCount(daysLimitToAnd, signals, signal, SignalAction.Sell) == indicators.Count)
+                        signaEvent.CompaniesToSell.Add(company);
+                }
+            }
+        }
+
+        private void CalculateSignalsForOrStrategy(DateTime endDate, IList<ParameterizedIndicator> indicators, IList<Price> prices, int company,
+            List<SignalEvent> signalEvents)
+        {
+            foreach (var indicator in indicators)
+            {
+                if (indicator.IndicatorType == null)
+                    continue;
+                var ind = _indicatorFactory.CreateIndicator(indicator.IndicatorType.Value,
+                    indicator.Properties.ToDictionary(t => t.Name, t => t.Value));
+                IList<Signal> signals = new List<Signal>();
+                try
+                {
+                    signals = ind.GenerateSignals(prices);
+                }
+                catch (Exception e) when (e is IndicatorArgumentException || e is ArgumentException)
+                {
+                    logger.Warn(
+                        $"Error when generating signals for company {company} and indicator {ind.Type}, end date {endDate}", e);
+                }
+                foreach (var signal in signals)
+                {
+                    var signaEvent = signalEvents.FirstOrDefault(item => item.Date == signal.Date);
+                    if (signaEvent == null) continue;
+                    if (signal.Action == SignalAction.Buy && !signaEvent.CompaniesToBuy.Contains(company))
+                        signaEvent.CompaniesToBuy.Add(company);
+                    if (signal.Action == SignalAction.Sell && !signaEvent.CompaniesToSell.Contains(company))
+                        signaEvent.CompaniesToSell.Add(company);
+                }
+            }
         }
 
         //TODO: refactor cache usage
