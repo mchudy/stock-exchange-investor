@@ -6,14 +6,14 @@ namespace StockExchange.Business.Models.Simulations
     public class TransactionStatistics
     {
         /// <summary>
-        /// The maximal gain on a single transaction achieved during the simulation
+        /// The average gain on a single transaction achieved during the simulation
         /// </summary>
-        public ExtremeTransactionResult MaximalGainOnTransaction { get; set; }
+        public AverageTransactionResult AverageGainOnTransaction { get; set; }
 
         /// <summary>
-        /// The maximal loss on a single transaction achieved during the simulation
+        /// The average loss on a single transaction achieved during the simulation
         /// </summary>
-        public ExtremeTransactionResult MaximalLossOnTransaction { get; set; }
+        public AverageTransactionResult AverageLossOnTransaction { get; set; }
 
         /// <summary>
         /// Success transaction percentage.

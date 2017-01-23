@@ -122,7 +122,7 @@
     <Compile Include="Models\Indicators\TodaySignal.cs" />
     <Compile Include="Models\Price\MostActivePriceDto.cs" />
     <Compile Include="Models\Simulations\ExtremeSimulationValue.cs" />
-    <Compile Include="Models\Simulations\ExtremeTransactionResult.cs" />
+    <Compile Include="Models\Simulations\AverageTransactionResult.cs" />
     <Compile Include="Models\Simulations\SimulationTransactionDto.cs" />
     <Compile Include="Models\Simulations\TransactionStatistics.cs" />
     <Compile Include="Models\Strategy\StrategyDto.cs" />

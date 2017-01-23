@@ -76,7 +76,7 @@ namespace StockExchange.Business.Services
             simulationResult.SimulationTotalValue = simulationResult.CurrentCompanyQuantity.Sum(x => x.Value * currentPrices[x.Key].ClosePrice) + simulationDto.Budget;
             simulationResult.PercentageProfit = Math.Round((double)((simulationResult.SimulationTotalValue - simulationResult.StartBudget) / simulationResult.StartBudget) * 100, 2);
             CalculateMinimalAndMaximalSimulationValue(simulationDto.StartDate, simulationDto.EndDate, allPrices, simulationDto.SelectedCompanyIds, simulationResult);
-            CalculateMaximalGainAndLossOnTransaction(simulationResult, simulationDto.SelectedCompanyIds);
+            CalculateAverageGainAndLossOnTransaction(simulationResult, simulationDto.SelectedCompanyIds);
             simulationResult.KeepStrategyProfit = keepStrategyProfit;
             return simulationResult;
         }
@@ -184,11 +184,11 @@ namespace StockExchange.Business.Services
                 .ToDictionary(p => p.Company.Id, p => p.Prices.FirstOrDefault(pr => pr.Date == date).ClosePrice);
         }
 
-        private static void CalculateMaximalGainAndLossOnTransaction(SimulationResultDto resultDto, IList<int> companyIds)
+        private static void CalculateAverageGainAndLossOnTransaction(SimulationResultDto resultDto, IList<int> companyIds)
         {
             var transactionDiffs = companyIds.ToDictionary<int, int, decimal>(companyId => companyId, companyId => 0);
-            var maxGain = 0m;
-            var maxLoss = 0m;
+            var gain = 0m;
+            var loss = 0m;
             var successes = 0;
             var losses = 0;
             TransactionStatistics stats = new TransactionStatistics();
@@ -204,24 +204,22 @@ namespace StockExchange.Business.Services
                     decimal sellValue = trans.Quantity * trans.Price;
                     transactionDiffs[trans.CompanyId] = 0;
                     var diff = sellValue - buyValue;
-                    if (diff > maxGain)
-                    {
-                        maxGain = diff;
-                        stats.MaximalGainOnTransaction = new ExtremeTransactionResult(trans.Date, buyValue, sellValue);
-                    }
-                    if (diff < maxLoss)
-                    {
-                        maxLoss = diff;
-                        stats.MaximalLossOnTransaction = new ExtremeTransactionResult(trans.Date, buyValue, sellValue);
-                    }
                     if (diff > 0m)
+                    {
+                        gain += diff;
                         successes++;
+                    }
                     else
+                    {
+                        loss += diff;
                         losses++;
+                    }
                 }
             }
             stats.SuccessTransactionPercentage = Math.Round(100 * ((double)successes) / (successes + losses), 2);
             stats.FailedTransactionPercentage = Math.Round(100 * ((double)losses) / (successes + losses), 2);
+            stats.AverageGainOnTransaction = new AverageTransactionResult(gain, successes);
+            stats.AverageLossOnTransaction = new AverageTransactionResult(loss, losses);
             resultDto.TransactionStatistics = stats;
         }
     }
