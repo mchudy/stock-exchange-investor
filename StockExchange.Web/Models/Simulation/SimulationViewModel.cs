@@ -72,27 +72,28 @@ namespace StockExchange.Web.Models.Simulation
         public decimal Budget { get; set; }
 
         /// <summary>
-        /// Budget limit for a single buy transaction.
+        /// Budget limit for a single buy transaction
         /// </summary>
         [Display(Name = "Transaction limit value")]
         public decimal MaximalBudgetPerTransaction { get; set; }
 
         /// <summary>
-        /// Indicates whether transaction limit is defined.
+        /// Indicates whether transaction limit is defined
         /// </summary>
         [Display(Name = "Transaction limit")]
         public bool HasTransactionLimit { get; set; }
 
         /// <summary>
-        /// Indicates whether transaction limit is defined.
+        /// Indicates whether action should be taken only when all selected
+        /// indicators generated a signal
         /// </summary>
-        [Display(Name = "And Indicators")]
-        public bool AndIndictaors { get; set; }
+        [Display(Name = "Take action only when all indicators generate a signal")]
+        public bool AndIndicators { get; set; }
 
         /// <summary>
-        /// Budget limit for a single buy transaction.
+        /// Number of days in which all selected signals must occur
         /// </summary>
         [Display(Name = "Days Range")]
-        public int daysLimitToAnd { get; set; }
+        public int SignalDaysPeriod { get; set; }
     }
 }

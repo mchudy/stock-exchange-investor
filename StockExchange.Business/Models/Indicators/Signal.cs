@@ -1,4 +1,5 @@
-﻿using System;
+﻿using StockExchange.Business.Indicators.Common;
+using System;
 
 namespace StockExchange.Business.Models.Indicators
 {
@@ -10,18 +11,18 @@ namespace StockExchange.Business.Models.Indicators
         /// <summary>
         /// Creates a new instance of <see cref="Signal"/>
         /// </summary>
-        /// <param name="action">The action to take</param>
-        public Signal(SignalAction action)
+        public Signal()
         {
-            Action = action;
+
         }
 
         /// <summary>
         /// Creates a new instance of <see cref="Signal"/>
         /// </summary>
-        public Signal()
+        /// <param name="action">The action to take</param>
+        public Signal(SignalAction action)
         {
-
+            Action = action;
         }
 
         /// <summary>
@@ -35,9 +36,9 @@ namespace StockExchange.Business.Models.Indicators
         public DateTime Date { get; set; }
 
         /// <summary>
-        /// Indicator Id
+        /// Type of indicator which generated the signal
         /// </summary>
-        public int Indicator { get; set; }
+        public IndicatorType IndicatorType { get; set; }
 
     }
 }

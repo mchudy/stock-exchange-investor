@@ -109,24 +109,29 @@
                             </tbody>
                         </table>
                     </div>
-                    <div class="table-responsive col-md-4" style="padding-left: 0">
+                    <div class="table-responsive col-md-5" style="padding-left: 0">
                         <table class="table no-margin borderless">
                             <tbody>
                                 @{
-                                    string successes = Model.SuccessTransactionPercentage + "%";
-                                    string losses = Model.FailedTransactionPercentage + "%";
-                                    string keepStrategyProfit = (Model.KeepStrategyProfit / (double)Model.StartBudget * 100) + "%";
+                                    double keepStrategyProfit = (Model.KeepStrategyProfit/(double) Model.StartBudget*100);
                                     <tr>
                                         <td><label>Successful transactions</label></td>
-                                        <td><span class="text-success">@successes</span></td>
+                                        <td><span class="text-success">@Model.SuccessTransactionPercentage%</span></td>
                                     </tr>
                                     <tr>
                                         <td><label>Failed transactions</label></td>
-                                        <td><span class="text-danger">@losses</span></td>
+                                        <td><span class="text-danger">@Model.FailedTransactionPercentage%</span></td>
                                     </tr>
                                     <tr>
-                                        <td><label>Strategy Buy and Keep Result</label></td>
-                                        <td><span class="text-danger">@keepStrategyProfit</span></td>
+                                        <td><label>Buy and Keep strategy result</label></td>
+                                        @if (keepStrategyProfit <= 0)
+                                        {
+                                            <td><i class="fa fa-arrow-down icon-stock-down"></i><span class="text-danger">@(keepStrategyProfit + "%")</span></td>
+                                        }
+                                        else
+                                        {
+                                            <td><i class="fa fa-arrow-up icon-stock-up"></i><span class="text-success">@(keepStrategyProfit + "%")</span></td>
+                                        }
                                     </tr>
                                 }
                             </tbody>
@@ -140,7 +145,7 @@
                         <table class="table no-margin">
                             <thead>
                                 <tr>
-                                    <th>Company Name</th>
+                                    <th>Company name</th>
                                     <th>Quantity</th>
                                 </tr>
                             </thead>
@@ -163,7 +168,7 @@
         <div id="simulationlog-table-container">
             <div class="box box-info">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Transactions Log</h3>
+                    <h3 class="box-title">Transactions log</h3>
                 </div>
                 <div class="box-body">
                     <div class="table-responsive">
@@ -175,7 +180,7 @@
                                data-auto-width="false"
                                data-scroll-collapse="true"
                                data-processing="true"
-                               data-server-side="false" @*TODO*@>
+                               data-server-side="false">
                             <thead>
                                 <tr>
                                     <th data-column="date">@Html.DisplayNameFor(i => Model.TransactionsLog.FirstOrDefault().Date)</th>
@@ -204,7 +209,6 @@
 @section scripts
 {
     <script>
-        //TODO: this is a temporary solution, data should be loaded via AJAX and paged on the server
         var config = {
             transactionLogData: @Html.ToJsonString(Model.TransactionsLog.OrderBy(t => t.Date).Select(t => new
                                 {

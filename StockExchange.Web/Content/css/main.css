@@ -459,6 +459,14 @@
   font-size: 12px;
   margin-left: 5px;
 }
+.form-group .checkbox-multiline .icheckbox_flat {
+  vertical-align: top;
+}
+.form-group .checkbox-multiline label {
+  width: 90%;
+  text-align: left;
+  padding-top: 0;
+}
 .input-group .input-group-addon {
   border-radius: 0;
   border-color: #d2d6de;

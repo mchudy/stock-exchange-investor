@@ -31,36 +31,40 @@
                         @* Don't use nameof here (breaks CI build)!!! *@
                         @Html.DropDownList("Indicators", new SelectList(Model.Indicators, "Type", "Name"), " --- ", new {@class = "form-control indicator-select"})
                     </div>
-                    foreach (var indicator in Model.Indicators)
-                    {
-                        <fieldset data-id="@indicator.Type" class="@(indicator.IsSelected ? "" : "hidden") indicator form-group">
-                            <legend class="col-sm-12">@indicator.Name<a href="#" class="show-indicator-description">Show description</a><i class="fa fa-trash fa-pull-right remove-indicator"></i></legend>
-                            <div class="alert hidden indicator-description">
-                                @*<div>
-                                    <label>Description</label>
-                                    <div>@indicator.IndicatorDescription</div>
-                                </div>*@
-                                <div>
-                                    <label>Buy signal:</label>
-                                    <div>@indicator.BuySignalDescription</div>
-                                </div>
-                                <div>
-                                    <label>Sell signal:</label>
-                                    <div>@indicator.SellSignalDescription</div>
-                                </div>
-                            </div>
-                            @foreach (var property in indicator.Properties)
-                            {
-                                <div class="property form-group" data-name="@property.Name">
-                                    <label class="col-sm-4 control-label">@property.Name</label>
-                                    <div class="input-group col-sm-8">
-                                        @* ReSharper disable once UnknownCssClass *@
-                                        @Html.TextBox(property.Value.ToString(), property.Value.ToString(), new {@class = "property-value form-control"})
+                        foreach (var indicator in Model.Indicators)
+                        {
+                            <fieldset data-id="@indicator.Type" class="@(indicator.IsSelected ? "" : "hidden") indicator form-group">
+                                <legend class="col-sm-12">
+                                    @indicator.Name
+                                    <i class="fa fa-trash fa-pull-right remove-indicator"></i>
+                                    <a href="#" class="show-indicator-description pull-right">Show description</a>
+                                </legend>
+                                <div class="alert hidden indicator-description">
+                                    @*<div>
+                                            <label>Description</label>
+                                            <div>@indicator.IndicatorDescription</div>
+                                        </div>*@
+                                    <div>
+                                        <label>Buy signal:</label>
+                                        <div>@indicator.BuySignalDescription</div>
+                                    </div>
+                                    <div>
+                                        <label>Sell signal:</label>
+                                        <div>@indicator.SellSignalDescription</div>
                                     </div>
                                 </div>
-                            }
-                        </fieldset>
-                    }
+                                @foreach (var property in indicator.Properties)
+                                {
+                                    <div class="property form-group" data-name="@property.Name">
+                                        <label class="col-sm-4 control-label">@property.Name</label>
+                                        <div class="input-group col-sm-8">
+                                            @* ReSharper disable once UnknownCssClass *@
+                                            @Html.TextBox(property.Value.ToString(), property.Value.ToString(), new { @class = "property-value form-control" })
+                                        </div>
+                                    </div>
+                                }
+                            </fieldset>
+                        }
                     <div class="form-group">
                         <button class="btn btn-success pull-right edit-strategy" type="submit">@(Model.Id.HasValue ? "Save" : "Create")</button>
                     </div>

@@ -58,13 +58,21 @@ namespace StockExchange.Web.Controllers
                 return View(model);
             }
 
-            var ret = await _simulationService.RunSimulation(await ConvertViewModelToDto(model));
+            var results = await _simulationService.RunSimulation(await ConvertViewModelToDto(model));
+            var resultsModel = await BuildSimulationResultViewModel(model, results);
+            return View("Results", resultsModel);
+        }
+
+        private async Task<SimulationResultViewModel> BuildSimulationResultViewModel(SimulationViewModel model, SimulationResultDto ret)
+        {
             var ids = ret.CurrentCompanyQuantity.Keys.ToList();
             ids.AddRange(ret.TransactionsLog.Select(item => item.CompanyId));
             var companies = await _companyService.GetCompanies(ids);
-            return View("Results", new SimulationResultViewModel
+            return new SimulationResultViewModel
             {
-                CurrentCompanyQuantity = ret.CurrentCompanyQuantity.ToDictionary(item => companies.FirstOrDefault(x => x.Id == item.Key), item => item.Value),
+                CurrentCompanyQuantity =
+                    ret.CurrentCompanyQuantity.ToDictionary(item => companies.FirstOrDefault(x => x.Id == item.Key),
+                        item => item.Value),
                 TransactionsLog = ret.TransactionsLog.Select(item => new SimulationTransaction
                 {
                     Date = item.Date,
@@ -83,8 +91,8 @@ namespace StockExchange.Web.Controllers
                 MinimalSimulationValue = ret.MinimalSimulationValue,
                 SuccessTransactionPercentage = ret.TransactionStatistics.SuccessTransactionPercentage,
                 FailedTransactionPercentage = ret.TransactionStatistics.FailedTransactionPercentage,
-                KeepStrategyProfit = (double)ret.KeepStrategyProfit
-            });
+                KeepStrategyProfit = (double) ret.KeepStrategyProfit
+            };
         }
 
         private async Task<SimulationDto> ConvertViewModelToDto(SimulationViewModel viewModel)
@@ -101,8 +109,8 @@ namespace StockExchange.Web.Controllers
                 Budget = viewModel.Budget,
                 HasTransactionLimit = viewModel.HasTransactionLimit,
                 MaximalBudgetPerTransaction = viewModel.MaximalBudgetPerTransaction,
-                AndIndicators = viewModel.AndIndictaors,
-                IndicatorsDays = viewModel.daysLimitToAnd
+                AndIndicators = viewModel.AndIndicators,
+                IndicatorsDays = viewModel.SignalDaysPeriod
             };
         }
 
