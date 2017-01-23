@@ -69,7 +69,8 @@ namespace StockExchange.Business.Services
             var keepStrategyProfit = BuyAndKeepStrategyProfit(simulationDto, simulationResult, allPrices);
             simulationResult.SimulationTotalValue = simulationResult.CurrentCompanyQuantity.Sum(x =>
             {
-                var lastDayPrice = allPrices[x.Key].Prices.Where(item => item.Date <= simulationDto.EndDate)
+                var companyPricesDto = allPrices.FirstOrDefault(item => item.Company.Id == x.Key);
+                var lastDayPrice = companyPricesDto?.Prices.Where(item => item.Date <= simulationDto.EndDate)
                     .OrderByDescending(item => item.Date)
                     .FirstOrDefault();
                 if (lastDayPrice != null)

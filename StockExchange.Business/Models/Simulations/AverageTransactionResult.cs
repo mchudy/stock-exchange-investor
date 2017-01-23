@@ -14,7 +14,7 @@ namespace StockExchange.Business.Models.Simulations
         /// <param name="transactionCount">Transaction count</param>
         public AverageTransactionResult(decimal value, int transactionCount)
         {
-            Value = Math.Round(value/transactionCount, 2);
+            Value = transactionCount == 0 ? 0 : Math.Round(value / transactionCount, 2);
             TransactionCount = transactionCount;
         }
 

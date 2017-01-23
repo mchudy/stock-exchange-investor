@@ -38,7 +38,7 @@ namespace StockExchange.Business.Services
         /// <param name="priceService"></param>
         /// <param name="companyService"></param>
         /// <param name="cache"></param>
-        public IndicatorsService(IIndicatorFactory indicatorFactory, IPriceService priceService, 
+        public IndicatorsService(IIndicatorFactory indicatorFactory, IPriceService priceService,
             ICompanyService companyService, ICache cache)
         {
             _indicatorFactory = indicatorFactory;
@@ -149,7 +149,7 @@ namespace StockExchange.Business.Services
                 }
                 else
                 {
-                    CalculateSignalsForAndStrategy(endDate, indicators, daysLimitToAnd, prices, company, signalEvents);
+                    CalculateSignalsForAndStrategy(endDate, indicators, daysLimitToAnd, prices, company, signalEvents, startDate);
                 }
             }
             signalEvents.RemoveAll(item => item.CompaniesToBuy.Count == 0 && item.CompaniesToSell.Count == 0);
@@ -157,7 +157,7 @@ namespace StockExchange.Business.Services
         }
 
         private void CalculateSignalsForAndStrategy(DateTime endDate, IList<ParameterizedIndicator> indicators, int daysLimitToAnd, IList<Price> prices,
-            int company, List<SignalEvent> signalEvents)
+            int company, List<SignalEvent> signalEvents, DateTime startDate)
         {
             IList<Signal> signals = new List<Signal>();
             foreach (var indicator in indicators)
@@ -184,18 +184,21 @@ namespace StockExchange.Business.Services
                         $"Error when generating signals for company {company} and indicator {ind.Type}, end date {endDate}", e);
                 }
             }
-            foreach (var signal in signals)
+            var signalsInScope = signals.Where(item => item.Date >= startDate).OrderBy(item => item.Date).ToList();
+            foreach (var signal in signalsInScope)
             {
                 var signaEvent = signalEvents.FirstOrDefault(item => item.Date == signal.Date);
                 if (signaEvent == null) continue;
                 if (signal.Action == SignalAction.Buy && !signaEvent.CompaniesToBuy.Contains(company))
                 {
-                    if (GetSignalsCount(daysLimitToAnd, signals, signal, SignalAction.Buy) == indicators.Count)
+                    var signalsCount = GetSignalsCount(daysLimitToAnd, signalsInScope, signal, SignalAction.Buy);
+                    if (signalsCount == indicators.Count)
                         signaEvent.CompaniesToBuy.Add(company);
                 }
                 if (signal.Action == SignalAction.Sell && !signaEvent.CompaniesToSell.Contains(company))
                 {
-                    if (GetSignalsCount(daysLimitToAnd, signals, signal, SignalAction.Sell) == indicators.Count)
+                    var signalsCount = GetSignalsCount(daysLimitToAnd, signalsInScope, signal, SignalAction.Sell);
+                    if (signalsCount == indicators.Count)
                         signaEvent.CompaniesToSell.Add(company);
                 }
             }
@@ -234,7 +237,7 @@ namespace StockExchange.Business.Services
 
         //TODO: refactor cache usage
         /// <inheritdoc />
-        #pragma warning disable CS0618 // Type or member is obsolete, the queries are cached
+#pragma warning disable CS0618 // Type or member is obsolete, the queries are cached
         public async Task<PagedList<TodaySignal>> GetCurrentSignals(PagedFilterDefinition<TransactionFilter> message)
         {
             var allSignals = await _cache.Get<List<TodaySignal>>(CacheKeys.AllCurrentSignals);
@@ -248,7 +251,7 @@ namespace StockExchange.Business.Services
             await _cache.Set(CacheKeys.AllCurrentSignals, allSignals);
             return allSignals.ToPagedList(message.Start, message.Length);
         }
-        #pragma warning restore CS0618 // Type or member is obsolete, the queries are cached
+#pragma warning restore CS0618 // Type or member is obsolete, the queries are cached
 
         //TODO: refactor cache usage
         /// <inheritdoc />
@@ -295,7 +298,12 @@ namespace StockExchange.Business.Services
 
         private static int GetSignalsCount(int daysLimitToAnd, IList<Signal> signals, Signal signal, SignalAction action)
         {
-            return signals.Where(item => item.Date <= signal.Date && item.Date >= item.Date.AddDays(-daysLimitToAnd + 1) && item.Action == action)
+            var scope =
+                signals.Where(
+                    item =>
+                        item.Date <= signal.Date && item.Date >= item.Date.AddDays(-daysLimitToAnd + 1) &&
+                        item.Action == action).ToList();
+            return scope
                 .Select(item => item.IndicatorType)
                 .Distinct()
                 .Count();
