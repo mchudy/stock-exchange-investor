@@ -281,7 +281,7 @@ namespace StockExchange.Business.Services
 
         private static int GetSignalsCount(int daysLimitToAnd, IList<Signal> signals, Signal signal, SignalAction action)
         {
-            return signals.Where(item => item.Date >= signal.Date && item.Date <= item.Date.AddDays(daysLimitToAnd) && item.Action == action)
+            return signals.Where(item => item.Date <= signal.Date && item.Date >= item.Date.AddDays(-daysLimitToAnd + 1) && item.Action == action)
                 .Select(item => item.IndicatorType)
                 .Distinct()
                 .Count();
