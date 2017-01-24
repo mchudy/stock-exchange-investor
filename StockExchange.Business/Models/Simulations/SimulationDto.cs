@@ -47,5 +47,15 @@ namespace StockExchange.Business.Models.Simulations
         /// Indicates whether transaction limit is set. 
         /// </summary>
         public bool HasTransactionLimit { get; set; }
+
+        /// <summary>
+        /// Indicates whether indicators should be and or or
+        /// </summary>
+        public bool AndIndicators { get; set; }
+
+        /// <summary>
+        /// Indicates how many days can be between two indicators
+        /// </summary>
+        public int IndicatorsDays { get; set; }
     }
 }

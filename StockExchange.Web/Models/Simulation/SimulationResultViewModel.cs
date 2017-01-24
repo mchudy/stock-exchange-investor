@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
-using StockExchange.Business.Models.Company;
+﻿using StockExchange.Business.Models.Company;
 using StockExchange.Business.Models.Simulations;
+using System.Collections.Generic;
 
 namespace StockExchange.Web.Models.Simulation
 {
@@ -34,16 +34,20 @@ namespace StockExchange.Web.Models.Simulation
         /// </summary>
         public double PercentageProfit { get; set; }
 
+        /// <summary>
+        /// The profit achieved when using the "Buy and Keep" strategy
+        /// </summary>
+        public double KeepStrategyProfit { get; set; }
 
         /// <summary>
-        /// The maximal gain on a single transaction achieved during the simulation
+        /// The average gain on a single transaction achieved during the simulation
         /// </summary>
-        public ExtremeTransactionResult MaximalGainOnTransaction { get; set; }
+        public AverageTransactionResult AverageGainOnTransaction { get; set; }
 
         /// <summary>
-        /// The maximal loss on a single transaction achieved during the simulation
+        /// The average loss on a single transaction achieved during the simulation
         /// </summary>
-        public ExtremeTransactionResult MaximalLossOnTransaction { get; set; }
+        public AverageTransactionResult AverageLossOnTransaction { get; set; }
 
         /// <summary>
         /// The minimal simulation value achieved during the simulation

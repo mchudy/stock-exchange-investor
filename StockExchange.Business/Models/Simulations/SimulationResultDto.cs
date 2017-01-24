@@ -33,6 +33,11 @@ namespace StockExchange.Business.Models.Simulations
         public double PercentageProfit { get; set; }
 
         /// <summary>
+        /// The percentage profit at the end of the simulation
+        /// </summary>
+        public decimal KeepStrategyProfit { get; set; }
+
+        /// <summary>
         /// The minimal simulation value achieved during the simulation
         /// </summary>
         public ExtremeSimulationValue MinimalSimulationValue { get; set; }

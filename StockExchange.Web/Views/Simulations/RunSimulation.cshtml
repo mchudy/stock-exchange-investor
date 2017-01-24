@@ -90,6 +90,10 @@
                                     <option value="@group.Id" data-companies="@Html.ToJsonString(group.CompanyIds)">@group.Name</option>
                                 }
                             </select>
+                            <div>
+                                <br />
+                                <a href="#" class="select-all-group">Select all from the group</a>
+                            </div>
                         </div>
                         @*<div class="checkbox col-sm-8 col-sm-offset-4">
                             <div class="icheckbox_flat">
@@ -99,17 +103,33 @@
                         </div>*@
                     </div>
                     <div class="form-group has-feedback">
-                        <div class="checkbox col-sm-offset-4">
+                        <div class="checkbox checkbox-multiline col-sm-offset-4">
                             <div class="icheckbox_flat">
                                 @Html.CheckBoxFor(m => m.HasTransactionLimit)
                             </div>
                             @Html.LabelFor(m => m.HasTransactionLimit, new { @class = "control-label" })
                         </div>
                     </div>
-                    <div class="form-group has-feedback transactionLimit hidden">
+                    <div class="form-group has-feedback transactionLimit @(Model.HasTransactionLimit ? "" : "hidden")">
                         @Html.LabelFor(m => m.MaximalBudgetPerTransaction, new { @class = "col-sm-4 control-label" })
                         <div class="input-group col-sm-8">
                             @Html.TextBoxFor(m => m.MaximalBudgetPerTransaction, new { @class = "form-control", Value = Model.Budget })
+                            <span class="glyphicon form-control-feedback"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group has-feedback">
+                        <div class="checkbox checkbox-multiline col-sm-offset-4">
+                            <div class="icheckbox_flat">
+                                @Html.CheckBoxFor(m => m.AndIndicators)
+                            </div>
+                                @Html.LabelFor(m => m.AndIndicators, new { @class = "control-label" })
+                        </div>
+                    </div>
+                    <div class="form-group has-feedback indicatorsLimit @(Model.AndIndicators ? "" : "hidden")">
+                        @Html.LabelFor(m => m.SignalDaysPeriod, new { @class = "col-sm-4 control-label" })
+                        <div class="input-group col-sm-8">
+                            @Html.TextBoxFor(m => m.SignalDaysPeriod, new { @class = "form-control", Value = 3 })
                             <span class="glyphicon form-control-feedback"></span>
                         </div>
                     </div>

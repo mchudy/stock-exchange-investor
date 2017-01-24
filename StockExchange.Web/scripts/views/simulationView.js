@@ -24,6 +24,14 @@
         $companySelect.select2({
             placeholder: 'Choose companies'
         });
+    }).trigger('change');
+
+    $('.select-all-group').on('click', function(e) {
+        e.preventDefault();
+        var groupCompanies = $('.company-group-select').find(':selected').data('companies');
+        if (groupCompanies && groupCompanies.length > 0) {
+            $('.company-select').val(groupCompanies).trigger('change');
+        }
     });
 
     $("input[type='checkbox']").iCheck({
@@ -33,10 +41,29 @@
     $('#StartDate').datepicker();
     $('#EndDate').datepicker();
 
+    if ($('#HasTransactionLimit').prop('checked')) {
+        $('.transactionLimit').removeClass('hidden');
+    }
+
+    if ($('#AndIndicators').prop('checked')) {
+        $('.indicatorsLimit').removeClass('hidden');
+    }
+
     // Disable companies select when AllCompanies checkbox is checked
     $('#HasTransactionLimit')
-        .on('ifChecked ifUnchecked', function() {
-            $('.transactionLimit').toggleClass('hidden');
+        .on('ifChecked', function() {
+            $('.transactionLimit').removeClass('hidden');
+        })
+        .on('ifUnchecked', function () {
+            $('.transactionLimit').addClass('hidden');
+        });
+
+    $('#AndIndicators')
+        .on('ifChecked', function () {
+            $('.indicatorsLimit').removeClass('hidden');
+        })
+        .on('ifUnchecked', function () {
+            $('.indicatorsLimit').addClass('hidden');
         });
 
     // Disables button on submit to prevent multiple clicks

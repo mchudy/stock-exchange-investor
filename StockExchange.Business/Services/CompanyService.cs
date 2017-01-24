@@ -1,5 +1,4 @@
-﻿using StockExchange.Business.Extensions;
-using StockExchange.Business.Models.Company;
+﻿using StockExchange.Business.Models.Company;
 using StockExchange.Business.ServiceInterfaces;
 using StockExchange.DataAccess.IRepositories;
 using StockExchange.DataAccess.Models;
