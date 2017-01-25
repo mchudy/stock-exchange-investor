@@ -284,6 +284,8 @@ namespace StockExchange.Business.Services
                     IList<Signal> signals = new List<Signal>();
                     try
                     {
+                        if (prices.Count < indicator.RequiredPricesForSignalCount)
+                            continue;
                         signals = indicator.GenerateSignals(companyPrices);
                     }
                     catch (Exception ex)
