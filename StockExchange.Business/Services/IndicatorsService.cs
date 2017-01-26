@@ -392,7 +392,7 @@ namespace StockExchange.Business.Services
 
         private static IList<CompanyIndicatorValues> ComputeIndicatorValues(IIndicator indicator, IEnumerable<CompanyPricesDto> companyPrices)
         {
-            return (companyPrices.Select(company => new { company, values = company.Prices.Count < indicator.RequiredPricesForSignalCount ? indicator.Calculate(company.Prices) : new List<IndicatorValue>() })
+            return (companyPrices.Select(company => new { company, values = company.Prices.Count > indicator.RequiredPricesForSignalCount ? indicator.Calculate(company.Prices) : new List<IndicatorValue>() })
                 .Select(@t => new CompanyIndicatorValues
                 {
                     Company = @t.company.Company,
