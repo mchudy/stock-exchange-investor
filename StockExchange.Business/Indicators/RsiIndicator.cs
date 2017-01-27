@@ -79,12 +79,24 @@ namespace StockExchange.Business.Indicators
         {
             var values = Calculate(prices);
             var signals = new List<Signal>();
-            foreach (var indicatorValue in values)
+            bool overbuy = false;
+            bool oversell = false;
+            for (int i = 1; i < values.Count; i++)
             {
-                if (indicatorValue.Value > Maximum)
-                    signals.Add(new Signal(SignalAction.Sell) { Date = indicatorValue.Date });
-                else if (indicatorValue.Value < Minimum)
-                    signals.Add(new Signal(SignalAction.Buy) {Date = indicatorValue.Date});
+                if (overbuy && values[i - 1].Value >= Maximum && values[i].Value < Maximum)
+                {
+                    signals.Add(new Signal(SignalAction.Sell) {Date = values[i].Date});
+                    overbuy = false;
+                }
+                if (oversell && values[i - 1].Value <= Minimum && values[i].Value > Minimum)
+                {
+                    signals.Add(new Signal(SignalAction.Buy) { Date = values[i].Date });
+                    oversell = false;
+                }
+                if (values[i].Value >= Maximum)
+                    overbuy = true;
+                if (values[i].Value <= Minimum)
+                    oversell = true;
             }
             return signals;
         }
