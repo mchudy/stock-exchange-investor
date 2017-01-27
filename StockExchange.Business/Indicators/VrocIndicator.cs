@@ -8,6 +8,7 @@ namespace StockExchange.Business.Indicators
     /// <summary>
     /// Volume Rate of Change technical indicator
     /// </summary>
+    [StrategyIgnoreIndicator]
     [IndicatorDescription("Vroc")]
     public class VrocIndicator : IIndicator
     {

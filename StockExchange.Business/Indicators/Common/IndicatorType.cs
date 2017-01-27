@@ -22,6 +22,7 @@ namespace StockExchange.Business.Indicators.Common
         /// <summary>
         /// OBV technical indicator
         /// </summary>
+        [StrategyIgnoreIndicator]
         [Display(Name = "OBV (On-balance Volume)")]
         Obv = 3,
 
@@ -58,6 +59,7 @@ namespace StockExchange.Business.Indicators.Common
         /// <summary>
         /// VROC technical indicator
         /// </summary>
+        [StrategyIgnoreIndicator]
         [Display(Name = "VROC (Volume Rate of Change)")]
         Vroc = 9,
 

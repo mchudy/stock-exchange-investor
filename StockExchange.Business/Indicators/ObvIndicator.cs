@@ -8,6 +8,7 @@ namespace StockExchange.Business.Indicators
     /// <summary>
     /// OBV technical indicator
     /// </summary>
+    [StrategyIgnoreIndicator]
     [IndicatorDescription("Obv")]
     public class ObvIndicator : IIndicator
     {

@@ -65,6 +65,27 @@ namespace StockExchange.Business.Services
             }).ToList();
         }
 
+        /// <inheritdoc/>
+        public IList<IndicatorType> GetIndicatorTypesAvailableForStrategies()
+        {
+            var names = typeof(IndicatorType).GetFields()
+                .Where(f => f.GetCustomAttribute<StrategyIgnoreIndicator>() == null)
+                .Select(f => f.Name);
+            return typeof(IndicatorType).GetEnumValues()
+                .Cast<IndicatorType>()
+                .Where(i => names.Contains(Enum.GetName(typeof(IndicatorType), i))).ToList();
+        }
+
+        /// <inheritdoc/>
+        public IList<IndicatorDto> GetIndicatorsAvailableForStrategies()
+        {
+            return GetIndicatorTypesAvailableForStrategies().Select(x => new IndicatorDto()
+                {
+                    IndicatorType = x,
+                    IndicatorName = x.GetEnumDescription()
+                }).ToList();
+        }
+
         /// <inheritdoc />
         public IndicatorType? GetTypeFromName(string indicatorName)
         {

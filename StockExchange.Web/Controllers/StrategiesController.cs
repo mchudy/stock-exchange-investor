@@ -119,7 +119,7 @@ namespace StockExchange.Web.Controllers
         {
             var model = new EditStrategyViewModel
             {
-                Indicators = _indicatorsService.GetAllIndicators().Select(dto=>new EditIndicatorViewModel()
+                Indicators = _indicatorsService.GetIndicatorsAvailableForStrategies().Select(dto=>new EditIndicatorViewModel()
                 {
                     Name = dto.IndicatorName,
                     Type = dto.IndicatorType
