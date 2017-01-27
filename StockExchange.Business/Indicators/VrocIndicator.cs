@@ -50,17 +50,7 @@ namespace StockExchange.Business.Indicators
         /// <inheritdoc />
         public IList<Signal> GenerateSignals(IList<Price> prices)
         {
-            var signals = new List<Signal>();
-            var values = Calculate(prices);
-            var priceTrend = MovingAverageHelper.ExpotentialMovingAverage(prices, Term);
-            for (int i = Term; i < prices.Count; i++)
-            {
-                if (prices[i].ClosePrice > priceTrend[i - Term + 1].Value && priceTrend[i - Term].Value < priceTrend[i - Term + 1].Value && values[i - Term].Value < 0)
-                    signals.Add(new Signal(SignalAction.Buy) { Date = prices[i].Date });
-                else if (prices[i].ClosePrice < priceTrend[i - Term + 1].Value && priceTrend[i - Term].Value > priceTrend[i - Term + 1].Value && values[i - Term].Value > 0)
-                    signals.Add(new Signal(SignalAction.Sell) { Date = prices[i].Date });
-            }
-            return signals;
+            return new List<Signal>(); //throw exception?
         }
     }
 }
