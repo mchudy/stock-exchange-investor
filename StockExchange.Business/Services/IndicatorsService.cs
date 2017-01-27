@@ -146,8 +146,6 @@ namespace StockExchange.Business.Services
         }
 
         /// <inheritdoc />
-        //TODO: use a DTO instead of all these params!
-        //TODO: shorten this method
         public async Task<IList<SignalEvent>> GetSignals(DateTime startDate, DateTime endDate, IList<int> companiesIds, IList<ParameterizedIndicator> indicators, bool isAnd, int daysLimitToAnd)
         {
             var signalEvents = new List<SignalEvent>();
@@ -261,9 +259,7 @@ namespace StockExchange.Business.Services
             }
         }
 
-        //TODO: refactor cache usage
         /// <inheritdoc />
-#pragma warning disable CS0618 // Type or member is obsolete, the queries are cached
         public async Task<PagedList<TodaySignal>> GetCurrentSignals(PagedFilterDefinition<TransactionFilter> message)
         {
             var allSignals = await _cache.Get<List<TodaySignal>>(CacheKeys.AllCurrentSignals);
@@ -277,9 +273,7 @@ namespace StockExchange.Business.Services
             await _cache.Set(CacheKeys.AllCurrentSignals, allSignals);
             return allSignals.ToPagedList(message.Start, message.Length);
         }
-#pragma warning restore CS0618 // Type or member is obsolete, the queries are cached
 
-        //TODO: refactor cache usage
         /// <inheritdoc />
         public async Task<int> GetCurrentSignalsCount()
         {

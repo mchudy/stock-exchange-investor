@@ -45,10 +45,6 @@
         $('.transactionLimit').removeClass('hidden');
     }
 
-    if ($('#AndIndicators').prop('checked')) {
-        $('.indicatorsLimit').removeClass('hidden');
-    }
-
     // Disable companies select when AllCompanies checkbox is checked
     $('#HasTransactionLimit')
         .on('ifChecked', function() {
@@ -56,14 +52,6 @@
         })
         .on('ifUnchecked', function () {
             $('.transactionLimit').addClass('hidden');
-        });
-
-    $('#AndIndicators')
-        .on('ifChecked', function () {
-            $('.indicatorsLimit').removeClass('hidden');
-        })
-        .on('ifUnchecked', function () {
-            $('.indicatorsLimit').addClass('hidden');
         });
 
     // Disables button on submit to prevent multiple clicks

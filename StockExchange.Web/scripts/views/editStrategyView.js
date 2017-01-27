@@ -47,14 +47,17 @@
             });
             indicators.push(indicator);
         });
+        var data = {
+            id: config.strategyId,
+            name: $('.strategy-name').val(),
+            indicators: indicators,
+            isConjunctiveStrategy: $('#IsConjunctiveStrategy').prop('checked'),
+            signalDaysPeriod: $('#SignalDaysPeriod').val()
+        };
         $.ajax(config.createStrategyUrl, {
             type: 'POST',
             contentType: 'application/json',
-            data: JSON.stringify({
-                id: config.strategyId,
-                name: $('.strategy-name').val(),
-                indicators: indicators
-            })
+            data: JSON.stringify(data)
         })
         .done(function(response) {
             window.location = response.redirectUrl;
@@ -70,5 +73,21 @@
         var isHidden = $description.hasClass('hidden');
         $(this).text(isHidden ? 'Show description' : 'Hide description');
     });
+
+    $("input[type='checkbox']").iCheck({
+        checkboxClass: 'icheckbox_flat'
+    });
+
+    if ($('#IsConjunctiveStrategy').prop('checked')) {
+        $('.indicatorsLimit').removeClass('hidden');
+    }
+
+    $('#IsConjunctiveStrategy')
+        .on('ifChecked', function () {
+            $('.indicatorsLimit').removeClass('hidden');
+        })
+        .on('ifUnchecked', function () {
+            $('.indicatorsLimit').addClass('hidden');
+        });
 
 })(jQuery);

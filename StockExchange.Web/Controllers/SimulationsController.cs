@@ -109,8 +109,6 @@ namespace StockExchange.Web.Controllers
                 Budget = viewModel.Budget,
                 HasTransactionLimit = viewModel.HasTransactionLimit,
                 MaximalBudgetPerTransaction = viewModel.MaximalBudgetPerTransaction,
-                AndIndicators = viewModel.AndIndicators,
-                IndicatorsDays = viewModel.SignalDaysPeriod
             };
         }
 

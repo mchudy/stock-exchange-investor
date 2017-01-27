@@ -16,15 +16,31 @@
                 <div class="box-body col-sm-10 col-centered">
                     @using (Html.BeginForm("EditStrategy", "Strategies", null, FormMethod.Post, new {@class = "form-horizontal", id = "edit-strategy-form"}))
                     {
-                    <div class="form-group property has-feedback">
-                        <label class="col-sm-4 control-label">Strategy Name: </label>
-                        <div class="col-sm-8 input-group">
-                            @* ReSharper disable once UnknownCssClass *@
-                            @Html.TextBoxFor(m => m.Name, "", new {@class = "strategy-name form-control"})
-                            <span class="glyphicon form-control-feedback"></span>
-                            @Html.ValidationMessageFor(m => m.Name, null, new { @class = "help-block" })
+                        <div class="form-group property has-feedback">
+                            <label class="col-sm-4 control-label">Strategy Name: </label>
+                            <div class="col-sm-8 input-group">
+                                @* ReSharper disable once UnknownCssClass *@
+                                @Html.TextBoxFor(m => m.Name, "", new {@class = "strategy-name form-control"})
+                                <span class="glyphicon form-control-feedback"></span>
+                                @Html.ValidationMessageFor(m => m.Name, null, new { @class = "help-block" })
+                            </div>
                         </div>
-                    </div>
+                        <div class="form-group has-feedback">
+                            <div class="checkbox checkbox-multiline col-sm-offset-4">
+                                <div class="icheckbox_flat">
+                                    @Html.CheckBoxFor(m => m.IsConjunctiveStrategy)
+                                </div>
+                                @Html.LabelFor(m => m.IsConjunctiveStrategy, new { @class = "control-label" })
+                            </div>
+                        </div>
+                        <div class="form-group has-feedback indicatorsLimit @(Model.IsConjunctiveStrategy ? "" : "hidden")">
+                            @Html.LabelFor(m => m.SignalDaysPeriod, new { @class = "col-sm-4 control-label" })
+                            <div class="input-group col-sm-8">
+                                @Html.TextBoxFor(m => m.SignalDaysPeriod, new { @class = "form-control" })
+                                <span class="glyphicon form-control-feedback"></span>
+                                @Html.ValidationMessageFor(m => m.Name, null, new { @class = "help-block" })
+                            </div>
+                        </div>
                     <div class="form-group">
                         <label class="control-label">Add indicators: </label>
                         @* ReSharper disable once UnknownCssClass *@
@@ -80,7 +96,7 @@
     <script>
         var config = {
             createStrategyUrl: '@Url.Action("EditStrategy")',
-            strategyId : '@(Model.Id.HasValue ? Model.Id.ToString() : "null")'
+            strategyId : '@(Model.Id.HasValue ? Model.Id.ToString() : "")'
         };
     </script>
     @Scripts.Render("~/Scripts/Views/editStrategyView.js")

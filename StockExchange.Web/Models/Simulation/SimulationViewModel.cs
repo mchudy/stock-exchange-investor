@@ -82,18 +82,5 @@ namespace StockExchange.Web.Models.Simulation
         /// </summary>
         [Display(Name = "Transaction limit")]
         public bool HasTransactionLimit { get; set; }
-
-        /// <summary>
-        /// Indicates whether action should be taken only when all selected
-        /// indicators generated a signal
-        /// </summary>
-        [Display(Name = "Take action only when all indicators generate a signal")]
-        public bool AndIndicators { get; set; }
-
-        /// <summary>
-        /// Number of days in which all selected signals must occur
-        /// </summary>
-        [Display(Name = "Days Range")]
-        public int SignalDaysPeriod { get; set; }
     }
 }

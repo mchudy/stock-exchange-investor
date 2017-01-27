@@ -43,7 +43,8 @@ namespace StockExchange.Business.Services
                 Indicators = t.Indicators.Select(i => new ParameterizedIndicator
                 {
                     IndicatorType = (IndicatorType?) i.IndicatorType
-                }).ToList()
+                }).ToList(),
+                SignalDaysPeriod = t.SignalDaysPeriod
             }).ToList();
         }
 
@@ -59,6 +60,7 @@ namespace StockExchange.Business.Services
                 Name = ret.Name,
                 Id = ret.Id,
                 UserId = ret.UserId,
+                SignalDaysPeriod = ret.SignalDaysPeriod,
                 Indicators = _indicatorsService.ConvertIndicators(ret.Indicators)
             };
         }
@@ -81,7 +83,10 @@ namespace StockExchange.Business.Services
             var strategy = await _strategiesRepository.GetStrategy(dto.UserId, dto.Id);
             if(strategy == null)
                 throw new BusinessException("Strategy not found", ErrorStatus.DataNotFound);
+
             strategy.Name = dto.Name;
+            strategy.SignalDaysPeriod = dto.IsConjunctiveStrategy ? dto.SignalDaysPeriod : null;
+
             var toDelete = strategy.Indicators
                 .Where(i => dto.Indicators
                 .All(im => im.IndicatorType != (IndicatorType) i.IndicatorType))
@@ -120,6 +125,7 @@ namespace StockExchange.Business.Services
             {
                 UserId = strategy.UserId,
                 Name = strategy.Name,
+                SignalDaysPeriod = strategy.SignalDaysPeriod,
                 Indicators = new List<StrategyIndicator>()
             };
             foreach (var indicator in strategy.Indicators)

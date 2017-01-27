@@ -21,6 +21,20 @@ namespace StockExchange.Web.Models.Strategy
         public string Name { get; set; }
 
         /// <summary>
+        /// Indicates whether action should be taken only when all selected
+        /// indicators generated a signal
+        /// </summary>
+        [Display(Name = "Take action only when all indicators generate a signal")]
+        public bool IsConjunctiveStrategy { get; set; }
+
+        /// <summary>
+        /// Number of days in which all selected signals must occur
+        /// </summary>
+        [Display(Name = "Days range")]
+        [Range(1, int.MaxValue, ErrorMessage = "The value must be greater than 0")]
+        public int SignalDaysPeriod { get; set; } = 1;
+
+        /// <summary>
         /// Chosen indicators
         /// </summary>
         public IList<EditIndicatorViewModel> Indicators { get; set; } = new List<EditIndicatorViewModel>();

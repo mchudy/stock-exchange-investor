@@ -1,9 +1,8 @@
-﻿using System;
+﻿using StockExchange.Business.Models.Paging;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
-using StockExchange.Business.Models.Paging;
 
 namespace StockExchange.Business.Extensions
 {
@@ -40,7 +39,7 @@ namespace StockExchange.Business.Extensions
         /// <param name="skip">Number of items to skip</param>
         /// <param name="take">Number of items take</param>
         /// <returns>Paged collection</returns>
-        [Obsolete("Try to use IQueryable instead, this defeats the purpose of paging")]
+        //[Obsolete("Try to use IQueryable instead, this defeats the purpose of paging")]
         public static PagedList<T> ToPagedList<T>(this IEnumerable<T> queryable, int skip, int take)
         {
             var enumerable = queryable as IList<T> ?? queryable.ToList();

@@ -66,6 +66,10 @@ namespace StockExchange.Web.Controllers
             {
                 return JsonErrorResult("Strategy must have at least one indicator");
             }
+            if (!ModelState.IsValid)
+            {
+                return JsonErrorResult(ModelState);
+            }
             var dto = BuildCreateStrategyDto(model);
             int? id = model.Id;
             if (model.Id.HasValue)
@@ -110,7 +114,8 @@ namespace StockExchange.Web.Controllers
                             Name = p.Name,
                             Value = p.Value
                         }).ToList()
-                }).ToList()
+                }).ToList(),
+                SignalDaysPeriod = model.IsConjunctiveStrategy ? (int?)model.SignalDaysPeriod : null
             };
             return dto;
         }
@@ -123,7 +128,7 @@ namespace StockExchange.Web.Controllers
                 {
                     Name = dto.IndicatorName,
                     Type = dto.IndicatorType
-                }).ToList()
+                }).ToList(),
             };
             foreach (var indicator in model.Indicators)
             {
@@ -146,6 +151,8 @@ namespace StockExchange.Web.Controllers
         private async Task FillIndicatorValues(int? id, EditStrategyViewModel model)
         {
             var strategy = await _strategyService.GetStrategy(CurrentUserId, id.Value);
+            model.IsConjunctiveStrategy = strategy.IsConjunctiveStrategy;
+            model.SignalDaysPeriod = strategy.SignalDaysPeriod ?? 1;
             model.Name = strategy.Name;
             foreach (var parameterizedIndicator in strategy.Indicators.Where(t => t.IndicatorType.HasValue))
             {
