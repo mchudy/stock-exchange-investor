@@ -250,7 +250,7 @@ namespace StockExchange.Business.Indicators.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Occurs when RSI indicator value is less than Minimum property value..
+        ///   Looks up a localized string similar to Occurs when RSI indicator value crosses above Minimum property value..
         /// </summary>
         internal static string RsiBuySignal {
             get {
@@ -268,7 +268,7 @@ namespace StockExchange.Business.Indicators.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Occurs when RSI indicator value is greater than Maximum property value..
+        ///   Looks up a localized string similar to Occurs when RSI indicator value crosses below Maximum property value..
         /// </summary>
         internal static string RsiSellSignal {
             get {
