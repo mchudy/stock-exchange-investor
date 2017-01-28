@@ -46,16 +46,16 @@ namespace StockExchange.Business.Models.Simulations
         /// <summary>
         /// Indicates whether transaction limit is set. 
         /// </summary>
-        public bool HasTransactionLimit { get; set; }
+        public bool HasMaximalTransactionLimit { get; set; }
 
         /// <summary>
-        /// Indicates whether indicators should be and or or
+        /// Minimal budget for single buy transaction.
         /// </summary>
-        public bool AndIndicators { get; set; }
+        public decimal MinimalBudgetPerTransaction { get; set; }
 
         /// <summary>
-        /// Indicates how many days can be between two indicators
+        /// Indicates whether transaction limit is set. 
         /// </summary>
-        public int IndicatorsDays { get; set; }
+        public bool HasMinimalTransactionLimit { get; set; }
     }
 }

@@ -80,20 +80,19 @@ namespace StockExchange.Web.Models.Simulation
         /// <summary>
         /// Indicates whether transaction limit is defined
         /// </summary>
-        [Display(Name = "Transaction limit")]
-        public bool HasTransactionLimit { get; set; }
+        [Display(Name = "Maximal transaction limit")]
+        public bool HasMaximalTransactonLimit { get; set; }
 
         /// <summary>
-        /// Indicates whether action should be taken only when all selected
-        /// indicators generated a signal
+        /// Budget limit for a single buy transaction
         /// </summary>
-        [Display(Name = "Take action only when all indicators generate a signal")]
-        public bool AndIndicators { get; set; }
+        [Display(Name = "Transaction limit value")]
+        public decimal MinimalBudgetPerTransaction { get; set; }
 
         /// <summary>
-        /// Number of days in which all selected signals must occur
+        /// Indicates whether transaction limit is defined
         /// </summary>
-        [Display(Name = "Days Range")]
-        public int SignalDaysPeriod { get; set; }
+        [Display(Name = "Minimal transaction limit")]
+        public bool HasMinimalTransactionLimit { get; set; }
     }
 }

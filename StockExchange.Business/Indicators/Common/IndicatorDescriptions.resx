@@ -181,13 +181,13 @@
     <value>Occurs when ROC values are positive and prices trend values are falling</value>
   </data>
   <data name="RsiBuySignal" xml:space="preserve">
-    <value>Occurs when RSI indicator value is less than Minimum property value.</value>
+    <value>Occurs when RSI indicator value crosses above Minimum property value.</value>
   </data>
   <data name="RsiDescription" xml:space="preserve">
     <value>Relative Strength Index indicator</value>
   </data>
   <data name="RsiSellSignal" xml:space="preserve">
-    <value>Occurs when RSI indicator value is greater than Maximum property value.</value>
+    <value>Occurs when RSI indicator value crosses below Maximum property value.</value>
   </data>
   <data name="SmaBuySignal" xml:space="preserve">
     <value>Occurs when SMA values are growing and current close price is greater than SMA value</value>

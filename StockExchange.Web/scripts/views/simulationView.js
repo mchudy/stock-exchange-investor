@@ -41,29 +41,29 @@
     $('#StartDate').datepicker();
     $('#EndDate').datepicker();
 
-    if ($('#HasTransactionLimit').prop('checked')) {
+    if ($('#HasMaximalTransactonLimit').prop('checked')) {
         $('.transactionLimit').removeClass('hidden');
     }
 
-    if ($('#AndIndicators').prop('checked')) {
-        $('.indicatorsLimit').removeClass('hidden');
+    if ($('#HasMinimalTransactionLimit').prop('checked')) {
+        $('.minimalTransactionLimit').removeClass('hidden');
     }
 
-    // Disable companies select when AllCompanies checkbox is checked
-    $('#HasTransactionLimit')
+    $('#HasMinimalTransactionLimit')
+        .on('ifChecked', function () {
+            $('.minimalTransactionLimit').removeClass('hidden');
+        })
+        .on('ifUnchecked', function () {
+            $('.minimalTransactionLimit').addClass('hidden');
+        });
+
+
+    $('#HasMaximalTransactonLimit')
         .on('ifChecked', function() {
             $('.transactionLimit').removeClass('hidden');
         })
         .on('ifUnchecked', function () {
             $('.transactionLimit').addClass('hidden');
-        });
-
-    $('#AndIndicators')
-        .on('ifChecked', function () {
-            $('.indicatorsLimit').removeClass('hidden');
-        })
-        .on('ifUnchecked', function () {
-            $('.indicatorsLimit').addClass('hidden');
         });
 
     // Disables button on submit to prevent multiple clicks

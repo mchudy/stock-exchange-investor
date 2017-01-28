@@ -30,6 +30,12 @@ namespace StockExchange.DataAccess.Models
         public string Name { get; set; }
 
         /// <summary>
+        /// Number of days within all specified signals must occur to take action.
+        /// If null, any signal might generate a buy or sell transaction.
+        /// </summary>
+        public int? SignalDaysPeriod { get; set; }
+
+        /// <summary>
         /// Whether the strategy has been deleted
         /// </summary>
         public bool IsDeleted { get; set; }

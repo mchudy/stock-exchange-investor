@@ -1,14 +1,12 @@
-﻿using StockExchange.Business.Models.Indicators;
+﻿using StockExchange.Business.Exceptions;
+using StockExchange.Business.Models.Indicators;
 using StockExchange.Business.Models.Price;
 using StockExchange.Business.Models.Simulations;
 using StockExchange.Business.ServiceInterfaces;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity.Core.Metadata.Edm;
 using System.Linq;
 using System.Threading.Tasks;
-using StockExchange.Business.ErrorHandling;
-using StockExchange.Business.Exceptions;
 
 namespace StockExchange.Business.Services
 {
@@ -48,10 +46,10 @@ namespace StockExchange.Business.Services
             };
             var strategy = await _strategyService.GetStrategy(simulationDto.UserId, simulationDto.SelectedStrategyId);
             if (simulationDto.SelectedCompanyIds == null || !simulationDto.SelectedCompanyIds.Any())
-                throw new BusinessException("Empty Companies List");
+                throw new BusinessException("No companies were specified");
 
             var signalEvents = await _indicatorsService.GetSignals(simulationDto.StartDate, simulationDto.EndDate,
-                simulationDto.SelectedCompanyIds, strategy.Indicators, simulationDto.AndIndicators, simulationDto.IndicatorsDays);
+                simulationDto.SelectedCompanyIds, strategy.Indicators, strategy.IsConjunctiveStrategy, strategy.SignalDaysPeriod ?? 1);
 
             var allPrices = await _priceService.GetPrices(simulationDto.SelectedCompanyIds);
             foreach (var signalEvent in signalEvents.OrderBy(item => item.Date))
@@ -110,14 +108,21 @@ namespace StockExchange.Business.Services
         private static void HandleBuySignals(SimulationDto simulationDto, IList<CompanyPricesDto> allPrices, SignalEvent signalEvent,
             SimulationResultDto simulationResult)
         {
-            var prices = ConvertPrices(allPrices, signalEvent.CompaniesToBuy, signalEvent.Date)
-                .OrderByDescending(item => item.Value);
+            var prices = ConvertPrices(allPrices, signalEvent.CompaniesToBuy, signalEvent.Date);
+                //.OrderByDescending(item => item.Value);
             foreach (var price in prices)
             {
                 var value = simulationDto.Budget;
-                if (simulationDto.HasTransactionLimit)
+                if (simulationDto.HasMaximalTransactionLimit)
                     value = Math.Min(value, simulationDto.MaximalBudgetPerTransaction);
+                if (simulationDto.HasMinimalTransactionLimit)
+                {
+                    if(value < simulationDto.MinimalBudgetPerTransaction)
+                        continue; // not enough money
+                    value = Math.Max(value, simulationDto.MinimalBudgetPerTransaction);
+                }
                 if (value < price.Value) continue;
+
                 int quantity = (int)Math.Floor(value / price.Value);
                 var transaction = new SimulationTransactionDto
                 {
