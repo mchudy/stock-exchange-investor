@@ -43,13 +43,16 @@ namespace StockExchange.Business.Indicators
         {
             var signals = new List<Signal>();
             var values = Calculate(prices);
-            var trend = MovingAverageHelper.ExpotentialMovingAverage(prices, Term);
-            for (int i = Term; i < prices.Count - 1; i++)
+            for (int i = Term; i < prices.Count; i++)
             {
-                if (values[i - Term].Value < values[i - Term + 1].Value && trend[i - Term].Value < trend[i - Term + 1].Value)
-                    signals.Add(new Signal(SignalAction.Buy) { Date = values[i - Term + 1].Date });
-                if (values[i - Term].Value > values[i - Term + 1].Value && trend[i - Term].Value > trend[i - Term + 1].Value)
-                    signals.Add(new Signal(SignalAction.Sell) { Date = values[i - Term + 1].Date });
+                if (prices[i].ClosePrice > prices[i - 1].ClosePrice + values[i - Term].Value)
+                {
+                    signals.Add(new Signal(SignalAction.Buy) { Date = prices[i].Date });
+                }
+                if (prices[i].ClosePrice < prices[i - 1].ClosePrice - values[i - Term].Value)
+                {
+                    signals.Add(new Signal(SignalAction.Sell) { Date = prices[i].Date });
+                }
             }
             return signals;
         }
