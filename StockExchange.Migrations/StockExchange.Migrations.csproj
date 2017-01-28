@@ -167,6 +167,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Scripts\170127165529_Removing_OBV_and_VROC2.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Scripts\170128170443_Removing_VPT_VHF_Strategies.sql" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SlowCheetahTargets)" Condition="Exists('$(SlowCheetahTargets)')" Label="SlowCheetah" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
