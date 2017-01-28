@@ -108,8 +108,8 @@ namespace StockExchange.Business.Services
         private static void HandleBuySignals(SimulationDto simulationDto, IList<CompanyPricesDto> allPrices, SignalEvent signalEvent,
             SimulationResultDto simulationResult)
         {
-            var prices = ConvertPrices(allPrices, signalEvent.CompaniesToBuy, signalEvent.Date)
-                .OrderByDescending(item => item.Value);
+            var prices = ConvertPrices(allPrices, signalEvent.CompaniesToBuy, signalEvent.Date);
+                //.OrderByDescending(item => item.Value);
             foreach (var price in prices)
             {
                 var value = simulationDto.Budget;
