@@ -46,6 +46,16 @@ namespace StockExchange.Business.Models.Simulations
         /// <summary>
         /// Indicates whether transaction limit is set. 
         /// </summary>
-        public bool HasTransactionLimit { get; set; }
+        public bool HasMaximalTransactionLimit { get; set; }
+
+        /// <summary>
+        /// Minimal budget for single buy transaction.
+        /// </summary>
+        public decimal MinimalBudgetPerTransaction { get; set; }
+
+        /// <summary>
+        /// Indicates whether transaction limit is set. 
+        /// </summary>
+        public bool HasMinimalTransactionLimit { get; set; }
     }
 }

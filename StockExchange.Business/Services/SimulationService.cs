@@ -113,9 +113,16 @@ namespace StockExchange.Business.Services
             foreach (var price in prices)
             {
                 var value = simulationDto.Budget;
-                if (simulationDto.HasTransactionLimit)
+                if (simulationDto.HasMaximalTransactionLimit)
                     value = Math.Min(value, simulationDto.MaximalBudgetPerTransaction);
+                if (simulationDto.HasMinimalTransactionLimit)
+                {
+                    if(value < simulationDto.MinimalBudgetPerTransaction)
+                        continue; // not enough money
+                    value = Math.Max(value, simulationDto.MinimalBudgetPerTransaction);
+                }
                 if (value < price.Value) continue;
+
                 int quantity = (int)Math.Floor(value / price.Value);
                 var transaction = new SimulationTransactionDto
                 {

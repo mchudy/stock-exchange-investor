@@ -80,7 +80,19 @@ namespace StockExchange.Web.Models.Simulation
         /// <summary>
         /// Indicates whether transaction limit is defined
         /// </summary>
-        [Display(Name = "Transaction limit")]
-        public bool HasTransactionLimit { get; set; }
+        [Display(Name = "Maximal transaction limit")]
+        public bool HasMaximalTransactonLimit { get; set; }
+
+        /// <summary>
+        /// Budget limit for a single buy transaction
+        /// </summary>
+        [Display(Name = "Transaction limit value")]
+        public decimal MinimalBudgetPerTransaction { get; set; }
+
+        /// <summary>
+        /// Indicates whether transaction limit is defined
+        /// </summary>
+        [Display(Name = "Minimal transaction limit")]
+        public bool HasMinimalTransactionLimit { get; set; }
     }
 }

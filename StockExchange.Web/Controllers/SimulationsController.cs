@@ -107,8 +107,10 @@ namespace StockExchange.Web.Controllers
                     viewModel.SelectedCompanyIds,
                 UserId = CurrentUserId,
                 Budget = viewModel.Budget,
-                HasTransactionLimit = viewModel.HasTransactionLimit,
-                MaximalBudgetPerTransaction = viewModel.MaximalBudgetPerTransaction,
+                HasMaximalTransactionLimit = viewModel.HasMaximalTransactonLimit,
+                MaximalBudgetPerTransaction = viewModel.MinimalBudgetPerTransaction,
+                HasMinimalTransactionLimit = viewModel.HasMinimalTransactionLimit,
+                MinimalBudgetPerTransaction = viewModel.MinimalBudgetPerTransaction
             };
         }
 
