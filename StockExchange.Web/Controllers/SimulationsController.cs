@@ -108,7 +108,7 @@ namespace StockExchange.Web.Controllers
                 UserId = CurrentUserId,
                 Budget = viewModel.Budget,
                 HasMaximalTransactionLimit = viewModel.HasMaximalTransactonLimit,
-                MaximalBudgetPerTransaction = viewModel.MinimalBudgetPerTransaction,
+                MaximalBudgetPerTransaction = viewModel.MaximalBudgetPerTransaction,
                 HasMinimalTransactionLimit = viewModel.HasMinimalTransactionLimit,
                 MinimalBudgetPerTransaction = viewModel.MinimalBudgetPerTransaction
             };
