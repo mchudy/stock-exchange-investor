@@ -66,12 +66,14 @@ namespace StockExchange.Business.Indicators.Common
         /// <summary>
         /// VHF technical indicator
         /// </summary>
+        [StrategyIgnoreIndicator]
         [Display(Name = "VHF (Vertical Horizontal Filter)")]
         Vhf = 10,
 
         /// <summary>
         /// VPT technical indicator
         /// </summary>
+        [StrategyIgnoreIndicator]
         [Display(Name = "VPT (Volume Price Trend)")]
         Vpt = 11,
 
