@@ -62,6 +62,26 @@ namespace StockExchange.Business.Extensions
             return result ?? query;
         }
 
+        public static IEnumerable<TSource> OrderBy<TSource>(this IEnumerable<TSource> query, List<OrderBy> orderBys)
+        {
+            var first = true;
+            IOrderedQueryable<TSource> result = null;
+            if (orderBys == null) return query;
+            foreach (var orderBy in orderBys)
+            {
+                if (first)
+                {
+                    result = orderBy.Desc ? query.OrderByDescending(orderBy.Column) : query.OrderBy(orderBy.Column);
+                    first = false;
+                }
+                else
+                {
+                    result = orderBy.Desc ? result.ThenByDescending(orderBy.Column) : result.ThenBy(orderBy.Column);
+                }
+            }
+            return result ?? query;
+        }
+
         /// <summary>
         /// Orders the <paramref name="query"/> by the given property in ascending order
         /// </summary>
@@ -74,6 +94,11 @@ namespace StockExchange.Business.Extensions
             return OrderWithMethod(query, propertyName, "OrderBy", "ThenBy");
         }
 
+        public static IOrderedQueryable<TSource> OrderBy<TSource>(this IEnumerable<TSource> query, string propertyName)
+        {
+            return OrderWithMethod(query, propertyName, "OrderBy", "ThenBy");
+        }
+
         /// <summary>
         /// Orders the <paramref name="query"/> by the given property in descending order
         /// </summary>
@@ -82,6 +107,11 @@ namespace StockExchange.Business.Extensions
         /// <param name="propertyName">The name of property to order by</param>
         /// <returns>An ordered query</returns>
         public static IOrderedQueryable<TSource> OrderByDescending<TSource>(this IQueryable<TSource> query, string propertyName)
+        {
+            return OrderWithMethod(query, propertyName, "OrderByDescending", "ThenByDescending");
+        }
+
+        public static IOrderedQueryable<TSource> OrderByDescending<TSource>(this IEnumerable<TSource> query, string propertyName)
         {
             return OrderWithMethod(query, propertyName, "OrderByDescending", "ThenByDescending");
         }
@@ -167,6 +197,27 @@ namespace StockExchange.Business.Extensions
             return result;
         }
 
+        private static IOrderedQueryable<TSource> OrderWithMethod<TSource>(IEnumerable<TSource> query, string propertyName, string orderMethodName, string thenMethodName)
+        {
+            var sortOrder = AttributeHelper.GetPropertyAttribute<SortOrderAttribute>(typeof(TSource), propertyName);
+            if (sortOrder == null) return OrderBy(query, propertyName, orderMethodName);
+            IOrderedQueryable<TSource> result = null;
+            var first = true;
+            foreach (var order in sortOrder.Orders)
+            {
+                if (first)
+                {
+                    result = OrderBy(query, order, orderMethodName);
+                    first = false;
+                }
+                else
+                {
+                    result = OrderBy(result, order, thenMethodName);
+                }
+            }
+            return result;
+        }
+
         // ReSharper disable once SuggestBaseTypeForParameter
         private static IOrderedQueryable<TSource> OrderBy<TSource>(this IQueryable<TSource> query, string propertyName, string orderMethod)
         {
@@ -191,6 +242,32 @@ namespace StockExchange.Business.Extensions
                 selector = Expression.Lambda(property, arg);
             }
             return (IOrderedQueryable<TSource>)query.Provider.CreateQuery<TSource>(Expression.Call(typeof(Queryable), orderMethod, new[] { typeof(TSource), type }, query.Expression, Expression.Quote(selector)));
+        }
+
+        private static IOrderedQueryable<TSource> OrderBy<TSource>(this IEnumerable<TSource> query, string propertyName, string orderMethod)
+        {
+            var entityType = typeof(TSource);
+            var propertyInfo = entityType.GetProperty(propertyName);
+            if (propertyInfo == null) throw new ArgumentException();
+            var arg = Expression.Parameter(entityType, "x");
+            var property = Expression.Property(arg, propertyName);
+            var propertyType = Nullable.GetUnderlyingType(propertyInfo.PropertyType) ?? propertyInfo.PropertyType;
+            LambdaExpression selector;
+            Type type;
+            if (propertyType.IsEnum)
+            {
+                var toString = typeof(object).GetMethod("ToString");
+                var toStringValue = Expression.Call(property, toString);
+                type = typeof(string);
+                selector = Expression.Lambda(toStringValue, arg);
+            }
+            else
+            {
+                type = propertyInfo.PropertyType;
+                selector = Expression.Lambda(property, arg);
+            }
+            var query2 = query.AsQueryable();
+            return (IOrderedQueryable<TSource>)query2.Provider.CreateQuery<TSource>(Expression.Call(typeof(Queryable), orderMethod, new[] { typeof(TSource), type }, query2.Expression, Expression.Quote(selector)));
         }
 
         private static Expression GetWhereExpression(Type entityType, ParameterExpression parameter, string propertyName, string value)

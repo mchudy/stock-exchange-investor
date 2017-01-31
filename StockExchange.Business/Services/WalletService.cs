@@ -55,9 +55,14 @@ namespace StockExchange.Business.Services
         {
             var transactionsByCompany = await _transactionsService.GetTransactionsByCompany(currentUserId);
             var currentPrices = await _priceService.GetCurrentPrices(transactionsByCompany.Keys.Select(k => k.Id).ToList());
-            return transactionsByCompany
-                .Select(entry => BuildCompanyOwnedStocksDto(currentUserId, entry, currentPrices))
-                .ToPagedList(searchMessage.Start, searchMessage.Length);
+            var ret = transactionsByCompany.Select(entry => BuildCompanyOwnedStocksDto(currentUserId, entry, currentPrices));
+
+            if (!string.IsNullOrWhiteSpace(searchMessage.Search))
+                ret = ret.Where(item => item.CompanyName.Contains(searchMessage.Search.ToUpper()));
+
+            ret = ret.OrderBy(searchMessage.OrderBys);
+
+            return ret.ToPagedList(searchMessage.Start, searchMessage.Length);
         }
 
         private static OwnedCompanyStocksDto BuildCompanyOwnedStocksDto(int userId, KeyValuePair<Company, List<UserTransaction>> entry, IEnumerable<Price> currentPrices)
