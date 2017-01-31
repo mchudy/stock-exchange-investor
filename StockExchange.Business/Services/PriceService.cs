@@ -106,9 +106,15 @@ namespace StockExchange.Business.Services
                 var previousPrice = firstOrDefault.ClosePrice;
                 priceDto.Change = (priceDto.ClosePrice - previousPrice) / previousPrice * 100;
             }
-            return ret.OrderByDescending(item => item.Change)
-                .Where(item => item.Change > 0)
-                .ToPagedList(message.Start, message.Length);
+            ret = ret.OrderByDescending(item => item.Change)
+                .Where(item => item.Change > 0).ToList();
+
+            if (!string.IsNullOrWhiteSpace(message.Search))
+                ret = ret.Where(item => item.CompanyName.Contains(message.Search.ToUpper())).ToList();
+
+            ret = ret.OrderBy(message.OrderBys).ToList();
+
+            return ret.ToPagedList(message.Start, message.Length);
         }
 
         /// <inheritdoc />
@@ -131,9 +137,15 @@ namespace StockExchange.Business.Services
                 var previousPrice = firstOrDefault.ClosePrice;
                 priceDto.Change = (priceDto.ClosePrice - previousPrice) / previousPrice * 100;
             }
-            return ret.OrderBy(item => item.Change)
-                .Where(item => item.Change < 0)
-                .ToPagedList(message.Start, message.Length);
+            ret = ret.OrderBy(item => item.Change)
+                .Where(item => item.Change < 0).ToList();
+
+            if (!string.IsNullOrWhiteSpace(message.Search))
+                ret = ret.Where(item => item.CompanyName.Contains(message.Search.ToUpper())).ToList();
+
+            ret = ret.OrderBy(message.OrderBys).ToList();
+
+            return ret.ToPagedList(message.Start, message.Length);
         }
 
         /// <inheritdoc />
@@ -162,8 +174,14 @@ namespace StockExchange.Business.Services
                     priceDto.Change = 0;
                 }
             }
-            return ret.OrderByDescending(item => item.Volume).
-                ToPagedList(message.Start, message.Length);
+            ret = ret.OrderByDescending(item => item.Volume).ToList();
+
+            if (!string.IsNullOrWhiteSpace(message.Search))
+                ret = ret.Where(item => item.CompanyName.Contains(message.Search.ToUpper())).ToList();
+
+            ret = ret.OrderBy(message.OrderBys).ToList();
+
+            return ret.ToPagedList(message.Start, message.Length);
         }
 
         private async Task<IList<DateTime>> GetTwoMaxDates()
