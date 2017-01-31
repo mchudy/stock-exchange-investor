@@ -263,13 +263,8 @@ namespace StockExchange.Business.Services
         /// <inheritdoc />
         public async Task<PagedList<TodaySignal>> GetCurrentSignals(PagedFilterDefinition<TransactionFilter> message)
         {
-            var allSignals = await _cache.Get<List<TodaySignal>>(CacheKeys.AllCurrentSignals);
-            if (allSignals != null)
-            {
-                return allSignals.ToPagedList(message.Start, message.Length);
-            }
-
-            allSignals = await GetAllCurrentSignals();
+            var allSignals = await _cache.Get<List<TodaySignal>>(CacheKeys.AllCurrentSignals) ??
+                             await GetAllCurrentSignals();
 
             await _cache.Set(CacheKeys.AllCurrentSignals, allSignals);
 
