@@ -24,7 +24,7 @@ namespace StockExchange.Task.App.Commands
 
         public void Execute(IEnumerable<string> parameters)
         {
-            var startDate = DateTime.Now.AddDays(-1).Date;
+            var startDate = DateTime.Now.Date;
             var endDate = DateTime.Now.Date;
             Logger.Debug($"Synchronizing data from {startDate.ToShortDateString()}");
             _synchronizer.Sync(startDate, endDate);
