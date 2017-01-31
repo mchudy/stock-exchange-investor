@@ -12,6 +12,7 @@ using StockExchange.Common.Extensions;
 using StockExchange.DataAccess.Cache;
 using StockExchange.DataAccess.Models;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -80,10 +81,10 @@ namespace StockExchange.Business.Services
         public IList<IndicatorDto> GetIndicatorsAvailableForStrategies()
         {
             return GetIndicatorTypesAvailableForStrategies().Select(x => new IndicatorDto()
-                {
-                    IndicatorType = x,
-                    IndicatorName = x.GetEnumDescription()
-                }).ToList();
+            {
+                IndicatorType = x,
+                IndicatorName = x.GetEnumDescription()
+            }).ToList();
         }
 
         /// <inheritdoc />
@@ -271,6 +272,27 @@ namespace StockExchange.Business.Services
             allSignals = await GetAllCurrentSignals();
 
             await _cache.Set(CacheKeys.AllCurrentSignals, allSignals);
+
+            if (!string.IsNullOrWhiteSpace(message.Search))
+                allSignals = allSignals.Where(item => item.Company.Contains(message.Search.ToUpper())).ToList();
+
+            var first = true;
+            if (message.OrderBys == null) return allSignals.ToPagedList(message.Start, message.Length);
+
+            foreach (var orderBy in message.OrderBys)
+            {
+                if (!first) continue;
+                if (orderBy.Column == "Indicator")
+                    allSignals = orderBy.Desc ? allSignals.OrderByDescending(item => item.Indicator.Split(',').Length).ThenBy(item => item.Indicator).ThenBy(item => item.Company).ThenBy(item => item.Action).ToList()
+                        : allSignals.OrderBy(item => item.Indicator.Split(',').Length).ThenBy(item => item.Indicator).ThenBy(item => item.Company).ThenBy(item => item.Action).ToList();
+                if (orderBy.Column == "Company")
+                    allSignals = orderBy.Desc ? allSignals.OrderByDescending(item => item.Company).ToList() : allSignals.OrderBy(item => item.Company).ToList();
+                if (orderBy.Column == "Action")
+                    allSignals = orderBy.Desc ? allSignals.OrderByDescending(item => item.Action).ThenByDescending(item => item.Indicator.Split(',').Length).ThenBy(item => item.Indicator).ThenBy(item => item.Company).ToList()
+                        : allSignals.OrderBy(item => item.Action).ThenByDescending(item => item.Indicator.Split(',').Length).ThenBy(item => item.Indicator).ThenBy(item => item.Company).ToList();
+                first = false;
+            }
+
             return allSignals.ToPagedList(message.Start, message.Length);
         }
 
