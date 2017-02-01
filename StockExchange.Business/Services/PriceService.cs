@@ -168,10 +168,12 @@ namespace StockExchange.Business.Services
                 {
                     var previousPrice = firstOrDefault.ClosePrice;
                     priceDto.Change = (priceDto.ClosePrice - previousPrice) / previousPrice * 100;
+                    priceDto.Turnover = priceDto.ClosePrice*priceDto.Volume;
                 }
                 else
                 {
                     priceDto.Change = 0;
+                    priceDto.Turnover = priceDto.ClosePrice * priceDto.Volume;
                 }
             }
             ret = ret.OrderByDescending(item => item.Volume).ToList();
