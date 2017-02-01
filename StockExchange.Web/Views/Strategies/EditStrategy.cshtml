@@ -42,7 +42,7 @@
                             </div>
                         </div>
                     <div class="form-group">
-                        <label class="control-label">Add indicators: </label>
+                        <label class="control-label">Add indicators (You can choose multiple): </label>
                         @* ReSharper disable once UnknownCssClass *@
                         @* Don't use nameof here (breaks CI build)!!! *@
                         @Html.DropDownList("Indicators", new SelectList(Model.Indicators, "Type", "Name"), " --- ", new {@class = "form-control indicator-select"})
