@@ -60,4 +60,16 @@ jQuery.extend(jQuery.fn.dataTableExt.oSort, {
         responsive: true
     });
 
+    var $transactionLogTable2 = $('#simulation-transactions2-grid');
+
+    var columns2 = $('th', $transactionLogTable2).DataTableColumns();
+
+    $transactionLogTable2.DataTable({
+        data: config.transactionLogData2,
+        deferRender: true,
+        columns: columns2,
+       
+        responsive: true
+    });
+
 })(jQuery);

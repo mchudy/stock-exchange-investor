@@ -11,6 +11,8 @@
     <div class="col-sm-6">
         <div id="simulationresult-table-container">
             <div class="box box-info">
+
+
                 <div class="box-header with-border">
                     <h3 class="box-title">Results</h3>
                 </div>
@@ -27,7 +29,7 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>Your Strategy</td>
+                                    <th>Your Strategy</th>
                                     <td>@Model.StartBudget</td>
                                     <td>@Model.TotalSimulationValue</td>
                                     <td>
@@ -45,9 +47,9 @@
                                 </tr>
                                 <tr>
                                     @{
-                                        <td>Buy and Keep Strategy</td>
+                                        <th>Buy and Keep Strategy</th>
                                         <td>@Model.StartBudget</td>
-                                        <td>@Model.KeepStrategyProfit</td>
+                                        <td>@Model.KeepStrategyProfit.ToString("0.00")</td>
 
                                         double keepStrategyProfit = (Model.KeepStrategyProfit - (double)Model.StartBudget) / (double)Model.StartBudget * 100;
                                         if (keepStrategyProfit <= 0)
@@ -66,7 +68,9 @@
                     </div>
 
 
-
+                    <div class="box-header with-border">
+                        <h4 class="box-title">Your Strategy Stats</h4>
+                    </div>
                     <div class="table-responsive">
                         <table class="table no-margin">
                             <thead>
@@ -107,11 +111,11 @@
                             </tbody>
                         </table>
                     </div>
+
                     <div class="table-responsive col-md-5" style="padding-left: 0">
                         <table class="table no-margin borderless">
                             <tbody>
                                 @{
-
                                     <tr>
                                         <td><label>Average gain on transaction</label></td>
                                         <td><span class="text-success">@(Model.AverageGainOnTransaction?.Value ?? 0) PLN</span></td>
@@ -128,39 +132,61 @@
                                         <td><label>Failed transactions</label></td>
                                         <td><span class="text-danger">@Model.FailedTransactionPercentage%</span></td>
                                     </tr>
-
                                 }
                             </tbody>
                         </table>
                     </div>
                     <div class="clearfix"></div>
-                    <div class="box-header with-border">
-                        <h5>Stocks owned after simulation</h5>
-                    </div>
-                    <div class="table-responsive">
-                        <table class="table no-margin">
-                            <thead>
-                                <tr>
-                                    <th>Company name</th>
-                                    <th>Quantity</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var transaction in Model.CurrentCompanyQuantity)
-                                {
-                                    <tr>
-                                        <td>@transaction.Key.Code</td>
-                                        <td>@transaction.Value</td>
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
-                    </div>
                 </div>
             </div>
         </div>
+
+
+
+        <div>
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <h5>Stocks owned after simulation</h5>
+                </div>
+
+                <div class="box-body">
+                    <div class="table-responsive">
+                        <table id="simulation-transactions2-grid" class="table table-hover table-stripe"
+                               data-length-menu="[15, 25, 50, 100]"
+                               data-page-length="25"
+                               data-ordering="true"
+                               data-searching="true"
+                               data-auto-width="false"
+                               data-scroll-collapse="true"
+                               data-processing="true"
+                               data-server-side="false">
+                            <thead>
+                                <tr>
+                                    <th data-column="companyName">@Html.DisplayNameFor(i => Model.CurrentCompanyQuantity.FirstOrDefault().CompanyName)</th>
+                                    <th data-column="ownedStocksCount">@Html.DisplayNameFor(i => Model.CurrentCompanyQuantity.FirstOrDefault().OwnedStocksCount)</th>
+                                    <th data-column="currentPrice">@Html.DisplayNameFor(i => Model.CurrentCompanyQuantity.FirstOrDefault().CurrentPrice)</th>
+                                    <th data-column="currentValue">@Html.DisplayNameFor(i => Model.CurrentCompanyQuantity.FirstOrDefault().CurrentValue)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td colspan="4">
+                                        <span>No data found...</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
     </div>
-    <div class="col-sm-5">
+
+
+
+    <div class="col-sm-6">
         <div id="simulationlog-table-container">
             <div class="box box-info">
                 <div class="box-header with-border">
@@ -200,7 +226,12 @@
             </div>
         </div>
     </div>
+
+
+
+
 </div>
+
 
 @section scripts
 {
@@ -214,7 +245,15 @@
                                     t.Quantity,
                                     Action = t.Action.ToString(),
                                     BudgetAfter = t.BudgetAfter.ToString("0.00")
-                                }))
+                                })),
+            transactionLogData2:
+                @Html.ToJsonString(Model.CurrentCompanyQuantity.OrderBy(t => t.CompanyName).Select(t => new
+                            {
+                                t.CompanyName,
+                                OwnedStocksCount = t.OwnedStocksCount.ToString(),
+                                CurrentPrice = t.CurrentPrice.ToString("0.00"),
+                                CurrentValue = t.CurrentValue.ToString("0.00")
+                            }))
             };
     </script>
 
