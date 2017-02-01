@@ -69,17 +69,6 @@
                             @Html.ValidationMessageFor(m => m.Budget, null, new { @class = "help-block" })
                         </div>
                     </div>
-
-                    <div class="form-group has-feedback">
-                        @Html.LabelFor(m => m.Companies, new { @class = "col-sm-4 control-label" })
-                        <div class="col-sm-8 input-group">
-                            @* ReSharper disable once UnknownCssClass *@
-                            @Html.DropDownListFor(m => m.SelectedCompanyIds, new MultiSelectList(Model.Companies, "Id", "Name"),
-                                new { @class = "form-control company-select", multiple = "" })
-                            <span class="glyphicon form-control-feedback"></span>
-                            @Html.ValidationMessageFor(m => m.SelectedCompanyIds, null, new { @class = "help-block" })
-                        </div>
-                    </div>
                     <div class="form-group">
                         @Html.LabelFor(m => m.CompanyGroups, new { @class = "col-sm-4 control-label" })
                         <div class="col-sm-8 input-group">
@@ -96,12 +85,23 @@
                             </div>
                         </div>
                         @*<div class="checkbox col-sm-8 col-sm-offset-4">
-                            <div class="icheckbox_flat">
-                                @Html.CheckBoxFor(m => m.AllCompanies)
-                            </div>
-                            @Html.LabelFor(m => m.AllCompanies, new { @class = "control-label" })
-                        </div>*@
+                                <div class="icheckbox_flat">
+                                    @Html.CheckBoxFor(m => m.AllCompanies)
+                                </div>
+                                @Html.LabelFor(m => m.AllCompanies, new { @class = "control-label" })
+                            </div>*@
                     </div>
+                    <div class="form-group has-feedback">
+                        @Html.LabelFor(m => m.Companies, new { @class = "col-sm-4 control-label" })
+                        <div class="col-sm-8 input-group">
+                            @* ReSharper disable once UnknownCssClass *@
+                            @Html.DropDownListFor(m => m.SelectedCompanyIds, new MultiSelectList(Model.Companies, "Id", "Name"),
+                                new { @class = "form-control company-select", multiple = "" })
+                            <span class="glyphicon form-control-feedback"></span>
+                            @Html.ValidationMessageFor(m => m.SelectedCompanyIds, null, new { @class = "help-block" })
+                        </div>
+                    </div>
+                   
                     <div class="form-group has-feedback">
                         <div class="checkbox checkbox-multiline col-sm-offset-4">
                             <div class="icheckbox_flat">

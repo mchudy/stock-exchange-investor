@@ -24,12 +24,6 @@
         </div>
         <br>
         <div class="form-group">
-            <label>Companies</label>
-            @Html.DropDownList("selectedCompanies", new MultiSelectList(Model.Companies, "Id", "Name",
-                new List<int> { Model.Companies.FirstOrDefault()?.Id ?? 0 }),
-                new { @class = "form-control company-select", multiple = "" })
-        </div>
-        <div class="form-group">
             <label>Company group</label>
             <select class="form-control company-group-select">
                 <option>Select company group</option>
@@ -39,6 +33,14 @@
                 }
             </select>
         </div>
+
+        <div class="form-group">
+            <label>Companies</label>
+            @Html.DropDownList("selectedCompanies", new MultiSelectList(Model.Companies, "Id", "Name",
+                new List<int> { Model.Companies.FirstOrDefault()?.Id ?? 0 }),
+                new { @class = "form-control company-select", multiple = "" })
+        </div>
+
         <div class="form-group">
             <label>Indicator</label>
             @Html.DropDownList("Indicators", new SelectList(Model.Indicators, "Type", "Name"), "Select indicator",
@@ -52,7 +54,7 @@
                     <div class="indicator-property form-group" data-name="@property.Name" style="margin-right: 0;">
                         <label class="col-sm-6 control-label">@property.Name</label>
                         <div class="input-group col-sm-6">
-                            @Html.TextBox(property.Value.ToString(), property.Value.ToString(), new { @class = "property-value form-control", type="number" })
+                            @Html.TextBox(property.Value.ToString(), property.Value.ToString(), new { @class = "property-value form-control", type = "number" })
                         </div>
                     </div>
                 }
