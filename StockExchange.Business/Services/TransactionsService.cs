@@ -47,8 +47,8 @@ namespace StockExchange.Business.Services
                     Total = t.Quantity < 0 ? -t.Quantity * t.Price : t.Quantity * t.Price,
                     Profit = 0
                 }).ToList();
-            var pagedTransactions = transactions.ToPagedList(filter.Start, filter.Length);
-            foreach (var pagedTransaction in pagedTransactions.List)
+
+            foreach (var pagedTransaction in transactions)
             {
                 if (pagedTransaction.Action == Action.Buy) continue;
                 var pastTransactions = transactions
@@ -72,7 +72,14 @@ namespace StockExchange.Business.Services
                 }
                 pagedTransaction.Profit = pagedTransaction.Quantity * (pagedTransaction.Price - price);
             }
-            return pagedTransactions;
+
+
+            if (!string.IsNullOrWhiteSpace(filter.Search))
+                transactions = transactions.Where(item => item.CompanyName.Contains(filter.Search.ToUpper())).ToList();
+
+            transactions = transactions.OrderBy(filter.OrderBys).ToList();
+
+            return transactions.ToPagedList(filter.Start, filter.Length);
         }
 
         /// <inheritdoc />

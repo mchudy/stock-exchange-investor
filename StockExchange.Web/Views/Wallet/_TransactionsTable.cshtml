@@ -7,13 +7,15 @@
     <div class="box-body">
         <div class="table-responsive">
             <table id="grid" class="table table-hover table-stripe"
-                   data-ordering="false"
-                   data-searching="false"
+              
+                   data-length-menu="[10, 20, 30, 40]"
+                   data-page-length="10"
+                   data-ordering="true"
+                   data-searching="true"
                    data-auto-width="false"
                    data-scroll-collapse="true"
                    data-processing="true"
                    data-server-side="true"
-                   data-length-change="false"
                    data-ajax-url="@Url.Action("GetTransactionsTable")">
                 <thead>
                 <tr>

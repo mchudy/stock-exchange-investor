@@ -62,6 +62,7 @@
                 return StockExchange.getPriceWithIconHtml(data, full.Action === 'Buy');
             }
         }, {
+            orderable: false,
             targets: $('#grid th.delete-column').index(),
             render: function (data, type, full) {
                 var url = deleteTransactionUrl + '/' + full.Id;
