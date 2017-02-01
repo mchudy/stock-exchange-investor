@@ -101,7 +101,7 @@ namespace StockExchange.Business.Services
                 var quantity = (int)Math.Floor(budgetPerCompany / startDayPrice.ClosePrice);
                 budget += quantity * (endDatePrice.ClosePrice - startDayPrice.ClosePrice);
             }
-            var keepStrategyProfit = budget - simulationResult.StartBudget;
+            var keepStrategyProfit = budget;
             return keepStrategyProfit;
         }
 

@@ -1,6 +1,5 @@
 ﻿@using System.Globalization
 @using System.Web.Optimization
-@using StockExchange.Common.Extensions
 @using StockExchange.Web.Helpers
 @model StockExchange.Web.Models.Simulation.SimulationResultViewModel
 
@@ -20,6 +19,7 @@
                         <table class="table no-margin">
                             <thead>
                                 <tr>
+                                    <th></th>
                                     <th>Start budget</th>
                                     <th>Total simulation value</th>
                                     <th>Percentage profit</th>
@@ -27,24 +27,46 @@
                             </thead>
                             <tbody>
                                 <tr>
+                                    <td>Your Strategy</td>
                                     <td>@Model.StartBudget</td>
                                     <td>@Model.TotalSimulationValue</td>
                                     <td>
                                         @if (@Model.PercentageProfit > 0)
                                         {
-                                        <i class="fa fa-arrow-up icon-stock-up"></i>
-                                        <span class="text-success">@Model.PercentageProfit%</span>
+                                            <i class="fa fa-arrow-up icon-stock-up"></i>
+                                            <span class="text-success">@Model.PercentageProfit%</span>
                                         }
                                         else
                                         {
-                                        <i class="fa fa-arrow-down icon-stock-down"></i>
-                                        <span class="text-danger">@Model.PercentageProfit%</span>
+                                            <i class="fa fa-arrow-down icon-stock-down"></i>
+                                            <span class="text-danger">@Model.PercentageProfit%</span>
                                         }
                                     </td>
+                                </tr>
+                                <tr>
+                                    @{
+                                        <td>Buy and Keep Strategy</td>
+                                        <td>@Model.StartBudget</td>
+                                        <td>@Model.KeepStrategyProfit</td>
+
+                                        double keepStrategyProfit = (Model.KeepStrategyProfit - (double)Model.StartBudget) / (double)Model.StartBudget * 100;
+                                        if (keepStrategyProfit <= 0)
+                                        {
+                                            <td><i class="fa fa-arrow-down icon-stock-down"></i><span class="text-danger">@(keepStrategyProfit.ToString("0.00") + "%")</span></td>
+                                        }
+                                        else
+                                        {
+                                            <td><i class="fa fa-arrow-up icon-stock-up"></i><span class="text-success">@(keepStrategyProfit.ToString("0.00") + "%")</span></td>
+                                        }
+
+                                    }
                                 </tr>
                             </tbody>
                         </table>
                     </div>
+
+
+
                     <div class="table-responsive">
                         <table class="table no-margin">
                             <thead>
@@ -89,7 +111,7 @@
                         <table class="table no-margin borderless">
                             <tbody>
                                 @{
-                                    double keepStrategyProfit = (Model.KeepStrategyProfit/(double) Model.StartBudget*100);
+
                                     <tr>
                                         <td><label>Average gain on transaction</label></td>
                                         <td><span class="text-success">@(Model.AverageGainOnTransaction?.Value ?? 0) PLN</span></td>
@@ -98,25 +120,15 @@
                                         <td><label>Average loss on transaction</label></td>
                                         <td><span class="text-danger">@(Model.AverageLossOnTransaction?.Value ?? 0) PLN</span></td>
                                     </tr>
-                                <tr>
-                                    <td><label>Successful transactions</label></td>
-                                    <td><span class="text-success">@Model.SuccessTransactionPercentage%</span></td>
-                                </tr>
-                                <tr>
-                                    <td><label>Failed transactions</label></td>
-                                    <td><span class="text-danger">@Model.FailedTransactionPercentage%</span></td>
-                                </tr>
-                                <tr>
-                                    <td><label>Buy and Keep strategy result</label></td>
-                                    @if (keepStrategyProfit <= 0)
-                                        {
-                                        <td><i class="fa fa-arrow-down icon-stock-down"></i><span class="text-danger">@(keepStrategyProfit + "%")</span></td>
-                                        }
-                                        else
-                                        {
-                                        <td><i class="fa fa-arrow-up icon-stock-up"></i><span class="text-success">@(keepStrategyProfit + "%")</span></td>
-                                        }
-                                </tr>
+                                    <tr>
+                                        <td><label>Successful transactions</label></td>
+                                        <td><span class="text-success">@Model.SuccessTransactionPercentage%</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><label>Failed transactions</label></td>
+                                        <td><span class="text-danger">@Model.FailedTransactionPercentage%</span></td>
+                                    </tr>
+
                                 }
                             </tbody>
                         </table>
@@ -157,10 +169,10 @@
                 <div class="box-body">
                     <div class="table-responsive">
                         <table id="simulation-transactions-grid" class="table table-hover table-stripe"
-                               data-length-menu="[15, 25, 50]"
-                               data-page-length="15"
-                               data-ordering="false"
-                               data-searching="false"
+                               data-length-menu="[15, 25, 50, 100]"
+                               data-page-length="25"
+                               data-ordering="true"
+                               data-searching="true"
                                data-auto-width="false"
                                data-scroll-collapse="true"
                                data-processing="true"
