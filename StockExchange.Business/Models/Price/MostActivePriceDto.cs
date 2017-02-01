@@ -30,6 +30,13 @@ namespace StockExchange.Business.Models.Price
         public int Volume { get; set; }
 
         /// <summary>
+        /// The total number of transaction concluded during the day
+        /// </summary>
+        [DisplayFormat(DataFormatString = Consts.Formats.Integer)]
+        [Display(Name = "Turnover (PLN)")]
+        public decimal Turnover { get; set; }
+
+        /// <summary>
         /// The change in volume 
         /// </summary>
         [DisplayFormat(DataFormatString = Consts.Formats.Currency)]

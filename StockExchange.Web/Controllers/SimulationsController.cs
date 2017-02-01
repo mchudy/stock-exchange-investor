@@ -70,9 +70,8 @@ namespace StockExchange.Web.Controllers
             var companies = await _companyService.GetCompanies(ids);
             return new SimulationResultViewModel
             {
-                CurrentCompanyQuantity =
-                    ret.CurrentCompanyQuantity.ToDictionary(item => companies.FirstOrDefault(x => x.Id == item.Key),
-                        item => item.Value),
+                CurrentCompanyQuantity = ret.CurrentCompanies
+                  ,
                 TransactionsLog = ret.TransactionsLog.Select(item => new SimulationTransaction
                 {
                     Date = item.Date,

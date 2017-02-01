@@ -1,6 +1,7 @@
 ﻿using StockExchange.Business.Models.Company;
 using StockExchange.Business.Models.Simulations;
 using System.Collections.Generic;
+using StockExchange.Business.Models.Wallet;
 
 namespace StockExchange.Web.Models.Simulation
 {
@@ -17,7 +18,8 @@ namespace StockExchange.Web.Models.Simulation
         /// <summary>
         /// Number of stocks owned at the end of the simulation
         /// </summary>
-        public Dictionary<CompanyDto, int> CurrentCompanyQuantity { get; set; }
+        public IList<OwnedCompanyStocksDto> CurrentCompanyQuantity { get; set; }
+
 
         /// <summary>
         /// The start budget

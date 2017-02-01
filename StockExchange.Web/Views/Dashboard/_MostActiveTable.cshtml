@@ -7,7 +7,7 @@
     <div class="box-body">
         <div class="table-responsive">
             <table id="most-grid" class="table table-hover table-stripe"
-                    data-order='[[3, "desc"]]'
+                    data-order='[[4, "desc"]]'
                    data-length-menu="[10, 20, 30, 40]"
                    data-page-length="10"
                    data-ordering="true"
@@ -23,7 +23,7 @@
                         <th data-column="ClosePrice">@Html.DisplayNameFor(i => Model.MostActive.FirstOrDefault().ClosePrice)</th>
                         <th data-column="Change">@Html.DisplayNameFor(i => Model.MostActive.FirstOrDefault().Change)</th>
                         <th data-column="Volume">@Html.DisplayNameFor(i => Model.MostActive.FirstOrDefault().Volume)</th>
-                       
+                        <th data-column="Turnover">@Html.DisplayNameFor(i => Model.MostActive.FirstOrDefault().Turnover)</th>
                     </tr>
                 </thead>
                 <tbody>

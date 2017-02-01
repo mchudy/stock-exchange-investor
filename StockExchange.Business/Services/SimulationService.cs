@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using StockExchange.Business.Models.Wallet;
 
 namespace StockExchange.Business.Services
 {
@@ -79,6 +80,30 @@ namespace StockExchange.Business.Services
             CalculateMinimalAndMaximalSimulationValue(simulationDto.StartDate, simulationDto.EndDate, allPrices, simulationDto.SelectedCompanyIds, simulationResult);
             CalculateAverageGainAndLossOnTransaction(simulationResult, simulationDto.SelectedCompanyIds);
             simulationResult.KeepStrategyProfit = keepStrategyProfit;
+
+            simulationResult.CurrentCompanies = new List<OwnedCompanyStocksDto>();
+            var companies = await _companyService.GetCompanies(simulationDto.SelectedCompanyIds);
+            foreach (var i in simulationResult.CurrentCompanyQuantity)
+            {
+                simulationResult.CurrentCompanies.Add(new OwnedCompanyStocksDto
+                {
+                    CompanyId = i.Key,
+                    CompanyName = companies.FirstOrDefault(x => x.Id == i.Key)?.Code,
+                    OwnedStocksCount = i.Value,
+                    CurrentPrice = allPrices.First(item => item.Company.Id == i.Key).Prices.Where(item => item.Date <= simulationDto.EndDate).OrderByDescending(item => item.Date).First().ClosePrice,
+                    CurrentValue = allPrices.First(item => item.Company.Id == i.Key).Prices.Where(item => item.Date <= simulationDto.EndDate).OrderByDescending(item => item.Date).First().ClosePrice * i.Value
+                });
+            }
+
+            simulationResult.CurrentCompanies.Add(new OwnedCompanyStocksDto
+            {
+                CompanyId = 0,
+                CompanyName = "Free Budget",
+                OwnedStocksCount = 0,
+                CurrentPrice = 0,
+                CurrentValue = simulationDto.Budget
+            });
+
             return simulationResult;
         }
 
@@ -101,7 +126,7 @@ namespace StockExchange.Business.Services
                 var quantity = (int)Math.Floor(budgetPerCompany / startDayPrice.ClosePrice);
                 budget += quantity * (endDatePrice.ClosePrice - startDayPrice.ClosePrice);
             }
-            var keepStrategyProfit = budget - simulationResult.StartBudget;
+            var keepStrategyProfit = budget;
             return keepStrategyProfit;
         }
 
