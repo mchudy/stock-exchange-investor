@@ -1,53 +1,10 @@
 ﻿/**
  * View for the simulation results page
  */
-jQuery.extend(jQuery.fn.dataTableExt.oSort, {
-    "date-eu-pre": function (date) {
-        date = date.replace(" ", "");
-
-        if (!date) {
-            return 0;
-        }
-
-        var year;
-        var eu_date = date.split(/[\.\-\/]/);
-
-        /*year (optional)*/
-        if (eu_date[2]) {
-            year = eu_date[2];
-        }
-        else {
-            year = 0;
-        }
-
-        /*month*/
-        var month = eu_date[1];
-        if (month.length == 1) {
-            month = 0 + month;
-        }
-
-        /*day*/
-        var day = eu_date[0];
-        if (day.length == 1) {
-            day = 0 + day;
-        }
-
-        return (year + month + day) * 1;
-    },
-
-    "date-eu-asc": function (a, b) {
-        return ((a < b) ? -1 : ((a > b) ? 1 : 0));
-    },
-
-    "date-eu-desc": function (a, b) {
-        return ((a < b) ? 1 : ((a > b) ? -1 : 0));
-    }
-});
 (function ($) {
     'use strict';
 
     var $transactionLogTable = $('#simulation-transactions-grid');
-    
     var columns = $('th', $transactionLogTable).DataTableColumns();
 
     $transactionLogTable.DataTable({
@@ -61,7 +18,6 @@ jQuery.extend(jQuery.fn.dataTableExt.oSort, {
     });
 
     var $transactionLogTable2 = $('#simulation-transactions2-grid');
-
     var columns2 = $('th', $transactionLogTable2).DataTableColumns();
 
     $transactionLogTable2.DataTable({
@@ -70,6 +26,29 @@ jQuery.extend(jQuery.fn.dataTableExt.oSort, {
         columns: columns2,
        
         responsive: true
+    });
+    
+    Highcharts.stockChart('chart-container', {
+        legend: {
+            enabled: false
+        },
+        credits: {
+            enabled: false
+        },
+        xAxis: {
+            type: 'datetime',
+            dateTimeLabelFormats: {
+                day: '%d %b %Y'
+            }
+        },
+        yAxis: {
+            title: {
+                text: 'Budget (PLN)'
+            }
+        },
+        series: [{
+            data: config.budgetData.data
+        }]
     });
 
 })(jQuery);

@@ -1,5 +1,5 @@
 /**
- * @license Highcharts JS v5.0.2 (2016-10-26)
+ * @license Highcharts JS v5.0.7 (2017-01-17)
  *
  * (c) 2009-2016 Torstein Honsi
  *
@@ -58,13 +58,22 @@
 
                 },
                 labels: {
-                    overflow: 'justify'
+                    overflow: 'justify',
+                    rotation: 0
                 },
                 minColor: '#e6ebf5',
                 maxColor: '#003399',
                 tickLength: 5,
                 showInLegend: true
             },
+
+            // Properties to preserve after destroy, for Axis.update (#5881)
+            keepProps: ['legendGroup', 'legendItem', 'legendSymbol']
+                .concat(Axis.prototype.keepProps),
+
+            /**
+             * Initialize the color axis
+             */
             init: function(chart, userOptions) {
                 var horiz = chart.options.legend.layout !== 'vertical',
                     options;
@@ -357,11 +366,15 @@
             visible: true,
             setVisible: noop,
             getSeriesExtremes: function() {
-                var series;
-                if (this.series.length) {
-                    series = this.series[0];
-                    this.dataMin = series.valueMin;
-                    this.dataMax = series.valueMax;
+                var series = this.series,
+                    i = series.length;
+                this.dataMin = Infinity;
+                this.dataMax = -Infinity;
+                while (i--) {
+                    if (series[i].valueMin !== undefined) {
+                        this.dataMin = Math.min(this.dataMin, series[i].valueMin);
+                        this.dataMax = Math.max(this.dataMax, series[i].valueMax);
+                    }
                 }
             },
             drawCrosshair: function(e, point) {
@@ -498,7 +511,16 @@
          */
         each(['fill', 'stroke'], function(prop) {
             H.Fx.prototype[prop + 'Setter'] = function() {
-                this.elem.attr(prop, ColorAxis.prototype.tweenColors(color(this.start), color(this.end), this.pos));
+                this.elem.attr(
+                    prop,
+                    ColorAxis.prototype.tweenColors(
+                        color(this.start),
+                        color(this.end),
+                        this.pos
+                    ),
+                    null,
+                    true
+                );
             };
         });
 
@@ -594,6 +616,14 @@
                         point[key][method]();
                     }
                 });
+            },
+            setState: function(state) {
+                H.Point.prototype.setState.call(this, state);
+                if (this.graphic) {
+                    this.graphic.attr({
+                        zIndex: state === 'hover' ? 1 : 0
+                    });
+                }
             }
         };
 
@@ -746,7 +776,11 @@
                 seriesTypes.column.prototype.drawPoints.call(this);
 
                 each(this.points, function(point) {
-                    point.graphic.attr(this.colorAttribs(point, point.state));
+
+                    // In styled mode, use CSS, otherwise the fill used in the style
+                    // sheet will take precesence over the fill attribute.
+                    point.graphic.css(this.colorAttribs(point));
+
                 }, this);
             },
             animate: noop,

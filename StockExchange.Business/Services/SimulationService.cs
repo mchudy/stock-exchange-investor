@@ -76,6 +76,7 @@ namespace StockExchange.Business.Services
                     return x.Value * lastDayPrice.ClosePrice;
                 return 0;
             }) + simulationDto.Budget;
+           
             simulationResult.PercentageProfit = Math.Round((double)((simulationResult.SimulationTotalValue - simulationResult.StartBudget) / simulationResult.StartBudget) * 100, 2);
             CalculateMinimalAndMaximalSimulationValue(simulationDto.StartDate, simulationDto.EndDate, allPrices, simulationDto.SelectedCompanyIds, simulationResult);
             CalculateAverageGainAndLossOnTransaction(simulationResult, simulationDto.SelectedCompanyIds);
@@ -228,6 +229,7 @@ namespace StockExchange.Business.Services
         private static void CalculateMinimalAndMaximalSimulationValue(DateTime startDate, DateTime endDate,
             IList<CompanyPricesDto> prices, IList<int> companyIds, SimulationResultDto resultDto)
         {
+            var dateBudgetDictionary = new Dictionary<DateTime, decimal>();
             Dictionary<int, int> quantities = companyIds.ToDictionary(companyId => companyId, companyId => 0);
             decimal budget = resultDto.StartBudget;
             decimal minVal = resultDto.StartBudget;
@@ -254,7 +256,9 @@ namespace StockExchange.Business.Services
                     resultDto.MinimalSimulationValue = new ExtremeSimulationValue(d, value, resultDto.StartBudget);
                     minVal = value;
                 }
+                dateBudgetDictionary.Add(d,value);
             }
+            resultDto.BudgetHistory = dateBudgetDictionary;
         }
 
         private static void UpdateQuantities(Dictionary<int, int> quantities, SimulationTransactionDto transaction)

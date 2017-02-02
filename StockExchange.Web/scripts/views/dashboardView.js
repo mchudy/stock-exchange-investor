@@ -65,29 +65,7 @@
                 name: 'Company',
                 colorByPoint: true,
                 data: data
-            }],
-
-
-            exporting: {
-                buttons: {
-                    contextButton: {
-                        menuItems: [
-                        {
-                            textKey: 'downloadPNG',
-                            onclick: function () {
-                                this.exportChart();
-                            }
-                        }, {
-                            textKey: 'downloadJPEG',
-                            onclick: function () {
-                                this.exportChart({
-                                    type: 'image/jpeg'
-                                });
-                            }
-                        }]
-                    }
-                }
-            }
+            }]
         });
     }
 

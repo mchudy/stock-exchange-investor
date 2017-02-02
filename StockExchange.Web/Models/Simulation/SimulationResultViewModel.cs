@@ -2,6 +2,7 @@
 using StockExchange.Business.Models.Simulations;
 using System.Collections.Generic;
 using StockExchange.Business.Models.Wallet;
+using StockExchange.Web.Models.Charts;
 
 namespace StockExchange.Web.Models.Simulation
 {
@@ -70,5 +71,7 @@ namespace StockExchange.Web.Models.Simulation
         /// Failed transaction percentage.
         /// </summary>
         public double FailedTransactionPercentage { get; set; }
+
+        public LineChartModel Chart { get; set; }
     }
 }

@@ -1,5 +1,5 @@
 /**
- * @license Highcharts JS v5.0.2 (2016-10-26)
+ * @license Highcharts JS v5.0.7 (2017-01-17)
  *
  * 3D features for Highcharts JS
  *
@@ -113,6 +113,25 @@
                     z: coordinate.z
                 };
             });
+        };
+
+        /**
+         * Calculate a distance from camera to points - made for calculating zIndex of scatter points.
+         * Parameters:
+         *		- coordinates: The coordinates of the specific point
+         *		- chart: the chart
+         * Returns:
+         *		- a distance from camera to point
+         */
+        H.pointCameraDistance = function(coordinates, chart) {
+            var options3d = chart.options.chart.options3d,
+                cameraPosition = {
+                    x: chart.plotWidth / 2,
+                    y: chart.plotHeight / 2,
+                    z: pick(options3d.depth, 1) * pick(options3d.viewDistance, 0) + options3d.depth
+                },
+                distance = Math.sqrt(Math.pow(cameraPosition.x - coordinates.plotX, 2) + Math.pow(cameraPosition.y - coordinates.plotY, 2) + Math.pow(cameraPosition.z - coordinates.plotZ, 2));
+            return distance;
         };
 
     }(Highcharts));
@@ -264,6 +283,7 @@
         SVGRenderer.prototype.cuboid = function(shapeArgs) {
 
             var result = this.g(),
+                destroy = result.destroy,
                 paths = this.cuboidPath(shapeArgs);
 
 
@@ -372,7 +392,7 @@
                 this.top.destroy();
                 this.side.destroy();
 
-                return null;
+                return destroy.call(this);
             };
 
             // Apply the Z index to the cuboid group
@@ -603,7 +623,7 @@
             /**
              * Override attr to remove shape attributes and use those to set child paths
              */
-            wrap(wrapper, 'attr', function(proceed, params, val) {
+            wrap(wrapper, 'attr', function(proceed, params) {
                 var ca;
                 if (typeof params === 'object') {
                     ca = suckOutCustom(params);
@@ -612,7 +632,7 @@
                         wrapper.setPaths(wrapper.attribs);
                     }
                 }
-                return proceed.call(this, params, val);
+                return proceed.apply(this, [].slice.call(arguments, 1));
             });
 
             /**
@@ -1017,21 +1037,28 @@
                         }
                     }
                 }
-            },
-
-            defs: {
-                style: {
-                    textContent: defaultOptions.defs.style.textContent +
-                        '\n.highcharts-3d-top{' +
-                        'filter: url(#highcharts-brighter)' +
-                        '}' +
-                        '\n.highcharts-3d-side{' +
-                        'filter: url(#highcharts-darker)' +
-                        '}'
-                }
             }
-
         });
+
+
+        /**
+         * Override the getContainer by adding the required CSS classes for column 
+         * sides (#6018)
+         */
+        wrap(Chart.prototype, 'getContainer', function(proceed) {
+            proceed.apply(this, [].slice.call(arguments, 1));
+
+            this.renderer.definition({
+                tagName: 'style',
+                textContent: '.highcharts-3d-top{' +
+                    'filter: url(#highcharts-brighter)' +
+                    '}\n' +
+                    '.highcharts-3d-side{' +
+                    'filter: url(#highcharts-darker)' +
+                    '}\n'
+            });
+        });
+
 
         wrap(Chart.prototype, 'setClassName', function(proceed) {
             proceed.apply(this, [].slice.call(arguments, 1));
@@ -1411,6 +1438,15 @@
                 }
             }
             proceed.apply(this, [].slice.call(args, 1));
+        });
+
+        wrap(Axis.prototype, 'destroy', function(proceed) {
+            each(['backFrame', 'bottomFrame', 'sideFrame'], function(prop) {
+                if (this[prop]) {
+                    this[prop] = this[prop].destroy();
+                }
+            }, this);
+            proceed.apply(this, [].slice.call(arguments, 1));
         });
 
         /***
@@ -1939,6 +1975,7 @@
         'use strict';
         var perspective = H.perspective,
             pick = H.pick,
+            Point = H.Point,
             seriesTypes = H.seriesTypes,
             wrap = H.wrap;
 
@@ -1992,10 +2029,10 @@
                 rawPoint.plotY = projectedPoint.y;
                 rawPoint.plotZ = projectedPoint.z;
 
-
             }
 
         });
+
 
         wrap(seriesTypes.scatter.prototype, 'init', function(proceed, chart, options) {
             if (chart.is3d()) {
@@ -2021,6 +2058,27 @@
                 }
             }
             return result;
+        });
+
+        /**
+         * Updating zIndex for every point - based on the distance from point to camera
+         */
+        wrap(seriesTypes.scatter.prototype, 'pointAttribs', function(proceed, point) {
+            var pointOptions = proceed.apply(this, [].slice.call(arguments, 1));
+            if (this.chart.is3d() && point) {
+                pointOptions.zIndex = H.pointCameraDistance(point, this.chart);
+            }
+            return pointOptions;
+        });
+
+
+        wrap(Point.prototype, 'applyOptions', function(proceed) {
+            var point = proceed.apply(this, [].slice.call(arguments, 1));
+
+            if (this.series.chart.is3d() && point.z === undefined) {
+                point.z = 0;
+            }
+            return point;
         });
 
     }(Highcharts));

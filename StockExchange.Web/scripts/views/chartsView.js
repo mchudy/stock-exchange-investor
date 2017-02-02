@@ -79,12 +79,6 @@
      * @returns {Object} - Highcharts chart object
      */
     function initChart() {
-        Highcharts.setOptions({
-            global: {
-                useUTC: true
-            }
-        });
-
         chart = new Highcharts.stockChart('chart-container', {
             title: {
                 text: 'Stock chart'
@@ -101,6 +95,9 @@
             tooltip: {
                 pointFormat: '<span style="color:{point.color}">\u25CF</span> {series.name}: <b>{point.y:.2f}</b><br/>'
             },
+            chart: {
+                panning: true
+            },
             rangeSelector: {
                 inputDateFormat: '%Y-%m-%d',
                 inputEditDateFormat: '%Y-%m-%d',
@@ -111,29 +108,22 @@
                     return date.getTime();
                 }
             },
-        
+            annotationsOptions: {
+                buttonsOffsets: [3, -3]
+            }
+        });
 
-        exporting: {
-                buttons: {
-                    contextButton: {
-                        menuItems: [
-                        {
-                            textKey: 'downloadPNG',
-                            onclick: function() {
-                                this.exportChart();
-                            }
-                        }, {
-                            textKey: 'downloadJPEG',
-                            onclick: function() {
-                                this.exportChart({
-                                    type: 'image/jpeg'
-                                });
-                            }
-                        }]
-                    }
+        $(document).on('keyup', function (e) {
+            // destroy selected annotations when pressed DEL key
+            if (e.keyCode === 46) {
+                if (chart.selectedAnnotation) {
+                    var annotation = chart.selectedAnnotation;
+                    annotation.deselect();
+                    annotation.destroy();
                 }
             }
         });
+
         chart.showLoading(loadingIndicator);
     }
 

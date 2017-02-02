@@ -526,6 +526,12 @@
     <Content Include="bower_components\font-awesome\css\font-awesome.min.css" />
     <Content Include="bower_components\font-awesome\fonts\fontawesome-webfont.svg" />
     <Content Include="bower_components\font-awesome\HELP-US-OUT.txt" />
+    <Content Include="bower_components\highcharts-annotations\css\styles.css" />
+    <Content Include="bower_components\highcharts-annotations\gulpfile.js" />
+    <Content Include="bower_components\highcharts-annotations\index.html" />
+    <Content Include="bower_components\highcharts-annotations\js\annotations.js" />
+    <Content Include="bower_components\highcharts-annotations\js\demo.js" />
+    <Content Include="bower_components\highcharts-annotations\license.txt" />
     <Content Include="bower_components\highcharts\adapters\standalone-framework.js" />
     <Content Include="bower_components\highcharts\adapters\standalone-framework.src.js" />
     <Content Include="bower_components\highcharts\css\highcharts.css" />
@@ -2162,6 +2168,7 @@
     </Content>
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="Scripts\chartSettings.js" />
     <Content Include="Scripts\components\budgetInfoBox.js" />
     <Content Include="Scripts\views\simulationResultsView.js" />
     <Content Include="Scripts\views\simulationView.js" />
@@ -2515,6 +2522,11 @@
     <Content Include="bower_components\toastr\toastr.scss" />
     <Content Include="App_Code\NotificationsBuilder.cshtml" />
     <Content Include="App_Code\Modals.cshtml" />
+    <Content Include="bower_components\highcharts-annotations\.bower.json" />
+    <Content Include="bower_components\highcharts-annotations\bower.json" />
+    <Content Include="bower_components\highcharts-annotations\manifest.json" />
+    <Content Include="bower_components\highcharts-annotations\package.json" />
+    <Content Include="bower_components\highcharts-annotations\README.md" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
@@ -2643,6 +2655,7 @@
     <Content Include="Views\Dashboard\_DeclinersTable.cshtml" />
     <Content Include="Views\Dashboard\_MostActiveTable.cshtml" />
     <Content Include="Scripts\utils.js" />
+    <Content Include="Scripts\plugins\dataTablesEuDate.js" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

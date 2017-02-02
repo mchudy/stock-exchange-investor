@@ -1,5 +1,5 @@
 /**
- * @license Highcharts JS v5.0.2 (2016-10-26)
+ * @license Highcharts JS v5.0.7 (2017-01-17)
  * Client side exporting module
  *
  * (c) 2015 Torstein Honsi / Oystein Moseng
@@ -32,6 +32,7 @@
             each = Highcharts.each,
             domurl = win.URL || win.webkitURL || win,
             isMSBrowser = /Edge\/|Trident\/|MSIE /.test(nav.userAgent),
+            isEdgeBrowser = /Edge\/\d+/.test(nav.userAgent),
             loadEventDeferDelay = isMSBrowser ? 150 : 0; // Milliseconds to defer image load event handlers to offset IE bug
 
         // Dummy object so we can reuse our canvas-tools.js without errors
@@ -57,6 +58,33 @@
             head.appendChild(script);
         }
 
+        // Convert dataURL to Blob if supported, otherwise returns undefined
+        Highcharts.dataURLtoBlob = function(dataURL) {
+            if (
+                win.atob &&
+                win.ArrayBuffer &&
+                win.Uint8Array &&
+                win.Blob &&
+                domurl.createObjectURL
+            ) {
+                // Try to convert data URL to Blob
+                var parts = dataURL.match(/data:([^;]*)(;base64)?,([0-9A-Za-z+/]+)/),
+                    binStr = win.atob(parts[3]), // Assume base64 encoding
+                    buf = new win.ArrayBuffer(binStr.length),
+                    binary = new win.Uint8Array(buf),
+                    blob;
+
+                for (var i = 0; i < binary.length; ++i) {
+                    binary[i] = binStr.charCodeAt(i);
+                }
+
+                blob = new win.Blob([binary], {
+                    'type': parts[1]
+                });
+                return domurl.createObjectURL(blob);
+            }
+        };
+
         // Download contents by dataURL/blob
         Highcharts.downloadURL = function(dataURL, filename) {
             var a = doc.createElement('a'),
@@ -66,6 +94,15 @@
             if (nav.msSaveOrOpenBlob) {
                 nav.msSaveOrOpenBlob(dataURL, filename);
                 return;
+            }
+
+            // Some browsers have limitations for data URL lengths. Try to convert to
+            // Blob or fall back.
+            if (dataURL.length > 2000000) {
+                dataURL = Highcharts.dataURLtoBlob(dataURL);
+                if (!dataURL) {
+                    throw 'Data URL length limit reached';
+                }
             }
 
             // Try HTML5 download attr if supported
@@ -191,7 +228,8 @@
                 var width = svgElement.width.baseVal.value + 2 * margin,
                     height = svgElement.height.baseVal.value + 2 * margin,
                     pdf = new win.jsPDF('l', 'pt', [width, height]); // eslint-disable-line new-cap
-                win.svgElementToPdf(svgElement, pdf, {
+
+                win.svg2pdf(svgElement, pdf, {
                     removeInvalid: true
                 });
                 return pdf.output('datauristring');
@@ -200,20 +238,32 @@
             function downloadPDF() {
                 dummySVGContainer.innerHTML = svg;
                 var textElements = dummySVGContainer.getElementsByTagName('text'),
+                    titleElements,
+                    svgData,
                     svgElementStyle = dummySVGContainer.getElementsByTagName('svg')[0].style;
                 // Workaround for the text styling. Making sure it does pick up the root element
                 each(textElements, function(el) {
+                    // Workaround for the text styling. making sure it does pick up the root element
                     each(['font-family', 'font-size'], function(property) {
                         if (!el.style[property] && svgElementStyle[property]) {
                             el.style[property] = svgElementStyle[property];
                         }
                     });
                     el.style['font-family'] = el.style['font-family'] && el.style['font-family'].split(' ').splice(-1);
+                    // Workaround for plotband with width, removing title from text nodes
+                    titleElements = el.getElementsByTagName('title');
+                    each(titleElements, function(titleElement) {
+                        el.removeChild(titleElement);
+                    });
                 });
-                var svgData = svgToPdf(dummySVGContainer.firstChild, 0);
-                Highcharts.downloadURL(svgData, filename);
-                if (successCallback) {
-                    successCallback();
+                svgData = svgToPdf(dummySVGContainer.firstChild, 0);
+                try {
+                    Highcharts.downloadURL(svgData, filename);
+                    if (successCallback) {
+                        successCallback();
+                    }
+                } catch (e) {
+                    failCallback();
                 }
             }
 
@@ -236,16 +286,14 @@
                     failCallback();
                 }
             } else if (imageType === 'application/pdf') {
-                if (win.jsPDF && win.svgElementToPdf) {
+                if (win.jsPDF && win.svg2pdf) {
                     downloadPDF();
                 } else {
                     // Must load pdf libraries first
                     objectURLRevoke = true; // Don't destroy the object URL yet since we are doing things asynchronously. A cleaner solution would be nice, but this will do for now.
                     getScript(libURL + 'jspdf.js', function() {
-                        getScript(libURL + 'rgbcolor.js', function() {
-                            getScript(libURL + 'svg2pdf.js', function() {
-                                downloadPDF();
-                            });
+                        getScript(libURL + 'svg2pdf.js', function() {
+                            downloadPDF();
                         });
                     });
                 }
@@ -327,9 +375,14 @@
                 images,
                 imagesEmbedded = 0,
                 chartCopyContainer,
+                chartCopyOptions,
                 el,
                 i,
                 l,
+                // After grabbing the SVG of the chart's copy container we need to do sanitation on the SVG
+                sanitize = function(svg) {
+                    return chart.sanitizeSVG(svg, chartCopyOptions);
+                },
                 // Success handler, we converted image to base64!
                 embeddedSuccess = function(imageURL, imageType, callbackArgs) {
                     ++imagesEmbedded;
@@ -339,15 +392,24 @@
 
                     // When done with last image we have our SVG
                     if (imagesEmbedded === images.length) {
-                        successCallback(chart.sanitizeSVG(chartCopyContainer.innerHTML));
+                        successCallback(sanitize(chartCopyContainer.innerHTML));
                     }
                 };
 
             // Hook into getSVG to get a copy of the chart copy's container
-            Highcharts.wrap(Highcharts.Chart.prototype, 'getChartHTML', function(proceed) {
-                chartCopyContainer = this.container.cloneNode(true);
-                return proceed.apply(this, Array.prototype.slice.call(arguments, 1));
-            });
+            Highcharts.wrap(
+                Highcharts.Chart.prototype,
+                'getChartHTML',
+                function(proceed) {
+                    var ret = proceed.apply(
+                        this,
+                        Array.prototype.slice.call(arguments, 1)
+                    );
+                    chartCopyOptions = this.options;
+                    chartCopyContainer = this.container.cloneNode(true);
+                    return ret;
+                }
+            );
 
             // Trigger hook to get chart copy
             chart.getSVGForExport(options, chartOptions);
@@ -356,7 +418,7 @@
             try {
                 // If there are no images to embed, the SVG is okay now.
                 if (!images.length) {
-                    successCallback(chart.sanitizeSVG(chartCopyContainer.innerHTML)); // Use SVG of chart copy
+                    successCallback(sanitize(chartCopyContainer.innerHTML)); // Use SVG of chart copy
                     return;
                 }
 
@@ -389,7 +451,7 @@
                 fallbackToExportServer = function() {
                     if (options.fallbackToExportServer === false) {
                         if (options.error) {
-                            options.error();
+                            options.error(options);
                         } else {
                             throw 'Fallback to export server disabled';
                         }
@@ -398,11 +460,37 @@
                     }
                 },
                 svgSuccess = function(svg) {
-                    Highcharts.downloadSVGLocal(svg, options, fallbackToExportServer);
+                    // If SVG contains foreignObjects all exports except SVG will fail,
+                    // as both CanVG and svg2pdf choke on this. Gracefully fall back.
+                    if (
+                        svg.indexOf('<foreignObject') > -1 &&
+                        options.type !== 'image/svg+xml'
+                    ) {
+                        fallbackToExportServer();
+                    } else {
+                        Highcharts.downloadSVGLocal(svg, options, fallbackToExportServer);
+                    }
                 };
 
-            // If we have embedded images and are exporting to JPEG/PNG, Microsoft browsers won't handle it, so fall back
-            if ((isMSBrowser && options.imageType !== 'image/svg+xml' || options.imageType !== 'application/pdf') && chart.container.getElementsByTagName('image').length) {
+            // Always fall back on:
+            // - MS browsers: Embedded images JPEG/PNG, or any PDF
+            // - Edge: PNG/JPEG all cases
+            // - Embedded images and PDF
+            if (
+                (
+                    isMSBrowser &&
+                    (
+                        options.type === 'application/pdf' ||
+                        chart.container.getElementsByTagName('image').length &&
+                        options.type !== 'image/svg+xml'
+                    )
+                ) || (
+                    isEdgeBrowser && options.type !== 'image/svg+xml'
+                ) || (
+                    options.type === 'application/pdf' &&
+                    chart.container.getElementsByTagName('image').length
+                )
+            ) {
                 fallbackToExportServer();
                 return;
             }
@@ -412,7 +500,7 @@
 
         // Extend the default options to use the local exporter logic
         merge(true, Highcharts.getOptions().exporting, {
-            libURL: 'http://code.highcharts.com/5.0.2/lib/',
+            libURL: 'https://code.highcharts.com/5.0.7/lib/',
             buttons: {
                 contextButton: {
                     menuItems: [{

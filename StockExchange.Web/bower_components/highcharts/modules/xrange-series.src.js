@@ -1,5 +1,5 @@
 /**
- * @license Highcharts JS v5.0.2 (2016-10-26)
+ * @license Highcharts JS v5.0.7 (2017-01-17)
  * X-range series
  *
  * (c) 2010-2016 Torstein Honsi, Lars A. V. Cabrera
@@ -34,7 +34,6 @@
             merge = H.merge,
             pick = H.pick,
             seriesTypes = H.seriesTypes,
-            stop = H.stop,
             wrap = H.wrap,
             Axis = H.Axis,
             Point = H.Point,
@@ -136,6 +135,10 @@
                     plotX = Math.max(plotX, -10);
                     plotX2 = Math.min(Math.max(plotX2, -10), xAxis.len + 10);
 
+                    if (plotX2 < plotX) { // #6107
+                        plotX2 = plotX;
+                    }
+
                     point.shapeArgs = {
                         x: plotX,
                         y: point.plotY + metrics.offset,
@@ -190,7 +193,6 @@
 
                     if (isNumber(plotY) && point.y !== null) {
                         if (graphic) { // update
-                            stop(graphic);
                             point.graphicOriginal[verb](
                                 merge(shapeArgs)
                             );
