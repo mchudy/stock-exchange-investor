@@ -6,11 +6,6 @@
     public class IndicatorDescriptionDto
     {
         /// <summary>
-        /// Indicator description.
-        /// </summary>
-        public string IndicatorDescription { get; set; }
-
-        /// <summary>
         /// Buy signal description. 
         /// </summary>
         public string BuySignalDescription { get; set; }

@@ -61,7 +61,7 @@ namespace StockExchange.Business.Indicators.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Occurs when +DI line crosses above -DI line and ADX value is greater than 25.
+        ///   Looks up a localized string similar to Occurs when +DI line crosses above -DI line and ADX value is greater than 25..
         /// </summary>
         internal static string AdxBuySignal {
             get {
@@ -70,16 +70,7 @@ namespace StockExchange.Business.Indicators.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Average Directional Index indicator.
-        /// </summary>
-        internal static string AdxDescription {
-            get {
-                return ResourceManager.GetString("AdxDescription", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Occurs when +DI line crosses below -DI line and ADX value is greater than 25.
+        ///   Looks up a localized string similar to Occurs when +DI line crosses below -DI line and ADX value is greater than 25..
         /// </summary>
         internal static string AdxSellSignal {
             get {
@@ -88,7 +79,7 @@ namespace StockExchange.Business.Indicators.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Occurs when ATR values are growing and price trend values are growing.
+        ///   Looks up a localized string similar to Occurs when current close price is greater than the sum of previous close price and ATR indicator value for previous day..
         /// </summary>
         internal static string AtrBuySignal {
             get {
@@ -97,16 +88,7 @@ namespace StockExchange.Business.Indicators.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Average True Range indicator.
-        /// </summary>
-        internal static string AtrDescription {
-            get {
-                return ResourceManager.GetString("AtrDescription", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Occurs when ATR values are falling and price trend values are also falling.
+        ///   Looks up a localized string similar to Occurs when current close price is less than the difference of previous close price and ATR value for previous day..
         /// </summary>
         internal static string AtrSellSignal {
             get {
@@ -115,7 +97,7 @@ namespace StockExchange.Business.Indicators.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Occurs when EMA values are growing and current close price is greater than EMA value..
+        ///   Looks up a localized string similar to Occurs when current close price is greater than EMA value and average values are growing..
         /// </summary>
         internal static string EmaBuySignal {
             get {
@@ -124,16 +106,7 @@ namespace StockExchange.Business.Indicators.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Expotential Moving Average indicator.
-        /// </summary>
-        internal static string EmaDescription {
-            get {
-                return ResourceManager.GetString("EmaDescription", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Occurs when EMA values are falling and current close price is less than SMA value.
+        ///   Looks up a localized string similar to Occurs when current close price is less than EMA value and average values are falling..
         /// </summary>
         internal static string EmaSellSignal {
             get {
@@ -142,7 +115,7 @@ namespace StockExchange.Business.Indicators.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Occurs when MACD line crosses above signal line.
+        ///   Looks up a localized string similar to Occurs when MACD line crosses above signal line..
         /// </summary>
         internal static string MacdBuySignal {
             get {
@@ -151,47 +124,11 @@ namespace StockExchange.Business.Indicators.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Moving Average Convergence/Divergence indicator.
-        /// </summary>
-        internal static string MacdDescription {
-            get {
-                return ResourceManager.GetString("MacdDescription", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Occurs when MACD line crosses below signal line.
+        ///   Looks up a localized string similar to Occurs when MACD line crosses below signal line..
         /// </summary>
         internal static string MacdSellSignal {
             get {
                 return ResourceManager.GetString("MacdSellSignal", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Occurs when OBV indicator value is greater than current volume value and prices trend values are growing.
-        /// </summary>
-        internal static string ObvBuySignal {
-            get {
-                return ResourceManager.GetString("ObvBuySignal", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to On Balance Volume indicator.
-        /// </summary>
-        internal static string ObvDescription {
-            get {
-                return ResourceManager.GetString("ObvDescription", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Occurs when OBV indicator value is less than current volume value and prices trend values are falling.
-        /// </summary>
-        internal static string ObvSellSignal {
-            get {
-                return ResourceManager.GetString("ObvSellSignal", resourceCulture);
             }
         }
         
@@ -205,15 +142,6 @@ namespace StockExchange.Business.Indicators.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Pivot Point indicator.
-        /// </summary>
-        internal static string PpDescription {
-            get {
-                return ResourceManager.GetString("PpDescription", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Occurs when current close price is greater than the second support level..
         /// </summary>
         internal static string PpSellSignal {
@@ -223,7 +151,7 @@ namespace StockExchange.Business.Indicators.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Occurs when ROC values are negative and prices trend values are growing.
+        ///   Looks up a localized string similar to Occurs when ROC values are negative and prices trend values are growing..
         /// </summary>
         internal static string RocBuySignal {
             get {
@@ -232,16 +160,7 @@ namespace StockExchange.Business.Indicators.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Rate Of Change indicator.
-        /// </summary>
-        internal static string RocDescription {
-            get {
-                return ResourceManager.GetString("RocDescription", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Occurs when ROC values are positive and prices trend values are falling.
+        ///   Looks up a localized string similar to Occurs when ROC values are positive and prices trend values are falling..
         /// </summary>
         internal static string RocSellSignal {
             get {
@@ -259,15 +178,6 @@ namespace StockExchange.Business.Indicators.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Relative Strength Index indicator.
-        /// </summary>
-        internal static string RsiDescription {
-            get {
-                return ResourceManager.GetString("RsiDescription", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Occurs when RSI indicator value crosses below Maximum property value..
         /// </summary>
         internal static string RsiSellSignal {
@@ -277,7 +187,7 @@ namespace StockExchange.Business.Indicators.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Occurs when SMA values are growing and current close price is greater than SMA value.
+        ///   Looks up a localized string similar to Occurs when current close price is greater than SMA value and average values are growing..
         /// </summary>
         internal static string SmaBuySignal {
             get {
@@ -286,101 +196,11 @@ namespace StockExchange.Business.Indicators.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Simple Moving Average indicator.
-        /// </summary>
-        internal static string SmaDescription {
-            get {
-                return ResourceManager.GetString("SmaDescription", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Occurs when SMA values are falling and current close price is less than SMA value.
+        ///   Looks up a localized string similar to Occurs when current close price is less than SMA value and average values are falling..
         /// </summary>
         internal static string SmaSellSignal {
             get {
                 return ResourceManager.GetString("SmaSellSignal", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Occurs when VHF values are growing and prices trend values are also growing.
-        /// </summary>
-        internal static string VhfBuySignal {
-            get {
-                return ResourceManager.GetString("VhfBuySignal", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Vertical Horizontal Filter indicator.
-        /// </summary>
-        internal static string VhfDescription {
-            get {
-                return ResourceManager.GetString("VhfDescription", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Occurs when VHF values are falling and prices trend values are also falling.
-        /// </summary>
-        internal static string VhfSellSignal {
-            get {
-                return ResourceManager.GetString("VhfSellSignal", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Occurs when VPT values are growing and prices trend values are also growing.
-        /// </summary>
-        internal static string VptBuySignal {
-            get {
-                return ResourceManager.GetString("VptBuySignal", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Volume Price Trend indicator.
-        /// </summary>
-        internal static string VptDescription {
-            get {
-                return ResourceManager.GetString("VptDescription", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Occurs when VPT values are falling and prices trend values are also falling.
-        /// </summary>
-        internal static string VptSellSignal {
-            get {
-                return ResourceManager.GetString("VptSellSignal", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Occurs when VROC values are negative and prices trend values are growing.
-        /// </summary>
-        internal static string VrocBuySignal {
-            get {
-                return ResourceManager.GetString("VrocBuySignal", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Volume Rate Of Change indicator.
-        /// </summary>
-        internal static string VrocDescription {
-            get {
-                return ResourceManager.GetString("VrocDescription", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Occurs when VROC values are positive and prices trend values are falling.
-        /// </summary>
-        internal static string VrocSellSignal {
-            get {
-                return ResourceManager.GetString("VrocSellSignal", resourceCulture);
             }
         }
     }
