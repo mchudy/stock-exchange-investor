@@ -79,7 +79,8 @@ namespace StockExchange.Web.Controllers
                     Action = item.Action,
                     BudgetAfter = item.BudgetAfter,
                     Quantity = item.Quantity,
-                    Company = companies.FirstOrDefault(x => x.Id == item.CompanyId)
+                    Company = companies.FirstOrDefault(x => x.Id == item.CompanyId),
+                    Profit = item.Profit
                 }).ToList(),
                 StartBudget = model.Budget,
                 TotalSimulationValue = ret.SimulationTotalValue,

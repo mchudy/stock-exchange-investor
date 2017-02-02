@@ -23,6 +23,11 @@ namespace StockExchange.Web.Models.Simulation
         public decimal Price { get; set; }
 
         /// <summary>
+        /// The price
+        /// </summary>
+        public decimal Profit { get; set; }
+
+        /// <summary>
         /// The number of stocks involved
         /// </summary>
         public int Quantity { get; set; }

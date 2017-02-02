@@ -211,6 +211,7 @@
                                     <th data-column="quantity">@Html.DisplayNameFor(i => Model.TransactionsLog.FirstOrDefault().Quantity)</th>
                                     <th data-column="action">@Html.DisplayNameFor(i => Model.TransactionsLog.FirstOrDefault().Action)</th>
                                     <th data-column="budgetAfter">@Html.DisplayNameFor(i => Model.TransactionsLog.FirstOrDefault().BudgetAfter)</th>
+                                    <th data-column="profit">@Html.DisplayNameFor(i => Model.TransactionsLog.FirstOrDefault().Profit)</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -238,14 +239,15 @@
     <script>
         var config = {
             transactionLogData: @Html.ToJsonString(Model.TransactionsLog.OrderBy(t => t.Date).Select(t => new
-                                {
-                                    Date = t.Date.ToShortDateString(),
-                                    CompanyCode = t.Company.Code,
-                                    Price =t.Price.ToString("0.00"),
-                                    t.Quantity,
-                                    Action = t.Action.ToString(),
-                                    BudgetAfter = t.BudgetAfter.ToString("0.00")
-                                })),
+                           {
+                               Date = t.Date.ToShortDateString(),
+                               CompanyCode = t.Company.Code,
+                               Price =t.Price.ToString("0.00"),
+                               t.Quantity,
+                               Action = t.Action.ToString(),
+                               BudgetAfter = t.BudgetAfter.ToString("0.00"),
+                               Profit = t.Profit.ToString("0.00")
+                           })),
             transactionLogData2:
                 @Html.ToJsonString(Model.CurrentCompanyQuantity.OrderBy(t => t.CompanyName).Select(t => new
                             {
