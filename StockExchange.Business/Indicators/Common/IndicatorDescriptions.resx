@@ -118,111 +118,51 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AdxBuySignal" xml:space="preserve">
-    <value>Occurs when +DI line crosses above -DI line and ADX value is greater than 25</value>
-  </data>
-  <data name="AdxDescription" xml:space="preserve">
-    <value>Average Directional Index indicator</value>
+    <value>Occurs when +DI line crosses above -DI line and ADX value is greater than 25.</value>
   </data>
   <data name="AdxSellSignal" xml:space="preserve">
-    <value>Occurs when +DI line crosses below -DI line and ADX value is greater than 25</value>
+    <value>Occurs when +DI line crosses below -DI line and ADX value is greater than 25.</value>
   </data>
   <data name="AtrBuySignal" xml:space="preserve">
-    <value>Occurs when ATR values are growing and price trend values are growing</value>
-  </data>
-  <data name="AtrDescription" xml:space="preserve">
-    <value>Average True Range indicator</value>
+    <value>Occurs when current close price is greater than the sum of previous close price and ATR indicator value for previous day.</value>
   </data>
   <data name="AtrSellSignal" xml:space="preserve">
-    <value>Occurs when ATR values are falling and price trend values are also falling</value>
+    <value>Occurs when current close price is less than the difference of previous close price and ATR value for previous day.</value>
   </data>
   <data name="EmaBuySignal" xml:space="preserve">
-    <value>Occurs when EMA values are growing and current close price is greater than EMA value.</value>
-  </data>
-  <data name="EmaDescription" xml:space="preserve">
-    <value>Expotential Moving Average indicator</value>
+    <value>Occurs when current close price is greater than EMA value and average values are growing.</value>
   </data>
   <data name="EmaSellSignal" xml:space="preserve">
-    <value>Occurs when EMA values are falling and current close price is less than SMA value</value>
+    <value>Occurs when current close price is less than EMA value and average values are falling.</value>
   </data>
   <data name="MacdBuySignal" xml:space="preserve">
-    <value>Occurs when MACD line crosses above signal line</value>
-  </data>
-  <data name="MacdDescription" xml:space="preserve">
-    <value>Moving Average Convergence/Divergence indicator</value>
+    <value>Occurs when MACD line crosses above signal line.</value>
   </data>
   <data name="MacdSellSignal" xml:space="preserve">
-    <value>Occurs when MACD line crosses below signal line</value>
-  </data>
-  <data name="ObvBuySignal" xml:space="preserve">
-    <value>Occurs when OBV indicator value is greater than current volume value and prices trend values are growing</value>
-  </data>
-  <data name="ObvDescription" xml:space="preserve">
-    <value>On Balance Volume indicator</value>
-  </data>
-  <data name="ObvSellSignal" xml:space="preserve">
-    <value>Occurs when OBV indicator value is less than current volume value and prices trend values are falling</value>
+    <value>Occurs when MACD line crosses below signal line.</value>
   </data>
   <data name="PpBuySignal" xml:space="preserve">
     <value>Occurs when current close price is greater than the second resistance level.</value>
-  </data>
-  <data name="PpDescription" xml:space="preserve">
-    <value>Pivot Point indicator</value>
   </data>
   <data name="PpSellSignal" xml:space="preserve">
     <value>Occurs when current close price is greater than the second support level.</value>
   </data>
   <data name="RocBuySignal" xml:space="preserve">
-    <value>Occurs when ROC values are negative and prices trend values are growing</value>
-  </data>
-  <data name="RocDescription" xml:space="preserve">
-    <value>Rate Of Change indicator</value>
+    <value>Occurs when ROC values are negative and prices trend values are growing.</value>
   </data>
   <data name="RocSellSignal" xml:space="preserve">
-    <value>Occurs when ROC values are positive and prices trend values are falling</value>
+    <value>Occurs when ROC values are positive and prices trend values are falling.</value>
   </data>
   <data name="RsiBuySignal" xml:space="preserve">
     <value>Occurs when RSI indicator value crosses above Minimum property value.</value>
-  </data>
-  <data name="RsiDescription" xml:space="preserve">
-    <value>Relative Strength Index indicator</value>
   </data>
   <data name="RsiSellSignal" xml:space="preserve">
     <value>Occurs when RSI indicator value crosses below Maximum property value.</value>
   </data>
   <data name="SmaBuySignal" xml:space="preserve">
-    <value>Occurs when SMA values are growing and current close price is greater than SMA value</value>
-  </data>
-  <data name="SmaDescription" xml:space="preserve">
-    <value>Simple Moving Average indicator</value>
+    <value>Occurs when current close price is greater than SMA value and average values are growing.</value>
   </data>
   <data name="SmaSellSignal" xml:space="preserve">
-    <value>Occurs when SMA values are falling and current close price is less than SMA value</value>
-  </data>
-  <data name="VhfBuySignal" xml:space="preserve">
-    <value>Occurs when VHF values are growing and prices trend values are also growing</value>
-  </data>
-  <data name="VhfDescription" xml:space="preserve">
-    <value>Vertical Horizontal Filter indicator</value>
-  </data>
-  <data name="VhfSellSignal" xml:space="preserve">
-    <value>Occurs when VHF values are falling and prices trend values are also falling</value>
-  </data>
-  <data name="VptBuySignal" xml:space="preserve">
-    <value>Occurs when VPT values are growing and prices trend values are also growing</value>
-  </data>
-  <data name="VptDescription" xml:space="preserve">
-    <value>Volume Price Trend indicator</value>
-  </data>
-  <data name="VptSellSignal" xml:space="preserve">
-    <value>Occurs when VPT values are falling and prices trend values are also falling</value>
-  </data>
-  <data name="VrocBuySignal" xml:space="preserve">
-    <value>Occurs when VROC values are negative and prices trend values are growing</value>
-  </data>
-  <data name="VrocDescription" xml:space="preserve">
-    <value>Volume Rate Of Change indicator</value>
-  </data>
-  <data name="VrocSellSignal" xml:space="preserve">
-    <value>Occurs when VROC values are positive and prices trend values are falling</value>
+    <value>Occurs when current close price is less than SMA value and average values are falling.</value>
   </data>
 </root>

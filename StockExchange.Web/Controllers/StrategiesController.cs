@@ -135,7 +135,6 @@ namespace StockExchange.Web.Controllers
                 var properties = _indicatorsService.GetPropertiesForIndicator(indicator.Type);
                 indicator.Properties = properties.Select(p => new IndicatorPropertyViewModel {Name = p.Name, Value = p.Value}).ToList();
                 var description = _indicatorsService.GetIndicatorDescription(indicator.Type);
-                indicator.IndicatorDescription = description.IndicatorDescription;
                 indicator.BuySignalDescription = description.BuySignalDescription;
                 indicator.SellSignalDescription = description.SellSignalDescription;
             }

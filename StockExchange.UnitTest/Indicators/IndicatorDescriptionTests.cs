@@ -26,7 +26,6 @@ namespace StockExchange.UnitTest.Indicators
             {
                 var description = _indicatorsService.GetIndicatorDescription(indicatorType);
                 Assert.NotNull(description);
-                Assert.False(string.IsNullOrEmpty(description.IndicatorDescription));
                 Assert.False(string.IsNullOrEmpty(description.BuySignalDescription));
                 Assert.False(string.IsNullOrEmpty(description.SellSignalDescription));
             }

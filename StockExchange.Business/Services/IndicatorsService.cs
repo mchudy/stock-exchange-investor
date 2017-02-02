@@ -101,7 +101,6 @@ namespace StockExchange.Business.Services
             var attribute = indicator.GetType().GetCustomAttribute(typeof(IndicatorDescriptionAttribute)) as IndicatorDescriptionAttribute;
             return new IndicatorDescriptionDto()
             {
-                IndicatorDescription = attribute?.IndicatorDescription,
                 BuySignalDescription = attribute?.BuySignalDescription,
                 SellSignalDescription = attribute?.SellSignalDescription
             };
