@@ -28,11 +28,7 @@
         responsive: true
     });
     
-    Highcharts.chart('chart-container',
-    {
-        title: {
-            text: 'Budget history'
-        },
+    Highcharts.stockChart('chart-container', {
         legend: {
             enabled: false
         },

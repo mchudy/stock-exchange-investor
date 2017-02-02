@@ -33,13 +33,13 @@
                                     <td>
                                         @if (@Model.PercentageProfit > 0)
                                         {
-                                            <i class="fa fa-arrow-up icon-stock-up"></i>
-                                            <span class="text-success">@Model.PercentageProfit%</span>
+                                        <i class="fa fa-arrow-up icon-stock-up"></i>
+                                        <span class="text-success">@Model.PercentageProfit%</span>
                                         }
                                         else
                                         {
-                                            <i class="fa fa-arrow-down icon-stock-down"></i>
-                                            <span class="text-danger">@Model.PercentageProfit%</span>
+                                        <i class="fa fa-arrow-down icon-stock-down"></i>
+                                        <span class="text-danger">@Model.PercentageProfit%</span>
                                         }
                                     </td>
                                 </tr>
@@ -52,11 +52,11 @@
                                         double keepStrategyProfit = (Model.KeepStrategyProfit - (double)Model.StartBudget) / (double)Model.StartBudget * 100;
                                         if (keepStrategyProfit <= 0)
                                         {
-                                            <td><i class="fa fa-arrow-down icon-stock-down"></i><span class="text-danger">@(keepStrategyProfit.ToString("0.00") + "%")</span></td>
+                                    <td><i class="fa fa-arrow-down icon-stock-down"></i><span class="text-danger">@(keepStrategyProfit.ToString("0.00") + "%")</span></td>
                                         }
                                         else
                                         {
-                                            <td><i class="fa fa-arrow-up icon-stock-up"></i><span class="text-success">@(keepStrategyProfit.ToString("0.00") + "%")</span></td>
+                                    <td><i class="fa fa-arrow-up icon-stock-up"></i><span class="text-success">@(keepStrategyProfit.ToString("0.00") + "%")</span></td>
                                         }
 
                                     }
@@ -86,24 +86,24 @@
                                     string minValuePercentage = (Model.MinimalSimulationValue?.PercentageIncome ?? 0.0) + "%";
                                     string maxValue = (Model.MaximalSimulationValue?.Value.ToString(CultureInfo.InvariantCulture) ?? "0");
                                     string minValue = (Model.MinimalSimulationValue?.Value.ToString(CultureInfo.InvariantCulture) ?? "0");
-                                    <tr>
-                                        <th>Maximal simulation value</th>
-                                        <td>@maximalDate</td>
-                                        <td>@maxValue</td>
-                                        <td>
-                                            <i class="fa fa-arrow-up icon-stock-up"></i>
-                                            <span class="text-success">@maxValuePercentage</span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>Minimal simulation value</th>
-                                        <td>@minimalDate</td>
-                                        <td>@minValue</td>
-                                        <td>
-                                            <i class="fa fa-arrow-down icon-stock-down"></i>
-                                            <span class="text-danger">@minValuePercentage</span>
-                                        </td>
-                                    </tr>
+                                <tr>
+                                    <th>Maximal simulation value</th>
+                                    <td>@maximalDate</td>
+                                    <td>@maxValue</td>
+                                    <td>
+                                        <i class="fa fa-arrow-up icon-stock-up"></i>
+                                        <span class="text-success">@maxValuePercentage</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Minimal simulation value</th>
+                                    <td>@minimalDate</td>
+                                    <td>@minValue</td>
+                                    <td>
+                                        <i class="fa fa-arrow-down icon-stock-down"></i>
+                                        <span class="text-danger">@minValuePercentage</span>
+                                    </td>
+                                </tr>
                                 }
                             </tbody>
                         </table>
@@ -138,50 +138,51 @@
             </div>
         </div>
 
-        <div>
-            <div class="box box-info">
-                <div class="box-header with-border">
-                    <h5>Stocks owned after simulation</h5>
-                </div>
+        <div class="box box-info">
+            <div class="box-header with-border">
+                <h3 class="box-title">Stocks owned after simulation</h3>
+            </div>
 
-                <div class="box-body">
-                    <div class="table-responsive">
-                        <table id="simulation-transactions2-grid" class="table table-hover table-stripe"
-                               data-length-menu="[15, 25, 50, 100]"
-                               data-page-length="25"
-                               data-ordering="true"
-                               data-searching="true"
-                               data-auto-width="false"
-                               data-scroll-collapse="true"
-                               data-processing="true"
-                               data-server-side="false">
-                            <thead>
-                                <tr>
-                                    <th data-column="companyName">@Html.DisplayNameFor(i => Model.CurrentCompanyQuantity.FirstOrDefault().CompanyName)</th>
-                                    <th data-column="ownedStocksCount">@Html.DisplayNameFor(i => Model.CurrentCompanyQuantity.FirstOrDefault().OwnedStocksCount)</th>
-                                    <th data-column="currentPrice">@Html.DisplayNameFor(i => Model.CurrentCompanyQuantity.FirstOrDefault().CurrentPrice)</th>
-                                    <th data-column="currentValue">@Html.DisplayNameFor(i => Model.CurrentCompanyQuantity.FirstOrDefault().CurrentValue)</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td colspan="4">
-                                        <span>No data found...</span>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+            <div class="box-body">
+                <div class="table-responsive">
+                    <table id="simulation-transactions2-grid" class="table table-hover table-stripe"
+                           data-length-menu="[15, 25, 50, 100]"
+                           data-page-length="25"
+                           data-ordering="true"
+                           data-searching="true"
+                           data-auto-width="false"
+                           data-scroll-collapse="true"
+                           data-processing="true"
+                           data-server-side="false">
+                        <thead>
+                        <tr>
+                            <th data-column="companyName">@Html.DisplayNameFor(i => Model.CurrentCompanyQuantity.FirstOrDefault().CompanyName)</th>
+                            <th data-column="ownedStocksCount">@Html.DisplayNameFor(i => Model.CurrentCompanyQuantity.FirstOrDefault().OwnedStocksCount)</th>
+                            <th data-column="currentPrice">@Html.DisplayNameFor(i => Model.CurrentCompanyQuantity.FirstOrDefault().CurrentPrice)</th>
+                            <th data-column="currentValue">@Html.DisplayNameFor(i => Model.CurrentCompanyQuantity.FirstOrDefault().CurrentValue)</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td colspan="4">
+                                <span>No data found...</span>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
 
-    </div>
-
-    <div class="col-sm-6">
         <div class="box">
-            <div id="chart-container"></div>
+            <div class="box-header with-border">
+                <h3 class="box-title">Budget history</h3>
+            </div>
+            <div class="box-body">
+                <div id="chart-container"></div>
+            </div>
         </div>
+
     </div>
 
     <div class="col-sm-6">
