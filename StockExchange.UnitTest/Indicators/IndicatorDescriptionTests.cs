@@ -22,7 +22,7 @@ namespace StockExchange.UnitTest.Indicators
         [Fact]
         public void Should_Indicator_Has_Non_Empty_Descriptions()
         {
-            foreach (var indicatorType in _indicatorsService.GetAllIndicatorTypes())
+            foreach (var indicatorType in _indicatorsService.GetIndicatorTypesAvailableForStrategies())
             {
                 var description = _indicatorsService.GetIndicatorDescription(indicatorType);
                 Assert.NotNull(description);
