@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using StockExchange.Business.Models.Wallet;
 
 namespace StockExchange.Business.Models.Simulations
@@ -58,5 +59,11 @@ namespace StockExchange.Business.Models.Simulations
         /// Transaction statistics.
         /// </summary>
         public TransactionStatistics TransactionStatistics { get; set; }
+
+
+        /// <summary>
+        /// Budget History
+        /// </summary>
+        public Dictionary<DateTime, decimal> BudgetHistory { get; set; }
     }
 }

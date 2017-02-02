@@ -73,7 +73,7 @@ namespace StockExchange.Web.Controllers
             return new SimulationResultViewModel
             {
                 CurrentCompanyQuantity = ret.CurrentCompanies,
-                Chart = new LineChartModel { Name = "Budget", CompanyId = 0, Data = ret.TransactionsLog.Select(item => new[] { item.Date.ToJavaScriptTimeStamp(), item.BudgetAfter }).ToList() },
+                Chart = new LineChartModel { Name = "Budget", CompanyId = 0, Data = ret.BudgetHistory.Select(item => new[] { item.Key.ToJavaScriptTimeStamp(), item.Value }).ToList() },
                 TransactionsLog = ret.TransactionsLog.Select(item => new SimulationTransaction
                 {
                     Date = item.Date,
