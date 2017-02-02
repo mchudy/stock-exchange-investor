@@ -12,7 +12,6 @@ using StockExchange.Common.Extensions;
 using StockExchange.DataAccess.Cache;
 using StockExchange.DataAccess.Models;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -263,10 +262,12 @@ namespace StockExchange.Business.Services
         /// <inheritdoc />
         public async Task<PagedList<TodaySignal>> GetCurrentSignals(PagedFilterDefinition<TransactionFilter> message)
         {
-            var allSignals = await _cache.Get<List<TodaySignal>>(CacheKeys.AllCurrentSignals) ??
-                             await GetAllCurrentSignals();
-
-            await _cache.Set(CacheKeys.AllCurrentSignals, allSignals);
+            var allSignals = await _cache.Get<List<TodaySignal>>(CacheKeys.AllCurrentSignals);
+            if (allSignals == null)
+            {
+                allSignals = await GetAllCurrentSignals();
+                await _cache.Set(CacheKeys.AllCurrentSignals, allSignals);
+            }
 
             if (!string.IsNullOrWhiteSpace(message.Search))
                 allSignals = allSignals.Where(item => item.Company.Contains(message.Search.ToUpper())).ToList();
