@@ -79,12 +79,6 @@
      * @returns {Object} - Highcharts chart object
      */
     function initChart() {
-        Highcharts.setOptions({
-            global: {
-                useUTC: true
-            }
-        });
-
         chart = new Highcharts.stockChart('chart-container', {
             title: {
                 text: 'Stock chart'
@@ -109,28 +103,6 @@
                     // hack for dealing with timezone issue
                     date.setTime(date.getTime() + 1 * 1000 * 60 * 60 * 4);
                     return date.getTime();
-                }
-            },
-        
-
-        exporting: {
-                buttons: {
-                    contextButton: {
-                        menuItems: [
-                        {
-                            textKey: 'downloadPNG',
-                            onclick: function() {
-                                this.exportChart();
-                            }
-                        }, {
-                            textKey: 'downloadJPEG',
-                            onclick: function() {
-                                this.exportChart({
-                                    type: 'image/jpeg'
-                                });
-                            }
-                        }]
-                    }
                 }
             }
         });

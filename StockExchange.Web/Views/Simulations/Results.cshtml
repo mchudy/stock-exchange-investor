@@ -11,8 +11,6 @@
     <div class="col-sm-6">
         <div id="simulationresult-table-container">
             <div class="box box-info">
-
-
                 <div class="box-header with-border">
                     <h3 class="box-title">Results</h3>
                 </div>
@@ -66,8 +64,7 @@
                             </tbody>
                         </table>
                     </div>
-
-                    <br /><br/>
+                    <br>
                     <div class="box-header with-border">
                         <h4 class="box-title">Your Strategy Stats</h4>
                     </div>
@@ -141,8 +138,6 @@
             </div>
         </div>
 
-
-
         <div>
             <div class="box box-info">
                 <div class="box-header with-border">
@@ -177,7 +172,6 @@
                             </tbody>
                         </table>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -185,12 +179,14 @@
     </div>
 
     <div class="col-sm-6">
-        <div id="chart-container"></div>
+        <div class="box">
+            <div id="chart-container"></div>
+        </div>
     </div>
 
     <div class="col-sm-6">
         <div id="simulationlog-table-container">
-            <div class="box box-info">
+            <div class="box box-success">
                 <div class="box-header with-border">
                     <h3 class="box-title">Transactions log</h3>
                 </div>
@@ -229,10 +225,6 @@
             </div>
         </div>
     </div>
-
-
-
-
 </div>
 
 
@@ -240,7 +232,7 @@
 {
     @Scripts.Render("~/bundles/scripts/highcharts")
     <script>
-          
+
         var config = {
             budgetData :  @Html.ToJsonString(Model.Chart),
             transactionLogData: @Html.ToJsonString(Model.TransactionsLog.OrderBy(t => t.Date).Select(t => new
@@ -261,7 +253,7 @@
                                 CurrentPrice = t.CurrentPrice.ToString("0.00"),
                                 CurrentValue = t.CurrentValue.ToString("0.00")
                             }))
-        };
+            };
     </script>
     @Scripts.Render("~/bundles/scripts/datatables")
     @Scripts.Render("~/Scripts/views/simulationResultsView.js")

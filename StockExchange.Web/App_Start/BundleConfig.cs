@@ -36,12 +36,14 @@ namespace StockExchange.Web
                 "~/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js",
                 "~/bower_components/datatables.net-responsive/js/dataTables.responsive.min.js",
                 "~/Scripts/plugins/dataTablesFilters.js",
+                "~/Scripts/plugins/dataTablesEuDate.js",
                 "~/Scripts/plugins/dateFilter.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/scripts/highcharts").Include(
                 "~/bower_components/highcharts/highstock.js",
                 "~/bower_components/highcharts/modules/exporting.js",
-                "~/bower_components/highcharts/modules/offline-exporting.js"));
+                "~/bower_components/highcharts/modules/offline-exporting.js",
+                "~/Scripts/chartSettings.js"));
 
             bundles.Add(new StyleBundle("~/bundles/styles/vendor").NonOrdering()
                 .Include("~/bower_components/bootstrap/dist/css/bootstrap.min.css", new CssRewriteUrlTransform())

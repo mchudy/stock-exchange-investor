@@ -2162,6 +2162,7 @@
     </Content>
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="Scripts\chartSettings.js" />
     <Content Include="Scripts\components\budgetInfoBox.js" />
     <Content Include="Scripts\views\simulationResultsView.js" />
     <Content Include="Scripts\views\simulationView.js" />
@@ -2643,6 +2644,7 @@
     <Content Include="Views\Dashboard\_DeclinersTable.cshtml" />
     <Content Include="Views\Dashboard\_MostActiveTable.cshtml" />
     <Content Include="Scripts\utils.js" />
+    <Content Include="Scripts\plugins\dataTablesEuDate.js" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
