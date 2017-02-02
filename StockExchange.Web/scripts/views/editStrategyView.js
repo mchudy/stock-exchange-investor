@@ -4,22 +4,36 @@
 (function ($) {
     'use strict';
 
+    var $indicatorSelect = $('.indicator-select');
+
     /*
      * Shows an indicator when it is chosen from the select
      */
-    $('.indicator-select').change(function () {
+    $indicatorSelect.on('change', function () {
         var str = '';
         $('select option:selected').each(function () {
+            $(this).addClass('hidden');
             str += $(this).val();
         });
-        $('.indicator[data-id=' + str +']').removeClass('hidden');
+        $('.indicator[data-id=' + str + ']').removeClass('hidden');
+        $indicatorSelect.val('');
+    });
+
+    $('.indicator:not(.hidden)').each(function () {
+        var indicatorType = $(this).data('id');
+        $indicatorSelect.find('option[value=' + indicatorType + ']')
+            .addClass('hidden');
     });
 
     /*
      * Hides indicator where the remove icon is clicked
      */
     $('.remove-indicator').on('click', function() {
-        $(this).parents('.indicator').addClass('hidden');
+        var $indicator = $(this).parents('.indicator');
+        var indicatorType = $indicator.data('id');
+        $indicator.addClass('hidden');
+        $indicatorSelect.find('option[value=' + indicatorType + ']')
+            .removeClass('hidden');
     });
 
     /*
