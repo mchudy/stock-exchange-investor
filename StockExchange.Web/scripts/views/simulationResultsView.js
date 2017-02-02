@@ -71,5 +71,82 @@ jQuery.extend(jQuery.fn.dataTableExt.oSort, {
        
         responsive: true
     });
+    
+    function mapData(data) {
+        return data.map(function (item) {
+            return {
+                name: item.name,
+                y: item.value
+            };
+        });
+    }
+
+    var chartData = mapData(config.budgetData.data);
+    initChart();
+    loadChart();
+    var chart;
+    function initChart() {
+        Highcharts.setOptions({
+            global: {
+                useUTC: true
+            }
+        });
+        chart = new Highcharts.stockChart('chart-container', {
+            title: {
+                text: 'Budget History'
+            },
+            legend: {
+                enabled: true
+            },
+            credits: {
+                enabled: false
+            },
+            yAxis: [{
+                id: 'price-axis'
+            }],
+            tooltip: {
+                pointFormat: '<span style="color:{point.color}">\u25CF</span> {series.name}: <b>{point.y:.2f}</b><br/>'
+            },
+            rangeSelector: {
+                inputDateFormat: '%Y-%m-%d',
+                inputEditDateFormat: '%Y-%m-%d',
+                inputDateParser: function (value) {
+                    var date = new Date(value);
+                    // hack for dealing with timezone issue
+                    date.setTime(date.getTime() + 1 * 1000 * 60 * 60 * 4);
+                    return date.getTime();
+                }
+            },
+            exporting: {
+                buttons: {
+                    contextButton: {
+                        menuItems: [
+                        {
+                            textKey: 'downloadPNG',
+                            onclick: function () {
+                                this.exportChart();
+                            }
+                        }, {
+                            textKey: 'downloadJPEG',
+                            onclick: function () {
+                                this.exportChart({
+                                    type: 'image/jpeg'
+                                });
+                            }
+                        }]
+                    }
+                }
+            }
+        });
+    }
+
+    function loadChart() {
+       
+      
+        for (var i = 0; i < config.budgetData.data.length; i++) {
+            chart.addSeries(config.budgetData.data[i], false);
+        }
+        
+    }
 
 })(jQuery);

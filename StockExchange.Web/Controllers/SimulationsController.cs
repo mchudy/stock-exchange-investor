@@ -5,6 +5,8 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using StockExchange.Web.Helpers;
+using StockExchange.Web.Models.Charts;
 
 namespace StockExchange.Web.Controllers
 {
@@ -70,8 +72,8 @@ namespace StockExchange.Web.Controllers
             var companies = await _companyService.GetCompanies(ids);
             return new SimulationResultViewModel
             {
-                CurrentCompanyQuantity = ret.CurrentCompanies
-                  ,
+                CurrentCompanyQuantity = ret.CurrentCompanies,
+                Chart = new LineChartModel { Name = "Budget", CompanyId = 0, Data = ret.TransactionsLog.Select(item => new[] { item.Date.ToJavaScriptTimeStamp(), item.BudgetAfter }).ToList() },
                 TransactionsLog = ret.TransactionsLog.Select(item => new SimulationTransaction
                 {
                     Date = item.Date,
@@ -91,7 +93,7 @@ namespace StockExchange.Web.Controllers
                 MinimalSimulationValue = ret.MinimalSimulationValue,
                 SuccessTransactionPercentage = ret.TransactionStatistics.SuccessTransactionPercentage,
                 FailedTransactionPercentage = ret.TransactionStatistics.FailedTransactionPercentage,
-                KeepStrategyProfit = (double) ret.KeepStrategyProfit
+                KeepStrategyProfit = (double)ret.KeepStrategyProfit
             };
         }
 
