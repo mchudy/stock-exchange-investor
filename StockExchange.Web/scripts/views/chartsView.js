@@ -113,8 +113,6 @@
             }
         });
 
-        console.log(Highcharts.Annotation)
-
         $(document).on('keyup', function (e) {
             // destroy selected annotations when pressed DEL key
             if (e.keyCode === 46) {
