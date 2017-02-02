@@ -104,7 +104,41 @@ namespace StockExchange.Business.Services
                 CurrentValue = simulationDto.Budget
             });
 
+            CalculateProfit(simulationResult);
+
             return simulationResult;
+        }
+
+        private static void CalculateProfit(SimulationResultDto result)
+        {
+            foreach (var pagedTransaction in result.TransactionsLog.OrderBy(item => item.Date))
+            {
+                if (pagedTransaction.Action == SignalAction.Buy)
+                {
+                    pagedTransaction.Profit = 0m;
+                    continue;
+                }
+                var pastTransactions = result.TransactionsLog
+                    .Where(item => item.CompanyId == pagedTransaction.CompanyId && item.Date < pagedTransaction.Date)
+                    .OrderBy(item => item.Date)
+                    .ToList();
+                var quantity = 0m;
+                var price = 0m;
+                foreach (var pastTransaction in pastTransactions)
+                {
+                    if (pastTransaction.Action == SignalAction.Buy)
+                    {
+                        price = (price * quantity + pastTransaction.Price * pastTransaction.Quantity) /
+                                (quantity + pastTransaction.Quantity);
+                        quantity += pastTransaction.Quantity;
+                    }
+                    else
+                    {
+                        quantity -= pastTransaction.Quantity;
+                    }
+                }
+                pagedTransaction.Profit = pagedTransaction.Quantity * (pagedTransaction.Price - price);
+            }
         }
 
         private static decimal BuyAndKeepStrategyProfit(SimulationDto simulationDto, SimulationResultDto simulationResult,

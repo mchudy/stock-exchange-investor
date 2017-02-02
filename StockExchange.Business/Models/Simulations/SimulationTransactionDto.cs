@@ -34,6 +34,11 @@ namespace StockExchange.Business.Models.Simulations
         public decimal BudgetAfter { get; set; }
 
         /// <summary>
+        /// The total budget after concluding the transaction
+        /// </summary>
+        public decimal Profit { get; set; }
+
+        /// <summary>
         /// The action taken
         /// </summary>
         public SignalAction Action { get; set; }
