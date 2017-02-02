@@ -45,6 +45,10 @@ namespace StockExchange.Web
                 "~/bower_components/highcharts/modules/offline-exporting.js",
                 "~/Scripts/chartSettings.js"));
 
+
+            bundles.Add(new ScriptBundle("~/bundles/scripts/highcharts-annotations").Include(
+                "~/bower_components/highcharts-annotations/js/annotations.js"));
+
             bundles.Add(new StyleBundle("~/bundles/styles/vendor").NonOrdering()
                 .Include("~/bower_components/bootstrap/dist/css/bootstrap.min.css", new CssRewriteUrlTransform())
                 .Include("~/bower_components/jquery-ui/themes/base/jquery-ui.min.css", new CssRewriteUrlTransform())

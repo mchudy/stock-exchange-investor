@@ -95,6 +95,9 @@
             tooltip: {
                 pointFormat: '<span style="color:{point.color}">\u25CF</span> {series.name}: <b>{point.y:.2f}</b><br/>'
             },
+            chart: {
+                panning: true
+            },
             rangeSelector: {
                 inputDateFormat: '%Y-%m-%d',
                 inputEditDateFormat: '%Y-%m-%d',
@@ -104,8 +107,25 @@
                     date.setTime(date.getTime() + 1 * 1000 * 60 * 60 * 4);
                     return date.getTime();
                 }
+            },
+            annotationsOptions: {
+                buttonsOffsets: [3, -3]
             }
         });
+
+        console.log(Highcharts.Annotation)
+
+        $(document).on('keyup', function (e) {
+            // destroy selected annotations when pressed DEL key
+            if (e.keyCode === 46) {
+                if (chart.selectedAnnotation) {
+                    var annotation = chart.selectedAnnotation;
+                    annotation.deselect();
+                    annotation.destroy();
+                }
+            }
+        });
+
         chart.showLoading(loadingIndicator);
     }
 
