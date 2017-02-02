@@ -46,6 +46,9 @@
                 text: 'Budget (PLN)'
             }
         },
+        tooltip: {
+            pointFormat: '<span style="color:{point.color}">\u25CF</span>  <b>{point.y:.2f} PLN</b><br/>'
+        },
         series: [{
             data: config.budgetData.data
         }]
