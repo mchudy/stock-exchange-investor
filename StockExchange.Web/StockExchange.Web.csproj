@@ -2574,6 +2574,7 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\ChartsController.cs" />
     <Compile Include="Controllers\DataController.cs" />
+    <Compile Include="Controllers\DonateController.cs" />
     <Compile Include="Controllers\SimulationsController.cs" />
     <Compile Include="Controllers\StrategiesController.cs" />
     <Compile Include="Controllers\WalletController.cs" />
@@ -2656,6 +2657,7 @@
     <Content Include="Views\Dashboard\_MostActiveTable.cshtml" />
     <Content Include="Scripts\utils.js" />
     <Content Include="Scripts\plugins\dataTablesEuDate.js" />
+    <Content Include="Views\Donate\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
