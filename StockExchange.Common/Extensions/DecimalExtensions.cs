@@ -12,7 +12,7 @@ namespace StockExchange.Common.Extensions
     {
         private static readonly Dictionary<string, CultureInfo> ISOCurrenciesToACultureMap =
             CultureInfo.GetCultures(CultureTypes.SpecificCultures)
-                .Select(c => new { c, new RegionInfo(c.LCID).ISOCurrencySymbol })
+                .Select(c => new { c, new RegionInfo(c.Name).ISOCurrencySymbol })
                 .GroupBy(x => x.ISOCurrencySymbol)
                 .ToDictionary(g => g.Key, g => g.First().c, StringComparer.OrdinalIgnoreCase);
 
