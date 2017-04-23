@@ -1,29 +1,30 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26403.7
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockExchange.Task.App", "StockExchange.Task.App\StockExchange.Task.App.csproj", "{30AB6F4E-A579-418C-BCA0-973F6F6B9C3A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockExchange.Task.App", "src\StockExchange.Task.App\StockExchange.Task.App.csproj", "{30AB6F4E-A579-418C-BCA0-973F6F6B9C3A}"
 	ProjectSection(ProjectDependencies) = postProject
 		{C5A583DA-A15F-45B2-A03F-FB20CB23BD1D} = {C5A583DA-A15F-45B2-A03F-FB20CB23BD1D}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockExchange.Task.Business", "StockExchange.Task.Business\StockExchange.Task.Business.csproj", "{C5A583DA-A15F-45B2-A03F-FB20CB23BD1D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockExchange.Task.Business", "src\StockExchange.Task.Business\StockExchange.Task.Business.csproj", "{C5A583DA-A15F-45B2-A03F-FB20CB23BD1D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockExchange.DataAccess", "StockExchange.DataAccess\StockExchange.DataAccess.csproj", "{C254649A-33DD-4EAA-BD0E-2AFB3AF7579E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockExchange.DataAccess", "src\StockExchange.DataAccess\StockExchange.DataAccess.csproj", "{C254649A-33DD-4EAA-BD0E-2AFB3AF7579E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockExchange.Common", "StockExchange.Common\StockExchange.Common.csproj", "{ABF032DB-F0CE-4F94-AD17-AD142B67F448}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockExchange.Common", "src\StockExchange.Common\StockExchange.Common.csproj", "{ABF032DB-F0CE-4F94-AD17-AD142B67F448}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockExchange.Business", "StockExchange.Business\StockExchange.Business.csproj", "{14A3BA8D-7D94-46F3-A1B9-3C9FC0E2FAC5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockExchange.Business", "src\StockExchange.Business\StockExchange.Business.csproj", "{14A3BA8D-7D94-46F3-A1B9-3C9FC0E2FAC5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockExchange.UnitTest", "StockExchange.UnitTest\StockExchange.UnitTest.csproj", "{D0968525-B2EC-4879-8D08-62566458A121}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockExchange.UnitTest", "test\StockExchange.UnitTest\StockExchange.UnitTest.csproj", "{D0968525-B2EC-4879-8D08-62566458A121}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockExchange.Web", "StockExchange.Web\StockExchange.Web.csproj", "{E3763FF0-5667-4A0A-8E97-BE601F967DDF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockExchange.Web", "src\StockExchange.Web\StockExchange.Web.csproj", "{E3763FF0-5667-4A0A-8E97-BE601F967DDF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockExchange.Migrations", "StockExchange.Migrations\StockExchange.Migrations.csproj", "{1C6AE943-82F5-451B-82B1-7CF6634014FE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockExchange.Migrations", "src\StockExchange.Migrations\StockExchange.Migrations.csproj", "{1C6AE943-82F5-451B-82B1-7CF6634014FE}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{553EBCE0-3F21-4E16-8BB3-FC4926ABB3E0}"
 	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
 		Readme.md = Readme.md
 	EndProjectSection
 EndProject
@@ -90,35 +91,5 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 9
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = https://bartosz-wozniak.visualstudio.com/
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = StockExchange.Task.App\\StockExchange.Task.App.csproj
-		SccProjectName1 = StockExchange.Task.App
-		SccLocalPath1 = StockExchange.Task.App
-		SccProjectUniqueName2 = StockExchange.Task.Business\\StockExchange.Task.Business.csproj
-		SccProjectName2 = StockExchange.Task.Business
-		SccLocalPath2 = StockExchange.Task.Business
-		SccProjectUniqueName3 = StockExchange.DataAccess\\StockExchange.DataAccess.csproj
-		SccProjectName3 = StockExchange.DataAccess
-		SccLocalPath3 = StockExchange.DataAccess
-		SccProjectUniqueName4 = StockExchange.Common\\StockExchange.Common.csproj
-		SccProjectName4 = StockExchange.Common
-		SccLocalPath4 = StockExchange.Common
-		SccProjectUniqueName5 = StockExchange.Business\\StockExchange.Business.csproj
-		SccProjectName5 = StockExchange.Business
-		SccLocalPath5 = StockExchange.Business
-		SccProjectUniqueName6 = StockExchange.UnitTest\\StockExchange.UnitTest.csproj
-		SccProjectName6 = StockExchange.UnitTest
-		SccLocalPath6 = StockExchange.UnitTest
-		SccProjectUniqueName7 = StockExchange.Web\\StockExchange.Web.csproj
-		SccProjectName7 = StockExchange.Web
-		SccLocalPath7 = StockExchange.Web
-		SccProjectUniqueName8 = StockExchange.Migrations\\StockExchange.Migrations.csproj
-		SccProjectName8 = StockExchange.Migrations
-		SccLocalPath8 = StockExchange.Migrations
 	EndGlobalSection
 EndGlobal
